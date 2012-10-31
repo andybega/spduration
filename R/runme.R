@@ -54,36 +54,10 @@ test <- subset(dur.coup, date==as.Date('2011-12-01'))
 spdur.coup <- 
   spdur(duration ~ d.major.l1 + d.minor.l1 + ln.dom.cris.i.count.l1 + ln.ProxElection.l1,
         atrisk ~ ln.gdppc.l1 + med.polity.l1 + ln.dom.cris.i.count.l1 + ln.ProxElection.l1,
+        data=dur.coup, last=dur.coup$end.spell, distr='weibull', max.iter=200)
+
+spdur.coup <- 
+  spdur(duration ~ d.major.l1 + d.minor.l1 + ln.dom.cris.i.count.l1 + ln.ProxElection.l1,
+        atrisk ~ ln.gdppc.l1 + med.polity.l1 + ln.dom.cris.i.count.l1 + ln.ProxElection.l1,
         data=dur.coup, test=test, last=dur.coup$end.spell, 
         distr='weibull', iter=200, sims=1000)
-
-# Separation plot
-predy.in <- spdur.coup[[3]][2, ]
-predy.in <- cbind(predy.in[dur.coup$end.spell==1], dur.coup$failure[dur.coup$end.spell==1])
-png(file='graphics/sepplot_coup.png', width=1024, height=512)
-separationplot(predy.in[,1],predy.in[,2],
-               shuffle=T, heading='', show.expected=T, newplot=F, 
-               type='line', lwd1=5, lwd2=2)
-dev.off()
-
-## Contingency table of predicted/observed
-predy.in.table <- data.frame(phat=predy.in[,1], y=predy.in[,2])
-predy.in.table$yhat <- as.numeric(predy.in.table[, 'phat'] > 0.5)
-predy.in.table <- cbind(predy.in.table, 
-                        country=dur.coup$country[dur.coup$end.spell==1], 
-                        date=dur.coup$date[dur.coup$end.spell==1])
-
-# Classification performance
-with(predy.in.table, table(y, yhat))
-
-# Outlier false negative
-predy.in.table[with(predy.in.table, { y==1 & yhat==0 }), ]
-
-# False positives
-predy.in.table[with(predy.in.table, { y==0 & yhat==1 }), ]
-
-# Watchlist
-watchlist <- subset(predy.in.table, date==max(date) & y==0, select=c('country', 'phat'))
-watchlist <- watchlist[with(watchlist, order(phat, country, decreasing=T)), ]
-watchlist$phat <- round(watchlist$phat, digits=4)
-watchlist[watchlist$phat>=0.9, ]
