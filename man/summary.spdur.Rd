@@ -1,19 +1,19 @@
-\name{spdur}
-\alias{spdur}
+\name{summary.spdur}
+\alias{summary.spdur}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Split-population duration (cure) regression
+Summarizing Split-Pop Duration Model Fit
 }
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-spdur(x, ...)
+summary.spdur(object, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{
-%%     ~~Describe \code{x} here~~
+  \item{object}{
+%%     ~~Describe \code{object} here~~
 }
   \item{\dots}{
 %%     ~~Describe \code{\dots} here~~
@@ -50,8 +50,14 @@ spdur(x, ...)
 ##--	or do  help(data=index)  for the standard data sets.
 
 ## The function is currently defined as
-function (x, ...) 
-UseMethod("spdur")
+function (object, ...) 
+{
+    table <- cbind(Estimate = coef(object), StdErr = object$se, 
+        Z = object$zstat, p = object$pval)
+    res <- list(call = object$call, coefficients = table)
+    class(res) <- "summary.spdur"
+    return(res)
+  }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

@@ -1,14 +1,9 @@
 ##########
-# What: spdur R package functions
+# What: spdur R package core functions
 # Date: November 2012
 # Who:  Andreas Beger, Daniel W. Hill, Nils Metternich
 #
 ###########
-
-# Input validation
-#if (is.null(data)) stop("No data provided")
-#if (is.null(last)) stop("Must specify censoring variable")
-#if (distr == "") stop("Must specify distribution")
 
 spdur <- function(x, ...) UseMethod('spdur')
 

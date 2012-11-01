@@ -1,19 +1,19 @@
-\name{spdur}
-\alias{spdur}
+\name{separationplot.spdur}
+\alias{separationplot.spdur}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Split-population duration (cure) regression
+Separation Plot for Split-Pop Duration Model
 }
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-spdur(x, ...)
+separationplot.spdur(object, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{
-%%     ~~Describe \code{x} here~~
+  \item{object}{
+%%     ~~Describe \code{object} here~~
 }
   \item{\dots}{
 %%     ~~Describe \code{\dots} here~~
@@ -50,8 +50,17 @@ spdur(x, ...)
 ##--	or do  help(data=index)  for the standard data sets.
 
 ## The function is currently defined as
-function (x, ...) 
-UseMethod("spdur")
+function (object, ...) 
+{
+    require(separationplot)
+    predy.in <- spdur.csp[[3]][2, ]
+    predy.in <- cbind(predy.in[dur.csp$end.spell == 1], dur.csp$failure[dur.csp$end.spell == 
+        1])
+    plot <- separationplot(predy.in[, 1], predy.in[, 2], shuffle = T, 
+        heading = "", show.expected = T, newplot = F, type = "line", 
+        lwd1 = 5, lwd2 = 2)
+    return(plot)
+  }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

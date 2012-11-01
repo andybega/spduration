@@ -15,11 +15,9 @@ blah blah
 To do
 ---
 
- * formatting in spdur
  * icews top-level wrapper
- * predict method
- * print method
- * summary method
+ * predict method for loglog
  * loglog estimation
  * packagebuilder
  * manuals
+ * duration build function

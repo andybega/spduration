@@ -1,5 +1,3 @@
-## Weibull part
-
 spweibull <- function(Y, X, Z, max.iter) {  
   # Base model likelihood
   weib.lik <- function(theta, y, X) {

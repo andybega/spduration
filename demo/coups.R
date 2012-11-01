@@ -6,30 +6,11 @@
 
 rm(list=ls())
 
-if(Sys.info()["user"]=="adbeger"){
-  path="~/Research/spdur_package"}
-
-# for maps
-library(cshapes)
-library(classInt)
-library(RColorBrewer)
-
-# Survival
-library(survival)
-library(wicews)
-
 source('R/spdur.R')
 
-##########
-# Data
-#
-##########
+library(spdur)
 
-## Data
 load('delete/dur.coup.RData')
-
-## List of coups and their dates
-dur.coup[dur.coup$failure==1, c('country', 'date', 'duration')]
 
 ## Prep for regression
 # Make sure all variables look somewhat normall distributed
@@ -48,16 +29,18 @@ dur.coup$ln.d.minor.neg.l1 <- log(dur.coup$d.minor.neg.l1+1)
 dur.coup <- subset(dur.coup, complete.cases(dur.coup$ln.gdppc.l1))
 dur.coup$trythis<-ifelse(dur.coup$ Xd.neg.var>0,1,0)
 
-test <- subset(dur.coup, date==as.Date('2011-12-01'))
-
 ## Split duration model
-spdur.coup <- 
+model <- 
   spdur(duration ~ d.major.l1 + d.minor.l1 + ln.dom.cris.i.count.l1 + ln.ProxElection.l1,
         atrisk ~ ln.gdppc.l1 + med.polity.l1 + ln.dom.cris.i.count.l1 + ln.ProxElection.l1,
         data=dur.coup, last=dur.coup$end.spell, distr='weibull', max.iter=200)
 
-spdur.coup <- 
-  spdur(duration ~ d.major.l1 + d.minor.l1 + ln.dom.cris.i.count.l1 + ln.ProxElection.l1,
-        atrisk ~ ln.gdppc.l1 + med.polity.l1 + ln.dom.cris.i.count.l1 + ln.ProxElection.l1,
-        data=dur.coup, test=test, last=dur.coup$end.spell, 
-        distr='weibull', iter=200, sims=1000)
+
+# Separationplot
+predy.in <- spdur.csp[[3]][2, ]
+predy.in <- cbind(predy.in[dur.csp$end.spell==1], dur.csp$failure[dur.csp$end.spell==1])
+png(file='graphics/sepplot_CSP_coup.png', width=1024, height=512)
+separationplot(predy.in[,1],predy.in[,2],
+               shuffle=T, heading='', show.expected=T, newplot=F, 
+               type='line', lwd1=5, lwd2=2)
+dev.off()

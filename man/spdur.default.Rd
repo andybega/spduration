@@ -1,22 +1,31 @@
-\name{spdur}
-\alias{spdur}
+\name{spdur.default}
+\alias{spdur.default}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Split-population duration (cure) regression
+Split-Pop Duration Model Default Method
 }
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-spdur(x, ...)
+spdur.default(Y, X, Z, distr, max.iter = 100)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{
-%%     ~~Describe \code{x} here~~
+  \item{Y}{
+%%     ~~Describe \code{Y} here~~
 }
-  \item{\dots}{
-%%     ~~Describe \code{\dots} here~~
+  \item{X}{
+%%     ~~Describe \code{X} here~~
+}
+  \item{Z}{
+%%     ~~Describe \code{Z} here~~
+}
+  \item{distr}{
+%%     ~~Describe \code{distr} here~~
+}
+  \item{max.iter}{
+%%     ~~Describe \code{max.iter} here~~
 }
 }
 \details{
@@ -50,8 +59,26 @@ spdur(x, ...)
 ##--	or do  help(data=index)  for the standard data sets.
 
 ## The function is currently defined as
-function (x, ...) 
-UseMethod("spdur")
+function (Y, X, Z, distr, max.iter = 100) 
+{
+    if (distr == "weibull") {
+        est <- spweibull(Y, X, Z, max.iter)
+    }
+    if (distr == "loglog") {
+        est <- sploglog(Y, X, Z, max.iter)
+    }
+    varnames <- c(paste(unlist(attr(X, "dimnames")[2])), paste(unlist(attr(Z, 
+        "dimnames")[2])), "alpha")
+    attr(est$coefficients, "names") <- varnames
+    colnames(est$vcv) <- rownames(est$vcv) <- varnames
+    est$se <- sqrt(diag(est$vcv))
+    est$zstat <- with(est, coefficients/se)
+    est$pval <- 2 * (1 - pnorm(abs(est$zstat)))
+    est$call <- match.call()
+    est$distr <- distr
+    class(est) <- "spdur"
+    return(est)
+  }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

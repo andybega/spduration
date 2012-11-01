@@ -1,14 +1,14 @@
-\name{spdur}
-\alias{spdur}
+\name{print.summary.spdur}
+\alias{print.summary.spdur}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Split-population duration (cure) regression
+Print Split-Pop Duration Model Summaries
 }
 \description{
 %%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-spdur(x, ...)
+print.summary.spdur(x, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -51,7 +51,13 @@ spdur(x, ...)
 
 ## The function is currently defined as
 function (x, ...) 
-UseMethod("spdur")
+{
+    cat("Call:\n")
+    print(x$call)
+    cat("\n")
+    printCoefmat(x$coefficients, P.value = T, has.Pvalue = T, 
+        digits = 4)
+  }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
