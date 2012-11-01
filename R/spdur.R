@@ -1,7 +1,7 @@
 ##########
 # What: spdur R package functions
 # Date: November 2012
-# Who:  Daniel W. Hill, Nils Metternich, Andreas Beger
+# Who:  Andreas Beger, Daniel W. Hill, Nils Metternich
 #
 ###########
 
@@ -20,6 +20,10 @@ spdur.default <- function(Y, X, Z, distr, max.iter=100)
   if (distr=='loglog') {
     est <- sploglog(Y, X, Z, max.iter)
   }
+  # Names
+  varnames <- c(paste(unlist(attr(X, 'dimnames')[2])), paste(unlist(attr(Z, 'dimnames')[2])), 'alpha')
+  attr(est$coefficients, 'names') <- varnames
+  colnames(est$vcv) <- rownames(est$vcv) <- varnames
   
   # Calculate uncertainty measures
   est$se <- sqrt(diag(est$vcv))
@@ -27,6 +31,7 @@ spdur.default <- function(Y, X, Z, distr, max.iter=100)
   est$pval <- 2*(1-pnorm(abs(est$zstat)))
   
   est$call <- match.call()
+  est$distr <- distr
   class(est) <- 'spdur'
   return(est)
 }
@@ -51,10 +56,29 @@ spdur.formula <- function(duration, atrisk, data=list(), last, distr='weibull',
   # Call default method for estimation
   est <- spdur.default(Y, X, Z, distr, max.iter)
   est$call <- match.call()
-  est$duration.formula <- duration
-  est$atrisk.formula <- atrisk
   
   return(est)
+}
+
+summary.spdur <- function(object, ...)
+{
+  table <- cbind(Estimate = coef(object),
+                 StdErr = object$se,
+                 Z = object$zstat,
+                 p = object$pval)
+  res <- list(call = object$call,
+              coefficients = table)
+  class(res) <- 'summary.spdur'
+  return(res)
+}
+
+print.summary.spdur <- function(x, ...)
+{
+  cat('Call:\n')
+  print(x$call)
+  cat('\n')
+  
+  printCoefmat(x$coefficients, P.value=T, has.Pvalue=T, digits=4)
 }
 
 ##########
