@@ -41,7 +41,6 @@ predict.spdur <- function(object, data=NULL, stat=cure, ...)
 # Output: row-matrix of predicted probability quantiles
 #
 pred_weibull <- function(coef, vcv, Y, X, Z, stat) {
-  require(MASS)
   
   coeff.b <- coef[1 : ncol(X)]
   coeff.g <- coef[(ncol(X) + 1) : (ncol(X) + ncol(Z))]
@@ -101,7 +100,6 @@ pred_weibull <- function(coef, vcv, Y, X, Z, stat) {
 # Output: row-matrix of predicted probability quantiles
 #
 pred_loglog <- function(y, X, Z, sims) {
-  require(MASS)
   
   coeff.b <- coef[1 : ncol(X)]
   coeff.g <- coef[(ncol(X) + 1) : (ncol(X) + ncol(Z))]

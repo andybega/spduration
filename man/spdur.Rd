@@ -5,55 +5,52 @@
 Split-population duration (cure) regression
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+This function estimates a split-population duration model and returns a ``spdur'' class object.
 }
 \usage{
-spdur(x, ...)
+spdur(duration = formula, atrisk = formula2, data = NULL, last = NULL, distr = NULL, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{x}{
-%%     ~~Describe \code{x} here~~
+  \item{duration}{
+A formula of the form Y ~ X1 + X2 \dots, where Y is duration until failure or censoring.
+}
+  \item{atrisk}{
+A formula of the form C ~ Z1 + Z2 \dots, where C is a binary indicator of risk (1 - cure).
+}
+  \item{data}{
+A data frame containing the variables in formula and formula2.
+}
+  \item{last}{
+A vector of binary indicators that equal 1 if failure occurs or the spell is right-censored.
+}
+  \item{distr}{
+The type of distribution to use in the hazard rate. Valid options are ``weibull'' or ``loglog''.
+}
+  \item{max.iter}{
+Maximum number of iterations to use in the likelihood maximization.
 }
   \item{\dots}{
-%%     ~~Describe \code{\dots} here~~
+Additional parameters passed to the appropriate spdur method.
 }
 }
 \details{
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
-}
-\references{
-%% ~put references to the literature/web site here ~
+\item{coefficients }{A named vector of coefficient point estimates.}
+\item{vcv }{Estimated covariance matrix.}
+\item{se }{Standard error estimates.}
+\item{distr }{Distribution used for the hazard rate.}
+\item{call }{The original spdur call.}
+...
 }
 \author{
-%%  ~~who you are~~
-}
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+Andreas Beger
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+#data(xx)
 
-## The function is currently defined as
-function (x, ...) 
-UseMethod("spdur")
+#model <-
+#  spdur()
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line

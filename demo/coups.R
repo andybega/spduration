@@ -4,13 +4,9 @@
 # Who:  Andreas Beger
 ###########
 
-rm(list=ls())
-
-source('R/spdur.R')
-
 library(spdur)
 
-load('delete/dur.coup.RData')
+data(dur.coup)
 
 ## Prep for regression
 # Make sure all variables look somewhat normall distributed
@@ -35,12 +31,16 @@ model <-
         atrisk ~ ln.gdppc.l1 + med.polity.l1 + ln.dom.cris.i.count.l1 + ln.ProxElection.l1,
         data=dur.coup, last=dur.coup$end.spell, distr='weibull', max.iter=200)
 
+summary(model)
+
+atrisk <- predict(model)
 
 # Separationplot
-predy.in <- spdur.csp[[3]][2, ]
-predy.in <- cbind(predy.in[dur.csp$end.spell==1], dur.csp$failure[dur.csp$end.spell==1])
-png(file='graphics/sepplot_CSP_coup.png', width=1024, height=512)
-separationplot(predy.in[,1],predy.in[,2],
-               shuffle=T, heading='', show.expected=T, newplot=F, 
-               type='line', lwd1=5, lwd2=2)
-dev.off()
+library(separationplot)
+predy.in <- atrisk
+#predy.in <- cbind(predy.in[dur.csp$end.spell==1], dur.csp$failure[dur.csp$end.spell==1])
+# png(file='graphics/sepplot_CSP_coup.png', width=1024, height=512)
+# separationplot(predy.in[,1],predy.in[,2],
+#                shuffle=T, heading='', show.expected=T, newplot=F, 
+#                type='line', lwd1=5, lwd2=2)
+# dev.off()

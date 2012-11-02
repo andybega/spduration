@@ -6,34 +6,39 @@
 Split-Population Duration (Cure) Regression Models
 }
 \description{
-More about what it does (maybe more than one line)
-~~ A concise (1-5 lines) description of the package ~~
+The spdur package provides functions to estimate split-population duration regression 
+models in which only a subset of the population is at risk for failure, while the remainder
+is immune, or cured, from the possibility of experiencing a failure event. In practice, 
+this class of models also may produce better performance in sparse data with few actual
+failure events.
 }
 \details{
 \tabular{ll}{
 Package: \tab spdur\cr
 Type: \tab Package\cr
-Version: \tab 1.0\cr
+Version: \tab 0.1 (pre-release)\cr
 Date: \tab 2012-11-01\cr
-License: \tab What license is it under?\cr
+License: \tab GPL 3.0\cr
 }
-~~ An overview of how to use the package, including the most important functions ~~
+The main function spdur is used to estimate the model objects with class ``spdur''. 
+
+Postestimation tools include predict.spdur, for calculating fitted values with arbitrary
+data and for several probabilities that might be of interest, as well as separationplot.spdur
+for visual display of model fit. 
 }
 \author{
-Who wrote it
+Andreas Beger, Daina Chiba, Daniel W. Hill, Nils W. Metternich, and Michael D. Ward
 
-Maintainer: Who to complain to <yourfault@somewhere.net>
-~~ The author and/or maintainer of the package ~~
+Maintainer: Andreas Beger <andreas.beger@duke.edu>
 }
 \references{
-~~ Literature or other references for background information ~~
-}
-~~ Optionally other standard keywords, one per line, from file KEYWORDS in the R documentation directory ~~
-\keyword{ package }
-\seealso{
-~~ Optional links to other man pages, e.g. ~~
-~~ \code{\link[<pkg>:<pkg>-package]{<pkg>}} ~~
+Leisch, Friedrich. 2009. ``Creating R Packages: A Tutorial.''
 }
 \examples{
-~~ simple examples of the most important functions ~~
+#data(xx)
+
+# Model
+#model <- spdur(duration ~ ,
+#               atrisk ~ ,
+#               data = , last = , max.iter = 200)
 }

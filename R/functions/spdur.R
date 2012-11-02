@@ -86,7 +86,7 @@ print.summary.spdur <- function(x, ...)
 # - clean up code
 #
 ###########
-spdur.icews <- function (formula, cure = formula2, data = NULL, test = NULL, 
+spdur.crisp <- function (formula, cure = formula2, data = NULL, test = NULL, 
                          last = NULL, distr = "", re = "", iter = NULL, sims = NULL) 
 {
   if (is.null(data)) 

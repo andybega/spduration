@@ -8,7 +8,7 @@
 rm(list = ls())
 
 # Package folder name
-package.name <- 'spdur_0.1'
+package.name <- 'spdur_0.2'
 
 # Directory in which to create package
 if(Sys.info()["user"]=="adbeger") package.path <- paste('~/Dropbox/Research/spdur_package/package', package.name, sep='/')
@@ -30,6 +30,7 @@ source('R/functions/predict.spdur.R')
 
 # Duration build function
 source('R/functions/buildDuration.R')
+source('R/functions/panelLag.R')
 
 # Demo script and data
 load('delete/dur.coup.RData')
@@ -61,6 +62,7 @@ package.skeleton('spdur')
 ## already exist in the folder of the latest version of the package. 
 ##
 ##  1. "DESCRIPTION" file
+##  2. "NAMESPACE"
 ##
 ## Open the "DESCRIPTION" file, and modify the version information, date, etc.
 ##
@@ -74,21 +76,17 @@ package.skeleton('spdur')
 ########
 ## 3. ##
 ########
-## Go into the Terminal, and build the package.
-##   cd /your/path/to/Dropbox/CRISP/package/packageX.X.X/
-##   cd ~/Dropbox/Research/spdur_package/package/spdur_0.1
-##   R CMD build spdur
-##
-## This will create CRISP_X.X.X.tar.gz that can be installed to R locally.
-##
+## This will build the package using Terminal:
+system('cd ~/Dropbox/Research/spdur_package/package/spdur_0.1')
+system('R CMD build spdur')
 
 ########
 ## 4. ##
 ########
 ## On the terminal, check if the package is alright.
-##   cd /your/path/to/Dropbox/CRISP/package/packageX.X.X/
-##   R CMD check CRISP
-##
+system('cd ~/Dropbox/Research/spdur_package/package/spdur_0.1')
+system('R CMD check spdur')
+
 
 ########
 ## 5. ##

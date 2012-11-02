@@ -1,0 +1,14 @@
+# Core functions
+export(spdur, spdur.crisp)
+
+# Utility functions
+export(buildDuration, panelLag)
+
+# Methods
+S3method(summary, spdur)
+S3method(predict, spdur)
+
+export(print.summary.spdur)
+
+# Depends
+importFrom(plyr, ddply)
