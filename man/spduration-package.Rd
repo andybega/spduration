@@ -1,12 +1,12 @@
-\name{spdur-package}
-\alias{spdur-package}
-\alias{spdur}
+\name{spduration-package}
+\alias{spduration-package}
+\alias{spduration}
 \docType{package}
 \title{
 Split-Population Duration (Cure) Regression Models
 }
 \description{
-The spdur package provides functions to estimate split-population duration regression 
+The spduration package provides functions to estimate split-population duration regression 
 models in which only a subset of the population is at risk for failure, while the remainder
 is immune, or cured, from the possibility of experiencing a failure event. In practice, 
 this class of models also may produce better performance in sparse data with few actual

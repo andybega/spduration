@@ -1,10 +1,10 @@
-Package: spdur
+Package: spduration
 Title: Split-Population Duration (Cure) Regression
-Version: 0.1
+Version: 0.2
 Date: 2012-11-01
 Author: Andreas Beger, Daniel W. Hill, Nils Metternich
 Maintainer: Andreas Beger <andreas.beger@duke.edu>
 Description: Initial package build for spdur, with functioning weibull model.
-Depends: MASS
+Depends: plyr
 Suggests: separationplot, wicews
 License: GPL-3

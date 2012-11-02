@@ -8,7 +8,7 @@
 rm(list = ls())
 
 # Package folder name
-package.name <- 'spdur_0.2'
+package.name <- 'spduration_0.2'
 
 # Directory in which to create package
 if(Sys.info()["user"]=="adbeger") package.path <- paste('~/Dropbox/Research/spdur_package/package', package.name, sep='/')
@@ -40,15 +40,15 @@ if (file.exists(package.path)) {
   setwd(package.path) 
   } else {
   dir.create(file.path(package.path))
-  setwd(path.package)
+  setwd(package.path)
 }
 
 # Delete if package folder already exists
-if (file.exists('spdur')) unlink('spdur', recursive=T)
+if (file.exists('spduration')) unlink('spduration', recursive=T)
 
 # Build package skeleton
 rm(package.name, package.path)
-package.skeleton('spdur')
+package.skeleton('spduration')
 
 ########
 ## 2. ##
@@ -77,15 +77,15 @@ package.skeleton('spdur')
 ## 3. ##
 ########
 ## This will build the package using Terminal:
-system('cd ~/Dropbox/Research/spdur_package/package/spdur_0.1')
-system('R CMD build spdur')
+system('cd ~/Dropbox/Research/spdur_package/package/spduration_0.2')
+system('R CMD build spduration')
 
 ########
 ## 4. ##
 ########
 ## On the terminal, check if the package is alright.
-system('cd ~/Dropbox/Research/spdur_package/package/spdur_0.1')
-system('R CMD check spdur')
+system('cd ~/Dropbox/Research/spdur_package/package/spduration_0.2')
+system('R CMD check spduration')
 
 
 ########

@@ -5,6 +5,9 @@ export(spdur, spdur.crisp)
 export(buildDuration, panelLag)
 
 # Methods
+export(summary.spdur, predict.spdur, print.summary.spdur)
+
+# Methods
 S3method(summary, spdur)
 S3method(predict, spdur)
 
