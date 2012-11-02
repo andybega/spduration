@@ -35,7 +35,7 @@ Additional parameters passed to the appropriate spdur method.
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+See \code{\link{summary.spdur}}, \code{\link{predict.spdur}} and \code{\link{separationplot.spdur}}
 }
 \value{
 \item{coefficients }{A named vector of coefficient point estimates.}

@@ -20,10 +20,10 @@ Version: \tab 0.1 (pre-release)\cr
 Date: \tab 2012-11-01\cr
 License: \tab GPL 3.0\cr
 }
-The main function spdur is used to estimate the model objects with class ``spdur''. 
+The main function \code{\link{spdur}} is used to estimate the model objects with class ``spdur''. 
 
-Postestimation tools include predict.spdur, for calculating fitted values with arbitrary
-data and for several probabilities that might be of interest, as well as separationplot.spdur
+Postestimation tools include \code{\link{predict.spdur}}, for calculating fitted values with arbitrary
+data and for several probabilities that might be of interest, as well as \code{\link{separationplot.spdur}}
 for visual display of model fit. 
 }
 \author{
