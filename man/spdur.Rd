@@ -8,7 +8,7 @@ Split-population duration (cure) regression
 This function estimates a split-population duration model and returns a ``spdur'' class object.
 }
 \usage{
-spdur(duration = formula, atrisk = formula2, data = NULL, last = NULL, distr = NULL, ...)
+spdur(duration, atrisk, data = list(), last, distr = "weibull", max.iter = 100, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -31,7 +31,7 @@ The type of distribution to use in the hazard rate. Valid options are ``weibull'
 Maximum number of iterations to use in the likelihood maximization.
 }
   \item{\dots}{
-Additional parameters passed to the appropriate spdur method.
+Additional parameters passed to spdur.
 }
 }
 \details{
@@ -45,8 +45,16 @@ See \code{\link{summary.spdur}}, \code{\link{predict.spdur}} and \code{\link{sep
 \item{call }{The original spdur call.}
 ...
 }
+\references{
+%% ~put references to the literature/web site here ~
+}
 \author{
 Andreas Beger
+}
+%% ~Make other sections like Warning with \section{Warning }{....} ~
+
+\seealso{
+%% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
 #data(xx)
@@ -54,3 +62,7 @@ Andreas Beger
 #model <-
 #  spdur()
 }
+% Add one or more standard keywords, see file 'KEYWORDS' in the
+% R documentation directory.
+\keyword{ ~kwd1 }
+\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line

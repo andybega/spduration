@@ -5,10 +5,22 @@
 #
 ###########
 
-spdur <- function(x, ...) UseMethod('spdur')
-
-spdur.default <- function(Y, X, Z, distr, max.iter=100)
+spdur <- function(duration, atrisk, data=list(), last, distr='weibull', 
+                  max.iter=100, ...)
 {
+  # Duration equation
+  mf.dur <- model.frame(formula=duration, data=data)
+  X <- model.matrix(attr(mf.dur, 'terms'), data=mf.dur)
+  lhb <- model.response(mf.dur)
+  # Risk/non-immunity equation
+  mf.risk <- model.frame(formula=atrisk, data=data)
+  Z <- model.matrix(attr(mf.risk, 'terms'), data=mf.risk)
+  lhg <- model.response(mf.risk)
+  # Y vectors
+  censor <- last
+  Y <- cbind(atrisk=lhg, duration=lhb, last=censor)
+  
+  # Estimation
   if (distr=='weibull') {
     est <- spweibull(Y, X, Z, max.iter)
   }
@@ -28,30 +40,6 @@ spdur.default <- function(Y, X, Z, distr, max.iter=100)
   est$call <- match.call()
   est$distr <- distr
   class(est) <- 'spdur'
-  return(est)
-}
-
-spdur.formula <- function(duration, atrisk, data=list(), last, distr='weibull', 
-                          max.iter=100)
-{
-  # Duration equation
-  mf.dur <- model.frame(formula=duration, data=data)
-  X <- model.matrix(attr(mf.dur, 'terms'), data=mf.dur)
-  lhb <- model.response(mf.dur)
-  
-  # Risk/non-immunity equation
-  mf.risk <- model.frame(formula=atrisk, data=data)
-  Z <- model.matrix(attr(mf.risk, 'terms'), data=mf.risk)
-  lhg <- model.response(mf.risk)
-  
-  # Y vectors
-  censor <- last
-  Y <- cbind(atrisk=lhg, duration=lhb, last=censor)
-  
-  # Call default method for estimation
-  est <- spdur.default(Y, X, Z, distr, max.iter)
-  est$call <- match.call()
-  
   return(est)
 }
 
@@ -86,43 +74,34 @@ print.summary.spdur <- function(x, ...)
 # - clean up code
 #
 ###########
-spdur.crisp <- function (formula, cure = formula2, data = NULL, test = NULL, 
-                         last = NULL, distr = "", re = "", iter = NULL, sims = NULL) 
+spdur.crisp <- function (duration = formula, atrisk = formula2, data = NULL, test = NULL, 
+                         last = NULL, distr = NULL, stat = cure, iter = 100, ...) 
 {
   if (is.null(data)) 
     stop("No data provided")
   if (is.null(last)) 
     stop("Must specify censoring variable")
-  if (distr == "") 
+  if (distr == NULL) 
     stop("Must specify distribution")
-  a <- as.character(formula)
-  b <- as.character(cure)
-  lhb <- a[2]
-  rhb <- strsplit(a[3], split = " + ", fixed = T)[[1]]
-  lhg <- b[2]
-  rhg <- strsplit(b[3], split = " + ", fixed = T)[[1]]
-  X <- data[rhb]
-  Z <- data[rhg]
-  Y <- cbind(data[lhg], data[lhb], last)
-  X.test <- test[rhb]
-  Z.test <- test[rhg]
-  Y.test <- cbind(test[lhg], test[lhb])
-  if (is.null(iter)) 
-    iter <- 100
-  if (is.null(sims)) 
-    sims <- 1000
-  if (distr == "weibull") {
-    model <- spweibull(Y, X, Z, Y.test, X.test, Z.test, iter, 
-                       sims)
-  }
-  if (distr == "loglog") {
-    model <- sploglog(Y, X, Z, Y.test, X.test, Z.test, iter, 
-                      sims)
-  }
+  
+  # Estimate parameters
+  model <- spdur(duration, atrisk, data=data, last, distr=distr, max.iter=100)
+  
+  # In-sample and test predictions
+  train <- predict(model, stat=stat)
+  test <- predict(model, data=test, stat=stat)
+  
+  # Forecast
+  pred <- forecast(model, npred = 6)
   
   # Format and show estimates
-  rownames(model$results) <- c('duration const', rhb, 'risk constant', rhg, 'alpha')
-  print(model$results, digits=4)
+  print(model)
   
-  invisible((model))
+  res <- model
+  res$train <- train
+  res$test <- test
+  res$pred <- pred
+  class(res) <- c('crisp', 'spdur')
+  
+  return(res)
 }

@@ -8,7 +8,7 @@
 rm(list = ls())
 
 # Package folder name
-package.name <- 'spduration_0.2'
+package.name <- 'spduration_0.3'
 
 # Directory in which to create package
 if(Sys.info()["user"]=="adbeger") package.path <- paste('~/Dropbox/Research/spdur_package/package', package.name, sep='/')
@@ -53,40 +53,37 @@ package.skeleton('spduration')
 ########
 ## 2. ##
 ########
-## Go into 
-##   Dropbox/spdur_package/package/spdur_X.X/
+## Copy and paste from github to package directory.
 ##
-## Copy & pastes the following objects from the githubprevious version of the
-## package ("packageX.X-1.X/CRISP/") into the latest version of the package 
-## ("packageX.X.X/CRISP/"). You will have to overwrite (replace) the ones that
-## already exist in the folder of the latest version of the package. 
-##
-##  1. "DESCRIPTION" file
-##  2. "NAMESPACE"
-##
-## Open the "DESCRIPTION" file, and modify the version information, date, etc.
-##
-## Copy and paste the following two folders from github to 
-## ("packageX.X.X/CRISP/")
-## 
-## 1. "man" folder to "man" folder
-## 2. "demo" folder on git to "demo" folder
+## 1. On the github folder, update the version in "DESCRIPTION" file.
+## 2. Copy & paste from github to dropbox:
+##        "DESCRIPTION"
+##        "NAMESPACE"
+##        "man" folder
+##        "demo" folder
 ##
 
 ########
 ## 3. ##
 ########
 ## This will build the package using Terminal:
-system('cd ~/Dropbox/Research/spdur_package/package/spduration_0.2')
+system('cd ~/Dropbox/Research/spdur_package/package/spduration_0.3')
 system('R CMD build spduration')
 
 ########
 ## 4. ##
 ########
 ## On the terminal, check if the package is alright.
-system('cd ~/Dropbox/Research/spdur_package/package/spduration_0.2')
+system('cd ~/Dropbox/Research/spdur_package/package/spduration_0.3')
 system('R CMD check spduration')
 
+########
+## 5. ##
+########
+## Install and test package
+##
+install.packages('~/Dropbox/Research/spdur_package/package/spduration_0.3/spduration_0.3.tar.gz', 
+                 repos=NULL, type='source')
 
 ########
 ## 5. ##

@@ -15,9 +15,9 @@ blah blah
 To do
 ---
 
- * icews top-level wrapper
- * predict method for loglog
- * loglog estimation
- * packagebuilder
+ * test spdur.crisp, loglog methods
+ * packagebuilder, system commands
  * manuals
  * duration build function
+ * new data example and demo code
+ * test code in packagebuilder
