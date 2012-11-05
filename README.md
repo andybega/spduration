@@ -18,6 +18,5 @@ To do
  * test spdur.crisp, loglog methods
  * packagebuilder, system commands
  * manuals
- * duration build function
- * new data example and demo code
- * test code in packagebuilder
+ * options for predict q.i.'s
+ * forecast function

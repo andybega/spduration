@@ -1,11 +1,11 @@
-buildDuration <- function(data, y) {
+buildDuration <- function(data, y, unitID, tID) {
   require(plyr)
   
-  data <- data[order(data$ccode,data$date), ]
+  data <- data[order(data[, unitID], data[, tID]), ]
   
   # Mark failure (0, 1)
   failure <- function(x) return(c(0, pmax(0, diff(x))))
-  data$failure <- unlist(by(data[, y], data$ccode, failure))
+  data$failure <- unlist(by(data[, y], data[, unitID], failure))
   
   # Drop ongoing (1->1) spells, keep only 0 and onset (0->1)
   data <- subset(data, !(get(y)==1 & failure==0))
@@ -13,8 +13,10 @@ buildDuration <- function(data, y) {
   # Mark end of a spell and create unique ID
   # A spell can end 3 ways: failure, right-censor because past observation
   # period, or right censor because state ceased to exist.
-  data <- ddply(data, .(ccode), transform, end=max(date)) 
-  data$end.spell <- ifelse(format(data$date, '%Y-%m')==format(as.Date(data$end), '%Y-%m'), 1, 0)
+  data$temp.t <- data[, tID]
+  data <- ddply(data, .variables=unitID, transform, end=max(temp.t)) 
+  data <- data[, !(colnames(data) %in% 'temp.t')]
+  data$end.spell <- ifelse(format(data[, tID], '%Y-%m')==format(as.Date(data$end), '%Y-%m'), 1, 0)
   data$end.spell <- ifelse(data$failure==1, 1, data$end.spell)
   data$spellID <- rev(cumsum(rev(data$end.spell)))
   
@@ -33,11 +35,11 @@ buildDuration <- function(data, y) {
   
   # Create duration variable, need to order by spell ID and date!!!!
   helper <- rep(1, dim(data)[1])
-  data <- data[order(data$spellID, data$date), ]
+  data <- data[order(data$spellID, data[, tID]), ]
   data$duration <- unlist(by(helper, data$spellID, cumsum))
   
   # Reorder data by ccode/date
-  data <- data[order(data$ccode, data$date), ]
+  data <- data[order(data[, unitID], data[, tID]), ]
   
   # Done
   return(data)

@@ -35,10 +35,6 @@ Maintainer: Andreas Beger <andreas.beger@duke.edu>
 Leisch, Friedrich. 2009. ``Creating R Packages: A Tutorial.''
 }
 \examples{
-#data(xx)
-
-# Model
-#model <- spdur(duration ~ ,
-#               atrisk ~ ,
-#               data = , last = , max.iter = 200)
+library(spduration)
+demo(insurgency)
 }

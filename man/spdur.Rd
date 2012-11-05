@@ -42,7 +42,7 @@ See \code{\link{summary.spdur}}, \code{\link{predict.spdur}} and \code{\link{sep
 \item{vcv }{Estimated covariance matrix.}
 \item{se }{Standard error estimates.}
 \item{distr }{Distribution used for the hazard rate.}
-\item{call }{The original spdur call.}
+\item{call }{The original \code{spdur} call.}
 ...
 }
 \references{
@@ -57,10 +57,15 @@ Andreas Beger
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
-#data(xx)
+# Prepare data
+data(insurgency)
+duration.ins <- buildDuration(insurgency, 'insurgency', unitID='ccode', tID='date')
 
-#model <-
-#  spdur()
+# Estimate model
+model <- spdur(
+  duration ~ low_intensity + high_neighbors + exclpop.l1,
+  atrisk ~ excl_groups_count.l1 + high_neighborhood + high_intensity + exclpop.l1 + lgdppc.l1,
+  last='end.spell', data=duration.ins, distr="weibull", max.iter=300)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

@@ -7,9 +7,11 @@ export(buildDuration, panelLag)
 # Methods
 S3method(summary, spdur)
 S3method(predict, spdur)
+S3method(plot, spdur)
 
 export(forecast.spdur)
 export(print.summary.spdur)
 
 # Depends
 importFrom(plyr, ddply)
+importFrom(separationplot, separationplot)

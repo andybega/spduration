@@ -17,8 +17,7 @@ spdur <- function(duration, atrisk, data=list(), last, distr='weibull',
   Z <- model.matrix(attr(mf.risk, 'terms'), data=mf.risk)
   lhg <- model.response(mf.risk)
   # Y vectors
-  censor <- last
-  Y <- cbind(atrisk=lhg, duration=lhb, last=censor)
+  Y <- cbind(atrisk=lhg, duration=lhb, last=data[, last])
   
   # Estimation
   if (distr=='weibull') {

@@ -21,8 +21,7 @@ predict.spdur <- function(object, data=NULL, stat=cure, ...)
   Z <- model.matrix(attr(mf.risk, 'terms'), data=mf.risk)
   lhg <- model.response(mf.risk) 
   # Y vectors
-  censor <- data[, as.character(object$call$last)[3]]
-  Y <- cbind(atrisk=lhg, duration=lhb, last=censor)
+  Y <- cbind(atrisk=lhg, duration=lhb, last=data[, object$call$last])
 
   if (object$distr=='weibull') {
     res <- pred_weibull(coef=coef(object), vcv=object$vcv, Y=Y, X=X, Z=Z, stat)
@@ -132,20 +131,24 @@ pred_loglog <- function(coef, vcv, Y, X, Z, stat) {
 # Input: parameters, data, and sims to run
 # Output: row-matrix of predicted probability quantiles
 #
-separationplot.spdur <- function(object, ...)
+plot.spdur <- function(object, failure='failure', endSpellOnly=F, ...)
 {
   require(separationplot)
   
   # Input validation
   
   # Get predicted/observed values
+  pred <- as.vector(as.matrix(predict(object)))
+  actual <- get(paste(object$call$data))[, failure]
   
-  # Format values for separationplot
-  predy.in <- spdur.csp[[3]][2, ]
-  predy.in <- cbind(predy.in[dur.csp$end.spell==1], dur.csp$failure[dur.csp$end.spell==1])
+  # Keep end of spell only
+  if (endSpellOnly==T) {
+    pred <- pred[ get(paste(object$call$data))[, object$call$last]==1 ]
+    actual <- actual[ get(paste(object$call$data))[, object$call$last]==1 ]
+  }
 
   # Separationplot call
-  plot <- separationplot(predy.in[,1],predy.in[,2],
+  plot <- separationplot(pred, actual,
                  shuffle=T, heading='', show.expected=T, newplot=F, 
                  type='line', lwd1=5, lwd2=2)
   return(plot)

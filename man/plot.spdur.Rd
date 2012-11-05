@@ -1,19 +1,25 @@
-\name{separationplot.spdur}
-\alias{separationplot.spdur}
+\name{plot.spdur}
+\alias{plot.spdur}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Separation Plot for Split-Pop Duration Model
+Plot method for \code{spdur} class object
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Creates a separation plot of risk/cure probabilities.
 }
 \usage{
-separationplot.spdur(object, ...)
+plot.spdur(object, failure = "failure", endSpellOnly = FALSE, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{object}{
 %%     ~~Describe \code{object} here~~
+}
+  \item{failure}{
+The variable indicating that a failure event has occurred at time \code{t}.
+}
+  \item{endSpellOnly}{
+Should only the last observation in each spell be kept? \code{TRUE} by default.
 }
   \item{\dots}{
 %%     ~~Describe \code{\dots} here~~

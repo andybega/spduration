@@ -33,7 +33,7 @@ source('R/functions/buildDuration.R')
 source('R/functions/panelLag.R')
 
 # Demo script and data
-load('delete/dur.coup.RData')
+load('data/insurgency.rda')
 
 # Create/navigate to package directory
 if (file.exists(package.path)) {
@@ -84,6 +84,11 @@ system('R CMD check spduration')
 ##
 install.packages('~/Dropbox/Research/spdur_package/package/spduration_0.3/spduration_0.3.tar.gz', 
                  repos=NULL, type='source')
+
+## Restart R
+
+library(spduration)
+demo(insurgency)
 
 ########
 ## 5. ##
