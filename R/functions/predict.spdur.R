@@ -6,23 +6,34 @@
 ###########
 
 ## Main predict method, calls on predict functions for each distribution
-predict.spdur <- function(object, data=NULL, stat=cure, ...)
+predict.spdur <- function(object, data=NULL, stat='cure', ...)
 {
   if(is.null(data)) {
-    data <- get(paste(object$call$data), pos=1)
-  }
+    data <- get(paste(object$call$data))
+  } 
+  
+  print(object$call)
+  print(sys.nframe())
+  print(eval(object$call$duration), sys.frame(sys.parent(2)))
+  ## problem is that object has unevaluated duration in it's call
+  
   
   # Duration equation
   mf.dur <- model.frame(formula=object$call$duration, data=data)
+  print('predict 1.1')
   X <- model.matrix(attr(mf.dur, 'terms'), data=mf.dur)
+  print('predict 1.2')
   lhb <- model.response(mf.dur) 
+  print('predict 1.3')
   # Risk/non-immunity equation
   mf.risk <- model.frame(formula=object$call$atrisk, data=data)
   Z <- model.matrix(attr(mf.risk, 'terms'), data=mf.risk)
   lhg <- model.response(mf.risk) 
   # Y vectors
+  print('predict 1.4')
   Y <- cbind(atrisk=lhg, duration=lhb, last=data[, object$call$last])
 
+  print('predict 2')
   if (object$distr=='weibull') {
     res <- pred_weibull(coef=coef(object), vcv=object$vcv, Y=Y, X=X, Z=Z, stat)
   }

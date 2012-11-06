@@ -5,9 +5,8 @@
 #
 ###########
 
-spdur <- function(duration, atrisk, data=list(), last, distr='weibull', 
-                  max.iter=100, ...)
-{
+spdur <- function(duration, atrisk, data=NULL, last, distr='weibull', max.iter=100, ...)
+{ 
   # Duration equation
   mf.dur <- model.frame(formula=duration, data=data)
   X <- model.matrix(attr(mf.dur, 'terms'), data=mf.dur)
@@ -74,24 +73,27 @@ print.summary.spdur <- function(x, ...)
 #
 ###########
 spdur.crisp <- function (duration = formula, atrisk = formula2, data = NULL, test = NULL, 
-                         last = NULL, distr = NULL, stat = cure, iter = 100, ...) 
+                         last = NULL, distr = NULL, stat = 'cure', iter = 100, ...) 
 {
   if (is.null(data)) 
     stop("No data provided")
   if (is.null(last)) 
     stop("Must specify censoring variable")
-  if (distr == NULL) 
+  if (is.null(distr)) 
     stop("Must specify distribution")
   
   # Estimate parameters
-  model <- spdur(duration, atrisk, data=data, last, distr=distr, max.iter=100)
+  model <- spdur(duration=duration, atrisk=atrisk, data=data, last=last, distr=distr, max.iter=iter)
   
   # In-sample and test predictions
-  train <- predict(model, stat=stat)
+  train <- predict(model, data=data, stat=stat)
+  print('here 0')
   test <- predict(model, data=test, stat=stat)
+  print('here 1')
   
   # Forecast
   pred <- forecast(model, npred = 6)
+  print('here 2')
   
   # Format and show estimates
   print(model)
