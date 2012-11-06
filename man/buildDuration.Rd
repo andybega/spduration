@@ -2,38 +2,51 @@
 \alias{buildDuration}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Build duration data
+Build duration version of panel data
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Builds a duration version of a data frame representing panel data.
 }
 \usage{
-buildDuration(data, y)
+buildDuration(data, y, unitID, tID)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{data}{
-%%     ~~Describe \code{data} here~~
+Data frame representing panel data.
 }
   \item{y}{
-%%     ~~Describe \code{y} here~~
+A binary indicator of the incidence of some event, e.g. insurgency.
+}
+  \item{unitID}{
+Name of the variable in the data frame identifying the cross-sectional units, e.g. countries.
+}
+  \item{tID}{
+Name of the variable in the data frame identifying the time unit, in date format.
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+This function processes a panel data frame by creating a failure variable from \code{y} and corresponding
+duration counter, as well as risk/immunity indicators. In case \code{y} already is a binary indicator
+of failure, the returned data frame should have the same number of rows at the original. If \code{y} is
+an indicator of the incidence of some event, then ongoing spells of failure beyond the initial event are dropped
+(e.g. 000111 becomes a spell of 0001), and the number of observation in the returned data frame may be lower.
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+Returns the original data frame less ongoing spells, with several duration specific variables:
+  \item{duration}{Counter of time to failure, in units determined by \code{tID}.}
+  \item{failure}{Indicator of failure event.}
+  \item{censor}{Indicates right-censoring of a spell.}
+  \item{end.spell}{Indicator that a spell has ended due to failure \emph{or} right-censoring.}
+  \item{end}{Date at which a given spell ends.}
+  \item{atrisk}{Binary indicator of whether a spell is at risk of failure. Equals 1 - \code{cure}.}
+  \item{cure}{Binary indicator of an immune spell not at risk of failure. Equals 1 - \code{atrisk}.}
 }
 \references{
 %% ~put references to the literature/web site here ~
 }
 \author{
-%%  ~~who you are~~
+Andreas Beger
 }
 \note{
 %%  ~~further notes~~
@@ -42,42 +55,13 @@ buildDuration(data, y)
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link{panelLag}}
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
-
-## The function is currently defined as
-function (data, y) 
-{
-    require(plyr)
-    data <- data[order(data$ccode, data$date), ]
-    failure <- function(x) return(c(0, pmax(0, diff(x))))
-    data$failure <- unlist(by(data[, y], data$ccode, failure))
-    data <- subset(data, !(get(y) == 1 & failure == 0))
-    data <- ddply(data, .(ccode), transform, end = max(date))
-    data$end.spell <- ifelse(format(data$date, "\%Y-\%m") == format(as.Date(data$end), 
-        "\%Y-\%m"), 1, 0)
-    data$end.spell <- ifelse(data$failure == 1, 1, data$end.spell)
-    data$spellID <- rev(cumsum(rev(data$end.spell)))
-    failedspells <- data$spellID[data$failure == 1]
-    helper <- cbind(failedspells, 0)
-    colnames(helper) <- c("spellID", "cured")
-    data <- merge(data, helper, by = ("spellID"), all.x = TRUE)
-    data$cured[is.na(data$cured)] <- 1
-    data$atrisk <- 1 - data$cured
-    data$censor <- ifelse(with(data, end.spell == 1 & failure == 
-        0), 1, 0)
-    helper <- rep(1, dim(data)[1])
-    data <- data[order(data$spellID, data$date), ]
-    data$duration <- unlist(by(helper, data$spellID, cumsum))
-    data <- data[order(data$ccode, data$date), ]
-    return(data)
-  }
+data(insurgency)
+duration.ins <- buildDuration(insurgency, 'insurgency', unitID='ccode', tID='date')
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{spdur}
+\keyword{spduration}% __ONLY ONE__ keyword per line

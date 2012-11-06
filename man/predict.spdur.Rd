@@ -2,10 +2,10 @@
 \alias{predict.spdur}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Predict fitted values for spdur object
+Predict fitted values for a split-population duration model
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+\code{predict} method for class ``\code{spdur}''.
 }
 \usage{
 predict.spdur(object, data = NULL, stat = cure, ...)
@@ -13,33 +13,29 @@ predict.spdur(object, data = NULL, stat = cure, ...)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{object}{
-%%     ~~Describe \code{object} here~~
+Object of class ``\code{spdur}''.
 }
   \item{data}{
-%%     ~~Describe \code{data} here~~
+Optional data for which to calculate fitted values, defaults to training data.
 }
   \item{stat}{
-%%     ~~Describe \code{stat} here~~
+Quantity of interest to calculate. Default is probability of being at risk.
 }
   \item{\dots}{
-%%     ~~Describe \code{\dots} here~~
+Optional arguments to pass to \code{predict} function.
 }
 }
 \details{
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+Returns a data frame with 1 column corresponding to \code{stat}.
 }
 \references{
 %% ~put references to the literature/web site here ~
 }
 \author{
-%%  ~~who you are~~
+Andreas Beger, Daina Chiba, Daniel W. Hill, Nils Metternich
 }
 \note{
 %%  ~~further notes~~
@@ -51,34 +47,8 @@ predict.spdur(object, data = NULL, stat = cure, ...)
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
-
-## The function is currently defined as
-function (object, data = NULL, stat = cure, ...) 
-{
-    if (is.null(data)) {
-        data <- get(paste(object$call$data), pos = 1)
-    }
-    mf.dur <- model.frame(formula = object$call$duration, data = data)
-    X <- model.matrix(attr(mf.dur, "terms"), data = mf.dur)
-    lhb <- model.response(mf.dur)
-    mf.risk <- model.frame(formula = object$call$atrisk, data = data)
-    Z <- model.matrix(attr(mf.risk, "terms"), data = mf.risk)
-    lhg <- model.response(mf.risk)
-    censor <- data[, as.character(object$call$last)[3]]
-    Y <- cbind(atrisk = lhg, duration = lhb, last = censor)
-    if (object$distr == "weibull") {
-        res <- pred_weibull(coef = coef(object), vcv = object$vcv, 
-            Y = Y, X = X, Z = Z, stat)
-    }
-    if (object$distr == "loglog") {
-        res <- pred_loglog(coef = coef(object), vcv = object$vcv, 
-            Y = Y, X = X, Z = Z, stat)
-    }
-    return(res)
-  }
+data(model.ins)
+atrisk <- predict(model.ins)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

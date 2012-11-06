@@ -8,9 +8,10 @@ export(buildDuration, panelLag)
 S3method(summary, spdur)
 S3method(predict, spdur)
 S3method(plot, spdur)
-
-export(forecast.spdur)
-export(print.summary.spdur)
+export(forecast) # forecast generic function
+S3method(forecast, default)
+S3method(forecast, spdur)
+S3method(print, summary.spdur)
 
 # Depends
 importFrom(plyr, ddply)

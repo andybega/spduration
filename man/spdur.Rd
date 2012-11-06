@@ -5,7 +5,7 @@
 Split-population duration (cure) regression
 }
 \description{
-This function estimates a split-population duration model and returns a ``spdur'' class object.
+This function estimates a split-population duration model and returns a object of class ``\code{spdur}''.
 }
 \usage{
 spdur(duration, atrisk, data = list(), last, distr = "weibull", max.iter = 100, ...)
@@ -38,6 +38,7 @@ Additional parameters passed to spdur.
 See \code{\link{summary.spdur}}, \code{\link{predict.spdur}} and \code{\link{separationplot.spdur}}
 }
 \value{
+Returns an object of class \code{spdur}, with attributes:
 \item{coefficients }{A named vector of coefficient point estimates.}
 \item{vcv }{Estimated covariance matrix.}
 \item{se }{Standard error estimates.}
@@ -69,5 +70,5 @@ model <- spdur(
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{ ~kwd1 }
+\keyword{spduration}
 \keyword{ ~kwd2 }% __ONLY ONE__ keyword per line

@@ -2,10 +2,10 @@
 \alias{plot.spdur}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Plot method for \code{spdur} class object
+Plot split-duration model fit.
 }
 \description{
-Creates a separation plot of risk/cure probabilities.
+\code{plot} method for class ``\code{spdur}''.
 }
 \usage{
 plot.spdur(object, failure = "failure", endSpellOnly = FALSE, ...)
@@ -26,7 +26,8 @@ Should only the last observation in each spell be kept? \code{TRUE} by default.
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+Creates a \code{\link{separationplot}} of fitted values from split-duration model results using
+\code{\link{predict.spdur}}.
 }
 \value{
 %%  ~Describe the value returned
@@ -39,7 +40,7 @@ Should only the last observation in each spell be kept? \code{TRUE} by default.
 %% ~put references to the literature/web site here ~
 }
 \author{
-%%  ~~who you are~~
+Andreas Beger
 }
 \note{
 %%  ~~further notes~~
@@ -48,27 +49,13 @@ Should only the last observation in each spell be kept? \code{TRUE} by default.
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link{separationplot}}, \code{\link{predict.spdur}}
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
-
-## The function is currently defined as
-function (object, ...) 
-{
-    require(separationplot)
-    predy.in <- spdur.csp[[3]][2, ]
-    predy.in <- cbind(predy.in[dur.csp$end.spell == 1], dur.csp$failure[dur.csp$end.spell == 
-        1])
-    plot <- separationplot(predy.in[, 1], predy.in[, 2], shuffle = T, 
-        heading = "", show.expected = T, newplot = F, type = "line", 
-        lwd1 = 5, lwd2 = 2)
-    return(plot)
-  }
+data(model.ins)
+p <- plot(model.ins)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{ ~kwd1 }
+\keyword{spdur}
 \keyword{ ~kwd2 }% __ONLY ONE__ keyword per line

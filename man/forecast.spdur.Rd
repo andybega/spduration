@@ -2,13 +2,10 @@
 \alias{forecast.spdur}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Forecast method for split duration models
+Forecast with split-duration model estimates
 }
 \description{
-This function calculates out-of-sample forecasts of various split-duration model related 
-quantities of interest when information on the model covariates is not available. If covariates
-are observed for the period for which you want to create predictions, use \code{\link{predict.spdur}}
-instead.
+\code{forecast} method for class ``\code{spdur}''.
 }
 \usage{
 forecast.spdur(object, npred = 1, ...)
@@ -26,7 +23,10 @@ Optional parameters passed to forecast method.
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+This function calculates out-of-sample forecasts of various split-duration model related 
+quantities of interest when information on the model covariates is not available. If covariates
+are observed for the period for which you want to create predictions, use \code{\link{predict.spdur}}
+instead.
 }
 \value{
 %%  ~Describe the value returned
@@ -39,7 +39,7 @@ Optional parameters passed to forecast method.
 %% ~put references to the literature/web site here ~
 }
 \author{
-Andreas Beger
+Andreas Beger, Daina Chiba
 }
 \note{
 %%  ~~further notes~~

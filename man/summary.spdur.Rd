@@ -2,10 +2,10 @@
 \alias{summary.spdur}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Summarizing Split-Pop Duration Model Fit
+Summarize split-population duration results
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+\code{summary} method for class ``\code{spdur}''.
 }
 \usage{
 summary.spdur(object, ...)
@@ -13,10 +13,10 @@ summary.spdur(object, ...)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{object}{
-%%     ~~Describe \code{object} here~~
+An object with class \code{spdur}
 }
   \item{\dots}{
-%%     ~~Describe \code{\dots} here~~
+Additional options passed to \code{summary} function.
 }
 }
 \details{
@@ -33,7 +33,7 @@ summary.spdur(object, ...)
 %% ~put references to the literature/web site here ~
 }
 \author{
-%%  ~~who you are~~
+Andreas Beger
 }
 \note{
 %%  ~~further notes~~
@@ -45,21 +45,12 @@ summary.spdur(object, ...)
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
-
-## The function is currently defined as
-function (object, ...) 
-{
-    table <- cbind(Estimate = coef(object), StdErr = object$se, 
-        Z = object$zstat, p = object$pval)
-    res <- list(call = object$call, coefficients = table)
-    class(res) <- "summary.spdur"
-    return(res)
-  }
+data(model.ins)
+s <- summary(model.ins)
+class(s)
+print(s)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
+\keyword{spdur}
+\keyword{summary}% __ONLY ONE__ keyword per line

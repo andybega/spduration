@@ -5,7 +5,9 @@
 Split-Pop Duration Model Wrapper for CRISP/ICEWS
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+This is a wrapper for the CRISP and ICEWS packages that replicated the original functionality
+of the \code{spdur} command by estimating a model, calculating training and validation set fitted values,
+and 6-month forecasts.
 }
 \usage{
 spdur.crisp(duration = formula, atrisk = formula2, data = NULL, test = NULL, last = NULL, distr = NULL, stat = cure, iter = 100, ...)
@@ -53,7 +55,7 @@ Returns an object of class \code{crisp}, which inherits from \code{spdur}.
 %% ~put references to the literature/web site here ~
 }
 \author{
-%%  ~~who you are~~
+Andreas Beger
 }
 \note{
 %%  ~~further notes~~
@@ -62,37 +64,18 @@ Returns an object of class \code{crisp}, which inherits from \code{spdur}.
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link{spdur}}
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+# Prepare data
+data(insurgency)
+duration.ins <- buildDuration(insurgency, 'insurgency', unitID='ccode', tID='date')
 
-## The function is currently defined as
-function (duration = formula, atrisk = formula2, data = NULL, 
-    test = NULL, last = NULL, distr = NULL, stat = cure, iter = 100, 
-    ...) 
-{
-    if (is.null(data)) 
-        stop("No data provided")
-    if (is.null(last)) 
-        stop("Must specify censoring variable")
-    if (distr == NULL) 
-        stop("Must specify distribution")
-    model <- spdur(duration, atrisk, data = data, last, distr = distr, 
-        max.iter = 100)
-    train <- predict(model, stat = stat)
-    test <- predict(model, data = test, stat = stat)
-    pred <- forecast(model, npred = 6)
-    print(model)
-    res <- model
-    res$train <- train
-    res$test <- test
-    res$pred <- pred
-    class(res) <- c("crisp", "spdur")
-    return(res)
-  }
+# Estimate model
+model3 <- spdur.crisp(
+  duration ~ low_intensity + high_neighbors + exclpop.l1,
+  atrisk ~ excl_groups_count.l1 + high_neighborhood + high_intensity + exclpop.l1 + lgdppc.l1,
+  last='end.spell', test=duration.ins[1,], data=duration.ins, distr="weibull", iter=300)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

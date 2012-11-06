@@ -8,7 +8,7 @@
 rm(list = ls())
 
 # Package folder name
-package.name <- 'spduration_0.3'
+package.name <- 'spduration_0.4'
 
 # Directory in which to create package
 if(Sys.info()["user"]=="adbeger") package.path <- paste('~/Dropbox/Research/spdur_package/package', package.name, sep='/')
@@ -34,6 +34,15 @@ source('R/functions/panelLag.R')
 
 # Demo script and data
 load('data/insurgency.rda')
+
+# Demo model to save estimation for examples
+duration.ins <- buildDuration(insurgency, 'insurgency', unitID='ccode', tID='date')
+## Split duration model of insurgency
+model.ins <- spduration::spdur(
+  duration ~ low_intensity + high_neighbors + exclpop.l1,
+  atrisk ~ excl_groups_count.l1 + high_neighborhood + high_intensity + exclpop.l1 + lgdppc.l1,
+  last='end.spell', data=duration.ins, distr="weibull", max.iter=300)
+rm(duration.ins)
 
 # Create/navigate to package directory
 if (file.exists(package.path)) {
@@ -67,14 +76,14 @@ package.skeleton('spduration')
 ## 3. ##
 ########
 ## This will build the package using Terminal:
-system('cd ~/Dropbox/Research/spdur_package/package/spduration_0.3')
+system('cd ~/Dropbox/Research/spdur_package/package/spduration_0.4')
 system('R CMD build spduration')
 
 ########
 ## 4. ##
 ########
 ## On the terminal, check if the package is alright.
-system('cd ~/Dropbox/Research/spdur_package/package/spduration_0.3')
+system('cd ~/Dropbox/Research/spdur_package/package/spduration_0.4')
 system('R CMD check spduration')
 
 ########
@@ -82,7 +91,7 @@ system('R CMD check spduration')
 ########
 ## Install and test package
 ##
-install.packages('~/Dropbox/Research/spdur_package/package/spduration_0.3/spduration_0.3.tar.gz', 
+install.packages('~/Dropbox/Research/spdur_package/package/spduration_0.4/spduration_0.4.tar.gz', 
                  repos=NULL, type='source')
 
 ## Restart R
