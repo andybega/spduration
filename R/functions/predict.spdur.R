@@ -8,36 +8,30 @@
 ## Main predict method, calls on predict functions for each distribution
 predict.spdur <- function(object, data=NULL, stat='cure', ...)
 {
+  # Evaluate call values
   if(is.null(data)) {
-    data <- get(paste(object$call$data))
+    data <- eval.parent(object$call$data, 1)
   } 
-  
-  print(object$call)
-  print(sys.nframe())
-  print(eval(object$call$duration), sys.frame(sys.parent(2)))
-  ## problem is that object has unevaluated duration in it's call
-  
+  duration <- eval.parent(object$call$duration, 1)
+  atrisk <- eval.parent(object$call$atrisk, 1)
+  last <- data[, eval.parent(object$call$last, 1)]
+  distr <- eval.parent(object$distr, 1)
   
   # Duration equation
-  mf.dur <- model.frame(formula=object$call$duration, data=data)
-  print('predict 1.1')
+  mf.dur <- model.frame(formula=duration, data=data)
   X <- model.matrix(attr(mf.dur, 'terms'), data=mf.dur)
-  print('predict 1.2')
   lhb <- model.response(mf.dur) 
-  print('predict 1.3')
   # Risk/non-immunity equation
-  mf.risk <- model.frame(formula=object$call$atrisk, data=data)
+  mf.risk <- model.frame(formula=atrisk, data=data)
   Z <- model.matrix(attr(mf.risk, 'terms'), data=mf.risk)
   lhg <- model.response(mf.risk) 
   # Y vectors
-  print('predict 1.4')
-  Y <- cbind(atrisk=lhg, duration=lhb, last=data[, object$call$last])
+  Y <- cbind(atrisk=lhg, duration=lhb, last=last)
 
-  print('predict 2')
-  if (object$distr=='weibull') {
+  if (distr=='weibull') {
     res <- pred_weibull(coef=coef(object), vcv=object$vcv, Y=Y, X=X, Z=Z, stat)
   }
-  if (object$distr=='loglog') {
+  if (distr=='loglog') {
     res <- pred_loglog(coef=coef(object), vcv=object$vcv, Y=Y, X=X, Z=Z, stat)
   }
   
@@ -169,6 +163,10 @@ plot.spdur <- function(object, failure='failure', endSpellOnly=F, ...)
 # Input: object of class 'spdur', time units to predict out
 # Ouput: row-matrix of forecast probabilities
 #
+forecast <- function(x, ...) { UseMethod('forecast') }
+
+forecast.default <- function(x, ...) { forecast.spdur(x, ...) }
+
 forecast.spdur <- function(object, npred = 1, ...)
 {
   NULL

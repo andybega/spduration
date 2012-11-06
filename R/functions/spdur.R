@@ -36,7 +36,7 @@ spdur <- function(duration, atrisk, data=NULL, last, distr='weibull', max.iter=1
   est$pval <- 2*(1-pnorm(abs(est$zstat)))
   
   est$call <- match.call()
-  est$distr <- distr
+  est$distr <- eval.parent(distr, 1)
   class(est) <- 'spdur'
   return(est)
 }
@@ -86,22 +86,22 @@ spdur.crisp <- function (duration = formula, atrisk = formula2, data = NULL, tes
   model <- spdur(duration=duration, atrisk=atrisk, data=data, last=last, distr=distr, max.iter=iter)
   
   # In-sample and test predictions
-  train <- predict(model, data=data, stat=stat)
-  print('here 0')
-  test <- predict(model, data=test, stat=stat)
-  print('here 1')
+  cat('Training set predictions...\n')
+  train.p <- predict(model, stat=stat)
+  cat('Validation set predictions...\n')
+  test.p <- predict(model, data=test, stat=stat)
   
   # Forecast
-  pred <- forecast(model, npred = 6)
-  print('here 2')
+  cat('Forecast...\n')
+  pred.p <- forecast(model, npred = 6)
   
   # Format and show estimates
-  print(model)
+  print(summary(model))
   
   res <- model
-  res$train <- train
-  res$test <- test
-  res$pred <- pred
+  res$train.p <- train.p
+  res$test.p <- test.p
+  res$pred.p <- pred.p
   class(res) <- c('crisp', 'spdur')
   
   return(res)

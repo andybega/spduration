@@ -29,11 +29,7 @@ summary(model)
 model3 <- spdur.crisp(
   duration ~ low_intensity + high_neighbors + exclpop.l1,
   atrisk ~ excl_groups_count.l1 + high_neighborhood + high_intensity + exclpop.l1 + lgdppc.l1,
-  last='end.spell', test=duration.ins[1,], data=duration.ins[1:5000,], distr="weibull", iter=300)
-
-test <- function(x) {
-  atrisk <- predict(x)
-}
+  last='end.spell', test=duration.ins[1,], data=duration.ins, distr="weibull", iter=300)
 
 # Test predict method
 atrisk <- predict(model)
