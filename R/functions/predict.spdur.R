@@ -156,7 +156,6 @@ plot.spdur <- function(object, failure='failure', endSpellOnly=F, ...)
   plot <- separationplot(pred, actual,
                  shuffle=T, heading='', show.expected=T, newplot=F, 
                  type='line', lwd1=5, lwd2=2)
-  return(plot)
 }
 
 ## Forecast method
