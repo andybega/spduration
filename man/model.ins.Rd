@@ -8,7 +8,7 @@ Estimated \code{spdur} model for insurgency
 This is an estimated split duration model of insurgency, used in some examples instead of re-estimating
 the model each time.
 }
-\usage{data(model)}
+\usage{data(model.ins)}
 \format{
 Use the example code below for the object structure.
 }
@@ -22,7 +22,7 @@ Use the example code below for the object structure.
 %%  ~~ possibly secondary sources and usages ~~
 }
 \examples{
-data(model)
-str(model)
+data(model.ins)
+str(model.ins)
 }
 \keyword{datasets}

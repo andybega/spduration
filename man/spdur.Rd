@@ -8,7 +8,7 @@ Split-population duration (cure) regression
 This function estimates a split-population duration model and returns a object of class ``\code{spdur}''.
 }
 \usage{
-spdur(duration, atrisk, data = list(), last, distr = "weibull", max.iter = 100, ...)
+spdur(duration, atrisk, data = NULL, last, distr = "weibull", max.iter = 100, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -22,7 +22,7 @@ A formula of the form C ~ Z1 + Z2 \dots, where C is a binary indicator of risk (
 A data frame containing the variables in formula and formula2.
 }
   \item{last}{
-A vector of binary indicators that equal 1 if failure occurs or the spell is right-censored.
+A string identifying the vector in \code{data} that indicates when a spell ends due to failure or right-censoring.
 }
   \item{distr}{
 The type of distribution to use in the hazard rate. Valid options are ``weibull'' or ``loglog''.
@@ -35,16 +35,17 @@ Additional parameters passed to spdur.
 }
 }
 \details{
-See \code{\link{summary.spdur}}, \code{\link{predict.spdur}} and \code{\link{separationplot.spdur}}
+See \code{\link{summary.spdur}}, \code{\link{predict.spdur}} and \code{\link{plot.spdur}}
 }
 \value{
 Returns an object of class \code{spdur}, with attributes:
 \item{coefficients }{A named vector of coefficient point estimates.}
 \item{vcv }{Estimated covariance matrix.}
 \item{se }{Standard error estimates.}
+\item{zstat }{Z-statistic values.}
+\item{pval }{P-values.}
+\item{call }{The original, unevaluated \code{spdur} call.}
 \item{distr }{Distribution used for the hazard rate.}
-\item{call }{The original \code{spdur} call.}
-...
 }
 \references{
 %% ~put references to the literature/web site here ~

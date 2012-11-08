@@ -8,7 +8,7 @@ Display split-population duration model result summary
 \code{plot} method for class ``\code{summary, spdur}''.
 }
 \usage{
-print.summary.spdur(x, ...)
+\method{print}{summary.spdur}(x, \dots)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

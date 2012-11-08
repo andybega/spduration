@@ -8,7 +8,7 @@
 rm(list = ls())
 
 # Package folder name
-package.name <- 'spduration_0.4'
+package.name <- 'spduration_0.5'
 
 # Directory in which to create package
 if(Sys.info()["user"]=="adbeger") package.path <- paste('~/Dropbox/Research/spdur_package/package', package.name, sep='/')
@@ -76,14 +76,14 @@ package.skeleton('spduration')
 ## 3. ##
 ########
 ## This will build the package using Terminal:
-system('cd ~/Dropbox/Research/spdur_package/package/spduration_0.4')
+system('cd ~/Dropbox/Research/spdur_package/package/spduration_0.5')
 system('R CMD build spduration')
 
 ########
 ## 4. ##
 ########
 ## On the terminal, check if the package is alright.
-system('cd ~/Dropbox/Research/spdur_package/package/spduration_0.4')
+system('cd ~/Dropbox/Research/spdur_package/package/spduration_0.5')
 system('R CMD check spduration')
 
 ########
@@ -91,7 +91,7 @@ system('R CMD check spduration')
 ########
 ## Install and test package
 ##
-install.packages('~/Dropbox/Research/spdur_package/package/spduration_0.4/spduration_0.4.tar.gz', 
+install.packages('~/Dropbox/Research/spdur_package/package/spduration_0.5/spduration_0.5.tar.gz', 
                  repos=NULL, type='source')
 
 ## Restart R

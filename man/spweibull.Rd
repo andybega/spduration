@@ -5,7 +5,7 @@
 Fit Split-Pop Weibull Model
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+For internal use only.
 }
 \usage{
 spweibull(Y, X, Z, max.iter)

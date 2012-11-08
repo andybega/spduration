@@ -8,7 +8,7 @@ Plot split-duration model fit.
 \code{plot} method for class ``\code{spdur}''.
 }
 \usage{
-plot.spdur(object, failure = "failure", endSpellOnly = FALSE, ...)
+\method{plot}{spdur}(object, failure = "failure", endSpellOnly = FALSE, \dots)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -52,7 +52,14 @@ Andreas Beger
 \code{\link{separationplot}}, \code{\link{predict.spdur}}
 }
 \examples{
+# build data
+data(insurgency)
+duration.ins <- buildDuration(insurgency, 'insurgency', unitID='ccode', tID='date')
+
+# get model estimates
 data(model.ins)
+
+# plot
 p <- plot(model.ins)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

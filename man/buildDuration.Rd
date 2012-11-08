@@ -55,7 +55,7 @@ Andreas Beger
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-\code{\link{panelLag}}
+\code{\link{panelLag}} for lagging variables in a panel data frame before building duration data.
 }
 \examples{
 data(insurgency)

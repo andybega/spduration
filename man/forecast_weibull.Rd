@@ -1,14 +1,14 @@
-\name{pred_weibull}
-\alias{pred_weibull}
+\name{forecast_weibull}
+\alias{forecast_weibull}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Predict fitted values for Weibull model
+Forecast with weibull spdur model.
 }
 \description{
 For internal use only.
 }
 \usage{
-pred_weibull(coef, vcv, Y, X, Z, stat)
+forecast_weibull(coef, vcv, Y, X, Z, stat, npred)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -30,6 +30,9 @@ pred_weibull(coef, vcv, Y, X, Z, stat)
   \item{stat}{
 %%     ~~Describe \code{stat} here~~
 }
+  \item{npred}{
+%%     ~~Describe \code{npred} here~~
+}
 }
 \details{
 %%  ~~ If necessary, more details than the description above ~~
@@ -45,7 +48,7 @@ pred_weibull(coef, vcv, Y, X, Z, stat)
 %% ~put references to the literature/web site here ~
 }
 \author{
-%%  ~~who you are~~
+Andreas Beger
 }
 \note{
 %%  ~~further notes~~
@@ -62,27 +65,45 @@ pred_weibull(coef, vcv, Y, X, Z, stat)
 ##--	or do  help(data=index)  for the standard data sets.
 
 ## The function is currently defined as
-function (coef, vcv, Y, X, Z, stat) 
+function (coef, vcv, Y, X, Z, stat, npred) 
 {
-    require(MASS)
     coeff.b <- coef[1:ncol(X)]
     coeff.g <- coef[(ncol(X) + 1):(ncol(X) + ncol(Z))]
     coeff.a <- coef[(ncol(X) + ncol(Z) + 1)]
     al.hat <- exp(-coeff.a)
-    la.hat <- exp(-X \%*\% coeff.b)
-    n.cure <- plogis(Z \%*\% coeff.g)
-    cure <- 1 - n.cure
-    st <- exp(-(la.hat * Y[, 2])^al.hat)
-    s0 <- exp(-(la.hat * (Y[, 2] - 1))^al.hat)
-    cure.t <- cure/(st + cure * (1 - st))
+    la.hat.pred <- exp(-X \%*\% coeff.b)
+    n.cure.pred <- plogis(Z \%*\% coeff.g)
+    cure.pred <- 1 - n.cure.pred
+    rows <- length(la.hat.pred)
+    s0 <- exp(-(la.hat.pred * (Y[, 2] - 1))^al.hat)
+    st <- matrix(nrow = rows, ncol = npred)
+    cure.t <- matrix(nrow = rows, ncol = npred)
+    for (i in 1:npred) {
+        st[, i] <- exp(-(la.hat.pred * (Y[, 2] + (i - 1)))^al.hat)
+        cure.t[, i] <- cure.pred/(st[, i] + cure.pred * (1 - 
+            st[, i]))
+    }
     n.cure.t <- 1 - cure.t
-    ft <- la.hat * al.hat * (la.hat * Y[, 2])^(al.hat - 1) * 
-        exp(-(la.hat * Y[, 2])^al.hat)
-    pr.c.f <- n.cure.t * ft/s0
-    pr.c.h <- n.cure.t * ft/st
-    pr.u.f <- n.cure * ft/s0
-    pr.u.h <- n.cure * ft/st
-    res <- data.frame(n.cure.t)
+    if (stat == "cure") 
+        res <- cure.t
+    if (stat == "atrisk") 
+        res <- n.cure.t
+    if (!stat \%in\% c("cure", "atrisk")) {
+        ft <- matrix(nrow = rows, ncol = npred)
+        u.f <- matrix(nrow = rows, ncol = npred)
+        for (i in 1:npred) {
+            ft[, i] <- la.hat.pred * al.hat * (la.hat.pred * 
+                (Y[, 2] + (i - 1)))^(al.hat - 1) * exp(-(la.hat.pred * 
+                (Y[, 2] + (i - 1)))^al.hat)
+            if (i == 1) 
+                u.f[, i] <- n.cure.t[, i] * ft[, i]/s0
+            if (i > 1) 
+                u.f[, i] <- n.cure.t[, i] * ft[, i]/st[, (i - 
+                  1)]
+        }
+        if (stat == "u.f") 
+            res <- u.f
+    }
     return(res)
   }
 }

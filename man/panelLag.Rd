@@ -6,7 +6,7 @@ Lag panel data
 }
 \description{
 A function that correctly lags panel data where units are identified by \code{id} and
-time periods are identified with \code{t}.
+time periods are identified with \code{t}. Results are in same order as \code{data}.
 }
 \usage{
 panelLag(x, id, t, lag = 1, data = NULL)
@@ -14,16 +14,16 @@ panelLag(x, id, t, lag = 1, data = NULL)
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{
-%%     ~~Describe \code{x} here~~
+Quoted string identifying the vectors to be lagged in \code{data}.
 }
   \item{id}{
-%%     ~~Describe \code{id} here~~
+Quoted string identifying the unit identifier in \code{data}.
 }
   \item{t}{
-%%     ~~Describe \code{t} here~~
+Quoted string identifying the time identifier in \code{data}.
 }
   \item{lag}{
-%%     ~~Describe \code{lag} here~~
+Lag order, i.e. by how many time periods should \code{x} be lagged?
 }
   \item{data}{
 %%     ~~Describe \code{data} here~~
@@ -33,17 +33,13 @@ panelLag(x, id, t, lag = 1, data = NULL)
 %%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
+A vector of same length as \code{x} representing lagged values with leading \code{NA}'s.
 }
 \references{
 %% ~put references to the literature/web site here ~
 }
 \author{
-%%  ~~who you are~~
+Andreas Beger
 }
 \note{
 %%  ~~further notes~~
@@ -55,23 +51,15 @@ panelLag(x, id, t, lag = 1, data = NULL)
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
+data(insurgency)
 
-## The function is currently defined as
-function (x, id, t, lag = 1, data = NULL) 
-{
-    if (is.null(data) == T) 
-        data <- data.frame(x = x, id = id, t = t)
-    k <- lag
-    lags <- function(x, k) {
-        c(rep(NA, k), x[1:(length(x) - k)])
-    }
-    data <- data[order(data[, id], data[, t]), ]
-    result <- unlist(by(data[, x], data[, id], lags, k = k))
-    return(result)
-  }
+# No need to order before using panelLag, just do it here so we can compare results below.
+insurgency <- insurgency[order(insurgency$ccode, insurgency$date), ]
+test <- panelLag('lgdppc.l1', 'ccode', 'date', data=insurgency)
+
+# Compare output
+head(test)
+head(insurgency$lgdppc.l1)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

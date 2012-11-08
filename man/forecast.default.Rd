@@ -2,13 +2,13 @@
 \alias{forecast.default}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Default forecast method.
+Generic forecasting.
 }
 \description{
-Default forecast method, only defined for object class \code{spdur}.
+Default forecast method, not defined.
 }
 \usage{
-forecast.default(x, ...)
+\method{forecast}{default}(x, \dots)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -20,7 +20,7 @@ forecast.default(x, ...)
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+Empty default forecast method, for convenience only.
 }
 \value{
 %%  ~Describe the value returned
@@ -33,7 +33,7 @@ forecast.default(x, ...)
 %% ~put references to the literature/web site here ~
 }
 \author{
-%%  ~~who you are~~
+Andreas Beger
 }
 \note{
 %%  ~~further notes~~
@@ -52,8 +52,8 @@ forecast.default(x, ...)
 ## The function is currently defined as
 function (x, ...) 
 {
-    forecast.spdur(x, ...)
-  }
+  NULL
+}
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

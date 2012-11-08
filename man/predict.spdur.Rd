@@ -8,7 +8,7 @@ Predict fitted values for a split-population duration model
 \code{predict} method for class ``\code{spdur}''.
 }
 \usage{
-predict.spdur(object, data = NULL, stat = cure, ...)
+\method{predict}{spdur}(object, data = NULL, stat = "atrisk", \dots)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -47,6 +47,11 @@ Andreas Beger, Daina Chiba, Daniel W. Hill, Nils Metternich
 %% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
+# build data
+data(insurgency)
+duration.ins <- buildDuration(insurgency, 'insurgency', unitID='ccode', tID='date')
+
+# get model estimates
 data(model.ins)
 atrisk <- predict(model.ins)
 }

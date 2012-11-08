@@ -59,7 +59,7 @@ print.summary.spdur <- function(x, ...)
   print(x$call)
   cat('\n')
   
-  printCoefmat(x$coefficients, P.value=T, has.Pvalue=T, digits=4)
+  printCoefmat(x$coefficients, P.values=T, has.Pvalue=T, digits=4)
 }
 
 ##########
@@ -72,18 +72,15 @@ print.summary.spdur <- function(x, ...)
 # - clean up code
 #
 ###########
-spdur.crisp <- function (duration = formula, atrisk = formula2, data = NULL, test = NULL, 
-                         last = NULL, distr = NULL, stat = 'cure', iter = 100, ...) 
+spdur.crisp <- function (duration, atrisk, train = NULL, test = NULL, pred = NULL, 
+                         last = NULL, distr = NULL, stat = 'atrisk', iter = 100, npred=6, ...) 
 {
-  if (is.null(data)) 
-    stop("No data provided")
-  if (is.null(last)) 
-    stop("Must specify censoring variable")
-  if (is.null(distr)) 
-    stop("Must specify distribution")
+  if (is.null(data)) stop("No data provided")
+  if (is.null(last)) stop("Must specify censoring variable")
+  if (is.null(distr)) stop("Must specify distribution")
   
   # Estimate parameters
-  model <- spdur(duration=duration, atrisk=atrisk, data=data, last=last, distr=distr, max.iter=iter)
+  model <- spdur(duration=duration, atrisk=atrisk, data=train, last=last, distr=distr, max.iter=iter)
   
   # In-sample and test predictions
   cat('Training set predictions...\n')
@@ -93,7 +90,7 @@ spdur.crisp <- function (duration = formula, atrisk = formula2, data = NULL, tes
   
   # Forecast
   cat('Forecast...\n')
-  pred.p <- forecast(model, npred = 6)
+  pred.p <- forecast(model, pred, stat=stat, npred=npred)
   
   # Format and show estimates
   print(summary(model))
@@ -105,4 +102,34 @@ spdur.crisp <- function (duration = formula, atrisk = formula2, data = NULL, tes
   class(res) <- c('crisp', 'spdur')
   
   return(res)
+}
+
+## Separationplot method (not really a method) for spdur
+# Input: parameters, data, and sims to run
+# Output: row-matrix of predicted probability quantiles
+#
+plot.spdur <- function(object, failure='failure', endSpellOnly=FALSE, ...)
+{
+  require(separationplot)
+  
+  # Input validation
+  
+  # Get predicted/observed values
+  pred <- as.vector(as.matrix(predict(object)))
+  actual <- get(paste(object$call$data))[, failure]
+  
+  # Keep end of spell only
+  if (endSpellOnly==T) {
+    pred <- pred[ get(paste(object$call$data))[, object$call$last]==1 ]
+    actual <- actual[ get(paste(object$call$data))[, object$call$last]==1 ]
+  }
+  
+  # Separationplot call
+  plot <- separationplot(pred, actual,
+                         shuffle=T, heading='', show.expected=T, newplot=F, 
+                         type='line', lwd1=5, lwd2=2)
+}
+
+test <- function(...) {
+  print(names(list(...)))
 }

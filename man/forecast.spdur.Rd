@@ -8,15 +8,21 @@ Forecast with split-duration model estimates
 \code{forecast} method for class ``\code{spdur}''.
 }
 \usage{
-forecast.spdur(object, npred = 1, ...)
+\method{forecast}{spdur}(object, pred.data = NULL, stat = 'atrisk', npred = 6, \dots)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{object}{
 And object of class \code{spdur}.
 }
+  \item{pred.data}{
+A data frame from which forecasts are made. Should be slice of last time period observed.
+}
+  \item{stat}{
+Type of forecast quantity, e.g. probability of being ``at risk''.
+}
   \item{npred}{
-How many time periods to predict forward. Default is 1.
+How many time periods to predict forward. Default is 6.
 }
   \item{\dots}{
 Optional parameters passed to forecast method.

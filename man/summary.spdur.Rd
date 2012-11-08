@@ -8,7 +8,7 @@ Summarize split-population duration results
 \code{summary} method for class ``\code{spdur}''.
 }
 \usage{
-summary.spdur(object, ...)
+\method{summary}{spdur}(object, \dots)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

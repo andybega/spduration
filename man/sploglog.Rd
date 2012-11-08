@@ -5,14 +5,14 @@
 Fit Split-Pop LogLog Model
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+For internal use only.
 }
 \usage{
-sploglog(y, X, Z, y.test, X.test, Z.test, iter, sims)
+sploglog(Y, X, Z, max.iter)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{y}{
+  \item{Y}{
 %%     ~~Describe \code{y} here~~
 }
   \item{X}{
@@ -21,20 +21,8 @@ sploglog(y, X, Z, y.test, X.test, Z.test, iter, sims)
   \item{Z}{
 %%     ~~Describe \code{Z} here~~
 }
-  \item{y.test}{
+  \item{max.iter}{
 %%     ~~Describe \code{y.test} here~~
-}
-  \item{X.test}{
-%%     ~~Describe \code{X.test} here~~
-}
-  \item{Z.test}{
-%%     ~~Describe \code{Z.test} here~~
-}
-  \item{iter}{
-%%     ~~Describe \code{iter} here~~
-}
-  \item{sims}{
-%%     ~~Describe \code{sims} here~~
 }
 }
 \details{

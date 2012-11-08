@@ -2,10 +2,10 @@
 \alias{forecast}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Generic forecast function
+Forecast out of sample.
 }
 \description{
-Generic forecast function that dispatches to specific class methods.
+Generic forecast function.
 }
 \usage{
 forecast(x, ...)
@@ -20,7 +20,7 @@ forecast(x, ...)
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+The only method defined is for class ``\code{spdur}''.
 }
 \value{
 %%  ~Describe the value returned
@@ -33,7 +33,7 @@ forecast(x, ...)
 %% ~put references to the literature/web site here ~
 }
 \author{
-%%  ~~who you are~~
+Andreas Beger
 }
 \note{
 %%  ~~further notes~~

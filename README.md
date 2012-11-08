@@ -16,7 +16,6 @@ To do
 ---
 
  * test spdur.crisp, loglog methods
- * packagebuilder, system commands
  * manuals
- * options for predict q.i.'s
- * forecast function
+ * test forecast and predict options
+ * build duration option for forecast data

@@ -5,14 +5,20 @@
 Predict fitted values for loglog model
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+For internal use only.
 }
 \usage{
-pred_loglog(y, X, Z, sims)
+pred_loglog(coef, vcv, Y, X, Z, stat)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{y}{
+  \item{coef}{
+%%     ~~Describe \code{y} here~~
+}
+  \item{vcv}{
+%%     ~~Describe \code{y} here~~
+}
+  \item{Y}{
 %%     ~~Describe \code{y} here~~
 }
   \item{X}{
@@ -21,7 +27,7 @@ pred_loglog(y, X, Z, sims)
   \item{Z}{
 %%     ~~Describe \code{Z} here~~
 }
-  \item{sims}{
+  \item{stat}{
 %%     ~~Describe \code{sims} here~~
 }
 }

@@ -10,7 +10,7 @@ of the \code{spdur} command by estimating a model, calculating training and vali
 and 6-month forecasts.
 }
 \usage{
-spdur.crisp(duration = formula, atrisk = formula2, data = NULL, test = NULL, last = NULL, distr = NULL, stat = cure, iter = 100, ...)
+spdur.crisp(duration, atrisk, train = NULL, test = NULL, pred = NULL, last = NULL, distr = NULL, stat = 'atrisk', iter = 100, npred = 6, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -20,11 +20,14 @@ spdur.crisp(duration = formula, atrisk = formula2, data = NULL, test = NULL, las
   \item{atrisk}{
 %%     ~~Describe \code{atrisk} here~~
 }
-  \item{data}{
-%%     ~~Describe \code{data} here~~
+  \item{train}{
+Training data.
 }
   \item{test}{
-%%     ~~Describe \code{test} here~~
+Validation data (out-of-sample).
+}
+  \item{pred}{
+A data frame from which forecasts are made. Should be slice of last time period observed.
 }
   \item{last}{
 %%     ~~Describe \code{last} here~~
@@ -36,10 +39,13 @@ spdur.crisp(duration = formula, atrisk = formula2, data = NULL, test = NULL, las
 %%     ~~Describe \code{stat} here~~
 }
   \item{iter}{
-%%     ~~Describe \code{iter} here~~
+Maximum iterations to use in optimization.
+}
+  \item{npred}{
+Number of months to predict out.
 }
   \item{\dots}{
-%%     ~~Describe \code{\dots} here~~
+Optional arguments; not used currently.
 }
 }
 \details{
@@ -75,7 +81,7 @@ duration.ins <- buildDuration(insurgency, 'insurgency', unitID='ccode', tID='dat
 model3 <- spdur.crisp(
   duration ~ low_intensity + high_neighbors + exclpop.l1,
   atrisk ~ excl_groups_count.l1 + high_neighborhood + high_intensity + exclpop.l1 + lgdppc.l1,
-  last='end.spell', test=duration.ins[1,], data=duration.ins, distr="weibull", iter=300)
+  last='end.spell', train=duration.ins, test=duration.ins[1,], pred=duration.ins[1,], distr="weibull", iter=300)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.
