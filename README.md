@@ -18,4 +18,3 @@ To do
  * test spdur.crisp, loglog methods
  * manuals
  * test forecast and predict options
- * build duration option for forecast data

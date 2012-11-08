@@ -16,7 +16,7 @@ failure events.
 \tabular{ll}{
 Package: \tab spdur\cr
 Type: \tab Package\cr
-Version: \tab 0.3 (pre-release)\cr
+Version: \tab 0.5 (pre-release)\cr
 Date: \tab 2012-11-01\cr
 License: \tab GPL 3.0\cr
 }

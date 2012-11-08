@@ -37,4 +37,4 @@ model2 <- wicews::spdur(
 model3 <- spdur.crisp(
   duration ~ low_intensity + high_neighbors + exclpop.l1,
   atrisk ~ excl_groups_count.l1 + high_neighborhood + high_intensity + exclpop.l1 + lgdppc.l1,
-  last='end.spell', test=duration.ins[1,], train=duration.ins, pred=duration.ins[1,], distr="weibull", iter=300)
+  last='end.spell', train=duration.ins, test=duration.ins[1,], pred=duration.ins[1,], distr="weibull", iter=300)

@@ -8,7 +8,7 @@ Build duration version of panel data
 Builds a duration version of a data frame representing panel data.
 }
 \usage{
-buildDuration(data, y, unitID, tID)
+buildDuration(data, y, unitID, tID, slice.last = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -23,6 +23,9 @@ Name of the variable in the data frame identifying the cross-sectional units, e.
 }
   \item{tID}{
 Name of the variable in the data frame identifying the time unit, in date format.
+}
+  \item{slice.last}{
+Set to \code{TRUE} to create a slice of the last time period; used with \link{\code{forecast.spdur}}. For compatibility with CRISP and ICEWS projects.
 }
 }
 \details{
