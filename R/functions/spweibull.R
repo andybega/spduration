@@ -2,7 +2,7 @@ spweibull <- function(Y, X, Z, max.iter) {
   # Base model likelihood
   weib.lik <- function(theta, y, X) {
     beta <- theta[1:ncol(X)]
-    p <- theta[ncol(X)+1]
+    p <- theta[ncol(X) + 1]
     d <- y[,1]
     ti <- y[,2]
     t0 <- y[,2]-1

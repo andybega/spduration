@@ -1,9 +1,8 @@
 sploglog <- function(Y, X, Z, max.iter) {
   # Base model likelihood
   loglog.lik <- function(theta, y, X){
-    k <- ncol(X)
-    beta <- theta[1:k]
-    g <- theta[k+1]
+    beta <- theta[1:ncol(X)]
+    g <- theta[ncol(X) + 1]
     d <- y[,1]
     ti <- y[,2]
     t0 <- y[,2]-1
@@ -18,12 +17,8 @@ sploglog <- function(Y, X, Z, max.iter) {
     return(-logl)
   }
   
-  print(summary(Y))
-  print(summary(X))
-  print(summary(Z))
-  
   # Estimate base model
-  base.inits <- c(rep(0.1, ncol(X)), 0.1)
+  base.inits <- c(rep(0, ncol(X)), 1)
   cat('Fitting base loglog...\n')
   base <- optim(base.inits, loglog.lik, method="BFGS", control=list(maxit=max.iter), hessian=T, y=Y, X=X)
   
