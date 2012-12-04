@@ -16,10 +16,8 @@ To do
 ---
 
  * test spdur.crisp, loglog methods
- * test forecast and predict options
  * add model fit stats, e.g. AIC, BIC
  * prediction/forecast uncertainty
  * add stats for distinguishing baseline hazard form
  * add exponential
  * add option to look at cure or risk
- * loglog version estimation does not work

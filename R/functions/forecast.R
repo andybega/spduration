@@ -55,9 +55,13 @@ forecast_weibull <- function(coef, vcv, Y, X, Z, stat, npred) {
   al.hat <- exp(-coeff.a)  
   # lambda
   la.hat.pred <- exp(-X %*% coeff.b)
+  
   # unconditional pr(~cure) & pr(cure)
-  n.cure.pred <- plogis(Z %*% coeff.g)
-  cure.pred <- 1 - n.cure.pred
+  atrisk.pred <- plogis(Z %*% coeff.g)
+  cure.pred <- 1 - atrisk.pred
+  
+  if (stat=='unconditional cure') res <- matrix(rep(cure.pred, npred), ncol=npred)
+  if (stat=='unconditional risk') res <- matrix(rep(atrisk.pred, npred), ncol=npred)
   
   ## Create emtpy matrices for various quantities
   rows <- length(la.hat.pred)
@@ -71,25 +75,23 @@ forecast_weibull <- function(coef, vcv, Y, X, Z, stat, npred) {
     st[, i] <- exp(-(la.hat.pred * (Y[, 2] + (i - 1)))^al.hat)
     cure.t[, i] <- cure.pred / (st[, i] + cure.pred * (1 - st[, i]))
   }
-  n.cure.t <- 1 - cure.t
+  atrisk.t <- 1 - cure.t
   
-  if (stat=='cure') res <- cure.t
-  if (stat=='atrisk') res <- n.cure.t
+  if (stat=='conditional cure') res <- cure.t
+  if (stat=='conditional risk') res <- atrisk.t
   
-  # more obscure stats
-  if (!stat %in% c('cure', 'atrisk')) {
-    # f(t)
-    ft <- matrix(nrow=rows, ncol=npred)
-    # unconditional f(t)
-    u.f <- matrix(nrow=rows, ncol=npred)
+  # f(t)
+  ft <- matrix(nrow=rows, ncol=npred)
+  # unconditional f(t)
+  u.f <- matrix(nrow=rows, ncol=npred)
     
-    for (i in 1:npred) {
-      ft[, i] <- la.hat.pred * al.hat * (la.hat.pred * (Y[,2] + (i - 1)))^(al.hat - 1) * exp(-(la.hat.pred * (Y[,2] + (i - 1)))^al.hat)
-      if (i==1) u.f[, i] <- n.cure.t[, i] * ft[, i] / s0
-      if (i > 1) u.f[, i] <- n.cure.t[, i] * ft[, i] / st[, (i-1)]
-    }
-    if (stat=='u.f') res <- u.f
+  for (i in 1:npred) {
+    ft[, i] <- la.hat.pred * al.hat * (la.hat.pred * (Y[,2] + (i - 1)))^(al.hat - 1) * 
+      exp(-(la.hat.pred * (Y[,2] + (i - 1)))^al.hat)
+    if (i==1) u.f[, i] <- atrisk.t[, i] * ft[, i] / s0
+    if (i > 1) u.f[, i] <- atrisk.t[, i] * ft[, i] / st[, (i-1)]
   }
+  if (stat=='failure') res <- u.f
   
   return(res)
 }
@@ -109,8 +111,11 @@ forecast_loglog <- function(coef, vcv, Y, X, Z, stat, npred) {
   # lambda
   la.hat.pred <- exp(-X %*% coeff.b)
   # unconditional pr(~cure) & pr(cure)
-  n.cure.pred <- plogis(Z %*% coeff.g)
-  cure.pred <- 1 - n.cure.pred
+  atrisk.pred <- plogis(Z %*% coeff.g)
+  cure.pred <- 1 - atrisk.pred
+  
+  if (stat=='unconditional cure') res <- matrix(rep(cure.pred, npred), ncol=npred)
+  if (stat=='unconditional risk') res <- matrix(rep(atrisk.pred, npred), ncol=npred)
   
   ## Create emtpy matrices for various quantities
   rows <- length(la.hat.pred)
@@ -124,25 +129,23 @@ forecast_loglog <- function(coef, vcv, Y, X, Z, stat, npred) {
     st[, i] <- 1/(1 + (la.hat.pred * (Y[,2] + (i - 1)))^al.hat)
     cure.t[, i] <- cure.pred / (st[, i] + cure.pred * (1 - st[, i]))
   }
-  n.cure.t <- 1 - cure.t
+  atrisk.t <- 1 - cure.t
   
-  if (stat=='cure') res <- cure.t
-  if (stat=='atrisk') res <- n.cure.t
+  if (stat=='conditional cure') res <- cure.t
+  if (stat=='conditional risk') res <- atrisk.t
   
-  # more obscure stats
-  if (!stat %in% c('cure', 'atrisk')) {
-    # f(t)
-    ft <- matrix(nrow=rows, ncol=npred)
-    # unconditional f(t)
-    u.f <- matrix(nrow=rows, ncol=npred)
+  # f(t)
+  ft <- matrix(nrow=rows, ncol=npred)
+  # unconditional f(t)
+  u.f <- matrix(nrow=rows, ncol=npred)
     
-    for (i in 1:npred) {
-      ft[, i] <- (la.hat.pred * al.hat * (la.hat.pred * (Y[,2] + (i - 1)))^(al.hat - 1)) / ((1 + (la.hat.pred * (Y[,2] + (i - 1)))^al.hat)^2)
-      if (i==1) u.f[, i] <- n.cure.t[, i] * ft[, i] / s0
-      if (i > 1) u.f[, i] <- n.cure.t[, i] * ft[, i] / st[, (i - 1)]
-    }
-    if (stat=='u.f') res <- u.f
+  for (i in 1:npred) {
+    ft[, i] <- (la.hat.pred * al.hat * (la.hat.pred * (Y[,2] + (i - 1)))^(al.hat - 1)) / 
+      ((1 + (la.hat.pred * (Y[,2] + (i - 1)))^al.hat)^2)
+    if (i==1) u.f[, i] <- atrisk.t[, i] * ft[, i] / s0
+    if (i > 1) u.f[, i] <- atrisk.t[, i] * ft[, i] / st[, (i - 1)]
   }
+  if (stat=='failure') res <- u.f
   
   return(res)
 }

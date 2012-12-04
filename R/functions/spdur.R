@@ -5,8 +5,7 @@
 #
 ###########
 
-spdur <- function(duration, atrisk, data=NULL, last, distr='weibull', max.iter=100, ...)
-{ 
+spdur <- function(duration, atrisk, data=NULL, last, distr='weibull', max.iter=100, ...) { 
   # Duration equation
   mf.dur <- model.frame(formula=duration, data=data)
   X <- model.matrix(attr(mf.dur, 'terms'), data=mf.dur)
@@ -41,8 +40,7 @@ spdur <- function(duration, atrisk, data=NULL, last, distr='weibull', max.iter=1
   return(est)
 }
 
-summary.spdur <- function(object, ...)
-{
+summary.spdur <- function(object, ...) {
   table <- cbind(Estimate = coef(object),
                  StdErr = object$se,
                  Z = object$zstat,
