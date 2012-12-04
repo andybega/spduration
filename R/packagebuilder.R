@@ -27,6 +27,8 @@ source('R/functions/spdur.R')
 source('R/functions/spweibull.R')
 source('R/functions/sploglog.R')
 source('R/functions/predict.spdur.R')
+source('R/functions/plot.spdur.R')
+source('R/functions/forecast.R')
 
 # Duration build function
 source('R/functions/buildDuration.R')

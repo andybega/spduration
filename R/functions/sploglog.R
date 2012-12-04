@@ -1,25 +1,29 @@
 sploglog <- function(Y, X, Z, max.iter) {
   # Base model likelihood
-  loglog.lik <- function(theta,y,X){
-    k<-ncol(X)
-    beta<-theta[1:k]
-    g<-theta[k+1]
-    d<-y[,1]
-    ti<-y[,2]
-    t0<-y[,2]-1
-    ly<-y[,3]
-    lambda<-exp(-X%*%beta)
-    alpha<-exp(-g)
-    su<-log((1+(lambda*t0)^g))-log((1+(lambda*ti)^g))
-    haz<-log(g)+g*log(lambda)+(g-1)*log(ti)-log(1+(lambda*ti)^g)
-    cens<-ifelse((d==1) & (ly==0) | (d==0) , su , 0)
-    nocens<-ifelse((d==1) & (ly==1) , haz+su , 0)
-    logl<-sum(cens+nocens)
+  loglog.lik <- function(theta, y, X){
+    k <- ncol(X)
+    beta <- theta[1:k]
+    g <- theta[k+1]
+    d <- y[,1]
+    ti <- y[,2]
+    t0 <- y[,2]-1
+    ly <- y[,3]
+    lambda <- exp(-X%*%beta)
+    alpha <- exp(-g)
+    su <- log((1+(lambda*t0)^g))-log((1+(lambda*ti)^g))
+    haz <- log(g)+g*log(lambda)+(g-1)*log(ti)-log(1+(lambda*ti)^g)
+    cens <- ifelse((d==1) & (ly==0) | (d==0) , su , 0)
+    nocens <- ifelse((d==1) & (ly==1) , haz+su , 0)
+    logl <- sum(cens+nocens)
     return(-logl)
   }
   
+  print(summary(Y))
+  print(summary(X))
+  print(summary(Z))
+  
   # Estimate base model
-  base.inits <- c(rep(0, ncol(X)), 0)
+  base.inits <- c(rep(0.1, ncol(X)), 0.1)
   cat('Fitting base loglog...\n')
   base <- optim(base.inits, loglog.lik, method="BFGS", control=list(maxit=max.iter), hessian=T, y=Y, X=X)
   

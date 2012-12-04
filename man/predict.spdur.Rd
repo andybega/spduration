@@ -19,17 +19,34 @@ Object of class ``\code{spdur}''.
 Optional data for which to calculate fitted values, defaults to training data.
 }
   \item{stat}{
-Quantity of interest to calculate. Default is probability of being at risk.
+Quantity of interest to calculate. Default conditional probability of being at risk, i.e. 
+conditioned on observed survival up to time \code{t}. See below for list of values.
 }
   \item{\dots}{
 Optional arguments to pass to \code{predict} function.
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
+Calculates various types of probabilities, where ``conditional'' is used in reference to
+conditioning on the observed survival time of a spell up to time \var{t}, in addition to
+conditioning on any variables included in the model (which is always done). Valid values 
+for the \code{stat} option include:
+\itemize{
+	\item ``conditional risk'': \var{Pr(Cure=0|Z\gamma, T>t)}
+	\item ``conditional cure'': \var{Pr(Cure=1|Z\gamma, T>t)}
+	\item ``hazard'': \var{Pr(T=t|T>t, C=0, X\beta) * Pr(Cure=0|Z\gamma)}
+	\item ``failure'': \var{Pr(T=t|T>t-1, C=0, X\beta) * Pr(Cure=0|Z\gamma)}
+	\item ``unconditional risk'': \var{Pr(Cure=0|Z\gamma)}
+	\item ``unconditional cure'': \var{Pr(Cure=1|Z\gamma)}
+	\item ``conditional hazard'': \var{Pr(T=t|T>t, C=0, X\beta) * Pr(Cure=0|Z\gamma, T>t)}
+	\item ``conditional failure'': \var{Pr(T=t|T>t-1, C=0, X\beta) * Pr(Cure=0|Z\gamma, T>t)}
+	}
+The vector \var{Z\gamma} indicates the cure/at risk equation covariate vector, while 
+\var{X\beta} indicates the duration equation covariate vector.
 }
 \value{
-Returns a data frame with 1 column corresponding to \code{stat}.
+Returns a data frame with 1 column corresponding to \code{stat}, in the same order as the
+data frame used to estimate \code{object}.
 }
 \references{
 %% ~put references to the literature/web site here ~
@@ -38,7 +55,8 @@ Returns a data frame with 1 column corresponding to \code{stat}.
 Andreas Beger, Daina Chiba, Daniel W. Hill, Nils Metternich
 }
 \note{
-%%  ~~further notes~~
+See \code{\link{forecast.spdur}} for producing forecasts when future covariate values
+are unknown.
 }
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~

@@ -20,7 +20,10 @@ model <- spduration::spdur(
 summary(model)
 
 # Test predict method
-atrisk <- predict(model)
+duration.ins$atrisk.hat <- predict(model)
+top5 <- duration.ins[duration.ins$date==as.Date('2012-09-01'), c('country', 'atrisk.hat')]
+top5 <- top5[order(top5$atrisk.hat, decreasing=T), ]
+head(top5)
 
 # Test plot method
 library(separationplot)
