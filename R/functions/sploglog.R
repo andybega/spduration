@@ -57,9 +57,11 @@ sploglog <- function(Y, X, Z, max.iter) {
   if (est$convergence!=0) stop('Model did not converge')
   coef <- est$par
   vcv <- solve(est$hessian)
+  logL <- est$value
   
   # Put together results
   return(
     list(coefficients = coef,
-         vcv = vcv))
+         vcv = vcv,
+         logL = logL))
 }

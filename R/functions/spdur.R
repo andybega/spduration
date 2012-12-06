@@ -34,30 +34,83 @@ spdur <- function(duration, atrisk, data=NULL, last, distr='weibull', max.iter=1
   est$zstat <- with(est, coefficients/se)
   est$pval <- 2*(1-pnorm(abs(est$zstat)))
   
+  # Other class elements
   est$call <- match.call()
   est$distr <- eval.parent(distr, 1)
+  est$obs <- nrow(Y)
+  
   class(est) <- 'spdur'
   return(est)
 }
 
 summary.spdur <- function(object, ...) {
+  # Find index to separate 2 equations
+  start_split <- which(names(object$coefficients)=='(Intercept)')[2]
+  end_duration <- start_split - 1
+  
   table <- cbind(Estimate = coef(object),
                  StdErr = object$se,
-                 Z = object$zstat,
+                 t = object$zstat,
                  p = object$pval)
+  
+  duration_table <- table[1:end_duration, ]
+  split_table <- table[start_split:(nrow(table)-1), ]
+  
   res <- list(call = object$call,
-              coefficients = table)
+              duration = duration_table,
+              split = split_table,
+              alpha = table[nrow(table), , drop=FALSE])
   class(res) <- 'summary.spdur'
   return(res)
 }
 
-print.summary.spdur <- function(x, ...)
+print.summary.spdur <- function(object, ...)
 {
   cat('Call:\n')
-  print(x$call)
+  print(object$call)
   cat('\n')
+  cat('Duration equation: \n')
+  printCoefmat(object$duration, P.values=T, has.Pvalue=T, digits=4, zap.ind=4, signif.legend=F)
+  cat('\n')
+  cat('Risk equation: \n')
+  printCoefmat(object$split, P.values=T, has.Pvalue=T, digits=4, zap.ind=4, signif.legend=F)
+  cat('\n')
+  printCoefmat(object$alpha, P.values=T, has.Pvalue=T, digits=4, zap.ind=4, signif.legend=F)
+  cat('---\n')
+  cat('Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1')
+}
+
+logLik.spdur <- function(object) 
+{
+  p <- nobs(object) - length(object$coefficients)
+  val <- object$logL
+  attr(val, "nobs") <- nobs(object)
+  attr(val, "df")  <- p
+  class(val) <- 'logLik'  
   
-  printCoefmat(x$coefficients, P.values=T, has.Pvalue=T, digits=4)
+  return(val)
+}
+
+nobs.spdur <- function(object)
+{
+  val <- object$obs
+  return(val)
+}
+
+AIC.spdur <- function(object, ..., k = 2)
+{
+  npar <- length(object$coefficients)
+  lnL <- logLik(object)
+  aic <- as.vector(-2*lnL + k * npar)
+  
+  return(aic)
+}
+
+BIC.spdur <- function(object, ...)
+{
+  bic <- AIC(object, k = log(nobs(object)))
+  
+  return(bic)
 }
 
 ##########

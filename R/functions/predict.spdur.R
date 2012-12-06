@@ -1,4 +1,4 @@
-##########
+###########
 # Predict and separationplot methods
 # December 2012
 # Andreas Beger
