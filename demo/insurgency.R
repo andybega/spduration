@@ -16,16 +16,16 @@ model <- spduration::spdur(
   atrisk ~ excl_groups_count.l1 + high_neighborhood + high_intensity + exclpop.l1 + lgdppc.l1,
   last='end.spell', data=duration.ins, distr="weibull", max.iter=300)
 
-# Test summary and print.summary methods
+# Summary and print.summary methods
 summary(model)
 
-# Test predict method
+# Predict method
 duration.ins$atrisk.hat <- predict(model)
 top5 <- duration.ins[duration.ins$date==as.Date('2012-09-01'), c('country', 'atrisk.hat')]
-top5 <- top5[order(top5$atrisk.hat, decreasing=T), ]
+top5 <- top5[order(top5$atrisk.hat, decreasing=TRUE), ]
 head(top5)
 
-# Test plot method
+# Plot method
 library(separationplot)
 p <- plot(model)
 

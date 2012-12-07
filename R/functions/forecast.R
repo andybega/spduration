@@ -2,11 +2,11 @@
 # Input: object of class 'spdur', time units to predict out
 # Ouput: vector of forecast probabilities
 #
-forecast <- function(x, ...) { UseMethod('forecast') }
+forecast <- function(object, ...) { UseMethod('forecast') }
 
-forecast.default <- function(x, ...) { NULL }
+forecast.default <- function(object, ...) { NULL }
 
-forecast.spdur <- function(object, pred.data = NULL, stat = 'hazard', npred = 6, ...)
+forecast.spdur <- function(object, ..., pred.data = NULL, stat = 'hazard', npred = 6)
 {
   if (is.null(pred.data)) stop("Must provide pred.data")
   stat_choices <- c('conditional risk', 'conditional cure', 'hazard', 'failure',

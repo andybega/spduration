@@ -2,22 +2,22 @@
 # Input: parameters, data, and sims to run
 # Output: row-matrix of predicted probability quantiles
 #
-plot.spdur <- function(object, failure='failure', endSpellOnly=FALSE, ...)
+plot.spdur <- function(x, ..., failure='failure', endSpellOnly=FALSE)
 {
   require(separationplot)
   
   # Input validation
-  if (!'spdur' %in% class(object)) stop('"object" argument must have class "spdur"')
-  if (!'failure' %in% colnames(get(paste(object$call$data)))) stop(paste(failure, 'not in data'))
+  if (!'spdur' %in% class(x)) stop('"object" argument must have class "spdur"')
+  if (!'failure' %in% colnames(get(paste(x$call$data)))) stop(paste(failure, 'not in data'))
   
   # Get predicted/observed values
-  pred <- as.vector(as.matrix(predict(object)))
-  actual <- get(paste(object$call$data))[, failure]
+  pred <- as.vector(as.matrix(predict(x)))
+  actual <- get(paste(x$call$data))[, failure]
   
   # Keep end of spell only
   if (endSpellOnly==T) {
-    pred <- pred[ get(paste(object$call$data))[, object$call$last]==1 ]
-    actual <- actual[ get(paste(object$call$data))[, object$call$last]==1 ]
+    pred <- pred[ get(paste(x$call$data))[, x$call$last]==1 ]
+    actual <- actual[ get(paste(x$call$data))[, x$call$last]==1 ]
   }
   
   # Separationplot call

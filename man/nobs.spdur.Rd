@@ -1,26 +1,27 @@
-\name{forecast}
-\alias{forecast}
+\name{nobs.spdur}
+\alias{nobs.spdur}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Forecast out of sample.
+Extract the number of observations from a spdur object.
 }
 \description{
-Generic forecast function.
+Extract the number of observations from an object of class \code{spdur}. Used when 
+calculating AIC and BIC.
 }
 \usage{
-forecast(object, ...)
+\method{nobs}{spdur}(object, \dots)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{object}{
-%%     ~~Describe \code{x} here~~
+object of class \code{spdur}.
 }
-  \item{\dots}{
-%%     ~~Describe \code{\dots} here~~
+\item{\dots}{
+not used in this method.
 }
 }
 \details{
-The only method defined is for class ``\code{spdur}''.
+%%  ~~ If necessary, more details than the description above ~~
 }
 \value{
 %%  ~Describe the value returned
@@ -42,18 +43,11 @@ Andreas Beger
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link{nobs}}
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
-
-## The function is currently defined as
-function (x, ...) 
-{
-    UseMethod("forecast")
-  }
+data(model.ins)
+nobs(model.ins)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

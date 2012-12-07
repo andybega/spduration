@@ -10,7 +10,7 @@ of the \code{spdur} command by estimating a model, calculating training and vali
 and 6-month forecasts.
 }
 \usage{
-spdur.crisp(duration, atrisk, train = NULL, test = NULL, pred = NULL, last = NULL, distr = NULL, stat = 'atrisk', iter = 100, npred = 6, ...)
+spdur.crisp(duration, atrisk, train = NULL, test = NULL, pred = NULL, last = NULL, distr = NULL, stat = 'conditional risk', iter = 100, npred = 6, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -36,7 +36,7 @@ A data frame from which forecasts are made. Should be slice of last time period 
 %%     ~~Describe \code{distr} here~~
 }
   \item{stat}{
-%%     ~~Describe \code{stat} here~~
+Statistic to calculate with \code{\link{predict.spdur}} and \code{\link{forecast.spdur}}.
 }
   \item{iter}{
 Maximum iterations to use in optimization.

@@ -1,26 +1,26 @@
-\name{forecast}
-\alias{forecast}
+\name{BIC.spdur}
+\alias{BIC.spdur}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Forecast out of sample.
+BIC an spdur Object
 }
 \description{
-Generic forecast function.
+Computes the Bayesian Information Criterion for an \code{spdur} class object.
 }
 \usage{
-forecast(object, ...)
+\method{BIC}{spdur}(object, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{object}{
-%%     ~~Describe \code{x} here~~
+an object inheriting from class \code{spdur}.
 }
   \item{\dots}{
 %%     ~~Describe \code{\dots} here~~
 }
 }
 \details{
-The only method defined is for class ``\code{spdur}''.
+Computed as \code{AIC(object, k = log(nobs(object)))}.
 }
 \value{
 %%  ~Describe the value returned
@@ -42,18 +42,11 @@ Andreas Beger
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link{BIC}}, \code{\link{AIC.spdur}}
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
-
-## The function is currently defined as
-function (x, ...) 
-{
-    UseMethod("forecast")
-  }
+data(model.ins)
+BIC(model.ins)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

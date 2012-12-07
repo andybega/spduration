@@ -16,8 +16,8 @@ failure events.
 \tabular{ll}{
 Package: \tab spdur\cr
 Type: \tab Package\cr
-Version: \tab 0.5 (pre-release)\cr
-Date: \tab 2012-11-01\cr
+Version: \tab 0.6 (pre-release)\cr
+Date: \tab 2012-12-06\cr
 License: \tab GPL 3.0\cr
 }
 The main function \code{\link{spdur}} is used to estimate the model objects with class \code{spdur}. 

@@ -8,21 +8,21 @@ Plot split-duration model fit.
 \code{plot} method for class ``\code{spdur}''.
 }
 \usage{
-\method{plot}{spdur}(object, failure = "failure", endSpellOnly = FALSE, \dots)
+\method{plot}{spdur}(x, \dots, failure = "failure", endSpellOnly = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{object}{
+  \item{x}{
 %%     ~~Describe \code{object} here~~
+}
+  \item{\dots}{
+%%     ~~Describe \code{\dots} here~~
 }
   \item{failure}{
 The variable indicating that a failure event has occurred at time \code{t}.
 }
   \item{endSpellOnly}{
 Should only the last observation in each spell be kept? \code{TRUE} by default.
-}
-  \item{\dots}{
-%%     ~~Describe \code{\dots} here~~
 }
 }
 \details{

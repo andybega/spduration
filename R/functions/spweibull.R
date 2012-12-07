@@ -56,7 +56,7 @@ spweibull <- function(Y, X, Z, max.iter) {
   if (est$convergence!=0) stop('Model did not converge')
   coef <- est$par
   vcv <- solve(est$hessian)
-  logL <- est$value
+  logL <- -est$value
   
   # Put together results
   return(

@@ -1,26 +1,27 @@
-\name{forecast}
-\alias{forecast}
+\name{logLik.spdur}
+\alias{logLik.spdur}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Forecast out of sample.
+Log-Likelihood of an spdur Object
 }
 \description{
-Generic forecast function.
+Returns the log-likelihood of the split duration model represented by \code{object} evaluated 
+at the estimated coefficients.
 }
 \usage{
-forecast(object, ...)
+\method{logLik}{spdur}(object, \dots)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{object}{
-%%     ~~Describe \code{x} here~~
+an object inheriting from class \code{spdur}.
 }
   \item{\dots}{
-%%     ~~Describe \code{\dots} here~~
+not used in this method.
 }
 }
 \details{
-The only method defined is for class ``\code{spdur}''.
+%%  ~~ If necessary, more details than the description above ~~
 }
 \value{
 %%  ~Describe the value returned
@@ -33,7 +34,7 @@ The only method defined is for class ``\code{spdur}''.
 %% ~put references to the literature/web site here ~
 }
 \author{
-Andreas Beger
+%%  ~~who you are~~
 }
 \note{
 %%  ~~further notes~~
@@ -50,9 +51,14 @@ Andreas Beger
 ##--	or do  help(data=index)  for the standard data sets.
 
 ## The function is currently defined as
-function (x, ...) 
+function (object) 
 {
-    UseMethod("forecast")
+    p <- nobs(object) - length(object$coefficients)
+    val <- object$logL
+    attr(val, "nobs") <- nobs(object)
+    attr(val, "df") <- p
+    class(val) <- "logLik"
+    return(val)
   }
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

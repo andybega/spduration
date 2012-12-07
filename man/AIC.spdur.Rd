@@ -1,26 +1,29 @@
-\name{forecast}
-\alias{forecast}
+\name{AIC.spdur}
+\alias{AIC.spdur}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Forecast out of sample.
+AIC an spdur Object
 }
 \description{
-Generic forecast function.
+Computes the Akaike Information Criterion for an \code{spdur} class object.
 }
 \usage{
-forecast(object, ...)
+\method{AIC}{spdur}(object, ..., k = 2)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{object}{
-%%     ~~Describe \code{x} here~~
+an object inheriting from class \code{spdur}.
 }
   \item{\dots}{
-%%     ~~Describe \code{\dots} here~~
+not used for this method.
+}
+  \item{k}{
+the penalty parameter, by default 2.
 }
 }
 \details{
-The only method defined is for class ``\code{spdur}''.
+%%  ~~ If necessary, more details than the description above ~~
 }
 \value{
 %%  ~Describe the value returned
@@ -42,18 +45,11 @@ Andreas Beger
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
+\code{\link{AIC}}, \code{\link{BIC.spdur}}
 }
 \examples{
-##---- Should be DIRECTLY executable !! ----
-##-- ==>  Define data, use random,
-##--	or do  help(data=index)  for the standard data sets.
-
-## The function is currently defined as
-function (x, ...) 
-{
-    UseMethod("forecast")
-  }
+data(model.ins)
+AIC(model.ins)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the
 % R documentation directory.

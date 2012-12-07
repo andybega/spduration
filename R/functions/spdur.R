@@ -64,23 +64,23 @@ summary.spdur <- function(object, ...) {
   return(res)
 }
 
-print.summary.spdur <- function(object, ...)
+print.summary.spdur <- function(x, ...)
 {
   cat('Call:\n')
-  print(object$call)
+  print(x$call)
   cat('\n')
   cat('Duration equation: \n')
-  printCoefmat(object$duration, P.values=T, has.Pvalue=T, digits=4, zap.ind=4, signif.legend=F)
+  printCoefmat(x$duration, P.values=T, has.Pvalue=T, digits=4, zap.ind=4, signif.legend=F)
   cat('\n')
   cat('Risk equation: \n')
-  printCoefmat(object$split, P.values=T, has.Pvalue=T, digits=4, zap.ind=4, signif.legend=F)
+  printCoefmat(x$split, P.values=T, has.Pvalue=T, digits=4, zap.ind=4, signif.legend=F)
   cat('\n')
-  printCoefmat(object$alpha, P.values=T, has.Pvalue=T, digits=4, zap.ind=4, signif.legend=F)
+  printCoefmat(x$alpha, P.values=T, has.Pvalue=T, digits=4, zap.ind=4, signif.legend=F)
   cat('---\n')
-  cat('Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1')
+  cat("Signif. codes: *** = 0.001, ** = 0.01, * = 0.05, . = 0.1")
 }
 
-logLik.spdur <- function(object) 
+logLik.spdur <- function(object, ...) 
 {
   p <- nobs(object) - length(object$coefficients)
   val <- object$logL
@@ -91,7 +91,7 @@ logLik.spdur <- function(object)
   return(val)
 }
 
-nobs.spdur <- function(object)
+nobs.spdur <- function(object, ...)
 {
   val <- object$obs
   return(val)
@@ -125,7 +125,7 @@ BIC.spdur <- function(object, ...)
 ###########
 spdur.crisp <- function (duration, atrisk, train = NULL, test = NULL, 
                          pred = NULL, last = NULL, distr = NULL, 
-                         stat = 'atrisk', iter = 100, npred=6, ...) {
+                         stat = 'conditional risk', iter = 100, npred=6, ...) {
   if (is.null(data)) stop("No data provided")
   if (is.null(last)) stop("Must specify censoring variable")
   if (is.null(distr)) stop("Must specify distribution")
@@ -141,7 +141,7 @@ spdur.crisp <- function (duration, atrisk, train = NULL, test = NULL,
   
   # Forecast
   cat('Forecast...\n')
-  pred.p <- forecast(model, pred, stat=stat, npred=npred)
+  pred.p <- forecast(model, pred.data=pred, stat=stat, npred=npred)
   
   # Format and show estimates
   print(summary(model))

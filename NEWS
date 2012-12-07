@@ -1,0 +1,21 @@
+spduration 0.6
+--------------
+
+NEW FEATURES
+
+* `AIC` and `BIC` methods for assessing models. 
+* `logLik`, and `nobs` methods, used in computing AIC and BIC.
+* `predict` and `forecast` methods now have more options for which statistic to create,
+  as documented in the respective help files.
+
+BUG FIXES
+
+* `spdur.crisp` had incorrect default statistic and problem passing value.
+
+spduration 0.5
+--------------
+
+NEW FEATURES
+
+* `spdur.crisp` wrapper the replicates functionality of the original `wicews::spdur`
+  and `crisp::spdur` functions.
