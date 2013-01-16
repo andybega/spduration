@@ -8,7 +8,7 @@ Plot split-duration model fit.
 \code{plot} method for class ``\code{spdur}''.
 }
 \usage{
-\method{plot}{spdur}(x, \dots, failure = "failure", endSpellOnly = FALSE)
+\method{plot}{spdur}(x, \dots, failure = "failure", endSpellOnly = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

@@ -2,7 +2,7 @@
 # Input: parameters, data, and sims to run
 # Output: row-matrix of predicted probability quantiles
 #
-plot.spdur <- function(x, ..., failure='failure', endSpellOnly=FALSE)
+plot.spdur <- function(x, ..., failure='failure', endSpellOnly=TRUE)
 {
   require(separationplot)
   
