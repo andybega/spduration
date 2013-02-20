@@ -5,7 +5,7 @@
 #
 ###########
 
-spdur <- function(duration, atrisk, data=NULL, last, distr='weibull', max.iter=100, ...) { 
+spdur <- function(duration, atrisk, data=NULL, last="end.spell", distr='weibull', max.iter=300, ...) { 
   # Duration equation
   mf.dur <- model.frame(formula=duration, data=data)
   X <- model.matrix(attr(mf.dur, 'terms'), data=mf.dur)
@@ -25,7 +25,7 @@ spdur <- function(duration, atrisk, data=NULL, last, distr='weibull', max.iter=1
     est <- sploglog(Y, X, Z, max.iter)
   }
   # Names
-  varnames <- c(paste(unlist(attr(X, 'dimnames')[2])), paste(unlist(attr(Z, 'dimnames')[2])), 'alpha')
+  varnames <- c(paste(unlist(attr(X, 'dimnames')[2])), paste(unlist(attr(Z, 'dimnames')[2])), 'log(alpha)')
   attr(est$coefficients, 'names') <- varnames
   colnames(est$vcv) <- rownames(est$vcv) <- varnames
   

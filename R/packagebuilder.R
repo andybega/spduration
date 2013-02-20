@@ -8,13 +8,13 @@
 rm(list = ls())
 
 # Package folder name
-package.name <- 'spduration_0.6'
+package.name <- 'spduration_0.7'
 
 # Directory in which to create package
-if(Sys.info()["user"]=="adbeger") package.path <- paste('~/Dropbox/Research/spdur_package/package', package.name, sep='/')
+if(Sys.info()["user"]=="ab428") package.path <- paste('~/Dropbox/Work/spdur_package/package', package.name, sep='/')
 
 # Working directory from which to source functions, data, etc.
-if(Sys.info()["user"]=="adbeger") setwd('~/Research/spdur_package')
+if(Sys.info()["user"]=="ab428") setwd('~/Work/spdur_package')
 
 ########
 ## 1. ##
@@ -46,6 +46,7 @@ model.ins <- spdur(
   atrisk ~ excl_groups_count.l1 + high_neighborhood + high_intensity + exclpop.l1 + lgdppc.l1,
   last='end.spell', data=duration.ins, distr="weibull", max.iter=300)
 rm(duration.ins)
+# log-l should be 249.807508 
 
 # Create/navigate to package directory
 if (file.exists(package.path)) {
@@ -67,10 +68,12 @@ package.skeleton('spduration')
 ########
 ## Copy and paste from github to package directory.
 ##
-## 1. On the github folder, update the version in "DESCRIPTION" file.
+## 1. On the github folder, update the version in "DESCRIPTION" and package 
+##    manual file, update "NEWS".
 ## 2. Copy & paste from github to dropbox:
 ##        "DESCRIPTION"
 ##        "NAMESPACE"
+##        "NEWS"
 ##        "man" folder
 ##        "demo" folder
 ##
@@ -79,14 +82,14 @@ package.skeleton('spduration')
 ## 3. ##
 ########
 ## This will build the package using Terminal:
-system('cd ~/Dropbox/Research/spdur_package/package/spduration_0.6')
+system('cd ~/Dropbox/Work/spdur_package/package/spduration_0.7')
 system('R CMD build spduration')
 
 ########
 ## 4. ##
 ########
 ## On the terminal, check if the package is alright.
-system('cd ~/Dropbox/Research/spdur_package/package/spduration_0.6')
+system('cd ~/Dropbox/Work/spdur_package/package/spduration_0.7')
 system('R CMD check spduration')
 
 ########
@@ -94,7 +97,7 @@ system('R CMD check spduration')
 ########
 ## Install and test package
 ##
-install.packages('~/Dropbox/Research/spdur_package/package/spduration_0.6/spduration_0.6.tar.gz', 
+install.packages('~/Dropbox/Work/spdur_package/package/spduration_0.7/spduration_0.7.tar.gz', 
                  repos=NULL, type='source')
 
 ## Restart R

@@ -1,14 +1,21 @@
-buildDuration <- function(data, y, unitID, tID, slice.last=FALSE) {
+buildDuration <- function(data, y, unitID, tID, freq="monthly", slice.last=FALSE) {
   require(plyr)
   
+  # Check input
+  if (class(data[, tID])!="Date") stop(paste(tID, "is not class 'Date' (?as.Date())"))
+  supported.freq=c("monthly", "yearly")
+  if (!freq %in% supported.freq) stop("frequency must be 'monthly' or 'yearly'")
+  if (any(is.na(data[, c(y, unitID, tID)]))) stop("There are NA's in y, unitID, or tID")
+  
+  # Need to order by date to id and drop ongoing spells
   res <- data[order(data[, unitID], data[, tID]), ]
   
   # Mark failure (0, 1)
-  failure <- function(x) return(c(0, pmax(0, diff(x))))
+  failure <- function(x) return(c(x[1], pmax(0, diff(x))))
   res$failure <- unlist(by(res[, y], res[, unitID], failure))
   
   # Drop ongoing (1->1) spells, keep only 0 and onset (0->1)
-  res <- subset(res, !(get(y)==1 & failure==0))
+  res <- subset(res, !(get(y)==1 & (failure==0 | is.na(failure))))
   
   # Mark end of a spell and create unique ID
   # A spell can end 3 ways: failure, right-censor because past observation
@@ -16,7 +23,12 @@ buildDuration <- function(data, y, unitID, tID, slice.last=FALSE) {
   res$temp.t <- res[, tID]
   res <- ddply(res, .variables=unitID, transform, end=max(temp.t)) 
   res <- res[, !(colnames(res) %in% 'temp.t')]
-  res$end.spell <- ifelse(format(res[, tID], '%Y-%m')==format(as.Date(res$end), '%Y-%m'), 1, 0)
+  if (freq=="monthly") {
+    res$end.spell <- ifelse(format(res[, tID], '%Y-%m')==format(as.Date(res$end), '%Y-%m'), 1, 0)
+  }
+  if (freq=="yearly") {
+    res$end.spell <- ifelse(format(res[, tID], '%Y')==format(as.Date(res$end), '%Y'), 1, 0)
+  }
   res$end.spell <- ifelse(res$failure==1, 1, res$end.spell)
   res$spellID <- rev(cumsum(rev(res$end.spell)))
   
@@ -59,3 +71,10 @@ buildDuration <- function(data, y, unitID, tID, slice.last=FALSE) {
   res <- res[order(res[, unitID], res[, tID]), ]
   return(res)
 }
+
+#test <- data.frame(event=c(0,0,0,1, 0,0,1,0), ccode=c(rep(1,4), rep(2,4)), month=as.Date(rep(c("2000-01-01","2000-02-01","2000-03-01","2000-04-01"),2)), stringsAsFactors=F)
+#buildDuration(test, "event", "ccode", "month", freq="monthly")
+#test <- data.frame(event=c(0,0,0,1, 0,0,1,0), ccode=c(rep(1,4), rep(2,4)), year=as.Date(rep(c("2000-01-01","2001-01-01","2002-03-01","2003-04-01"),2)), stringsAsFactors=F)
+#buildDuration(test, "event", "ccode", "year")
+#test <- data.frame(event=c(NA,0,0,1, 0,0,1,0), ccode=c(rep(1,4), rep(2,4)), year=as.Date(rep(c("2000-01-01","2001-01-01","2002-03-01","2003-04-01"),2)), stringsAsFactors=F)
+#buildDuration(test, "event", "ccode", "year")

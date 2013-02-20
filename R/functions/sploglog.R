@@ -49,7 +49,6 @@ sploglog <- function(Y, X, Z, max.iter) {
   # Estimate full model
   x.inits <- base$par[1:ncol(X)]
   a.init <- base$par[ncol(X)+1]
-  print(a.init)
   cat('Fitting split loglog...\n')
   est <- optim(c(x.inits, rep(0, ncol(Z)), a.init), sploglog.lik, method="BFGS", control=list(trace=T, maxit=max.iter), hessian=T, y=Y, X=X, Z=Z)
   

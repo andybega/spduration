@@ -13,10 +13,10 @@ Plot split-duration model fit.
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{x}{
-%%     ~~Describe \code{object} here~~
+An object of class "\code{spdur}".
 }
   \item{\dots}{
-%%     ~~Describe \code{\dots} here~~
+Optional parameters passed to \code{predict.spdur}, e.g. type of statistic to calculate.
 }
   \item{failure}{
 The variable indicating that a failure event has occurred at time \code{t}.

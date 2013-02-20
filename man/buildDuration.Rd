@@ -10,7 +10,7 @@ Builds a duration version of a data frame representing panel data.
 }
 
 \usage{
-buildDuration(data, y, unitID, tID, slice.last = FALSE)
+buildDuration(data, y, unitID, tID, freq="monthly", slice.last = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -26,6 +26,9 @@ Name of the variable in the data frame identifying the cross-sectional units, e.
   \item{tID}{
 Name of the variable in the data frame identifying the time unit, in date format.
 }
+  \item{freq}{
+Frequency by which data is observed in \code{tID}, i.e. "\code{monthly}" or "\code{yearly}".  
+}
   \item{slice.last}{
 Set to \code{TRUE} to create a slice of the last time period; used with \code{\link{forecast.spdur}}. For compatibility with CRISP and ICEWS projects.
 }
@@ -37,6 +40,8 @@ duration counter, as well as risk/immunity indicators. In case \code{y} already 
 of failure, the returned data frame should have the same number of rows at the original. If \code{y} is
 an indicator of the incidence of some event, then ongoing spells of failure beyond the initial event are dropped
 (e.g. 000111 becomes a spell of 0001), and the number of observation in the returned data frame may be lower.
+
+There cannot be missing values ("\code{NA}") in any of the key variables specified in the function call above; they will stop the function.
 }
 
 \value{
@@ -59,8 +64,16 @@ Andreas Beger
 }
 
 \examples{
+# Monthly data
 data(insurgency)
-duration.ins <- buildDuration(insurgency, 'insurgency', unitID='ccode', tID='date')
+duration.ins <- buildDuration(insurgency, 'insurgency', unitID='ccode', 
+                              tID='date', freq="monthly")
+
+# Yearly example
+yearly <- data.frame(event=c(0,0,0,1, 0,0,1,0), ccode=c(rep(1,4), rep(2,4)), 
+  year=as.Date(rep(c("2001-01-01","2002-01-01","2003-01-01","2004-01-01"),2)),       
+  stringsAsFactors=F)
+buildDuration(yearly, "event", "ccode", "year", "yearly")
 }
 
 \keyword{spdur}

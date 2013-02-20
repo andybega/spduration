@@ -84,6 +84,8 @@ forecast_weibull <- function(coef, vcv, Y, X, Z, stat, npred) {
   ft <- matrix(nrow=rows, ncol=npred)
   # unconditional f(t)
   u.f <- matrix(nrow=rows, ncol=npred)
+  # unconditional hazard
+  u.h <- matrix(nrow=rows, ncol=npred)
     
   for (i in 1:npred) {
     ft[, i] <- la.hat.pred * al.hat * (la.hat.pred * (Y[,2] + (i - 1)))^(al.hat - 1) * 
@@ -91,7 +93,12 @@ forecast_weibull <- function(coef, vcv, Y, X, Z, stat, npred) {
     if (i==1) u.f[, i] <- atrisk.t[, i] * ft[, i] / s0
     if (i > 1) u.f[, i] <- atrisk.t[, i] * ft[, i] / st[, (i-1)]
   }
+  
+  if (stat=='hazard') res <- NULL
   if (stat=='failure') res <- u.f
+  
+  if (stat=='conditional hazard') res <- NULL
+  if (stat=='conditional failure') res <- NULL
   
   return(res)
 }

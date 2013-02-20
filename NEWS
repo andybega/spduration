@@ -1,3 +1,22 @@
+spduration 0.8
+--------------
+
+BUG FIXES
+
+* buildDuration() would drop events that occurred during the first time period of a series, due to the way that onset was coded, e.g. incidence of (1,0,0,0,1) would become one spell that ends in failure after t=4, rather than two spells, both of which end in failure at t=1 and t=4. This has been fixed.
+* Expanded manual for plot.spdur().
+* Set correct values for last and max.iter defaults in spdur()
+
+
+spduration 0.7
+--------------
+
+BUG FIXES
+
+* buildDuration() now works with monthly and yearly data, and will stop if any
+  key variables are missing values (NA).
+* Minor fix in sploglog().
+
 spduration 0.6
 --------------
 

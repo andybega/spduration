@@ -40,8 +40,8 @@ spweibull <- function(Y, X, Z, max.iter) {
     haz <- log(alpha) + (alpha)*log(lambda) + (alpha-1)*log(ti)
     su <- log(exp(-(lambda*ti)^alpha)/exp(-(lambda*t0)^alpha)) 
     su.exp <- exp(su)
-    cens <- ifelse((d==1) & (ly==0) | (d==0), log(pr0+pr1*su.exp), 0)
-    nocens <- ifelse((d==1) & (ly==1), log(pr1)+haz+log(su.exp), 0)
+    cens <- ifelse((d==1) & (ly==0) | (d==0), log(pr0 + pr1*su.exp), 0)
+    nocens <- ifelse((d==1) & (ly==1), log(pr1) + haz + su, 0)
     logl <- sum(cens+nocens)
     return(-logl)
   }
