@@ -8,7 +8,7 @@ Split-population duration (cure) regression
 This function estimates a split-population duration model and returns a object of class ``\code{spdur}''.
 }
 \usage{
-spdur(duration, atrisk, data = NULL, last, distr = "weibull", max.iter = 100, ...)
+spdur(duration, atrisk, data = NULL, last = "end.spell", t.0 = "t.0", distr = "weibull", max.iter = 300, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -23,6 +23,9 @@ A data frame containing the variables in formula and formula2.
 }
   \item{last}{
 A string identifying the vector in \code{data} that indicates when a spell ends due to failure or right-censoring.
+}
+  \item{t.0}{
+The starting point for time-varying covariate intervals, by default \code{duration-1} when using \code{\link{buildDuration}}.
 }
   \item{distr}{
 The type of distribution to use in the hazard rate. Valid options are ``weibull'' or ``loglog''.

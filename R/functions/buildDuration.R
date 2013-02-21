@@ -49,7 +49,7 @@ buildDuration <- function(data, y, unitID, tID, freq="monthly", slice.last=FALSE
   helper <- rep(1, dim(res)[1])
   res <- res[order(res$spellID, res[, tID]), ]
   res$duration <- unlist(by(helper, res$spellID, cumsum))
-  res$t.0 <- duration - 1 ## previous duration
+  res$t.0 <- res$duration - 1 ## previous duration
   
   # Slice option for forecast data; for CRISP/ICEWS
   if (slice.last==TRUE) {

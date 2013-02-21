@@ -8,7 +8,13 @@
 rm(list = ls())
 
 # Package folder name
-package.name <- 'spduration_0.7'
+
+###
+###
+### change version here
+###
+###
+package.name <- 'spduration_0.8'
 
 # Directory in which to create package
 if(Sys.info()["user"]=="ab428") package.path <- paste('~/Dropbox/Work/spdur_package/package', package.name, sep='/')
@@ -46,7 +52,7 @@ model.ins <- spdur(
   atrisk ~ excl_groups_count.l1 + high_neighborhood + high_intensity + exclpop.l1 + lgdppc.l1,
   last='end.spell', data=duration.ins, distr="weibull", max.iter=300)
 rm(duration.ins)
-# log-l should be 249.807508 
+# log-l should be 249.807508 (old) new ll function: 
 
 # Create/navigate to package directory
 if (file.exists(package.path)) {
@@ -82,14 +88,14 @@ package.skeleton('spduration')
 ## 3. ##
 ########
 ## This will build the package using Terminal:
-system('cd ~/Dropbox/Work/spdur_package/package/spduration_0.7')
+system('cd ~/Dropbox/Work/spdur_package/package/spduration_0.8')
 system('R CMD build spduration')
 
 ########
 ## 4. ##
 ########
 ## On the terminal, check if the package is alright.
-system('cd ~/Dropbox/Work/spdur_package/package/spduration_0.7')
+system('cd ~/Dropbox/Work/spdur_package/package/spduration_0.8')
 system('R CMD check spduration')
 
 ########
@@ -97,7 +103,7 @@ system('R CMD check spduration')
 ########
 ## Install and test package
 ##
-install.packages('~/Dropbox/Work/spdur_package/package/spduration_0.7/spduration_0.7.tar.gz', 
+install.packages('~/Dropbox/Work/spdur_package/package/spduration_0.8/spduration_0.8.tar.gz', 
                  repos=NULL, type='source')
 
 ## Restart R
