@@ -40,8 +40,8 @@ function(Y, X, Z, max.iter) {
     ly <- y[,3]
     lambda <- exp(-X%*%beta)
     alpha <- exp(-p)
-    pr1 <- plogis(Z%*%gamma, lower.tail=F)
-    pr0 <- plogis(Z%*%gamma)
+    pr1 <- plogis(Z%*%gamma)
+    pr0 <- plogis(Z%*%gamma, lower.tail=F)
     ln.ft <- log(alpha) + (alpha)*log(lambda) + (alpha-1)*log(ti) - (lambda*ti)^alpha
     st <- (exp(-(lambda*ti)^alpha))
     st0 <- (exp(-(lambda*t0)^alpha))

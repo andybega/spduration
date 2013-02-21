@@ -37,8 +37,8 @@ sploglog <- function(Y, X, Z, max.iter) {
     ly<-y[,3]
     lambda<-exp(-X%*%beta)
     alpha<-exp(-g)
-    pr1 <- plogis(Z%*%gamma, lower.tail=F)
-    pr0 <- plogis(Z%*%gamma)
+    pr1 <- plogis(Z%*%gamma)
+    pr0 <- plogis(Z%*%gamma, lower.tail=F)
     ln.ft <- log(g) + g*log(lambda) + (g-1)*log(ti) -2 * log(1+(lambda*ti)^g)
 	st  <- 1/((1+(lambda*ti)^g))
 	st0 <- 1/((1+(lambda*t0)^g))
