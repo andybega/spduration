@@ -1,5 +1,6 @@
 spweibull <-
 function(Y, X, Z, max.iter) {  
+  require(corpcor) # make.positive.definite
   # Base model likelihood
   weib.lik <- function(theta, y, X) {
     beta <- theta[1:ncol(X)]
@@ -11,7 +12,8 @@ function(Y, X, Z, max.iter) {
     lambda <- exp(-X%*%beta)
     alpha <- exp(-p)
     haz <- log(alpha) + (alpha)*log(lambda) + (alpha-1)*log(ti)
-    su <- log(exp(-(lambda*ti)^alpha)/exp(-(lambda*t0)^alpha)) 
+#     su <- log(exp(-(lambda*ti)^alpha)/exp(-(lambda*t0)^alpha)) 
+    su <- -(lambda*ti)^alpha + (lambda*t0)^alpha
     cens <- ifelse((d==1) & (ly==0) | (d==0) , su , 0)
     nocens <- ifelse((d==1) & (ly==1) , haz+su ,0)
     logl <- sum(cens+nocens)
@@ -59,6 +61,7 @@ function(Y, X, Z, max.iter) {
   if (est$convergence!=0) stop('Model did not converge')
   coef <- est$par
   vcv <- solve(est$hessian)
+  vcv <- make.positive.definite(vcv)
   logL <- -est$value
   
   # Put together results
