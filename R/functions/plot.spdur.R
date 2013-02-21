@@ -11,7 +11,7 @@ plot.spdur <- function(x, ..., failure='failure', endSpellOnly=TRUE)
   if (!'failure' %in% colnames(get(paste(x$call$data)))) stop(paste(failure, 'not in data'))
   
   # Get predicted/observed values
-  pred <- as.vector(as.matrix(predict(x)))
+  pred <- as.vector(as.matrix(predict(x, ...)))
   actual <- get(paste(x$call$data))[, failure]
   
   # Keep end of spell only
