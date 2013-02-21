@@ -42,6 +42,8 @@ an indicator of the incidence of some event, then ongoing spells of failure beyo
 (e.g. 000111 becomes a spell of 0001), and the number of observation in the returned data frame may be lower.
 
 There cannot be missing values ("\code{NA}") in any of the key variables specified in the function call above; they will stop the function.
+
+Furthermore, series that start with an event, e.g. (100), are treated as experiencing failure in the first time period. If those events are in fact ongoing, e.g. the last year of a war that started before the start time of the dataset, they should be dropped manually before using \code{buildDuration()}.
 }
 
 \value{
