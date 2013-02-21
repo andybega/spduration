@@ -6,14 +6,15 @@ sploglog <- function(Y, X, Z, max.iter) {
     g <- theta[ncol(X) + 1]
     d <- y[,1]
     ti <- y[,2]
-    t0 <- y[,2]-1
+    t0 <- y[,4]
     ly <- y[,3]
     lambda <- exp(-X%*%beta)
     alpha <- exp(-g)
-    su <- log((1+(lambda*t0)^g))-log((1+(lambda*ti)^g))
-    haz <- log(g)+g*log(lambda)+(g-1)*log(ti)-log(1+(lambda*ti)^g)
-    cens <- ifelse((d==1) & (ly==0) | (d==0) , su , 0)
-    nocens <- ifelse((d==1) & (ly==1) , haz+su , 0)
+    ln.ft <- log(g) + g*log(lambda) + (g-1)*log(ti) -2 * log(1+(lambda*ti)^g)
+	ln.st  <- -log((1+(lambda*ti)^g))
+	ln.st0 <- -log((1+(lambda*t0)^g))
+    cens <- ifelse((d==1) & (ly==0) | (d==0) , ln.st - ln.st0 , 0)
+    nocens <- ifelse((d==1) & (ly==1) , ln.ft - ln.st0 , 0)
     logl <- sum(cens+nocens)
     return(-logl)
   }
@@ -32,17 +33,17 @@ sploglog <- function(Y, X, Z, max.iter) {
     g<-theta[rx+rz+1]
     d<-y[,1]
     ti<-y[,2]
-    t0<-y[,2]-1
+    t0 <- y[,4]
     ly<-y[,3]
     lambda<-exp(-X%*%beta)
     alpha<-exp(-g)
-    pr1<-plogis(Z%*%gamma)
-    pr0<-plogis(Z%*%gamma, lower.tail=F)
-    su<-log((1+(lambda*t0)^g))-log((1+(lambda*ti)^g))
-    haz<-log(g)+g*log(lambda)+(g-1)*log(ti)-log(1+(lambda*ti)^g)
-    su.exp<-exp(su)
-    cens<-ifelse((d==1) & (ly==0) | (d==0), log(pr0+pr1*su.exp) , 0)
-    nocens<-ifelse((d==1) & (ly==1), log(pr1)+haz+log(su.exp) , 0)
+    pr1 <- plogis(Z%*%gamma, lower.tail=F)
+    pr0 <- plogis(Z%*%gamma)
+    ln.ft <- log(g) + g*log(lambda) + (g-1)*log(ti) -2 * log(1+(lambda*ti)^g)
+	st  <- 1/((1+(lambda*ti)^g))
+	st0 <- 1/((1+(lambda*t0)^g))
+    nocens <- ifelse((d==1) & (ly==1), log(pr1) + ln.ft - log(pr0 + (pr1 * st0)), 0)
+    cens <- ifelse((d==1) & (ly==0) | (d==0), log(pr0 + (pr1 * st)) - log(pr0 + (pr1 * st0)), 0)
     logl<-sum(cens+nocens)
     return(-logl)
   }

@@ -5,7 +5,7 @@
 #
 ###########
 
-spdur <- function(duration, atrisk, data=NULL, last="end.spell", distr='weibull', max.iter=300, ...) { 
+spdur <- function(duration, atrisk, data=NULL, last="end.spell", t.0="t.0", distr='weibull', max.iter=300, ...) { 
   # Duration equation
   mf.dur <- model.frame(formula=duration, data=data)
   X <- model.matrix(attr(mf.dur, 'terms'), data=mf.dur)
@@ -15,7 +15,7 @@ spdur <- function(duration, atrisk, data=NULL, last="end.spell", distr='weibull'
   Z <- model.matrix(attr(mf.risk, 'terms'), data=mf.risk)
   lhg <- model.response(mf.risk)
   # Y vectors
-  Y <- cbind(atrisk=lhg, duration=lhb, last=data[, last])
+  Y <- cbind(atrisk=lhg, duration=lhb, last=data[, last], t.0=data[, t.0])
   
   # Estimation
   if (distr=='weibull') {
