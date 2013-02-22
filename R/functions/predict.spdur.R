@@ -33,23 +33,10 @@ predict.spdur <- function(object, data=NULL, stat='conditional risk', ...) {
   lhg <- model.response(mf.risk) 
   # Y vectors
   Y <- cbind(atrisk=lhg, duration=lhb, last=last)
-
-  if (distr=='weibull') {
-    res <- pred_weibull(coef=coef(object), vcv=object$vcv, Y=Y, X=X, Z=Z, stat)
-  }
-  if (distr=='loglog') {
-    res <- pred_loglog(coef=coef(object), vcv=object$vcv, Y=Y, X=X, Z=Z, stat)
-  }
   
-  return(res)
-}
-
-## Weibull predict function
-# Input: parameters, data, and sims to run
-# Output: vector of predicted probability quantiles
-#
-pred_weibull <- function(coef, vcv, Y, X, Z, stat) {
-  
+  ## Start with actual prediction
+  # coefficients
+  coef <- coef(object)
   coeff.b <- coef[1 : ncol(X)]
   coeff.g <- coef[(ncol(X) + 1) : (ncol(X) + ncol(Z))]
   coeff.a <- coef[(ncol(X) + ncol(Z) + 1)]
@@ -66,8 +53,14 @@ pred_weibull <- function(coef, vcv, Y, X, Z, stat) {
   if (stat=='unconditional risk') res <- atrisk
   
   # S(T)
-  st <- exp(-(la.hat * Y[,2])^al.hat)
-  s0 <- exp(-(la.hat * (Y[,2]-1))^al.hat)
+  if (distr=='weibull') {
+    st <- exp(-(la.hat * Y[,2])^al.hat)
+    s0 <- exp(-(la.hat * (Y[,2]-1))^al.hat)
+  }
+  if (distr=='loglog') {
+    st <- 1/(1+(la.hat * Y[,2])^al.hat)
+    s0 <- 1/(1+(la.hat * Y[,4])^al.hat)
+  }
   
   # Conditional cure/atrisk rate
   cure.t <- cure / (st + cure * (1 - st))
@@ -75,76 +68,18 @@ pred_weibull <- function(coef, vcv, Y, X, Z, stat) {
   if (stat=='conditional cure') res <- cure.t
   if (stat=='conditional risk') res <- atrisk.t
   
-  # f(t) and h(t)
-  ft <- la.hat * al.hat * (la.hat * Y[,2])^(al.hat-1) * exp(-(la.hat * Y[,2])^al.hat) 
+  # f(t)
+  if (distr=='weibull') {
+    ft <- la.hat * al.hat * (la.hat * Y[,2])^(al.hat-1) * exp(-(la.hat * Y[,2])^al.hat) 
+  }
+  if (distr=='loglog') {
+    ft <- (la.hat * al.hat * (la.hat * Y[,2])^(al.hat-1)) / ((1 + (la.hat * Y[,2])^al.hat)^2)  
+  }
+  
   if (stat=='conditional failure') res <- atrisk.t * ft / s0 # Pr(T=t | (T > t-1, not cured)) * Pr(not cured | T > t)
   if (stat=='conditional hazard')  res <- atrisk.t * ft / st # Pr(T=t | (T > t, not cured)) * Pr(not cured | T > t)
   if (stat=='failure')             res <- atrisk * ft / s0   # Pr(T=t | (T > t-1, not cured)) * Pr(not cured)
   if (stat=='hazard')              res <- atrisk * ft / st   # Pr(T=t | (T > t, not cured)) * Pr(not cured)
   
-  return(res)
-}
-  
-#   # Empty results matrix
-#   cure <- matrix(NA, nrow(y), sims)
-#   
-#   for (i in 1:sims){
-#     draw <- mvrnorm(1, coef, vcv)
-#     
-#     lxbeta <- X %*% draw[1:ncol(X)]
-#     pxbeta <- Z %*% draw[(ncol(X)+1):(ncol(X)+ncol(Z))]
-#     alph <- 1*draw[ncol(X)+ncol(Z)+1]
-#     
-#     alph <- exp(-alph)
-#     lyhat <- exp(-lxbeta)
-#     pyhat <- 1/(1+exp(-pxbeta))
-#     cure[, i]<-pyhat/((lyhat*y[,2])^alph+pyhat*(1-(lyhat*y[,2])^alph))
-#   }
-#   print(dim(cure))
-#   predvalues <- apply(cure, 1, quantile, probs = c(0.025,0.5,0.975), na.rm=T)
-#   predvalues <- t(predvalues)
-#   return(predvalues)
-# }
-
-## Loglog predict function
-# Input: parameters, data, and sims to run
-# Output: row-matrix of predicted probability quantiles
-#
-pred_loglog <- function(coef, vcv, Y, X, Z, stat) {
-  # In: matrices
-  # Out: vector
-  
-  coeff.b <- coef[1 : ncol(X)]
-  coeff.g <- coef[(ncol(X) + 1) : (ncol(X) + ncol(Z))]
-  coeff.a <- coef[(ncol(X) + ncol(Z) + 1)]
-  
-  # alpha
-  al.hat <- exp(-coeff.a)  
-  # lambda
-  la.hat <- exp(-X %*% coeff.b)
-  
-  # Unconditional cure/atrisk rate
-  atrisk <- plogis(Z %*% coeff.g)
-  cure <- 1 - atrisk
-  if (stat=='unconditional cure') res <- cure
-  if (stat=='unconditional risk') res <- atrisk
-  
-  # S(T)
-  st <- exp(-(la.hat * Y[,2])^al.hat)
-  s0 <- exp(-(la.hat * (Y[,2]-1))^al.hat)
-  
-  # Conditional cure/atrisk rate
-  cure.t <- cure / (st + cure * (1 - st))
-  atrisk.t  <- 1 - cure.t
-  if (stat=='conditional cure') res <- cure.t
-  if (stat=='conditional risk') res <- atrisk.t
-  
-  # f(t) and h(t)
-  ft <- (la.hat * al.hat * (la.hat * Y[,2])^(al.hat-1)) / ((1 + (la.hat * Y[,2])^al.hat)^2)  
-  if (stat=='conditional failure') res <- atrisk.t * ft / s0  # Pr(T=t | (T > t-1, not cured)) * Pr(not cured | T > t)
-  if (stat=='conditional hazard')  res <- atrisk.t * ft / st  # Pr(T=t | (T > t, not cured)) * Pr(not cured | T > t)
-  if (stat=='failure')             res <- atrisk * ft / s0    # Pr(T=t | (T > t-1, not cured)) * Pr(not cured)
-  if (stat=='hazard')              res <- atrisk * ft / st    # Pr(T=t | (T > t, not cured)) * Pr(not cured)
-
   return(res)
 }

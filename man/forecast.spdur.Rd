@@ -8,7 +8,7 @@ Forecast with split-duration model estimates
 \code{forecast} method for class ``\code{spdur}''.
 }
 \usage{
-\method{forecast}{spdur}(object, \dots, pred.data = NULL, stat = 'hazard', npred = 6)
+\method{forecast}{spdur}(object, \dots, pred.data = NULL, stat = 'conditional hazard', npred = 6)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

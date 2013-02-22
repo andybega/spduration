@@ -124,7 +124,7 @@ BIC.spdur <- function(object, ...)
 #
 ###########
 spdur.crisp <- function (duration, atrisk, train = NULL, test = NULL, 
-                         pred = NULL, last = NULL, distr = NULL, 
+                         pred = NULL, last = NULL, t.0="t.0", distr = NULL, 
                          stat = 'conditional risk', iter = 100, npred=6, ...) {
   if (is.null(data)) stop("No data provided")
   if (is.null(last)) stop("Must specify censoring variable")
