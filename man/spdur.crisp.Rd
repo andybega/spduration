@@ -10,7 +10,7 @@ of the \code{spdur} command by estimating a model, calculating training and vali
 and 6-month forecasts.
 }
 \usage{
-spdur.crisp(duration, atrisk, train = NULL, test = NULL, pred = NULL, last = NULL, distr = NULL, stat = 'conditional risk', iter = 100, npred = 6, ...)
+spdur.crisp(duration, atrisk, train = NULL, test = NULL, pred = NULL, last = NULL, t.0 = "t.0", distr = NULL, stat = 'conditional risk', iter = 100, npred = 6, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

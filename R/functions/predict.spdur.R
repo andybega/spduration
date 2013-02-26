@@ -21,6 +21,7 @@ predict.spdur <- function(object, data=NULL, stat='conditional risk', ...) {
   duration <- eval.parent(object$call$duration, 1)
   atrisk <- eval.parent(object$call$atrisk, 1)
   last <- data[, eval.parent(object$call$last, 1)]
+  t.0 <- data[, eval.parent(object$call$t.0, 1)]
   distr <- eval.parent(object$distr, 1)
   
   # Duration equation
@@ -32,7 +33,7 @@ predict.spdur <- function(object, data=NULL, stat='conditional risk', ...) {
   Z <- model.matrix(attr(mf.risk, 'terms'), data=mf.risk)
   lhg <- model.response(mf.risk) 
   # Y vectors
-  Y <- cbind(atrisk=lhg, duration=lhb, last=last)
+  Y <- cbind(atrisk=lhg, duration=lhb, last=last, t.0=t.0)
   
   ## Start with actual prediction
   # coefficients
@@ -55,7 +56,7 @@ predict.spdur <- function(object, data=NULL, stat='conditional risk', ...) {
   # S(T)
   if (distr=='weibull') {
     st <- exp(-(la.hat * Y[,2])^al.hat)
-    s0 <- exp(-(la.hat * (Y[,2]-1))^al.hat)
+    s0 <- exp(-(la.hat * (Y[,4]))^al.hat)
   }
   if (distr=='loglog') {
     st <- 1/(1+(la.hat * Y[,2])^al.hat)
@@ -76,10 +77,10 @@ predict.spdur <- function(object, data=NULL, stat='conditional risk', ...) {
     ft <- (la.hat * al.hat * (la.hat * Y[,2])^(al.hat-1)) / ((1 + (la.hat * Y[,2])^al.hat)^2)  
   }
   
-  if (stat=='conditional failure') res <- atrisk.t * ft / s0 # Pr(T=t | (T > t-1, not cured)) * Pr(not cured | T > t)
-  if (stat=='conditional hazard')  res <- atrisk.t * ft / st # Pr(T=t | (T > t, not cured)) * Pr(not cured | T > t)
-  if (stat=='failure')             res <- atrisk * ft / s0   # Pr(T=t | (T > t-1, not cured)) * Pr(not cured)
-  if (stat=='hazard')              res <- atrisk * ft / st   # Pr(T=t | (T > t, not cured)) * Pr(not cured)
+  if (stat=='conditional failure') res <- atrisk.t * ft / (cure.t + atrisk.t * s0) # Pr(T=t | (T > t-1, not cured)) * Pr(not cured | T > t)
+  if (stat=='conditional hazard')  res <- atrisk.t * ft / (cure.t + atrisk.t * st) # Pr(T=t | (T > t, not cured)) * Pr(not cured | T > t)
+  if (stat=='failure')             res <- atrisk * ft / (cure + atrisk * s0)       # Pr(T=t | (T > t-1, not cured)) * Pr(not cured)
+  if (stat=='hazard')              res <- atrisk * ft / (cure + atrisk * st)       # Pr(T=t | (T > t, not cured)) * Pr(not cured)
   
   return(res)
 }

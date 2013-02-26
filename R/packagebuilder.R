@@ -14,7 +14,7 @@ rm(list = ls())
 ### change version here
 ###
 ###
-package.name <- 'spduration_0.8'
+package.name <- 'spduration_0.9'
 
 # Directory in which to create package
 if(Sys.info()["user"]=="ab428") package.path <- paste('~/Dropbox/Work/spdur_package/package', package.name, sep='/')
@@ -35,6 +35,7 @@ source('R/functions/sploglog.R')
 source('R/functions/predict.spdur.R')
 source('R/functions/plot.spdur.R')
 source('R/functions/forecast.R')
+source('R/functions/expand.call.R')
 
 # Duration build function
 source('R/functions/buildDuration.R')
@@ -88,14 +89,14 @@ package.skeleton('spduration')
 ## 3. ##
 ########
 ## This will build the package using Terminal:
-system('cd ~/Dropbox/Work/spdur_package/package/spduration_0.8')
+system('cd ~/Dropbox/Work/spdur_package/package/spduration_0.9')
 system('R CMD build spduration')
 
 ########
 ## 4. ##
 ########
 ## On the terminal, check if the package is alright.
-system('cd ~/Dropbox/Work/spdur_package/package/spduration_0.8')
+system('cd ~/Dropbox/Work/spdur_package/package/spduration_0.9')
 system('R CMD check spduration')
 
 ########

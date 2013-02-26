@@ -18,6 +18,7 @@ forecast.spdur <- function(object, ..., pred.data = NULL, stat = 'conditional ha
   # Evaluate call values
   duration <- eval.parent(object$call$duration, 1)
   atrisk <- eval.parent(object$call$atrisk, 1)
+  t.0 <- pred.data[, eval.parent(object$call$t.0, 1)]
   distr <- eval.parent(object$distr, 1)
   
   # Duration equation
@@ -29,7 +30,7 @@ forecast.spdur <- function(object, ..., pred.data = NULL, stat = 'conditional ha
   Z <- model.matrix(attr(mf.risk, 'terms'), data=mf.risk)
   lhg <- model.response(mf.risk) 
   # Y vectors
-  Y <- cbind(atrisk=0, duration=lhb, last=0)
+  Y <- cbind(atrisk=0, duration=lhb, last=0, t.0=t.0)
   
   ## Start with actual prediction
   # coefficients
@@ -122,11 +123,11 @@ forecast.spdur <- function(object, ..., pred.data = NULL, stat = 'conditional ha
       ft[, i] <- (la.hat.pred * al.hat * (la.hat.pred * (Y[,2] + (i - 1)))^(al.hat - 1)) / 
         ((1 + (la.hat.pred * (Y[,2] + (i - 1)))^al.hat)^2)
       # f(t) with unconditional risk
-      if (i==1) u.f[, i] <- atrisk.pred * ft[, i] / s0
-      if (i > 1) u.f[, i] <- atrisk.pred * ft[, i] / st[, (i-1)]
+      if (i==1) u.f[, i] <- atrisk.pred * ft[, i] / (cure.pred + atrisk.pred * s0)
+      if (i > 1) u.f[, i] <- atrisk.pred * ft[, i] / (cure.pred + atrisk.pred * st[, (i-1)])
       # f(t) with risk|t>T
-      if (i==1) u.f[, i] <- atrisk.t[, i] * ft[, i] / s0
-      if (i > 1) u.f[, i] <- atrisk.t[, i] * ft[, i] / st[, (i-1)]
+      if (i==1) u.f[, i] <- atrisk.t[, i] * ft[, i] / (cure.t[, i] + atrisk.t[, i] * s0)
+      if (i > 1) u.f[, i] <- atrisk.t[, i] * ft[, i] / (cure.t[, i] + atrisk.t[, i] * st[, (i-1)])
       # h(t) with unconditional risk
       u.h[, i] <- atrisk.pred*ft[, i] / (cure.pred + atrisk.pred*st[, i])
       # h(t) with risk|t>T

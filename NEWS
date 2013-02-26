@@ -1,3 +1,12 @@
+spduration 0.9
+--------------
+
+BUG FIXES
+
+* spdur() now uses expand.call() instead of match.call() to capture arguments with default parameters. This could previously cause a problem with other methods that used parameters which were not explicitly specified in the user's function call.
+* predict.spdur() and forecast.spdur() updated for new likelihood function.
+
+
 spduration 0.8
 --------------
 
