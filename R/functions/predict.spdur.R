@@ -64,7 +64,7 @@ predict.spdur <- function(object, data=NULL, stat='conditional risk', ...) {
   }
   
   # Conditional cure/atrisk rate
-  cure.t <- cure / (st + cure * (1 - st))
+  cure.t <- cure / pmax(1e-10, (st + cure * (1 - st))) # pmax to avoid dividing it by 0
   atrisk.t  <- 1 - cure.t
   if (stat=='conditional cure') res <- cure.t
   if (stat=='conditional risk') res <- atrisk.t
@@ -77,10 +77,10 @@ predict.spdur <- function(object, data=NULL, stat='conditional risk', ...) {
     ft <- (la.hat * al.hat * (la.hat * Y[,2])^(al.hat-1)) / ((1 + (la.hat * Y[,2])^al.hat)^2)  
   }
   
-  if (stat=='conditional failure') res <- atrisk.t * ft / (cure.t + atrisk.t * s0) # Pr(T=t | (T > t-1, not cured)) * Pr(not cured | T > t)
-  if (stat=='conditional hazard')  res <- atrisk.t * ft / (cure.t + atrisk.t * st) # Pr(T=t | (T > t, not cured)) * Pr(not cured | T > t)
-  if (stat=='failure')             res <- atrisk * ft / (cure + atrisk * s0)       # Pr(T=t | (T > t-1, not cured)) * Pr(not cured)
-  if (stat=='hazard')              res <- atrisk * ft / (cure + atrisk * st)       # Pr(T=t | (T > t, not cured)) * Pr(not cured)
+  if (stat=='conditional failure') res <- atrisk.t * ft / pmax(1e-10, (cure.t + atrisk.t * s0)) # Pr(T=t | (T > t-1, not cured)) * Pr(not cured | T > t)
+  if (stat=='conditional hazard')  res <- atrisk.t * ft / pmax(1e-10, (cure.t + atrisk.t * st)) # Pr(T=t | (T > t, not cured)) * Pr(not cured | T > t)
+  if (stat=='failure')             res <- atrisk * ft / pmax(1e-10, (cure + atrisk * s0))       # Pr(T=t | (T > t-1, not cured)) * Pr(not cured)
+  if (stat=='hazard')              res <- atrisk * ft / pmax(1e-10, (cure + atrisk * st))       # Pr(T=t | (T > t, not cured)) * Pr(not cured)
   
   return(res)
 }
