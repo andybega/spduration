@@ -10,9 +10,9 @@ sploglog <- function(Y, X, Z, max.iter) {
     ly <- y[,3]
     lambda <- exp(-X%*%beta)
     alpha <- exp(-g)
-    ln.ft <- log(g) + g*log(lambda) + (g-1)*log(ti) -2 * log(1+(lambda*ti)^g)
-	ln.st  <- -log((1+(lambda*ti)^g))
-	ln.st0 <- -log((1+(lambda*t0)^g))
+    ln.ft <- log(alpha) + alpha*log(lambda) + (alpha-1)*log(ti) -2 * log(1+(lambda*ti)^alpha)
+	ln.st  <- -log((1+(lambda*ti)^alpha))
+	ln.st0 <- -log((1+(lambda*t0)^alpha))
     cens <- ifelse((d==1) & (ly==0) | (d==0) , ln.st - ln.st0 , 0)
     nocens <- ifelse((d==1) & (ly==1) , ln.ft - ln.st0 , 0)
     logl <- sum(cens+nocens)
