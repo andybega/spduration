@@ -7,39 +7,56 @@
 
 rm(list = ls())
 
-# Package folder name
-
-###
-###
-### change version here
-###
-###
-package.name <- 'spduration_0.9'
-
-# Directory in which to create package
-if(Sys.info()["user"]=="ab428") package.path <- paste('~/Dropbox/Work/spdur_package/package', package.name, sep='/')
-
-# Working directory from which to source functions, data, etc.
-if(Sys.info()["user"]=="ab428") setwd('~/Work/spdur_package')
+# AB: 6.6.2013 starting to transition to devtools/roxygen2
+library(devtools)
+library(roxygen2)
 
 ########
 ## 1. ##
 ########
+##
+## change version here, and workind directors
+##
+pack_ver <- "0.10"
+
+# Working directory from which to source functions, data, etc.
+# And location of package on dropbox (which we will create in a sec.)
+if(Sys.info()["user"]=="ab428") {
+  pack_git <- "~/Work/spdur_package/package/spduration"
+  pack_db <- paste0("~/Dropbox/Work/spdur_package/package/spduration_", 
+                    pack_ver)
+}
+  
+########
+## 1. ##
+########
+##
+## On github:
+##    1. Update "DESCRIPTION"
+##    2. Update "NEWS"
+##
+## On dropbox:
+##    1. Create a folder for the new package version, e.g. spduration_0.10
+##    2. Copy the "spduration" folder from github to this folder.
+##
+
+########
+## 2. ##
+########
 ## Source functions, data, demo, etc. and build package skeleton
 ##
 
+setwd(paste0(pack_db, "/spduration"))
+
 # Core functionality
-source('R/functions/spdur.R')
-source('R/functions/spweibull.R')
-source('R/functions/sploglog.R')
-source('R/functions/predict.spdur.R')
-source('R/functions/plot.spdur.R')
-source('R/functions/forecast.R')
-source('R/functions/expand.call.R')
+source('R/spdur.R')
+source('R/spweibull.R')
+source('R/sploglog.R')
+source('R/expand.call.R')
 
 # Duration build function
-source('R/functions/buildDuration.R')
-source('R/functions/panelLag.R')
+source('R/buildDuration.R')
+source('R/panelLag.R')
 
 # Demo script and data
 load('data/insurgency.rda')
@@ -55,48 +72,18 @@ model.ins <- spdur(
 rm(duration.ins)
 # log-l should be 249.807508 (old) new ll function: 
 
-# Create/navigate to package directory
-if (file.exists(package.path)) {
-  setwd(package.path) 
-  } else {
-  dir.create(file.path(package.path))
-  setwd(package.path)
-}
 
-# Delete if package folder already exists
-if (file.exists('spduration')) unlink('spduration', recursive=T)
+## Build package documentation and package
+setwd(paste0(pack_db, "/spduration"))
 
-# Build package skeleton
-rm(package.name, package.path) 
-package.skeleton('spduration')
-
-########
-## 2. ##
-########
-## Copy and paste from github to package directory.
-##
-## 1. On the github folder, update the version in "DESCRIPTION" and package 
-##    manual file, update "NEWS".
-## 2. Copy & paste from github to dropbox:
-##        "DESCRIPTION"
-##        "NAMESPACE"
-##        "NEWS"
-##        "man" folder
-##        "demo" folder
-##
+document(roclets=c("namespace", "rd"))
 
 ########
 ## 3. ##
 ########
-## This will build the package using Terminal:
-system('cd ~/Dropbox/Work/spdur_package/package/spduration_0.9')
+## This will build and test the package using Terminal:
+setwd(pack_db)
 system('R CMD build spduration')
-
-########
-## 4. ##
-########
-## On the terminal, check if the package is alright.
-system('cd ~/Dropbox/Work/spdur_package/package/spduration_0.9')
 system('R CMD check spduration')
 
 ########
@@ -104,7 +91,7 @@ system('R CMD check spduration')
 ########
 ## Install and test package
 ##
-install.packages('~/Dropbox/Work/spdur_package/package/spduration_0.8/spduration_0.8.tar.gz', 
+install.packages(paste0(pack_db, paste0("spduration_", pack_ver, ".tar.gz"), 
                  repos=NULL, type='source')
 
 ## Restart R
@@ -115,6 +102,7 @@ demo(insurgency)
 ########
 ## 5. ##
 ########
-## Build a Windows version of the package. Go to the following URL and follow the instruction.
+## Build a Windows version of the package. Go to the following URL and follow 
+## the instructions.
 ## http://win-builder.r-project.org/
 ##

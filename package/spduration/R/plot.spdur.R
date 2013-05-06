@@ -1,7 +1,5 @@
-## Separationplot method (not really a method) for spdur
-# Input: parameters, data, and sims to run
-# Output: row-matrix of predicted probability quantiles
-#
+#' @S3method plot spdur
+#' @importFrom separationplot separationplot
 plot.spdur <- function(x, ..., failure='failure', endSpellOnly=TRUE)
 {
   require(separationplot)

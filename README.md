@@ -15,9 +15,8 @@ blah blah
 To do
 ---
 
- * test spdur.crisp, loglog methods
- * add model fit stats, e.g. AIC, BIC
+ * forecast plot function
  * prediction/forecast uncertainty
  * add stats for distinguishing baseline hazard form
  * add exponential
- * add option to look at cure or risk
+ * P. Brandt suggestion about better starting values

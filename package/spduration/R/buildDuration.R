@@ -1,3 +1,5 @@
+#' @export
+#' @importFrom plyr ddply
 buildDuration <- function(data, y, unitID, tID, freq="monthly", slice.last=FALSE) {
   require(plyr)
   

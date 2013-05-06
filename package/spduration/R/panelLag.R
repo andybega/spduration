@@ -1,3 +1,4 @@
+#' @export
 panelLag <- function(x, id, t, lag=1, data=NULL) {
   ## Returns a version of x lagged within panels given by id, in original order
   # Input validation

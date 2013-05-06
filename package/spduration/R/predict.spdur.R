@@ -1,11 +1,4 @@
-###########
-# Predict and separationplot methods
-# December 2012
-# Andreas Beger
-#
-###########
-
-## Main predict method, calls on predict functions for each distribution
+#' @S3method predict spdur
 predict.spdur <- function(object, data=NULL, stat='conditional risk', ...) {
   # Input validation
   stat_choices <- c('conditional risk', 'conditional cure', 'hazard', 'failure',

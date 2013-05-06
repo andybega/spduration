@@ -1,11 +1,4 @@
-## Forecast method
-# Input: object of class 'spdur', time units to predict out
-# Ouput: vector of forecast probabilities
-#
-forecast <- function(object, ...) { UseMethod('forecast') }
-
-forecast.default <- function(object, ...) { NULL }
-
+#' @S3method forecast spdur
 forecast.spdur <- function(object, ..., pred.data = NULL, stat = 'conditional hazard', npred = 6)
 {
   if (is.null(pred.data)) stop("Must provide pred.data")

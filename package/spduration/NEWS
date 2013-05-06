@@ -1,3 +1,10 @@
+spduration 0.10
+---------------
+
+NEW FEATURES
+* Forecast plot function 
+* Started changing package documentation/build process using devtools/roxygen2. Instead of separate, manually updated documentation files, this allows one to write the documentation within the R script for a function, and automatically build documentation during the package creation process.
+
 spduration 0.9
 --------------
 

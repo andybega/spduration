@@ -1,3 +1,4 @@
+#' @importFrom corpcor make.positive.definite
 spweibull <-
 function(Y, X, Z, max.iter) {  
   require(corpcor) # make.positive.definite
