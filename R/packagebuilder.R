@@ -7,7 +7,7 @@
 
 rm(list = ls())
 
-# AB: 6.6.2013 starting to transition to devtools/roxygen2
+# AB: 6.5.2013 starting to transition to devtools/roxygen2
 library(devtools)
 library(roxygen2)
 
@@ -15,7 +15,7 @@ library(roxygen2)
 ## 1. ##
 ########
 ##
-## change version here, and workind directors
+## change version here, and workind directories
 ##
 pack_ver <- "0.10"
 
@@ -28,7 +28,7 @@ if(Sys.info()["user"]=="ab428") {
 }
   
 ########
-## 1. ##
+## 2. ##
 ########
 ##
 ## On github:
@@ -41,7 +41,7 @@ if(Sys.info()["user"]=="ab428") {
 ##
 
 ########
-## 2. ##
+## 3. ##
 ########
 ## Source functions, data, demo, etc. and build package skeleton
 ##
@@ -63,6 +63,7 @@ load('data/insurgency.rda')
 
 # Demo model to save estimation for examples
 duration.ins <- buildDuration(insurgency, 'insurgency', unitID='ccode', tID='date')
+duration.ins <- duration.ins[!is.na(duration.ins$failure), ]
 
 ## Split duration model of insurgency
 model.ins <- spdur(
@@ -70,16 +71,14 @@ model.ins <- spdur(
   atrisk ~ excl_groups_count.l1 + high_neighborhood + high_intensity + exclpop.l1 + lgdppc.l1,
   last='end.spell', data=duration.ins, distr="weibull", max.iter=300)
 rm(duration.ins)
-# log-l should be 249.807508 (old) new ll function: 
-
+# log-l should be 249.807508 (old) new ll function: 315.591765
 
 ## Build package documentation and package
 setwd(paste0(pack_db, "/spduration"))
-
-document(roclets=c("namespace", "rd"))
+document(roclets=c("namespace", "rd"), reload=T)
 
 ########
-## 3. ##
+## 4. ##
 ########
 ## This will build and test the package using Terminal:
 setwd(pack_db)
@@ -92,7 +91,7 @@ system('R CMD check spduration')
 ## Install and test package
 ##
 install.packages(paste0(pack_db, paste0("spduration_", pack_ver, ".tar.gz"), 
-                 repos=NULL, type='source')
+                 repos=NULL, type='source'))
 
 ## Restart R
 
@@ -100,7 +99,7 @@ library(spduration)
 demo(insurgency)
 
 ########
-## 5. ##
+## 6. ##
 ########
 ## Build a Windows version of the package. Go to the following URL and follow 
 ## the instructions.
