@@ -1,7 +1,7 @@
 .Rproj.*
-
+*.Rproj
 .Rhistory
-
 .Rproj.user
-
+.Rbuildignore
 .DS_Store
+
