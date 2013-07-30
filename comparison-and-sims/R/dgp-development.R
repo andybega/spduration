@@ -9,7 +9,7 @@ library(survival)
 # Basic Weibull regression ------------------------------------------------
 
 # Source:
-#browseURL("http://www-stat.ucdavis.edu/~hiwang/teaching/10fall/R_tutorial%202.pdf")
+browseURL("http://www-stat.ucdavis.edu/~hiwang/teaching/10fall/R_tutorial%202.pdf")
 
 set.seed(1)
 N <- 1000
@@ -21,7 +21,7 @@ mu <- exp(xb)
 y <- rweibull(N, shape=5, scale=mu)
 
 model <- survreg(Surv(y, rep(1, N)) ~ x, dist="weibull")
-summary(model)
+cbind(estimate=model$coef, dgp=b)
 
 
 # Weibull regression with censoring ---------------------------------------
@@ -40,7 +40,26 @@ y.cen <- pmin(y, censored.time)
 di <- as.numeric(y<=censored.time)
 
 model <- survreg(Surv(y.cen, di) ~ x, dist="weibull")
-summary(model)
+cbind(estimate=model$coef, dgp=b)
 
 # Weibull regression with TVC ---------------------------------------------
 
+# based on wiki
+ht <- function(t, lambda, p) {
+  p/lambda * (t/lambda)^(p-1)
+}
+ft <- function(t, lambda, p) {
+  p/lambda * (t/lambda)^(p-1) * exp(-(t/lambda)^p)
+}
+plot(ft(0:100, lambda=10, p=exp(1)), type="l")
+plot(ht(0:100, lambda=10, p=exp(1)), type="l")
+
+# based on spdur
+ht <- function(t, lambda, p) {
+  exp(-p) * lambda^exp(-p) * t^(exp(-p) - 1)
+}
+ft <- function(t, lambda, p) {
+  exp(-p) * lambda^exp(-p) * t^(exp(-p) - 1) * exp(-(lambda*t)^exp(-p))
+}
+plot(ft(0:100, lambda=0.1, p=-1), type="l")
+plot(ht(0:100, lambda=0.1, p=-1), type="l")
