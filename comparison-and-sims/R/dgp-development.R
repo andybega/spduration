@@ -44,6 +44,14 @@ cbind(estimate=model$coef, dgp=b)
 
 # Weibull regression with TVC ---------------------------------------------
 
+
+
+
+# Different parametrizations ----------------------------------------------
+# Looks like MG's notes are different, mainly in that they have (lt)^p instead
+# of l*t^p. So, are there parentheses or not? In practice they may not affect
+# predictive performance, just comparison of models, and interpretation.
+
 # based on wiki
 ht <- function(t, lambda, p) {
   p/lambda * (t/lambda)^(p-1)
@@ -63,3 +71,24 @@ ft <- function(t, lambda, p) {
 }
 plot(ft(0:100, lambda=0.1, p=-1), type="l")
 plot(ht(0:100, lambda=0.1, p=-1), type="l")
+
+# Survival parametrization
+ht <- function(t, lambda, p) {
+  p * lambda * t^(p-1)
+}
+ft <- function(t, lambda, p) {
+  p * lambda * t^(p-1) * exp(-lambda * t^(p))
+}
+plot(ft(0:500, lambda=0.1, p=1.5), type="l")
+plot(ht(0:500, lambda=0.1, p=1.5), type="l")
+
+# now in MG style
+# Survival parametrization
+ht <- function(t, lambda, p) {
+  p * lambda^p * t^(p-1)
+}
+ft <- function(t, lambda, p) {
+  p * lambda^p * t^(p-1) * exp(-(lambda*t)^p)
+}
+plot(ft(0:500, lambda=0.1, p=1.5), type="l")
+plot(ht(0:500, lambda=0.1, p=1.5), type="l")
