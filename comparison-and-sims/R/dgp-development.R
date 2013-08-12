@@ -44,8 +44,47 @@ cbind(estimate=model$coef, dgp=b)
 
 # Weibull regression with TVC ---------------------------------------------
 
+set.seed(1)
+N <- 100
+t <- 0:(N-1)
+alpha <- 1
+p <- -log(alpha)
+x <- matrix(rep(1, N))  #rnorm(100, mean=-3, sd=0.1)
+b <- matrix(2) #rnorm(1)
+lambda <- exp(-x%*%b)
+ht <- alpha * lambda^alpha * t^(alpha - 1)
+p <- runif(N)
+d <- (ht > p)
+spell <- data[1:match(1, d)]
+
+# different approach
+# seems to give the same
 
 
+GenSpell <- function(t.max, alpha, b, seed) {
+  set.seed(seed)
+  t <- seq(0, (t.max - 1))
+  x1 <- rep(1, t.max)
+  lambda <- exp(-cbind(rep(1, t.max), x1) %*% b)
+  y.true <- rweibull(t.max, shape=alpha, scale=1/lambda)
+  d <- as.integer(t>=y.true)
+  data <- data.frame(t, x1, lambda, y.true, d)
+  spell <- data[1:match(1, data$d), ]
+  print(spell)
+  return(max(spell$t))
+}
+
+t.max <- 100
+alpha <- 2
+p <- -log(alpha)
+b <- matrix(c(0, 2), ncol=1) #rnorm(1)
+GenSpell(t.max, alpha, b, 6)
+
+seeds <- as.integer(runif(1000, min=1, max=100000))
+
+results <- sapply(seeds, GenSpell, t.max=t.max, alpha=alpha, b=b)
+hist(rweibull(t.max, shape=alpha, scale=1/lambda))
+hist(results)
 
 # Different parametrizations ----------------------------------------------
 # Looks like MG's notes are different, mainly in that they have (lt)^p instead
@@ -69,8 +108,8 @@ ht <- function(t, lambda, p) {
 ft <- function(t, lambda, p) {
   exp(-p) * lambda^exp(-p) * t^(exp(-p) - 1) * exp(-(lambda*t)^exp(-p))
 }
-plot(ft(0:100, lambda=0.1, p=-1), type="l")
-plot(ht(0:100, lambda=0.1, p=-1), type="l")
+plot(ft(0:100, lambda=0.1, p=-log(1)), type="l")
+plot(ht(0:100, lambda=0.1, p=-log(1)), type="l")
 
 # Survival parametrization
 ht <- function(t, lambda, p) {
