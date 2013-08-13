@@ -10,11 +10,13 @@ setwd("~/Work/spdur_package/comparison-and-sims/")
 # Libraries
 library(spduration)
 library(CRISP)
+library(ggplot2)
 library(pROC)
+library(xtable)
 
 # create connection to log file
 log.name <- paste0("cure_", gsub(":", "-", sub(" ", "_", Sys.time())), ".txt")
-sink(log.name)
+sink(paste0("logs/", log.name))
 cat(paste0("\n", " Split-duration cure coding problem\n", 
            paste(rep("=", 50), collapse=""), "\n"))
 cat(paste0("\nTime: ", Sys.time(), "\nUser: ", Sys.info()[ "user"], "\n\n"))
@@ -50,6 +52,8 @@ crisp.data <- subset(crisp.data, select=keep)
 
 # Build duration data and check spdur and CRISP spdur() match -------------
 
+section("Check that CRISP and spduration spdur() match.")
+
 reb.data <- build.duration(data=crisp.data, y="rebellion", cutoffs$trainingend, 
                            cutoffs$teststart, cutoffs$dataend)
 
@@ -57,12 +61,14 @@ train <- reb.data$training
 test <- reb.data$test
 pred.data <- reb.data$pred.data
 
+catl("Model using CRISP::spdur")
 model <- CRISP::spdur(
   duration ~  high_neighbors + high_intensity + low_intensity, 
   c ~ Amnesty.l1 + polity2.l1 + lgdpc.l1 + lpop.l1, 
   last=train$end.spell, data=train, test=test, distr="weibull", iter=300
   )
 
+catl("Model using spduration:::spdur_crisp")
 model2 <- spduration:::spdur_crisp(
   duration ~  high_neighbors + high_intensity + low_intensity, 
   c ~ Amnesty.l1 + polity2.l1 + lgdpc.l1 + lpop.l1, 
@@ -78,6 +84,8 @@ data.frame(spduration=coef(model2), crisp=model$model$coef)
 
 
 # How often does cure coding change? --------------------------------------
+
+section("How often does cure coding change?")
 
 # Function that for a given date, sees how many failures there are later
 # for spells that are coded as cured.
@@ -100,25 +108,35 @@ failLater <- function(trainend) {
 }
 
 delivery <- failLater(cutoffs$trainingend)
-table(delivery$cured$duration)
+cured.tc <- data.frame(table(delivery$cured$duration))
+names(cured.tc) <- c("t.censor", "Count")
+xtable(cured.tc)
 
 # Function to summarize the key results
 sum.failLater <- function(...) {
   data <- failLater(...)
   res <- data.frame(trainend=data$trainend, 
                     spells=dim(data$spell.ends)[1],
-                    failed=sum(data$spell.ends$failure, na.rm=T),
+                    failed=as.integer(sum(data$spell.ends$failure, na.rm=T)),
                     cured=dim(data$cured)[1],
                     late.fail=sum(data$cured$later.fail)
                     )
   res
 }
 
+# Roll through several train end dates to see how much misclassification
+# changes:
 sum.failLater(cutoffs$trainingend)
 dates <- seq.Date(as.Date("2001-11-01"), as.Date("2012-11-01"), by="year")
-cure.codings <- do.call(rbind, lapply(dates, sum.failLater))
+cure.codings <- do.call(rbind, lapply(rev(dates), sum.failLater))
+cure.codings$trainend <- as.character(cure.codings$trainend)
+
+# get percent misclassified as cured: 
+cure.codings$f.neg <- with(cure.codings, late.fail/(failed + late.fail))
+cure.codings$f.neg <- round(cure.codings$f.neg, digits=2)
+
 catl("CRISP cure miscoding by train end cutoff")
-cure.codings
+xtable(cure.codings)
 
 
 # Durations and alternatives for cure coding ------------------------------
