@@ -1,3 +1,5 @@
+#' Expand call to full names.
+#' 
 #' Return a call in which all of the arguments which were supplied
 #' or have presets are specified by their full names and supplied
 #' or default values.

@@ -1,3 +1,16 @@
+#' Plot predicted values for a country
+#' 
+#' @param eoi Name of variable of interest as quoted string.
+#' @param model An object of class \code{spdur}.
+#' @param country
+#' @param lastMonth
+#' @param fcastMonths
+#' @param cumul
+#' @param yext
+#' 
+#' @author Shahryar Minhas, Andreas Beger
+#' @export
+
 # rm(list=ls())
 # # setwd('~/Dropbox/Work/spdur_package/package/spduration_0.9/spdurationCNTRYplot')
 # setwd('~/Dropbox/spdur_package/package/spduration_0.9/spdurationCNTRYplot')
