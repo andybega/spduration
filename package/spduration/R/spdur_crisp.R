@@ -24,7 +24,9 @@
 #' 
 #' @author Andreas Beger
 #' @seealso \code{\link{spdur}}
-#' @example
+#' 
+#' @examples
+#' \dontrun{
 #' # Prepare data
 #' data(insurgency)
 #' duration.ins <- buildDuration(insurgency, 'insurgency', unitID='ccode', tID='date')
@@ -34,6 +36,7 @@
 #' duration ~ low_intensity + high_neighbors + exclpop.l1,
 #' atrisk ~ excl_groups_count.l1 + high_neighborhood + high_intensity + exclpop.l1 + lgdppc.l1,
 #' last='end.spell', train=duration.ins, test=duration.ins[1,], pred=duration.ins[1,], distr="weibull", iter=300)
+#' }
 #' 
 #' @export
 

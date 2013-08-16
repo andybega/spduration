@@ -1,13 +1,57 @@
+#' Split-population duration (cure) regression
+#' 
+#' This function estimates a split-population duration model and returns a 
+#' object of class \code{spdur}.
+#' 
+#' @param duration A formula of the form Y ~ X1 + X2 \dots, where Y is duration 
+#' until failure or censoring.
+#' @param atrisk A formula of the form C ~ Z1 + Z2 \dots, where C is a binary 
+#' indicator of risk (1 - cure).
+#' @param data A data frame containing the variables in formula and formula2.
+#' @param last A string identifying the vector in \code{data} that indicates 
+#' when a spell ends due to failure or right-censoring.
+#' @param t.0 The starting point for time-varying covariate intervals, by 
+#' default \code{duration-1} when using \code{\link{buildDuration}}.
+#' @param distr The type of distribution to use in the hazard rate. Valid 
+#' options are ``weibull'' or ``loglog''.
+#' @param max.iter Maximum number of iterations to use in the likelihood 
+#' maximization.
+#' @param \dots Additional parameters passed to \code{spdur()}
+#' 
+#' @details See \code{\link{summary.spdur}}, \code{\link{predict.spdur}} ,
+#' \code{\link{plot.spdur}}, and \code{\link{countryplot}} for post-estimation
+#' options.
+#' 
+#' @return Returns an object of class \code{spdur}, with attributes:
+#' \item{coefficients }{A named vector of coefficient point estimates.}
+#' \item{vcv }{Estimated covariance matrix.}
+#' \item{se }{Standard error estimates.}
+#' \item{zstat }{Z-statistic values.}
+#' \item{pval }{P-values.}
+#' \item{call }{The original, unevaluated \code{spdur} call.}
+#' \item{distr }{Distribution used for the hazard rate.}
+#' 
+#' @author Andreas Beger
+#' 
+#' @examples
+#' \dontrun{
+#' # Prepare data
+#' data(insurgency)
+#' duration.ins <- buildDuration(insurgency, 'insurgency', unitID='ccode', tID='date')
+#' duration.ins <- duration.ins[!is.na(duration.ins$failure), ]
+#'
+#' # Estimate model
+#' model <- spdur(
+#'   duration ~ low_intensity + high_neighbors + exclpop.l1,
+#'   atrisk ~ excl_groups_count.l1 + high_neighborhood + high_intensity + exclpop.l1 + 
+#'     lgdppc.l1,
+#'   last='end.spell', data=duration.ins, distr="weibull", max.iter=300)
+#' }
+#' 
 #' @export spdur
 
-##########
-# What: spdur R package core functions
-# Date: November 2012
-# Who:  Andreas Beger, Daniel W. Hill, Nils Metternich
-#
-###########
-
-spdur <- function(duration, atrisk, data=NULL, last="end.spell", t.0="t.0", distr='weibull', max.iter=300, ...) { 
+spdur <- function(duration, atrisk, data=NULL, last="end.spell", t.0="t.0", 
+                  distr='weibull', max.iter=300, ...) { 
   # Duration equation
   mf.dur <- model.frame(formula=duration, data=data)
   X <- model.matrix(attr(mf.dur, 'terms'), data=mf.dur)

@@ -25,6 +25,10 @@ if(Sys.info()["user"]=="ab428") {
   pack_git <- "~/Work/spdur_package/package/spduration"
   pack_db <- paste0("~/Dropbox/Work/spdur_package/package/spduration_", 
                     pack_ver)
+} else if(Sys.info()["user"]=="adbeger") {
+  pack_git <- "~/Work/spdur_package/package/spduration"
+  pack_db <- paste0("~/Dropbox/Work/spdur_package/package/spduration_", 
+                    pack_ver)
 }
   
 ########
@@ -35,15 +39,15 @@ if(Sys.info()["user"]=="ab428") {
 ##    1. Update "DESCRIPTION"
 ##    2. Update "NEWS"
 ##
-## On dropbox:
-##    1. Create a folder for the new package version, e.g. spduration_0.10
-##    2. Copy the "spduration" folder from github to this folder.
-##
+
+# Create package directory on dropbox and copy git package to it
+dir.create(pack_db)
+file.copy(from=pack_git, to=pack_db, recursive=T)
 
 ########
 ## 3. ##
 ########
-## Source functions, data, demo, etc. and build package skeleton
+## Source functions, data, demo, etc. and create manuals
 ##
 
 setwd(paste0(pack_db, "/spduration"))
@@ -74,7 +78,6 @@ rm(duration.ins)
 # log-l should be 249.807508 (old) new ll function: 315.591765
 
 ## Build package documentation and package
-setwd(paste0(pack_db, "/spduration"))
 document(roclets=c("namespace", "rd"), reload=T)
 
 ########
