@@ -1,7 +1,7 @@
 #' @export
 #' @importFrom plyr ddply
-buildDuration <- function(data, y, unitID, tID, freq="monthly", slice.last=FALSE) {
-  require(plyr)
+buildDuration <- function(data, y, unitID, tID, freq="monthly", 
+                          slice.last=FALSE) {
   
   # Check input
   if (class(data[, tID])!="Date") stop(paste(tID, "is not class 'Date' (?as.Date())"))

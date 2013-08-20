@@ -47,7 +47,7 @@ file.copy(from=pack_git, to=pack_db, recursive=T)
 ########
 ## 3. ##
 ########
-## Source functions, data, demo, etc. and create manuals
+## Estimate and save demo model
 ##
 
 setwd(paste0(pack_db, "/spduration"))
@@ -80,16 +80,29 @@ rm(duration.ins)
 # save model to data
 save(model.ins, file=paste0(pack_db, "/spduration/data/model.ins.rda"))
 
-## Build package documentation and package
-document(roclets=c("namespace", "rd"), reload=T)
-
 ########
 ## 4. ##
 ########
+## Create documentation and 00Index for demo
+##
+
+# Build package documentation and namespace
+document(roclets=c("namespace", "rd"), reload=T)
+
+# Write 00Index for demo
+file.name <- paste0(pack_db, "/spduration/demo/00Index")
+file.text <- "insurgency   Split-duration model of CRISP insurgency data.\n"
+write(file.text, file=file.name)
+
+########
+## 5. ##
+########
 ## This will build and test the package using Terminal:
+
 setwd(pack_db)
-system('R CMD build spduration')
-system('R CMD check spduration')
+system("find . -name '*.DS_Store' -type f -delete")  # delete .DS_Store
+system("R CMD build spduration")
+system("R CMD check spduration")
 
 ########
 ## 5. ##

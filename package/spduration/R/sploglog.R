@@ -1,6 +1,6 @@
 #' @importFrom corpcor make.positive.definite
 sploglog <- function(Y, X, Z, max.iter) {
-  require(corpcor) # make.positive.definite
+  
   # Base model likelihood
   loglog.lik <- function(theta, y, X){
     beta <- theta[1:ncol(X)]

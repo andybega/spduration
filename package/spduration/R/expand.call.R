@@ -27,7 +27,8 @@ expand.call <- function(definition=NULL,
     return(gsub("[[:space:]][[:space:]]+", " ", ret))
   }
   
-  call <- .Internal(match.call(definition, call, expand.dots))
+  print(call)
+  call <- match.call(definition, call, expand.dots)
   
   #supplied args:
   ans <- as.list(call)

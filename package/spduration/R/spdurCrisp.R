@@ -58,12 +58,15 @@
 spdurCrisp <- function (duration, atrisk, train = NULL, test = NULL, 
                         pred = NULL, last = NULL, t.0="t.0", distr = NULL, 
                         stat = 'conditional risk', iter = 100, npred=6, ...) {
+  
+  # Input validation
   if (is.null(data)) stop("No data provided")
   if (is.null(last)) stop("Must specify censoring variable")
   if (is.null(distr)) stop("Must specify distribution")
   
   # Estimate parameters
-  model <- spdur(duration=duration, atrisk=atrisk, data=train, last=last, distr=distr, max.iter=iter)
+  model <- spdur(duration=duration, atrisk=atrisk, data=train, last=last, 
+                 distr=distr, max.iter=iter)
   
   # In-sample and test predictions
   cat('Training set predictions...\n')

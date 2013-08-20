@@ -81,7 +81,7 @@ spdur <- function(duration, atrisk, data=NULL, last="end.spell", t.0="t.0",
   est$pval <- 2*(1-pnorm(abs(est$zstat)))
   
   # Other class elements
-  est$call <- expand.call() # instead of match.call to catch default parameters
+  est$call <- expand.call(definition=spdur) # instead of match.call to catch default parameters
   est$distr <- eval.parent(distr, 1)
   est$obs <- nrow(Y)
   
