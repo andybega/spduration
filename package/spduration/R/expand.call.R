@@ -17,7 +17,8 @@
 #' @seealso \code{\link[base]{match.call}}
 expand.call <- function(definition=NULL,
                         call=sys.call(sys.parent(1)),
-                        expand.dots = TRUE)
+                        expand.dots = TRUE,
+                        eval=FALSE)
 {
   
   safeDeparse <- function(expr){
@@ -30,7 +31,7 @@ expand.call <- function(definition=NULL,
   
   #supplied args:
   ans <- as.list(call)
-  #if(eval) ans[-1] <- lapply(ans[-1], eval)
+  if(eval) ans[-1] <- lapply(ans[-1], eval)
   
   #possible args:
   frmls <- formals(safeDeparse(ans[[1]]))

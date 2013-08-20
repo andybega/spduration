@@ -4,18 +4,22 @@
 #' original functionality of the \code{spdur} command by estimating a model, 
 #' calculating training and validation set fitted values and 6-month forecasts.
 #' 
-#' @param duration Duration model formula.
-#' @param atrisk Risk model formula.
+#' @param duration A formula of the form Y ~ X1 + X2 \dots, where Y is duration 
+#' until failure or censoring.
+#' @param atrisk A formula of the form C ~ Z1 + Z2 \dots, where C is a binary 
+#' indicator of risk (1 - cure).
 #' @param train Object containing the training data used to estimate the model.
 #' @param test Object containing the test data used to validate the model.
 #' @param pred Object containing the data to use for forecasting.
-#' @param last
-#' @param t.0 Variable indicating the start time for an observation. By default
-#' duration-1.
-#' @param distr Distribution for the hazard rate, either "weibull" or 
-#' "lognormal".
+#' @param last A string identifying the vector in \code{data} that indicates 
+#' when a spell ends due to failure or right-censoring.
+#' @param t.0 The starting point for time-varying covariate intervals, by 
+#' default \code{duration-1} when using \code{\link{buildDuration}}.
+#' @param distr The type of distribution to use in the hazard rate. Valid 
+#' options are ``weibull'' or ``loglog''.
 #' @param stat See \code{\link[spduration]{predict.spdur}}
-#' @param iter Maximum iterations to use in optimization.
+#' @param iter Maximum number of iterations to use in the likelihood 
+#' maximization.
 #' @param npred Number of months to predict out.
 #' @param \dots Optional arguments; not used currently.
 #' 
@@ -32,16 +36,15 @@
 #' duration.ins <- buildDuration(insurgency, 'insurgency', unitID='ccode', tID='date')
 #' 
 #' # Estimate model
-#' model3 <- spdur.crisp(
-#' duration ~ low_intensity + high_neighbors + exclpop.l1,
-#' atrisk ~ excl_groups_count.l1 + high_neighborhood + high_intensity + exclpop.l1 + lgdppc.l1,
-#' last='end.spell', train=duration.ins, test=duration.ins[1,], pred=duration.ins[1,], distr="weibull", iter=300)
+#' model3 <- spdurCrisp(
+#'   duration ~ low_intensity + high_neighbors + exclpop.l1,
+#'   atrisk ~ excl_groups_count.l1 + high_neighborhood + high_intensity + 
+#'     exclpop.l1 + lgdppc.l1,
+#'   last='end.spell', train=duration.ins, test=duration.ins[1,], 
+#'   pred=duration.ins[1,], distr="weibull", iter=300)
 #' }
 #' 
-#' @export
-
-
-#' @export spdur_crisp
+#' @export spdurCrisp
 ##########
 # spdur-crisp
 # Top level wrapper
@@ -52,9 +55,9 @@
 # - clean up code
 #
 ###########
-spdur_crisp <- function (duration, atrisk, train = NULL, test = NULL, 
-                         pred = NULL, last = NULL, t.0="t.0", distr = NULL, 
-                         stat = 'conditional risk', iter = 100, npred=6, ...) {
+spdurCrisp <- function (duration, atrisk, train = NULL, test = NULL, 
+                        pred = NULL, last = NULL, t.0="t.0", distr = NULL, 
+                        stat = 'conditional risk', iter = 100, npred=6, ...) {
   if (is.null(data)) stop("No data provided")
   if (is.null(last)) stop("Must specify censoring variable")
   if (is.null(distr)) stop("Must specify distribution")

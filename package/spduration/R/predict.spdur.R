@@ -1,3 +1,57 @@
+#' Predict fitted values for a split-population duration model
+#' 
+#' \code{predict} method for class ``\code{spdur}''.
+#' 
+#' @method predict spdur
+#' 
+#' @param object Object of class ``\code{spdur}''.
+#' @param data Optional data for which to calculate fitted values, defaults to 
+#' training data.
+#' @param stat Quantity of interest to calculate. Default conditional probability 
+#' of being at risk, i.e. conditioned on observed survival up to time \code{t}. 
+#' See below for list of values.
+#' @param \dots Optional arguments to pass to \code{predict} function.
+#' 
+#' @details
+#' Calculates various types of probabilities, where ``conditional'' is used in 
+#' reference to conditioning on the observed survival time of a spell up to 
+#' time \eqn{t}, in addition to conditioning on any variables included in the 
+#' model (which is always done). Valid values for the \code{stat} option 
+#' include:
+#' \itemize{
+#' \item ``conditional risk'': \eqn{Pr(Cure=0|Z\gamma, T>t)}{Pr(Cure=0|Z*gamma, T>t)}
+#' \item ``conditional cure'': \eqn{Pr(Cure=1|Z\gamma, T>t)}{Pr(Cure=1|Z*gamma, T>t)}
+#' \item ``hazard'': \eqn{Pr(T=t|T>t, C=0, X\beta) * Pr(Cure=0|Z\gamma)}{Pr(T=t|T>t, C=0, X*beta) * Pr(Cure=0|Z*gamma)}
+#' \item ``failure'': \eqn{Pr(T=t|T>t-1, C=0, X\beta) * Pr(Cure=0|Z\gamma)}{Pr(T=t|T>t-1, C=0, X*beta) * Pr(Cure=0|Z*gamma)}
+#' \item ``unconditional risk'': \eqn{Pr(Cure=0|Z\gamma)}{Pr(Cure=0|Z*gamma)}
+#' \item ``unconditional cure'': \eqn{Pr(Cure=1|Z\gamma)}{Pr(Cure=1|Z*gamma)}
+#' \item ``conditional hazard'': \eqn{Pr(T=t|T>t, C=0, X\beta) * Pr(Cure=0|Z\gamma, T>t)}{Pr(T=t|T>t, C=0, X*beta) * Pr(Cure=0|Z*gamma, T>t)}
+#' \item ``conditional failure'': \eqn{Pr(T=t|T>t-1, C=0, X\beta) * Pr(Cure=0|Z\gamma, T>t)}{Pr(T=t|T>t-1, C=0, X*beta) * Pr(Cure=0|Z*gamma, T>t)}
+#' }
+#' The vector \eqn{Z\gamma}{Z*gamma} indicates the cure/at risk equation 
+#' covariate vector, while \eqn{X\beta}{X*beta} indicates the duration equation 
+#' covariate vector.
+#' 
+#' @return
+#' Returns a data frame with 1 column corresponding to \code{stat}, in the same 
+#' order as the data frame used to estimate \code{object}.
+#' 
+#' @author Andreas Beger, Daina Chiba, Daniel W. Hill, Nils Metternich
+#' 
+#' @note See \code{\link{forecast.spdur}} for producing forecasts when future 
+#' covariate values are unknown.
+#' 
+#' @examples
+#' # build data
+#' data(insurgency)
+#' duration.ins <- buildDuration(insurgency, 'insurgency', unitID='ccode', 
+#'                               tID='date')
+#' duration.ins <- duration.ins[!is.na(duration.ins$failure), ]
+#' 
+#' # get model estimates
+#' data(model.ins)
+#' atrisk <- predict(model.ins)
+#' 
 #' @S3method predict spdur
 predict.spdur <- function(object, data=NULL, stat='conditional risk', ...) {
   # Input validation

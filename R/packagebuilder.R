@@ -77,6 +77,9 @@ model.ins <- spdur(
 rm(duration.ins)
 # log-l should be 249.807508 (old) new ll function: 315.591765
 
+# save model to data
+save(model.ins, file=paste0(pack_db, "/spduration/data/model.ins.rda"))
+
 ## Build package documentation and package
 document(roclets=c("namespace", "rd"), reload=T)
 
