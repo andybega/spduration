@@ -1,3 +1,34 @@
+#' Lag panel data
+#' 
+#' A function that correctly lags panel data where units are identified by 
+#' \code{id} and time periods are identified with \code{t}. Results are in same 
+#' order as \code{data} and are padded with \code{NA} as needed.
+#' 
+#' @param x String identifying the vectors to be lagged in \code{data}.
+#' @param id String identifying the unit (e.g. country) identifier in 
+#' \code{data}.
+#' @param t String identifying the time identifier in \code{data}.
+#' @param lag Lag order, i.e. by how many time periods should \code{x} be 
+#' lagged? Unlike the default \code{\link{lag}}, positive values indicate
+#' that past data is used for the current time period.
+#' @param data A data frame. If not provided, a new one will be constructed
+#' with the vectors supplied for the other parameters.
+#' 
+#' @return A vector of same length as \code{x} representing lagged values with 
+#' leading \code{NA}'s.
+#' 
+#' @author Andreas Beger
+#' 
+#' @examples
+#' data(insurgency)
+#' # No need to order before using panelLag, just do it here so we can compare results below.
+#' insurgency <- insurgency[order(insurgency$ccode, insurgency$date), ]
+#' test <- panelLag('lgdppc.l1', 'ccode', 'date', data=insurgency)
+#' 
+#' # Compare output
+#' head(test)
+#' head(insurgency$lgdppc.l1)
+#' 
 #' @export
 panelLag <- function(x, id, t, lag=1, data=NULL) {
   ## Returns a version of x lagged within panels given by id, in original order

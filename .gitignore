@@ -6,4 +6,5 @@
 *.DS_Store
 comparison-and-sims/logs/*
 .Rdata
+.Rapp*
 
