@@ -55,9 +55,10 @@
 # - clean up code
 #
 ###########
-spdurCrisp <- function (duration, atrisk, train = NULL, test = NULL, 
-                        pred = NULL, last = NULL, t.0="t.0", distr = NULL, 
-                        stat = 'conditional risk', iter = 100, npred=6, ...) {
+spdurCrisp <- function (duration, atrisk, train = train, test = test, 
+                        pred = pred, last = "end.spell", t.0="t.0", 
+                        distr = "weibull", stat = 'conditional risk', 
+                        iter = 100, npred=6, ...) {
   
   # Input validation
   if (is.null(data)) stop("No data provided")
@@ -78,14 +79,15 @@ spdurCrisp <- function (duration, atrisk, train = NULL, test = NULL,
   cat('Forecast...\n')
   pred.p <- forecast(model, pred.data=pred, stat=stat, npred=npred)
   
-  # Format and show estimates
-  print(summary(model))
-  
+  # Prepare and return results
   res <- model
+  res$call <- expand.call(definition=spdurCrisp)  # Fix to correct call  
   res$train.p <- train.p
   res$test.p <- test.p
   res$pred.p <- pred.p
   class(res) <- c('crisp', 'spdur')
-  
   return(res)
+  
+  # Format and show estimates
+  print(summary(model))
 }

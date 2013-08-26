@@ -4,7 +4,7 @@
 #' @param model An object of class \code{spdur}.
 #' @param country Name of the country to plot.
 #' @param lastMonth Month from which to forecast from, as a date object
-#' e.g. \code{as.Date("2001-03-01)}
+#' e.g. \code{as.Date("2001-03-01")}
 #' @param fcastMonths Number of months to forecast ahead.
 #' @param cumul Show cumulative or absolute probabilities of an event? (T/F)
 #' @param yext Extend y-axis to theoretical maximum of 1? (T/F)

@@ -10,6 +10,8 @@ rm(list = ls())
 # AB: 6.5.2013 starting to transition to devtools/roxygen2
 library(devtools)
 library(roxygen2)
+library(plyr)
+library(corpcor)
 
 ########
 ## 1. ##
@@ -63,22 +65,21 @@ source('R/buildDuration.R')
 source('R/panelLag.R')
 
 # Demo script and data
-load('data/insurgency.rda')
+load('data/coups.rda')
 
 # Demo model to save estimation for examples
-duration.ins <- buildDuration(insurgency, 'insurgency', unitID='ccode', tID='date')
-duration.ins <- duration.ins[!is.na(duration.ins$failure), ]
+dur.coup <- buildDuration(coups, "succ.coup", unitID='gwcode', tID='year',
+                          freq="yearly")
+dur.coup <- dur.coup[!is.na(dur.coup$polity2), ]
+dur.coup <- dur.coup[!is.na(dur.coup$failure), ]
 
 ## Split duration model of insurgency
-model.ins <- spdur(
-  duration ~ low_intensity + high_neighbors + exclpop.l1,
-  atrisk ~ excl_groups_count.l1 + high_neighborhood + high_intensity + exclpop.l1 + lgdppc.l1,
-  last='end.spell', data=duration.ins, distr="weibull", max.iter=300)
-rm(duration.ins)
+model.coups <- spdur(duration ~ polity2, atrisk ~ polity2, data=dur.coup)
+rm(dur.coup)
 # log-l should be 249.807508 (old) new ll function: 315.591765
 
 # save model to data
-save(model.ins, file=paste0(pack_db, "/spduration/data/model.ins.rda"))
+save(model.coups, file=paste0(pack_db, "/spduration/data/model-coups.rda"))
 
 ########
 ## 4. ##

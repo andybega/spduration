@@ -2,7 +2,13 @@ spduration 0.10
 ---------------
 
 NEW FEATURES
-* Forecast plot function 
+
+* Forecast plot function. This will plot the series for a particular country, indicating failed and ongoing event time periods, along with an overlay of model predictions.
+* New example data for global coups. This is publicly releasable data, unlike the previous demo data used during development.
+
+BUG FIXES
+
+* Renamed wrapper for CRISP to `spdurCrisp` to avoid confusion with methods. Previously it was `spdur.crisp` and `spdur_crisp`.
 * Started changing package documentation/build process using devtools/roxygen2. Instead of separate, manually updated documentation files, this allows one to write the documentation within the R script for a function, and automatically build documentation during the package creation process.
 
 spduration 0.9
