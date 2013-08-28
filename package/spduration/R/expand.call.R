@@ -15,6 +15,7 @@
 #' @return An object of class call. 
 #' @author fabians
 #' @seealso \code{\link[base]{match.call}}
+#' @keywords internal
 expand.call <- function(definition=NULL,
                         call=sys.call(sys.parent(1)),
                         expand.dots = TRUE,

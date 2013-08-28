@@ -6,7 +6,7 @@ Build duration version of panel data
 }
 
 \description{
-Builds a duration version of a data frame representing panel data.
+
 }
 
 \usage{
