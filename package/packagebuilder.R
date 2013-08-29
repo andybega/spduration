@@ -57,7 +57,6 @@ setwd(paste0(pack_db, "/spduration"))
 # Core functionality
 source('R/spdur.R')
 source('R/spweibull.R')
-source('R/sploglog.R')
 source('R/expand.call.R')
 
 # Duration build function
@@ -70,8 +69,6 @@ load('data/coups.rda')
 # Demo model to save estimation for examples
 dur.coup <- buildDuration(coups, "succ.coup", unitID='gwcode', tID='year',
                           freq="yearly")
-dur.coup <- dur.coup[!is.na(dur.coup$polity2), ]
-dur.coup <- dur.coup[!is.na(dur.coup$failure), ]
 
 ## Split duration model of insurgency
 model.coups <- spdur(duration ~ polity2, atrisk ~ polity2, data=dur.coup)

@@ -32,16 +32,16 @@
 #' @examples
 #' \dontrun{
 #' # Prepare data
-#' data(insurgency)
-#' duration.ins <- buildDuration(insurgency, 'insurgency', unitID='ccode', tID='date')
+#' data(coups)
+#' dur.coups <- buildDuration(coups, "succ.coup", unitID="gwcode", tID="year",
+#'                            freq="yearly")
 #' 
 #' # Estimate model
 #' model3 <- spdurCrisp(
-#'   duration ~ low_intensity + high_neighbors + exclpop.l1,
-#'   atrisk ~ excl_groups_count.l1 + high_neighborhood + high_intensity + 
-#'     exclpop.l1 + lgdppc.l1,
-#'   last='end.spell', train=duration.ins, test=duration.ins[1,], 
-#'   pred=duration.ins[1,], distr="weibull", iter=300)
+#'   duration ~ polity2,
+#'   atrisk ~ polity2,
+#'   train=dur.coups, test=dur.coups[1,], 
+#'   pred=dur.coups[1,])
 #' }
 #' 
 #' @export spdurCrisp
@@ -81,7 +81,7 @@ spdurCrisp <- function (duration, atrisk, train = train, test = test,
   
   # Prepare and return results
   res <- model
-  res$call <- expand.call(definition=spdurCrisp)  # Fix to correct call  
+  res$call <- match.call() 
   res$train.p <- train.p
   res$test.p <- test.p
   res$pred.p <- pred.p

@@ -19,17 +19,11 @@
 #' 
 #' @seealso \code{\link{separationplot}}, \code{\link{predict.spdur}}
 #' @examples
-#' # build data
-#' data(insurgency)
-#' duration.ins <- buildDuration(insurgency, 'insurgency', unitID='ccode', 
-#'                               tID='date')
-#' duration.ins <- duration.ins[!is.na(duration.ins$failure), ]
-#' 
 #' # get model estimates
-#' data(model.ins)
+#' data(model.coups)
 #' 
 #' # plot
-#' p <- plot(model.ins)
+#' p <- plot(model.coups)
 #' 
 #' @S3method plot spdur
 #' @importFrom separationplot separationplot
@@ -39,16 +33,21 @@ plot.spdur <- function(x, ..., failure='failure', endSpellOnly=TRUE)
   
   # Input validation
   if (!'spdur' %in% class(x)) stop('"object" argument must have class "spdur"')
-  if (!'failure' %in% colnames(get(paste(x$call$data)))) stop(paste(failure, 'not in data'))
+  
+  # Get data
+  # need to do something with napredict to make this more flexible
+  data <- get(paste(x$call$data))
+  if (class(na.action(x))=="omit") data <- data[-na.action(x), ]
+  if (!'failure' %in% colnames(data)) stop(paste(failure, 'not in data'))
   
   # Get predicted/observed values
   pred <- as.vector(as.matrix(predict(x, ...)))
-  actual <- get(paste(x$call$data))[, failure]
+  actual <- data[, failure]
   
   # Keep end of spell only
   if (endSpellOnly==T) {
-    pred <- pred[ get(paste(x$call$data))[, x$call$last]==1 ]
-    actual <- actual[ get(paste(x$call$data))[, x$call$last]==1 ]
+    pred <- pred[ data[, attr(model$Y, "last")]==1 ]
+    actual <- actual[ data[, attr(model$Y, "last")]==1 ]
   }
   
   # Separationplot call

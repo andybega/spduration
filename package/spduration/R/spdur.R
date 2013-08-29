@@ -16,6 +16,9 @@
 #' options are ``weibull'' or ``loglog''.
 #' @param max.iter Maximum number of iterations to use in the likelihood 
 #' maximization.
+#' @param na.action a function which indicates what should happen when the data 
+#' contain NAs. The default is set by the \code{na.action} setting of options, 
+#' and is \code{\link{na.fail}} if that is unset.
 #' @param \dots Additional parameters passed to \code{spdur()}
 #' 
 #' @details See \code{\link{summary.spdur}}, \code{\link{predict.spdur}} ,
@@ -28,6 +31,11 @@
 #' \item{se }{Standard error estimates.}
 #' \item{zstat }{Z-statistic values.}
 #' \item{pval }{P-values.}
+#' \item{mf.dur }{Model frame for the duration equation.}
+#' \item{mf.risk }{Model frame for the risk equation.}
+#' \item{Y }{Matrix of duration variables: risk, duration, end of spell, and
+#' t.0.}
+#' \item{na.action }{What action was taken for missing values in \code{data}.}
 #' \item{call }{The original, unevaluated \code{spdur} call.}
 #' \item{distr }{Distribution used for the hazard rate.}
 #' 
@@ -36,32 +44,48 @@
 #' @examples
 #' \dontrun{
 #' # Prepare data
-#' data(insurgency)
-#' duration.ins <- buildDuration(insurgency, 'insurgency', unitID='ccode', tID='date')
-#' duration.ins <- duration.ins[!is.na(duration.ins$failure), ]
+#' data(coups)
+#' dur.coups <- buildDuration(coups, "succ.coup", unitID="gwcode", tID="year",
+#'                            freq="yearly")
 #'
 #' # Estimate model
-#' model <- spdur(
-#'   duration ~ low_intensity + high_neighbors + exclpop.l1,
-#'   atrisk ~ excl_groups_count.l1 + high_neighborhood + high_intensity + exclpop.l1 + 
-#'     lgdppc.l1,
-#'   last='end.spell', data=duration.ins, distr="weibull", max.iter=300)
+#' model.coups <- spdur(duration ~ polity2, atrisk ~ polity2, data=dur.coups)
 #' }
 #' 
 #' @export spdur
 
 spdur <- function(duration, atrisk, data=NULL, last="end.spell", t.0="t.0", 
-                  distr='weibull', max.iter=300, ...) { 
+                  distr='weibull', max.iter=300, na.action, ...) 
+{ 
+  cl <- match.call()
+  
+  # NA actions, separately because model.frame for two different equations
+  # might return data frames with different row numbers, breaking the function.
+  f1 <- as.formula(eval(duration))
+  f2 <- as.formula(eval(atrisk))
+  vars <- unique(c(all.vars(f1), all.vars(f2)))
+  vars <- c(vars, last, t.0)
+  if (missing(na.action)) na.action <- options("na.action")[[1]]
+  df <- do.call(na.action, list(data[, vars]))
+  
   # Duration equation
-  mf.dur <- model.frame(formula=duration, data=data)
+  mf.dur <- eval(model.frame(formula=duration, data=df), parent.frame())
   X <- model.matrix(attr(mf.dur, 'terms'), data=mf.dur)
+  attr(X, "na.action") <- na.action(df)
+  attr(X, "dimnames")[[2]] <- sub("\\(Intercept\\)", "(Dur. Intercept)", 
+                                  attr(X, "dimnames")[[2]])
   lhb <- model.response(mf.dur)
   # Risk/non-immunity equation
-  mf.risk <- model.frame(formula=atrisk, data=data)
+  mf.risk <- eval(model.frame(formula=atrisk, data=df), parent.frame())
   Z <- model.matrix(attr(mf.risk, 'terms'), data=mf.risk)
+  attr(Z, "na.action") <- na.action(df)
+  attr(Z, "dimnames")[[2]] <- sub("\\(Intercept\\)", "(Risk Intercept)", 
+                                  attr(Z, "dimnames")[[2]])
   lhg <- model.response(mf.risk)
   # Y vectors
-  Y <- cbind(atrisk=lhg, duration=lhb, last=data[, last], t.0=data[, t.0])
+  Y <- cbind(atrisk=lhg, duration=lhb, last=df[, last], t.0=df[, t.0])
+  attr(Y, "last") <- last
+  attr(Y, "t.0") <- t.0
   
   # Estimation
   if (distr=='weibull') {
@@ -81,8 +105,11 @@ spdur <- function(duration, atrisk, data=NULL, last="end.spell", t.0="t.0",
   est$pval <- 2*(1-pnorm(abs(est$zstat)))
   
   # Other class elements
-  est$call <- expand.call(definition=spdur)  # instead of match.call to catch 
-                                             # default parameters
+  est$mf.dur <- mf.dur
+  est$mf.risk <- mf.risk
+  est$Y <- Y
+  est$na.action <- attr(df, "na.action")
+  est$call <- cl
   est$distr <- eval.parent(distr, 1)
   est$obs <- nrow(Y)
   

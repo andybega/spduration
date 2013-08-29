@@ -14,8 +14,8 @@
 #' @seealso \code{\link{BIC}}, \code{\link{AIC.spdur}}
 #' 
 #' @examples
-#' data(model.ins)
-#' BIC(model.ins)
+#' data(model.coups)
+#' BIC(model.coups)
 #' 
 #' @S3method BIC spdur
 #' @importFrom stats BIC

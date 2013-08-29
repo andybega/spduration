@@ -3,11 +3,13 @@ spduration 0.10
 
 NEW FEATURES
 
-* Forecast plot function. This will plot the series for a particular country, indicating failed and ongoing event time periods, along with an overlay of model predictions.
+* Forecast plot function `countryplot`. This will plot the series for a particular country, indicating failed and ongoing event time periods, along with an overlay of model predictions.
 * New example data for global coups. This is publicly releasable data, unlike the previous demo data used during development.
+* Major changes to `spdur`: checks for missing values in the data using `na.action`, and the class object it returns now includes the duration and risk equation model frames used for estimation. The associated methods like `predict` now use the model frames in the returned object for calculations, rather than drawing on objects in the parent frame. This allows the methods for `spdur` to work with the CRISP wrapper `spdurCrisp`.
 
 BUG FIXES
 
+* `buildDuration` will try to convert "tID" to Date format before throwing error.
 * Renamed wrapper for CRISP to `spdurCrisp` to avoid confusion with methods. Previously it was `spdur.crisp` and `spdur_crisp`.
 * Started changing package documentation/build process using devtools/roxygen2. Instead of separate, manually updated documentation files, this allows one to write the documentation within the R script for a function, and automatically build documentation during the package creation process.
 

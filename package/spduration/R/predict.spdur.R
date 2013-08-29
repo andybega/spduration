@@ -41,16 +41,10 @@
 #' @note See \code{\link{forecast.spdur}} for producing forecasts when future 
 #' covariate values are unknown.
 #' 
-#' @examples
-#' # build data
-#' data(insurgency)
-#' duration.ins <- buildDuration(insurgency, 'insurgency', unitID='ccode', 
-#'                               tID='date')
-#' duration.ins <- duration.ins[!is.na(duration.ins$failure), ]
-#' 
+#' @examples 
 #' # get model estimates
-#' data(model.ins)
-#' atrisk <- predict(model.ins)
+#' data(model.coups)
+#' atrisk <- predict(model.coups)
 #' 
 #' @S3method predict spdur
 predict.spdur <- function(object, data=NULL, stat='conditional risk', ...) {
@@ -61,26 +55,35 @@ predict.spdur <- function(object, data=NULL, stat='conditional risk', ...) {
                     
   if (!stat %in% stat_choices) stop('unknown statistic')
   
-  # Evaluate call values
+  # Get model frames
   if(is.null(data)) {
-    data <- eval.parent(object$call$data, 1)
-  } 
-  duration <- eval.parent(object$call$duration, 1)
-  atrisk <- eval.parent(object$call$atrisk, 1)
-  last <- data[, eval.parent(object$call$last, 1)]
-  t.0 <- data[, eval.parent(object$call$t.0, 1)]
-  distr <- eval.parent(object$distr, 1)
+    # From object
+    mf.dur <- object$mf.dur
+    mf.risk <- object$mf.risk
+    Y <- object$Y
+  } else {
+    # From provided data
+    # First, process NA's
+    fmla.dur  <- terms(object$mf.dur)
+    fmla.risk <- terms(object$mf.risk)
+    vars <- unique(c(all.vars(fmla.dur), all.vars(fmla.risk)))
+    last <- attr(object$Y, "last")
+    t.0  <- attr(object$Y, "t.0")
+    vars <- c(vars, last, t.0)
+    na.action <- paste0("na.", class(na.action(object)))
+    df <- do.call(na.action, list(data[, vars]))
+    
+    mf.dur <- model.frame(formula=fmla.dur, data=df)
+    mf.risk <- model.frame(formula=fmla.risk, data=df)
+    lhb  <- model.response(mf.dur)
+    lhg  <- model.response(mf.risk)
+    Y <- cbind(atrisk=lhg, duration=lhb, last=df[, last], t.0=df[, t.0])
+  }
+  distr <- object$distr
   
-  # Duration equation
-  mf.dur <- model.frame(formula=duration, data=data)
+  # Design matrices
   X <- model.matrix(attr(mf.dur, 'terms'), data=mf.dur)
-  lhb <- model.response(mf.dur) 
-  # Risk/non-immunity equation
-  mf.risk <- model.frame(formula=atrisk, data=data)
   Z <- model.matrix(attr(mf.risk, 'terms'), data=mf.risk)
-  lhg <- model.response(mf.risk) 
-  # Y vectors
-  Y <- cbind(atrisk=lhg, duration=lhb, last=last, t.0=t.0)
   
   ## Start with actual prediction
   # coefficients

@@ -1,7 +1,7 @@
 #' @S3method summary spdur
 summary.spdur <- function(object, ...) {
   # Find index to separate 2 equations
-  start_split <- which(names(object$coefficients)=='(Intercept)')[2]
+  start_split <- which(names(object$coefficients)=='(Risk Intercept)')
   end_duration <- start_split - 1
   
   table <- cbind(Estimate = coef(object),
