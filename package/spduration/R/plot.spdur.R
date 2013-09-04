@@ -4,7 +4,7 @@
 #' 
 #' @method plot spdur
 #' 
-#' @param x An object of class "\code{spdur}".
+#' @param model An object of class "\code{spdur}".
 #' @param \dots Optional parameters passed to \code{predict.spdur}, e.g. type 
 #' of statistic to calculate.
 #' @param failure The variable indicating that a failure event has occurred at 
@@ -27,21 +27,21 @@
 #' 
 #' @S3method plot spdur
 #' @importFrom separationplot separationplot
-plot.spdur <- function(x, ..., failure='failure', endSpellOnly=TRUE)
+plot.spdur <- function(model, ..., failure='failure', endSpellOnly=TRUE)
 {
   require(separationplot)
   
   # Input validation
-  if (!'spdur' %in% class(x)) stop('"object" argument must have class "spdur"')
+  if (!'spdur' %in% class(model)) stop('"object" argument must have class "spdur"')
   
   # Get data
   # need to do something with napredict to make this more flexible
-  data <- get(paste(x$call$data))
-  if (class(na.action(x))=="omit") data <- data[-na.action(x), ]
+  data <- get(paste(model$call$data))
+  if (class(na.action(model))=="omit") data <- data[-na.action(model), ]
   if (!'failure' %in% colnames(data)) stop(paste(failure, 'not in data'))
   
   # Get predicted/observed values
-  pred <- as.vector(as.matrix(predict(x, ...)))
+  pred <- as.vector(as.matrix(predict(model, ...)))
   actual <- data[, failure]
   
   # Keep end of spell only
