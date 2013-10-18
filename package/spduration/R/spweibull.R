@@ -1,7 +1,7 @@
 #' @importFrom corpcor make.positive.definite
 spweibull <-
 function(Y, X, Z, max.iter) {  
-  require(corpcor) # make.positive.definite
+
   # Base model likelihood
   weib.lik <- function(theta, y, X) {
     beta <- theta[1:ncol(X)]

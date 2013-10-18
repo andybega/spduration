@@ -10,6 +10,8 @@ rm(list = ls())
 # AB: 6.5.2013 starting to transition to devtools/roxygen2
 library(devtools)
 library(roxygen2)
+library(plyr)
+library(corpcor)
 
 ########
 ## 1. ##
@@ -25,6 +27,10 @@ if(Sys.info()["user"]=="ab428") {
   pack_git <- "~/Work/spdur_package/package/spduration"
   pack_db <- paste0("~/Dropbox/Work/spdur_package/package/spduration_", 
                     pack_ver)
+} else if(Sys.info()["user"]=="adbeger") {
+  pack_git <- "~/Work/spdur_package/package/spduration"
+  pack_db <- paste0("~/Dropbox/Work/spdur_package/package/spduration_", 
+                    pack_ver)
 }
   
 ########
@@ -35,15 +41,15 @@ if(Sys.info()["user"]=="ab428") {
 ##    1. Update "DESCRIPTION"
 ##    2. Update "NEWS"
 ##
-## On dropbox:
-##    1. Create a folder for the new package version, e.g. spduration_0.10
-##    2. Copy the "spduration" folder from github to this folder.
-##
+
+# Create package directory on dropbox and copy git package to it
+dir.create(pack_db)
+file.copy(from=pack_git, to=pack_db, recursive=T)
 
 ########
 ## 3. ##
 ########
-## Source functions, data, demo, etc. and build package skeleton
+## Estimate and save demo model
 ##
 
 setwd(paste0(pack_db, "/spduration"))
@@ -51,7 +57,6 @@ setwd(paste0(pack_db, "/spduration"))
 # Core functionality
 source('R/spdur.R')
 source('R/spweibull.R')
-source('R/sploglog.R')
 source('R/expand.call.R')
 
 # Duration build function
@@ -59,31 +64,43 @@ source('R/buildDuration.R')
 source('R/panelLag.R')
 
 # Demo script and data
-load('data/insurgency.rda')
+load('data/coups.rda')
 
 # Demo model to save estimation for examples
-duration.ins <- buildDuration(insurgency, 'insurgency', unitID='ccode', tID='date')
-duration.ins <- duration.ins[!is.na(duration.ins$failure), ]
+dur.coup <- buildDuration(coups, "succ.coup", unitID='gwcode', tID='year',
+                          freq="yearly")
 
 ## Split duration model of insurgency
-model.ins <- spdur(
-  duration ~ low_intensity + high_neighbors + exclpop.l1,
-  atrisk ~ excl_groups_count.l1 + high_neighborhood + high_intensity + exclpop.l1 + lgdppc.l1,
-  last='end.spell', data=duration.ins, distr="weibull", max.iter=300)
-rm(duration.ins)
+model.coups <- spdur(duration ~ polity2, atrisk ~ polity2, data=dur.coup)
+rm(dur.coup)
 # log-l should be 249.807508 (old) new ll function: 315.591765
 
-## Build package documentation and package
-setwd(paste0(pack_db, "/spduration"))
-document(roclets=c("namespace", "rd"), reload=T)
+# save model to data
+save(model.coups, file=paste0(pack_db, "/spduration/data/model-coups.rda"))
 
 ########
 ## 4. ##
 ########
+## Create documentation and 00Index for demo
+##
+
+# Build package documentation and namespace
+document(roclets=c("namespace", "rd"), reload=T)
+
+# Write 00Index for demo
+file.name <- paste0(pack_db, "/spduration/demo/00Index")
+file.text <- "insurgency   Split-duration model of CRISP insurgency data.\n"
+write(file.text, file=file.name)
+
+########
+## 5. ##
+########
 ## This will build and test the package using Terminal:
+
 setwd(pack_db)
-system('R CMD build spduration')
-system('R CMD check spduration')
+system("find . -name '*.DS_Store' -type f -delete")  # delete .DS_Store
+system("R CMD build spduration")
+system("R CMD check spduration")
 
 ########
 ## 5. ##

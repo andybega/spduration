@@ -65,6 +65,7 @@ Andreas Beger
 # Prepare data
 data(insurgency)
 duration.ins <- buildDuration(insurgency, 'insurgency', unitID='ccode', tID='date')
+duration.ins <- duration.ins[!is.na(duration.ins$failure), ]
 
 # Estimate model
 model <- spdur(

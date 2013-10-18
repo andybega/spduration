@@ -1,5 +1,6 @@
 #' @S3method forecast spdur
-forecast.spdur <- function(object, ..., pred.data = NULL, stat = 'conditional hazard', npred = 6)
+forecast.spdur <- function(object, ..., pred.data = NULL, 
+                           stat = 'conditional hazard', npred = 6)
 {
   if (is.null(pred.data)) stop("Must provide pred.data")
   stat_choices <- c('conditional risk', 'conditional cure', 'hazard', 'failure',
@@ -8,22 +9,21 @@ forecast.spdur <- function(object, ..., pred.data = NULL, stat = 'conditional ha
   
   if (!stat %in% stat_choices) stop('unknown statistic')
   
-  # Evaluate call values
-  duration <- eval.parent(object$call$duration, 1)
-  atrisk <- eval.parent(object$call$atrisk, 1)
-  t.0 <- pred.data[, eval.parent(object$call$t.0, 1)]
-  distr <- eval.parent(object$distr, 1)
+  # Equation formulas
+  fmla.dur  <- terms(object$mf.dur)
+  fmla.risk <- terms(object$mf.risk)
   
   # Duration equation
-  mf.dur <- model.frame(formula=duration, data=pred.data)
+  mf.dur <- model.frame(formula=fmla.dur, data=pred.data)
   X <- model.matrix(attr(mf.dur, 'terms'), data=mf.dur)
   lhb <- model.response(mf.dur) 
   # Risk/non-immunity equation
-  mf.risk <- model.frame(formula=atrisk, data=pred.data)
+  mf.risk <- model.frame(formula=fmla.risk, data=pred.data)
   Z <- model.matrix(attr(mf.risk, 'terms'), data=mf.risk)
   lhg <- model.response(mf.risk) 
   # Y vectors
-  Y <- cbind(atrisk=0, duration=lhb, last=0, t.0=t.0)
+  t.0  <- attr(object$Y, "t.0")
+  Y <- cbind(atrisk=0, duration=lhb, last=0, t.0=pred.data[, t.0])
   
   ## Start with actual prediction
   # coefficients
@@ -50,6 +50,7 @@ forecast.spdur <- function(object, ..., pred.data = NULL, stat = 'conditional ha
   ########################################################
   # S(T), will differ by distr.
   ########################################################
+  distr <- object$distr
   if (distr=='weibull') {
     # S(T)
     s0 <- exp(-(la.hat.pred * (Y[,2]-1))^al.hat)
