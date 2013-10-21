@@ -45,16 +45,7 @@
 #' }
 #' 
 #' @export spdurCrisp
-##########
-# spdur-crisp
-# Top level wrapper
-#
-# in:  
-#
-# to do:
-# - clean up code
-#
-###########
+
 spdurCrisp <- function (duration, atrisk, train = train, test = test, 
                         pred = pred, last = "end.spell", t.0="t.0", 
                         distr = "weibull", stat = 'conditional risk', 

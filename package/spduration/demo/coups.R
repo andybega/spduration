@@ -1,3 +1,11 @@
+##
+##    Demo/test code for "spduration" R package using Powell & Thyne coups
+##    Andreas Beger
+##    October 2013
+##
+
+# all of the stuff below is old and needs to be changes
+
 ##########
 # What: Demo/test code for spdur dev
 # Date: November 2012

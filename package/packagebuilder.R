@@ -1,9 +1,8 @@
-##########
-# Build spdur R package
-# November 2012
-# Andreas Beger
-#
-###########
+##
+##    Build spduration package
+##    Andreas Beger
+##    21 October 2013
+##
 
 rm(list = ls())
 
@@ -40,6 +39,7 @@ if(Sys.info()["user"]=="ab428") {
 ## On github:
 ##    1. Update "DESCRIPTION"
 ##    2. Update "NEWS"
+##    3. Update man/spduration-package.Rd
 ##
 
 # Create package directory on dropbox and copy git package to it
@@ -54,14 +54,8 @@ file.copy(from=pack_git, to=pack_db, recursive=T)
 
 setwd(paste0(pack_db, "/spduration"))
 
-# Core functionality
-source('R/spdur.R')
-source('R/spweibull.R')
-source('R/expand.call.R')
-
-# Duration build function
-source('R/buildDuration.R')
-source('R/panelLag.R')
+# Load all functions
+load_all("./")
 
 # Demo script and data
 load('data/coups.rda')
@@ -74,9 +68,10 @@ dur.coup <- buildDuration(coups, "succ.coup", unitID='gwcode', tID='year',
 model.coups <- spdur(duration ~ polity2, atrisk ~ polity2, data=dur.coup)
 rm(dur.coup)
 # log-l should be 249.807508 (old) new ll function: 315.591765
+# latest: 319.809
 
 # save model to data
-save(model.coups, file=paste0(pack_db, "/spduration/data/model-coups.rda"))
+save(model.coups, file=paste0(pack_db, "/spduration/data/model.coups.rda"))
 
 ########
 ## 4. ##
@@ -89,7 +84,7 @@ document(roclets=c("namespace", "rd"), reload=T)
 
 # Write 00Index for demo
 file.name <- paste0(pack_db, "/spduration/demo/00Index")
-file.text <- "insurgency   Split-duration model of CRISP insurgency data.\n"
+file.text <- "coups   Split-duration model of Powell coups.\n"
 write(file.text, file=file.name)
 
 ########
@@ -99,7 +94,7 @@ write(file.text, file=file.name)
 
 setwd(pack_db)
 system("find . -name '*.DS_Store' -type f -delete")  # delete .DS_Store
-system("R CMD build spduration")
+system("R CMD build spduration --resave-data")
 system("R CMD check spduration")
 
 ########

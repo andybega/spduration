@@ -36,18 +36,15 @@ plot.spdur <- function(model, ..., failure='failure', endSpellOnly=TRUE)
   
   # Get data
   # need to do something with napredict to make this more flexible
-  data <- get(paste(model$call$data))
-  if (class(na.action(model))=="omit") data <- data[-na.action(model), ]
-  if (!'failure' %in% colnames(data)) stop(paste(failure, 'not in data'))
+  actual <- model$Y[, "fail"]
   
-  # Get predicted/observed values
+  # Get predicted 
   pred <- as.vector(as.matrix(predict(model, ...)))
-  actual <- data[, failure]
   
   # Keep end of spell only
   if (endSpellOnly==T) {
-    pred <- pred[ data[, attr(model$Y, "last")]==1 ]
-    actual <- actual[ data[, attr(model$Y, "last")]==1 ]
+    pred <- pred[ model$Y[, "last"]==1 ]
+    actual <- actual[ model$Y[, "last"]==1 ]
   }
   
   # Separationplot call

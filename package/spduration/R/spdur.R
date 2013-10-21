@@ -12,6 +12,7 @@
 #' when a spell ends due to failure or right-censoring.
 #' @param t.0 The starting point for time-varying covariate intervals, by 
 #' default \code{duration-1} when using \code{\link{buildDuration}}.
+#' @param fail Name of the variable indicating that a spell ended in failure.
 #' @param distr The type of distribution to use in the hazard rate. Valid 
 #' options are ``weibull'' or ``loglog''.
 #' @param max.iter Maximum number of iterations to use in the likelihood 
@@ -55,7 +56,7 @@
 #' @export spdur
 
 spdur <- function(duration, atrisk, data=NULL, last="end.spell", t.0="t.0", 
-                  distr='weibull', max.iter=300, na.action, ...) 
+                  fail="failure", distr='weibull', max.iter=300, na.action, ...) 
 { 
   cl <- match.call()
   
@@ -64,7 +65,7 @@ spdur <- function(duration, atrisk, data=NULL, last="end.spell", t.0="t.0",
   f1 <- as.formula(eval(duration))
   f2 <- as.formula(eval(atrisk))
   vars <- unique(c(all.vars(f1), all.vars(f2)))
-  vars <- c(vars, last, t.0)
+  vars <- c(vars, last, t.0, fail)
   if (missing(na.action)) na.action <- options("na.action")[[1]]
   df <- do.call(na.action, list(data[, vars]))
   
@@ -83,9 +84,11 @@ spdur <- function(duration, atrisk, data=NULL, last="end.spell", t.0="t.0",
                                   attr(Z, "dimnames")[[2]])
   lhg <- model.response(mf.risk)
   # Y vectors
-  Y <- cbind(atrisk=lhg, duration=lhb, last=df[, last], t.0=df[, t.0])
+  Y <- cbind(atrisk=lhg, duration=lhb, last=df[, last], t.0=df[, t.0], 
+             fail=df[, fail])
   attr(Y, "last") <- last
   attr(Y, "t.0") <- t.0
+  attr(Y, "fail") <- fail
   
   # Estimation
   if (distr=='weibull') {
