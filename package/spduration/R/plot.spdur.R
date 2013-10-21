@@ -28,9 +28,7 @@
 #' @S3method plot spdur
 #' @importFrom separationplot separationplot
 plot.spdur <- function(model, ..., failure='failure', endSpellOnly=TRUE)
-{
-  require(separationplot)
-  
+{ 
   # Input validation
   if (!'spdur' %in% class(model)) stop('"object" argument must have class "spdur"')
   

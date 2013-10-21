@@ -10,7 +10,9 @@
 #' @param yext Extend y-axis to theoretical maximum of 1? (T/F)
 #' 
 #' @author Shahryar Minhas, Andreas Beger
+#' 
 #' @export
+#' @import ggplot2
 
 # rm(list=ls())
 # # setwd('~/Dropbox/Work/spdur_package/package/spduration_0.9/spdurationCNTRYplot')
@@ -31,11 +33,6 @@ countryplot <- function(eoi='insurgency', model, country, lastMonth,
   # Input validation
   if (!'spdur' %in% class(model)) stop('"model" argument must have class "spdur"')
   ## check eoi is valid
-  
-  require(spduration)
-  require(ggplot2)
-  require(reshape2)
-  require(Hmisc)
   
   # Get original model data and actual event values
   data <- get(paste(model$call$data))

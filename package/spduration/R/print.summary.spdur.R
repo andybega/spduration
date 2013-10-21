@@ -1,3 +1,24 @@
+#' Print a split-population duration model results summary
+#'
+#' \code{print} method for class ``\code{summary.spdur}''.
+#' 
+#' @method print summary.spdur
+#' 
+#' @param x An object with class \code{spdur}.
+#' @param \dots Further arguments passed to or from other methods.
+#' 
+#' @details
+#' Formats \code{spdur} summaries for printing.
+#' 
+#' @seealso The model fitting function is \code{\link{spdur}}, and see 
+#' \code{\link{summary.spdur}} for associated summary method.
+#' 
+#' @examples
+#' data(model.coups)
+#' s <- summary(model.coups)
+#' class(s)
+#' print(s)
+#' 
 #' @S3method print summary.spdur
 print.summary.spdur <- function(x, ...)
 {
