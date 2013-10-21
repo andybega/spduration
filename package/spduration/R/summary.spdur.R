@@ -1,4 +1,32 @@
+#' Summarize split-population duration results
+#'
+#' \code{summary} method for class ``\code{spdur}''.
+#' 
+#' @method summary spdur
+#' 
+#' @param object An object with class \code{spdur}.
+#' @param \dots Further arguments passed to or from other methods.
+#' 
+#' @details
+#' This will list the estimated coefficients and standard errors for the
+#' risk and duration equations of a split-population duration model.
+#' 
+#' @return
+#' An object with class \code{summary.spdur}.
+#' 
+#' @seealso The model fitting function is \code{\link{spdur}}, and see 
+#' \code{\link{summary}} for the generic function.
+#' 
+#' For print formatting, see \code{\link{print.summary.spdur}}.
+#' 
+#' @examples
+#' data(model.coups)
+#' s <- summary(model.coups)
+#' class(s)
+#' print(s)
+#' 
 #' @S3method summary spdur
+
 summary.spdur <- function(object, ...) {
   # Find index to separate 2 equations
   start_split <- which(names(object$coefficients)=='(Risk Intercept)')
