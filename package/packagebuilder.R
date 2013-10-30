@@ -64,7 +64,7 @@ load('data/coups.rda')
 dur.coup <- buildDuration(coups, "succ.coup", unitID='gwcode', tID='year',
                           freq="yearly")
 
-## Split duration model of insurgency
+## Split duration model of coups
 model.coups <- spdur(duration ~ polity2, atrisk ~ polity2, data=dur.coup)
 rm(dur.coup)
 # log-l should be 249.807508 (old) new ll function: 315.591765
