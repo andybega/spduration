@@ -48,7 +48,7 @@ panelLag <- function(x, id, t, lag=1, data=NULL) {
       res <- rep(NA, length(x))
       lag.length.flag <<- TRUE
     }  
-    if (k < length(x)) res <- c(rep(NA, k), x[k:(length(x)-k)]) 
+    if (k < length(x)) res <- c(rep(NA, k), x[1:(length(x)-k)]) 
     return(res)
   }
   
