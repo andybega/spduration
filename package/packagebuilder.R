@@ -102,8 +102,8 @@ system("R CMD check spduration")
 ########
 ## Install and test package
 ##
-install.packages(paste0(pack_db, paste0("spduration_", pack_ver, ".tar.gz"), 
-                 repos=NULL, type='source'))
+install.packages(paste0(pack_db, "/spduration_", pack_ver, ".tar.gz"), 
+                 repos=NULL, type='source')
 
 ## Restart R
 
