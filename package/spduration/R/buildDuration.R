@@ -78,13 +78,20 @@ buildDuration <- function(data, y, unitID, tID, freq="monthly",
                           slice.last=FALSE) {
   
   ## Check input
-  supported.freq <- c("monthly", "yearly")
+  supported.freq <- c("day", "month", "year")
   if (!freq %in% supported.freq) {
-    stop("frequency must be 'monthly' or 'yearly'")
+    stop("frequency must be 'day', 'month' or 'year'")
   }
   if (class(data[, tID])!="Date") {  # convert to date if possible
     data[, tID] <- as.character(data[, tID])
-    if (freq=="monthly") {
+    if (freq=="yearly") {
+      tryCatch(data[, tID] <- as.Date(data[, tID], format="%Y"))
+      if (class(data[, tID])=="Date") {
+        warning(paste("Temporarily converted", tID, "to 'Date' type."))
+      } else {
+        stop(paste(tID, "is not class 'Date' (?as.Date())"))  
+      }
+    } else if (freq=="monthly") {
       tryCatch(data[, tID] <- as.Date(data[, tID], format="%Y-%m"))
       tryCatch(data[, tID] <- as.Date(data[, tID], format="%Y/%m"))
       if (class(data[, tID])=="Date") {
@@ -92,14 +99,9 @@ buildDuration <- function(data, y, unitID, tID, freq="monthly",
       } else {
         stop(paste(tID, "is not class 'Date' (?as.Date())"))  
       }
-    } else if (freq=="yearly") {
-      tryCatch(data[, tID] <- as.Date(data[, tID], format="%Y"))
-      if (class(data[, tID])=="Date") {
-        warning(paste("Temporarily converted", tID, "to 'Date' type."))
-      } else {
-        stop(paste(tID, "is not class 'Date' (?as.Date())"))  
-      }
-    } 
+    } else if (freq=="day") {
+      ## need to fill in
+    }
   }
   # check for missing keys
   if (any(is.na(data[, c(y, unitID, tID)]))) {
@@ -121,11 +123,11 @@ buildDuration <- function(data, y, unitID, tID, freq="monthly",
   res$temp.t <- res[, tID]
   res <- ddply(res, .variables=unitID, transform, end=max(temp.t)) 
   res <- res[, !(colnames(res) %in% 'temp.t')]
-  if (freq=="monthly") {
-    res$end.spell <- ifelse(format(res[, tID], '%Y-%m')==format(as.Date(res$end), '%Y-%m'), 1, 0)
-  }
   if (freq=="yearly") {
     res$end.spell <- ifelse(format(res[, tID], '%Y')==format(as.Date(res$end), '%Y'), 1, 0)
+  }
+  if (freq=="monthly") {
+    res$end.spell <- ifelse(format(res[, tID], '%Y-%m')==format(as.Date(res$end), '%Y-%m'), 1, 0)
   }
   res$end.spell <- ifelse(res$failure==1, 1, res$end.spell)
   
