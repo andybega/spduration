@@ -4,7 +4,7 @@
 #' 
 #' @method plot spdur
 #' 
-#' @param model An object of class "\code{spdur}".
+#' @param x An object of class "\code{spdur}".
 #' @param \dots Optional parameters passed to \code{predict.spdur}, e.g. type 
 #' of statistic to calculate.
 #' @param failure The variable indicating that a failure event has occurred at 
@@ -27,10 +27,11 @@
 #' 
 #' @S3method plot spdur
 #' @importFrom separationplot separationplot
-plot.spdur <- function(model, ..., failure='failure', endSpellOnly=TRUE)
+plot.spdur <- function(x, ..., failure='failure', endSpellOnly=TRUE)
 { 
   # Input validation
-  if (!'spdur' %in% class(model)) stop('"object" argument must have class "spdur"')
+  if (!'spdur' %in% class(x)) stop('"object" argument must have class "spdur"')
+  model <- x
   
   # Get data
   # need to do something with napredict to make this more flexible

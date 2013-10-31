@@ -34,7 +34,7 @@
 #' # Prepare data
 #' data(coups)
 #' dur.coups <- buildDuration(coups, "succ.coup", unitID="gwcode", tID="year",
-#'                            freq="yearly")
+#'                            freq="year")
 #' 
 #' # Estimate model
 #' model3 <- spdurCrisp(

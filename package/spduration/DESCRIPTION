@@ -1,10 +1,11 @@
 Package: spduration
 Title: Split-Population Duration (Cure) Regression
 Version: 0.10
-Date: 2013-10-21
+Date: 2013-10-31
 Author: Andreas Beger, Daina Chiba, Daniel W. Hill, Nils Metternich, Shahryar Minhas, Michael D. Ward
 Maintainer: Andreas Beger <andreas.beger@duke.edu>
 Description: Functions for estimating split-duration regression models and various associated generic function methods.
-Depends: R
+Depends: R (>= 2.15.0)
+Imports: corpcor, ggplot2, plyr, separationplot
 Suggests: wicews
 License: GPL-3

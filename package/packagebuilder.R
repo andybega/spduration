@@ -62,7 +62,7 @@ load('data/coups.rda')
 
 # Demo model to save estimation for examples
 dur.coup <- buildDuration(coups, "succ.coup", unitID='gwcode', tID='year',
-                          freq="yearly")
+                          freq="year")
 
 ## Split duration model of coups
 model.coups <- spdur(duration ~ polity2, atrisk ~ polity2, data=dur.coup)
@@ -94,7 +94,7 @@ write(file.text, file=file.name)
 
 setwd(pack_db)
 system("find . -name '*.DS_Store' -type f -delete")  # delete .DS_Store
-system("R CMD build spduration --resave-data")
+system("R CMD build --resave-data spduration")
 system("R CMD check spduration")
 
 ########
@@ -108,7 +108,7 @@ install.packages(paste0(pack_db, paste0("spduration_", pack_ver, ".tar.gz"),
 ## Restart R
 
 library(spduration)
-demo(insurgency)
+demo(coups
 
 ########
 ## 6. ##

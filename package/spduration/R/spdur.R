@@ -47,7 +47,7 @@
 #' # Prepare data
 #' data(coups)
 #' dur.coups <- buildDuration(coups, "succ.coup", unitID="gwcode", tID="year",
-#'                            freq="yearly")
+#'                            freq="year")
 #'
 #' # Estimate model
 #' model.coups <- spdur(duration ~ polity2, atrisk ~ polity2, data=dur.coups)
