@@ -23,7 +23,7 @@ data("coups")
 
 # Demo model to save estimation for examples
 dur.coup <- buildDuration(coups, "succ.coup", unitID='gwcode', tID='year',
-                          freq="yearly")
+                          freq="year")
 
 ## Split duration model of coups
 model.coups <- spdur(duration ~ polity2, atrisk ~ polity2, data=dur.coup)
