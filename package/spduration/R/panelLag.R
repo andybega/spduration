@@ -20,14 +20,14 @@
 #' @author Andreas Beger
 #' 
 #' @examples
-#' data(insurgency)
+#' data(coups)
 #' # No need to order before using panelLag, just do it here so we can compare results below.
-#' insurgency <- insurgency[order(insurgency$ccode, insurgency$date), ]
-#' test <- panelLag('lgdppc.l1', 'ccode', 'date', data=insurgency)
+#' coups <- coups[order(coups$gwcode, coups$year), ]
+#' test <- panelLag("polity2", "gwcode", "year", data=coups)
 #' 
 #' # Compare output
+#' head(coups$polity2)
 #' head(test)
-#' head(insurgency$lgdppc.l1)
 #' 
 #' @export
 panelLag <- function(x, id, t, lag=1, data=NULL) {
@@ -38,8 +38,9 @@ panelLag <- function(x, id, t, lag=1, data=NULL) {
     warning(paste('lag is < 0, using', lag, 'instead')) 
   }
   # Construct data if not given
-  ## Don't think this part works properly.
-  if (is.null(data)==T) data <- data.frame(x=x, id=id, t=t)
+  if (is.null(data)) data <- data.frame(x=x, id=id, t=t)
+  # Subset to relevant parts
+  data <- data[, c(x, id, t)]
   
   k <- lag
   lag.length.flag <- FALSE
@@ -70,3 +71,10 @@ panelLag <- function(x, id, t, lag=1, data=NULL) {
 # panelLag('x1', 'id1', 't1', lag=-1, data=test.data)
 # # Result with warning about lag length.
 # panelLag('x1', 'id1', 't1', lag=-6, data=test.data)
+
+# # return data in original sort
+# test.data <- data.frame(x1=c(1,2,3,4,5,6,7,8,9,0), id1=c(1,1,1,1,1,2,2,2,2,2), t1=c(1,2,3,4,5,1,2,3,4,5))
+# test.data <- test.data[sample(1:10), ]
+# test.data$x1.l1 <- panelLag('x1', 'id1', 't1', lag=1, data=test.data)
+# test.data <- test.data[order(test.data$id1, test.data$t1), ]
+# all(test.data$x1.l1==c(NA,1,2,3,4,NA,6,7,8,9), na.rm=T)

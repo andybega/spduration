@@ -1,5 +1,7 @@
 #' Plot predicted values for a country
 #' 
+#' For use with CRISP/ICEWS.
+#' 
 #' @param eoi Name of variable of interest as quoted string.
 #' @param model An object of class \code{spdur}.
 #' @param country Name of the country to plot.

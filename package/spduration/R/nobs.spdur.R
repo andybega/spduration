@@ -2,6 +2,8 @@
 #' 
 #' Extract the number of observations in a \code{spdur} class model object.
 #' 
+#' @method nobs spdur
+#' 
 #' @param object an object inheriting from class \code{spdur}.
 #' @param \dots not used.
 #' 
