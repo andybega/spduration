@@ -65,7 +65,11 @@ pred=duration.coups.prediction[1,], distr="weibull", iter=300)
 
 # try out methods
 summary(model.coups2)
-
 nobs(model.coups2)
 AIC(model.coups2)
 BIC(model.coups2)
+
+#plots
+plot(model.coups)
+plot(model.coups2)
+countryplot(model.coups2)
