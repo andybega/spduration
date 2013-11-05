@@ -18,7 +18,7 @@ library(corpcor)
 ##
 ## change version here, and workind directories
 ##
-pack_ver <- "0.10"
+pack_ver <- "0.11"
 
 # Working directory from which to source functions, data, etc.
 # And location of package on dropbox (which we will create in a sec.)
