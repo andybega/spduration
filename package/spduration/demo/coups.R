@@ -18,41 +18,60 @@ data("coups")
 
 # Demo model to save estimation for examples
 duration.coup <- buildDuration(coups, "succ.coup", unitID="gwcode", tID='year',
-                          freq="year")
+                          freq="yearly")
 duration.coup <- duration.coup[!is.na(duration.coup$failure), ]                          
 
 # Split duration model of coups
 model.coups <- spdur(duration ~ polity2, atrisk ~ polity2, last='end.spell', data=dur.coup, distr="weibull", max.iter=300)
 
 # summary methods
-summary(model.coups)
+summary(model.coups) #works!
+nobs(model.coups)
+# error: Error in stats:::nobs.default(object, ...) : 
+  # no 'nobs' method is available
+AIC(model.coups) #works!
+BIC(model.coups) #works!
 
 # predict
-duration.coup$atrisk.hat <- predict(model.coups)
-top5 <- duration.coup[duration.coup$date==as.Date('2011-09-01'), c('country', 'atrisk.hat')]
-top5 <- top5[order(top5$atrisk.hat, decreasing=TRUE), ]
-head(top5)
+# error: predict works but can't figure out why you get a smaller data frame
+# duration.coup$atrisk.hat <- predict(model.coups)
+pred<-predict(model.coups)
+#top5 <- pred[duration.coup$date==as.Date('2011-09-01'), c('country', 'atrisk.hat')]
+#top5 <- top5[order(top5$atrisk.hat, decreasing=TRUE), ]
+#head(top5)
+
 
 ### CRISP wrapper (spdurCRISP)
-# # training: buildDuration, subset the coups through 2000
-# # test: buildDuration with coups through 2009, then subset it by dropping all before 2001
-# # pred: slice the last year of coups 2010
-# 
+# training: buildDuration, subset the coups through 2000
+coups.train<-coups[coups$year<="2000-06-30",]
+duration.coups.train <- buildDuration(coups.train, "succ.coup", unitID="gwcode", tID='year', freq="yearly")
+
+# test: buildDuration with coups through 2009
+coups.test<-coups[coups$year<="2009-06-30",]
+duration.coups.test <- buildDuration(coups.test, "succ.coup", unitID="gwcode", tID='year', freq="yearly")
+
+#then subset it by dropping all before 2001
+duration.coups.test<-duration.coups.test[duration.coups.test$year>="2001-06-30",]
+
+#pred: slice the last year of coups 2010
+coups.prediction<-coups[coups$year>="2010-06-30",]
+duration.coups.prediction<- buildDuration(coups.prediction, "succ.coup", unitID="gwcode", tID='year', freq="yearly")
+duration.coups.prediction<- duration.coups.prediction[complete.cases(duration.coups.prediction), ]
+
 # # Test CRISP/ICEWS wrapper
-# model.coups2 <- spdurCrisp(
-#   duration ~ polity2, atrisk ~ polity2,
-#   last='end.spell', train=duration.ins, test=duration.coup[1,], 
-#   pred=duration.coup[1,], distr="weibull", iter=300)
-# 
-# # try out methods
-# summary(model.coups2)
+model.coups2 <- spdurCrisp(
+duration ~ polity2, atrisk ~ polity2,
+last='end.spell', train=duration.coups.train, test=duration.coups.test[1,], 
+pred=duration.coups.prediction[1,], distr="weibull", iter=300)
 
-# nobs(model.coup2)
-# AIC(model.coup2)
-# BIC(model.coup2)
+#error: Error in forecast.spdur(model, pred.data = pred, stat = stat, npred = npred) : object 'distr' not found 
 
+# try out methods
+summary(model.coups2)
 
-
+nobs(model.coup2)
+AIC(model.coup2)
+BIC(model.coup2)
 
 
 
