@@ -54,9 +54,9 @@ duration.coups.test <- buildDuration(coups.test, "succ.coup", unitID="gwcode",
 duration.coups.test <- duration.coups.test[duration.coups.test$year>=2001, ]
 
 #pred: slice the last year of coups 2010
-coups.prediction<-coups[coups$year>="2010-06-30",]
-duration.coups.prediction<- buildDuration(coups.prediction, "succ.coup", unitID="gwcode", tID='year', freq="year")
+duration.coups.prediction<- buildDuration(coups, "succ.coup", unitID="gwcode", tID='year', freq="year")
 duration.coups.prediction<- duration.coups.prediction[complete.cases(duration.coups.prediction), ]
+coups.prediction<-duration.coups.prediction[duration.coups.prediction$year>="2010-06-30",]
 
 # # Test CRISP/ICEWS wrapper
 model.coups2 <- spdurCrisp(

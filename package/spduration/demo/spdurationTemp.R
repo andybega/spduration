@@ -10,7 +10,7 @@
 
 
 library(CRISP)
-#library(spduration)
+library(spduration)
 
 data(crisp.data)
 data(cutoffs)
@@ -20,8 +20,16 @@ data(cutoffs)
 #
 ##########
 
-duration.erv <- spduration::build.duration(data=crisp.data, y="erv", cutoffs$trainingend, 
+#original
+duration.erv <- build.duration(data=crisp.data, y="erv", cutoffs$trainingend, 
                             cutoffs$teststart, cutoffs$dataend)
+
+#spduration package
+train <- spduration::buildDuration((data=crisp.data[crisp.data$date<=cutoffs$trainingend,]), "erv", unitID="ccode", tID="date", freq="month")
+test <- spduration::buildDuration((data=crisp.data[crisp.data$date<=cutoffs$teststart,]), "erv", unitID="ccode", tID="date", freq="month")
+test<-test[test$date>=cutoffs$trainingend,]
+pred.data <-spduration::buildDuration((data=crisp.data[crisp.data$date<=cutoffs$dataend,]), "erv", unitID="ccode", tID="date", freq="month")
+pred.data<-pred.data[pred.data$date>=cutoffs$teststart,]
 
 train <- duration.erv$training
 test <- duration.erv$test
@@ -60,26 +68,23 @@ pred.data$high_intensity<-pred.data$ins.h.count.both.l1+pred.data$eth.rel.h.coun
 pred.data$high_neighbors <- pred.data$W.knn4.std.ins.h.count.both.l1+pred.data$W.knn4.std.reb.h.count.both.l1+pred.data$W.knn4.std.eth.rel.h.count.l1
 pred.data$high_neighborhood<-pred.data$W.centdist.std.ins.h.count.both.l1+pred.data$W.centdist.std.reb.h.count.both.l1+pred.data$W.centdist.std.eth.rel.h.count.l1
  
+#run demo(delivery.EOI4.split, ask=FALSE) to caompre
 model <- spduration::spdur(
 duration ~ exclpop.l1 + high_neighbors + high_intensity + low_intensity + high_neighborhood + elect, 
-+   c ~ excl_groups_count + DEMOC.l1 + Amnesty.l1 + lgdpc.l1 + SH.DYN.MORT.l1,
-+   last=train$end.spell, data=train, test=test, distr="weibull", iter=300
-+   )
+c ~ excl_groups_count + DEMOC.l1 + Amnesty.l1 + lgdpc.l1 + SH.DYN.MORT.l1,
+last='end.spell', data=train, distr="weibull", max.iter=300)
 
 pred.probs <- spduration::predict(model, pred.data)
 
 pr.nc.in <- cbind(train$erv,pred.probs$pr.in$n.cure.t.in)
-
 pr.nc.out <- cbind(test$erv,pred.probs$pr.out$n.cure.t.out)
-
 pr.ht.in <- cbind(train$erv,pred.probs$pr.in$pr.c.h.in)
-
 pr.ht.out <- cbind(test$erv,pred.probs$pr.out$pr.c.h.out)
 
 # Separation plots
 par(mfrow=c(2,2), mar=c(1,1,2,1))
 
-spduration::plot(pr.nc.in[,2], pr.nc.in[,1], shuffle=T, heading="Pr(Non immunity), In-sample", show.expected=T, newplot=F)
+plot(pr.nc.in[,2], pr.nc.in[,1], shuffle=T, heading="Pr(Non immunity), In-sample", show.expected=T, newplot=F)
 
 spduration::plot(pr.nc.out[,2], pr.nc.out[,1], shuffle=T, heading="Pr(Non immunity), Out-of-sample", show.expected=T, newplot=F)
 
