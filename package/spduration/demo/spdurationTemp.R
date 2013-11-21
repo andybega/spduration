@@ -1,7 +1,8 @@
-##    Demo/test code for "spduration" R package using Powell & Thyne coups
-##    Andreas Beger
-##    Cassy Dorff
-##    October 2013
+##
+##    Does CRISP run with spduration?
+##    Cassy Dorff, Andreas Beger
+##    November 2013
+##
 
 #This code runs through what is in the demo code for a spdur model
 #in the ICEWS package. 
@@ -15,6 +16,7 @@ library(spduration)
 data(crisp.data)
 data(cutoffs)
 
+
 ##########
 # Data prep
 #
@@ -24,16 +26,32 @@ data(cutoffs)
 duration.erv <- build.duration(data=crisp.data, y="erv", cutoffs$trainingend, 
                             cutoffs$teststart, cutoffs$dataend)
 
-#spduration package
-train <- spduration::buildDuration((data=crisp.data[crisp.data$date<=cutoffs$trainingend,]), "erv", unitID="ccode", tID="date", freq="month")
-test <- spduration::buildDuration((data=crisp.data[crisp.data$date<=cutoffs$teststart,]), "erv", unitID="ccode", tID="date", freq="month")
-test<-test[test$date>=cutoffs$trainingend,]
-pred.data <-spduration::buildDuration((data=crisp.data[crisp.data$date<=cutoffs$dataend,]), "erv", unitID="ccode", tID="date", freq="month")
-pred.data<-pred.data[pred.data$date>=cutoffs$teststart,]
-
 train <- duration.erv$training
 test <- duration.erv$test
 pred.data <- duration.erv$pred.data
+
+#spduration package
+train2 <- buildDuration(
+  (data=crisp.data[crisp.data$date<=cutoffs$trainingend,]), 
+  "erv", unitID="ccode", tID="date", freq="month")
+table(is.na(train2$failure))
+# training data is different
+
+test2 <- buildDuration(
+  data=crisp.data, "erv", unitID="ccode", tID="date", freq="month")
+test2 <- test2[test2$date >= format(as.Date(cutoffs$teststart), "%Y-%m"), ]
+table(is.na(test2$failure))
+
+# slice last option does not work
+pred.data <- buildDuration(
+  data=crisp.data, "erv", unitID="ccode", tID="date", freq="month",
+  slice.last=T)
+
+pred.data2 <- buildDuration(
+  data=crisp.data, "erv", unitID="ccode", tID="date", freq="month")
+pred.data2 <- pred.data[pred.data$date==cutoffs$dataend, ]
+
+
 train$lgdpc.l1<-log(train$NY.GDP.PCAP.KD.l1)
 train$lpop.l1<-log(train$SP.POP.TOTL.l1)
 train$elect<-log(train$ProxElection+1)
@@ -69,10 +87,28 @@ pred.data$high_neighbors <- pred.data$W.knn4.std.ins.h.count.both.l1+pred.data$W
 pred.data$high_neighborhood<-pred.data$W.centdist.std.ins.h.count.both.l1+pred.data$W.centdist.std.reb.h.count.both.l1+pred.data$W.centdist.std.eth.rel.h.count.l1
  
 #run demo(delivery.EOI4.split, ask=FALSE) to caompre
-model <- spduration::spdur(
-duration ~ exclpop.l1 + high_neighbors + high_intensity + low_intensity + high_neighborhood + elect, 
-c ~ excl_groups_count + DEMOC.l1 + Amnesty.l1 + lgdpc.l1 + SH.DYN.MORT.l1,
-last='end.spell', data=train, distr="weibull", max.iter=300)
+model <- CRISP::spdur(
+  duration ~ exclpop.l1 + high_neighbors + high_intensity + low_intensity + 
+    high_neighborhood + elect, 
+  cured ~ excl_groups_count + DEMOC.l1 + Amnesty.l1 + lgdpc.l1 + 
+    SH.DYN.MORT.l1,
+  last=train[!is.na(train$failure), ]$end.spell, 
+  data=train[!is.na(train$failure), ], 
+  test=test[!is.na(test$failure), ],
+  distr="weibull", iter=300
+)
+## ll: 642.024874 
+
+# problem with na.action in do.call(na.action, list(data[, vars]))
+model2 <- spdurCrisp(
+  duration ~ exclpop.l1 + high_neighbors + high_intensity + low_intensity + 
+    high_neighborhood + elect, 
+  c ~ excl_groups_count + DEMOC.l1 + Amnesty.l1 + lgdpc.l1 + 
+    SH.DYN.MORT.l1,
+  data=train[!is.na(train$failure), ], 
+  test=test[!is.na(test$failure), ],
+  pred=pred.data,
+  iter=300)
 
 pred.probs <- spduration::predict(model, pred.data)
 

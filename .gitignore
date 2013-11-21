@@ -7,4 +7,4 @@
 comparison-and-sims/logs/*
 .Rdata
 .Rapp*
-
+.RDataTmp
