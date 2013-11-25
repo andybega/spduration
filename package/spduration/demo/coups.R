@@ -53,12 +53,12 @@ duration.coups.test <- buildDuration(coups.test, "succ.coup", unitID="gwcode",
 # then subset it by dropping all before 2001
 duration.coups.test <- duration.coups.test[duration.coups.test$year>=2001, ]
 
-#pred: slice the last year of coups 2010
+# pred: slice the last year of coups 2010
 duration.coups.prediction<- buildDuration(coups, "succ.coup", unitID="gwcode", tID='year', freq="year")
 duration.coups.prediction<- duration.coups.prediction[complete.cases(duration.coups.prediction), ]
 coups.prediction<-duration.coups.prediction[duration.coups.prediction$year>="2010-06-30",]
 
-# # Test CRISP/ICEWS wrapper
+# Test CRISP/ICEWS wrapper
 model.coups2 <- spdurCrisp(
 duration ~ polity2, atrisk ~ polity2,
 last='end.spell', train=duration.coups.train, test=duration.coups.test[1,], 
@@ -70,7 +70,6 @@ nobs(model.coups2)
 AIC(model.coups2)
 BIC(model.coups2)
 
-#plots
+# plots
 plot(model.coups)
 plot(model.coups2)
-countryplot(model.coups2)
