@@ -1,5 +1,7 @@
 ## Test code for spduration package
 
+# transition this to testthat
+
 library(spduration)
 
 # build data
