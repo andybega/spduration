@@ -13,6 +13,9 @@
 #' \code{"month"}, or \code{"day"}.
 #' @param sort Sort data by unit and time? Default is \code{FALSE}, i.e. return
 #' data in original order.
+#' @param ongoing If \code{TRUE}, successive 1's are considered ongoing events
+#' and treated as \code{NA} after the first 1. If \code{FALSE}, successive 1's 
+#' are all treated as failures.
 #' @param slice.last Set to \code{TRUE} to create a slice of the last time 
 #' period; used with \code{\link{forecast.spdur}}. For compatibility with CRISP 
 #' and ICEWS projects.
@@ -78,7 +81,7 @@
 #' @export
 #' @importFrom plyr ddply
 buildDuration <- function(data, y, unitID, tID, freq="month", sort=FALSE,
-                          slice.last=FALSE) {
+                          ongoing=TRUE, slice.last=FALSE) {
   
   ##    Check input
   
@@ -90,21 +93,10 @@ buildDuration <- function(data, y, unitID, tID, freq="month", sort=FALSE,
   
   # convert to date if possible
   if (class(data[, tID])!="Date") {  
-    data[, tID] <- as.character(data[, tID])
-    if (freq=="year") {
-      tryCatch(data[, tID] <- as.Date(data[, tID], format="%Y"))
-    } else if (freq=="month") {
-      tryCatch(data[, tID] <- as.Date(data[, tID], format="%Y-%m"))
-      tryCatch(data[, tID] <- as.Date(data[, tID], format="%Y/%m"))
-    } else if (freq=="day") {
-      ## need to fill in
-    }
-    # Throw error if unsuccessfull
-    if (class(data[, tID])=="Date") {
-      warning(paste("Temporarily converted", tID, "to 'Date' type."))
-    } else {
-      stop(paste(tID, "is not class 'Date' (?as.Date())"))  
-    }
+    data[, "tID"] <- attemptDate(data[, tID], freq)
+    tID <- "tID"
+  } else {
+    stop(paste0(tID, " should be class 'Date'"))
   }
   
   # check for missing keys
@@ -129,10 +121,15 @@ buildDuration <- function(data, y, unitID, tID, freq="month", sort=FALSE,
   res <- data[order(data[, unitID], data[, tID]), ]
   
   # Mark failure (0, 1, NA for ongoing)
-  failure <- function(x) return(c(x[1], pmax(0, diff(x))))
-  res$failure <- unlist(by(res[, y], res[, unitID], failure))
-  res$ongoing <- ifelse(res[, y]==1 & res$failure==0, 1, 0)
-  res$failure <- ifelse(res$ongoing==1, NA, res$failure)
+  if (ongoing==TRUE) {
+    failure <- function(x) return(c(x[1], pmax(0, diff(x))))
+    res$failure <- unlist(by(res[, y], res[, unitID], failure))
+    res$ongoing <- ifelse(res[, y]==1 & res$failure==0, 1, 0)
+    res$failure <- ifelse(res$ongoing==1, NA, res$failure)
+  } else {
+    res$failure <- res[, y]
+    res$ongoing <- 0
+  }
   
   # Mark end of a spell and create unique ID
   # A spell can end 3 ways: failure, right-censor because last observation
@@ -153,6 +150,8 @@ buildDuration <- function(data, y, unitID, tID, freq="month", sort=FALSE,
   
   # Hack to correct ongoing spells, then create spellID
   spellIDhelper <- ifelse(is.na(res$end.spell), 0, res$end.spell)
+  
+  # Create spellID
   res$spellID <- rev(cumsum(rev(spellIDhelper)))
   res$spellID <- ifelse(res$ongoing==1, NA, res$spellID)
   
@@ -178,7 +177,6 @@ buildDuration <- function(data, y, unitID, tID, freq="month", sort=FALSE,
   res$t.0 <- res$duration - 1 ## previous duration
   
   ##    Slice option for forecast data; for CRISP/ICEWS
-  
   if (slice.last==TRUE) {
     dataend = max(data[, tID])
     pred.data <- res[res[, tID]==dataend, ]
@@ -218,7 +216,7 @@ buildDuration <- function(data, y, unitID, tID, freq="month", sort=FALSE,
   return(res)
 }
 
-# Test for yearly data
+# # Test for yearly data
 # data <- data.frame(y=c(0,0,0,1,0), 
 #                     unitID=c(1,1,1,1,1), 
 #                     tID=c(2000, 2001, 2002, 2003, 2004))
@@ -271,7 +269,7 @@ buildDuration <- function(data, y, unitID, tID, freq="month", sort=FALSE,
 #                 1L, 2L, 3L, 4L, 5L, 6L, 7L))
 # all(goal==test, na.rm=T)
 
-# Test sorting
+# # Test sorting
 # data <- data.frame(
 #   y=c(0,0,0,1,0), 
 #   unitID=c(1,1,1,1,1), 
@@ -280,3 +278,22 @@ buildDuration <- function(data, y, unitID, tID, freq="month", sort=FALSE,
 # test <- buildDuration(data, "y", "unitID", "tID", freq="year")
 # goal <- data[, c("unitID", "tID")]
 # all(goal==test[, c("unitID", "tID")])
+
+# # Test ongoing spells option
+# data <- data.frame(
+#   y=c(0, 0, 0, 1, 1, 0),
+#   unitID=rep(1, 6),
+#   tID=c(2000:2005))
+# test <- buildDuration(data, "y", "unitID", "tID", freq="year", ongoing=FALSE)
+# goal <- structure(list(spellID = c(3, 3, 3, 3, 2, 1), y = c(0, 0, 0, 
+# 1, 1, 0), unitID = c(1, 1, 1, 1, 1, 1), tID = c("2000", "2001", 
+# "2002", "2003", "2004", "2005"), failure = c(0, 0, 0, 1, 1, 0
+# ), ongoing = c(0, 0, 0, 0, 0, 0), end.spell = c(0, 0, 0, 1, 1, 
+# 1), cured = c(0, 0, 0, 0, 0, 1), atrisk = c(1, 1, 1, 1, 1, 0), 
+#     censor = c(0, 0, 0, 0, 0, 1), duration = c(1, 2, 3, 4, 1, 
+#     1), t.0 = c(0, 1, 2, 3, 0, 0)), .Names = c("spellID", "y", 
+# "unitID", "tID", "failure", "ongoing", "end.spell", "cured", 
+# "atrisk", "censor", "duration", "t.0"), class = "data.frame", row.names = c(3L, 
+# 4L, 5L, 6L, 2L, 1L))
+# all(goal==test)
+
