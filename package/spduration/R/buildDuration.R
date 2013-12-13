@@ -93,11 +93,9 @@ buildDuration <- function(data, y, unitID, tID, freq="month", sort=FALSE,
   
   # convert to date if possible
   if (class(data[, tID])!="Date") {  
-    data[, "tID"] <- attemptDate(data[, tID], freq)
-    tID <- "tID"
-  } else {
-    stop(paste0(tID, " should be class 'Date'"))
-  }
+    data[, "temp.tID"] <- attemptDate(data[, tID], freq)
+    tID <- "temp.tID"
+  } 
   
   # check for missing keys
   if (any(is.na(data[, c(y, unitID, tID)]))) {
@@ -118,7 +116,8 @@ buildDuration <- function(data, y, unitID, tID, freq="month", sort=FALSE,
   data$orig_order_track <- 1:nrow(data)
   
   # Need to order by date to id and drop ongoing spells
-  res <- data[order(data[, unitID], data[, tID]), ]
+  keep <- c(y, unitID, tID, "orig_order_track")
+  res <- data[order(data[, unitID], data[, tID]), keep]
   
   # Mark failure (0, 1, NA for ongoing)
   if (ongoing==TRUE) {
@@ -203,16 +202,25 @@ buildDuration <- function(data, y, unitID, tID, freq="month", sort=FALSE,
   if (freq=="month") res[, tID] <- format(res[, tID], format="%Y-%m")
   if (freq=="day")   res[, tID] <- format(res[, tID], format="%Y-%m-%d")
   
-  # Sort results
-  if (sort==F) {
-    res <- res[order(res$orig_order_track), ]       # original order
+  # Merge back with original data
+  keep <- c("failure", "ongoing", "end.spell", "cured", "atrisk", "censor",
+    "duration", "t.0")
+  if (sort==FALSE) {
+    res <- res[order(res$orig_order_track), ]
+    res <- subset(res, select=keep)
+    res <- cbind(data, res)
   } else {
-    res <- res[order(res[, unitID], res[, tID]), ]  # Reorder res by ccode/date
-    warning(paste0("Data is sorted by ", unitID, ", ", tID))
+    res <- res[order(res[, unitID], res[, tID]), ]
+    res <- subset(res, select=keep)
+    data <- data[order(data[, unitID], data[, tID]), ]
+    warning(paste0("Data are sorted by ", unitID, ", ", tID))
+    res <- cbind(data, res)
   }
-  
-  # Take out utility columns
-  res <- res[, !colnames(res) %in% c("end", "orig_order_track")]
+
+  # Drop utility columns in original data
+  res <- res[, !(colnames(res) %in% c("orig_order_track", "temp.tID"))]
+
+  # Done
   return(res)
 }
 
