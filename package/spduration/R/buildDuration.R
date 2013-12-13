@@ -133,8 +133,9 @@ buildDuration <- function(data, y, unitID, tID, freq="month", sort=FALSE,
   # Mark end of a spell and create unique ID
   # A spell can end 3 ways: failure, right-censor because last observation
   # period, or right censor because state ceased to exist.
-  res$temp.t <- res[, tID]
-  res <- ddply(res, .variables=unitID, transform, end=max(temp.t)) 
+  res$end <- unlist(by(res[, tID], res[, unitID], max))
+  res$end <- as.Date(res.end, origin=as.Date("1970-01-01"))
+  print(class(res$end)); stop()
   res <- res[, !(colnames(res) %in% 'temp.t')]
   if (freq=="year") {
     cond <- (format(res[, tID], '%Y')==format(as.Date(res$end), '%Y'))
@@ -277,15 +278,15 @@ buildDuration <- function(data, y, unitID, tID, freq="month", sort=FALSE,
 #                 1L, 2L, 3L, 4L, 5L, 6L, 7L))
 # all(goal==test, na.rm=T)
 
-# # Test sorting
-# data <- data.frame(
-#   y=c(0,0,0,1,0), 
-#   unitID=c(1,1,1,1,1), 
-#   tID=c(2000, 2001, 2002, 2003, 2004))
-# data <- data[sample(1:5), ]
-# test <- buildDuration(data, "y", "unitID", "tID", freq="year")
-# goal <- data[, c("unitID", "tID")]
-# all(goal==test[, c("unitID", "tID")])
+# Test sorting
+data <- data.frame(
+  y=c(0,0,0,1,0), 
+  unitID=c(1,1,1,1,1), 
+  tID=c(2000, 2001, 2002, 2003, 2004))
+data <- data[sample(1:5), ]
+test <- buildDuration(data, "y", "unitID", "tID", freq="year")
+goal <- data[, c("unitID", "tID")]
+all(goal==test[, c("unitID", "tID")])
 
 # # Test ongoing spells option
 # data <- data.frame(

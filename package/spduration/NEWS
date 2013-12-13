@@ -2,11 +2,13 @@ spduration 0.11
 ---------------
 
 NEW FEATURES
+
 * buildDuration() ongoing option to specify whether successive 1’s are treated as ongoing events (NA) or as successive failures.
 
 BUG FIXES
+
 * Fixed predict() error when using non-default data.
-* buildDuration() speed improvement, calculations now done on relevant subset of data.
+* buildDuration() optimization: calculations are now only done on relevant subset of data; switch from ddply to base by function.
 
 spduration 0.10
 ---------------
