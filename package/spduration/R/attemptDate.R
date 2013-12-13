@@ -1,6 +1,9 @@
 #' Attempt to convert to R date format
 #' 
 #' For internal use only
+#'
+#' @param date character or numeric
+#' @param by character, "year", "month", or "day"
 
 attemptDate <- function(date, by) {
   if (!class(date)=="Date") {

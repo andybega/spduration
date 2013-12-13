@@ -94,6 +94,7 @@ write(file.text, file=file.name)
 
 setwd(pack_db)
 system("find . -name '*.DS_Store' -type f -delete")  # delete .DS_Store
+system("find . -name '.Rapp.history' -type f -delete")
 system("R CMD build --resave-data spduration")
 system("R CMD check spduration")
 
