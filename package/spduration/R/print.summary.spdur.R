@@ -34,4 +34,5 @@ print.summary.spdur <- function(x, ...)
   printCoefmat(x$alpha, P.values=T, has.Pvalue=T, digits=4, zap.ind=4, signif.legend=F)
   cat('---\n')
   cat("Signif. codes: *** = 0.001, ** = 0.01, * = 0.05, . = 0.1")
+  cat("\n")
 }
