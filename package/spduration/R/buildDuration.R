@@ -133,8 +133,8 @@ buildDuration <- function(data, y, unitID, tID, freq="month", sort=FALSE,
   # Mark end of a spell and create unique ID
   # A spell can end 3 ways: failure, right-censor because last observation
   # period, or right censor because state ceased to exist.
-  res$end <- unlist(by(res[, tID], res[, unitID], max))
-  res$end <- as.Date(res$end, origin=as.Date("1970-01-01"))
+  res$temp.t <- res[, tID]
+  res <- ddply(res, .variables=unitID, transform, end=max(temp.t)) 
   if (freq=="year") {
     cond <- (format(res[, tID], '%Y')==format(as.Date(res$end), '%Y'))
   } else if (freq=="month") {
