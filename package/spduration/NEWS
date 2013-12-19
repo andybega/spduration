@@ -7,6 +7,9 @@ NEW FEATURES
 
 * buildDuration() ongoing option to specify whether successive 1’s are treated as ongoing events (NA) or as successive failures. By default they are treated as ongoing spells and excluded from analysis (NA).
 
+* spdur() will pass optional arguments to optim(), specifically for setting alternative
+initial parameter values for the base duration model, which can create issues with sparse data.
+
 BUG FIXES
 
 * predict() error when using non-default data.

@@ -20,11 +20,23 @@
 #' @param na.action a function which indicates what should happen when the data 
 #' contain NAs. The default is set by the \code{na.action} setting of options, 
 #' and is \code{\link{na.fail}} if that is unset.
-#' @param \dots Additional parameters passed to \code{spdur()}
+#' @param \dots Optional arguments, see details.
 #' 
-#' @details See \code{\link{summary.spdur}}, \code{\link{predict.spdur}} ,
+#' @details 
+#' See \code{\link{summary.spdur}}, \code{\link{predict.spdur}} ,
 #' \code{\link{plot.spdur}}, and \code{\link{countryplot}} for post-estimation
 #' options.
+#' 
+#' Optional arguments:
+#' \describe{
+#' \item{base.inits}{Initial values for the base duration model that is 
+#' estimates to get initial values for the full split-population model. This
+#' needs to be a vector with starting values for the constant, coefficients
+#' in the duration equation, and an additional value for the shape parameter
+#' of the density used, e.g. Weibull. By default they are 0 for all 
+#' coefficients and 0 or 1 for the Weibull and LogLog shape parameters 
+#' respectively.}
+#' }
 #' 
 #' @return Returns an object of class \code{spdur}, with attributes:
 #' \item{coefficients }{A named vector of coefficient point estimates.}
@@ -92,10 +104,10 @@ spdur <- function(duration, atrisk, data=NULL, last="end.spell", t.0="t.0",
   
   # Estimation
   if (distr=='weibull') {
-    est <- spweibull(Y, X, Z, max.iter)
+    est <- spweibull(Y, X, Z, max.iter, ...)
   }
   if (distr=='loglog') {
-    est <- sploglog(Y, X, Z, max.iter)
+    est <- sploglog(Y, X, Z, max.iter, ...)
   }
   # Names
   varnames <- c(paste(unlist(attr(X, 'dimnames')[2])), paste(unlist(attr(Z, 'dimnames')[2])), 'log(alpha)')

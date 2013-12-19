@@ -22,11 +22,13 @@ function(Y, X, Z, max.iter) {
   }
   
   # Estimate base model
-  base.inits <- c(rep(0, ncol(X)), 0)
-  #base.inits <- c(0.1, 0.1, 0.1, 0.1)
-  #print(paste("base initials:", base.inits, collapse=" "))
+  if (!exists("base.inits")) {
+    base.inits <- c(rep(0, ncol(X)), 0)
+  }
   cat('Fitting base weibull...\n')
-  base <- optim(base.inits, weib.lik, method="BFGS", control=list(maxit=max.iter), hessian=T, y=Y, X=X)
+  base <- optim(base.inits, 
+                weib.lik, method="BFGS", control=list(maxit=max.iter), 
+                hessian=T, y=Y, X=X)
   
   # Full model likelihood
   spweib.lik <- function(theta, y, X, Z) {

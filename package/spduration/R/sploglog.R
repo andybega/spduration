@@ -21,9 +21,13 @@ sploglog <- function(Y, X, Z, max.iter) {
   }
   
   # Estimate base model
-  base.inits <- c(rep(0, ncol(X)), 1)
+  if (!exists("base.inits")) {
+    base.inits <- c(rep(0, ncol(X)), 1)
+  }
   cat('Fitting base loglog...\n')
-  base <- optim(base.inits, loglog.lik, method="BFGS", control=list(maxit=max.iter), hessian=T, y=Y, X=X)
+  base <- optim(base.inits, 
+                loglog.lik, method="BFGS", control=list(maxit=max.iter), 
+                hessian=T, y=Y, X=X)
   
   # Full model likelihood
   sploglog.lik <- function(theta,y,X,Z){
