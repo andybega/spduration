@@ -37,7 +37,7 @@ summary.spdur <- function(object, ...) {
                  t = object$zstat,
                  p = object$pval)
   
-  duration_table <- table[1:end_duration, ]
+  duration_table <- table[1:end_duration, , drop=FALSE]
   split_table <- table[start_split:(nrow(table)-1), ]
   
   res <- list(call = object$call,
