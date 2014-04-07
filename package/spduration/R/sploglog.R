@@ -1,5 +1,5 @@
 #' @importFrom corpcor make.positive.definite
-sploglog <- function(Y, X, Z, max.iter) {
+sploglog <- function(Y, X, Z, max.iter, silent=FALSE) {
   
   # Base model likelihood
   loglog.lik <- function(theta, y, X){
@@ -24,7 +24,7 @@ sploglog <- function(Y, X, Z, max.iter) {
   if (!exists("base.inits")) {
     base.inits <- c(rep(0, ncol(X)), 1)
   }
-  cat('Fitting base loglog...\n')
+  if (!silent) cat('Fitting base loglog...\n')
   base <- optim(base.inits, 
                 loglog.lik, method="BFGS", control=list(maxit=max.iter), 
                 hessian=T, y=Y, X=X)
@@ -56,11 +56,13 @@ sploglog <- function(Y, X, Z, max.iter) {
   # Estimate full model
   x.inits <- base$par[1:ncol(X)]
   a.init <- base$par[ncol(X)+1]
-  cat('Fitting split loglog...\n')
-  est <- optim(c(x.inits, rep(0, ncol(Z)), a.init), sploglog.lik, method="BFGS", control=list(trace=T, maxit=max.iter), hessian=T, y=Y, X=X, Z=Z)
+  if (!silent) cat('Fitting split loglog...\n')
+  trace <- !silent
+  est <- optim(c(x.inits, rep(0, ncol(Z)), a.init), sploglog.lik, method="BFGS", 
+    control=list(trace=trace, maxit=max.iter), hessian=T, y=Y, X=X, Z=Z)
   
   # Solve other results
-  if (est$convergence!=0) stop('Model did not converge')
+  if (est$convergence!=0 & !silent) stop('Model did not converge')
   coef <- est$par
   vcv <- solve(est$hessian)
   vcv <- make.positive.definite(vcv)

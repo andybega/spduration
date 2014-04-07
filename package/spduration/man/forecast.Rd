@@ -1,0 +1,24 @@
+\name{forecast}
+\alias{forecast}
+\title{Model forecasts}
+\usage{
+forecast(object, ...)
+}
+\arguments{
+  \item{object}{A model object from which forecasts are
+  created.}
+
+  \item{\dots}{additional arguments affecting the forecasts
+  produced.}
+}
+\description{
+\code{forecast} is a generic function for creating
+out-of-sample predictions. It invokes particular
+\emph{methods} which depend on the \code{\link{class}} of
+the first argument
+}
+\details{
+This generic is implemented in the \code{\link{spduration}}
+package with a \code{\link{plot.spdur}} method.
+}
+

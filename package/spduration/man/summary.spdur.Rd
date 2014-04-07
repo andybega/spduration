@@ -1,0 +1,37 @@
+\name{summary.spdur}
+\alias{summary.spdur}
+\title{Summarize split-population duration results}
+\usage{
+\method{summary}{spdur}(object, ...)
+}
+\arguments{
+  \item{object}{An object with class \code{spdur}.}
+
+  \item{\dots}{Further arguments passed to or from other
+  methods.}
+}
+\value{
+An object with class \code{summary.spdur}.
+}
+\description{
+\code{summary} method for class ``\code{spdur}''.
+}
+\details{
+This will list the estimated coefficients and standard
+errors for the risk and duration equations of a
+split-population duration model.
+}
+\examples{
+data(model.coups)
+s <- summary(model.coups)
+class(s)
+print(s)
+}
+\seealso{
+The model fitting function is \code{\link{spdur}}, and see
+\code{\link{summary}} for the generic function.
+
+For print formatting, see
+\code{\link{print.summary.spdur}}.
+}
+

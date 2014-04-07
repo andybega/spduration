@@ -1,0 +1,20 @@
+\name{logLik.spdur}
+\alias{logLik.spdur}
+\title{Log-Likelihood of an spdur Object}
+\usage{
+\method{logLik}{spdur}(object, ...)
+}
+\arguments{
+  \item{object}{an object inheriting from class
+  \code{spdur}.}
+
+  \item{\dots}{not used}
+}
+\description{
+Returns the log-likelihood of a \code{spdur} class object.
+}
+\examples{
+data(model.coups)
+logLik(model.coups)
+}
+

@@ -1,0 +1,29 @@
+\name{print.summary.spdur}
+\alias{print.summary.spdur}
+\title{Print a split-population duration model results summary}
+\usage{
+\method{print}{summary.spdur}(x, ...)
+}
+\arguments{
+  \item{x}{An object with class \code{spdur}.}
+
+  \item{\dots}{Further arguments passed to or from other
+  methods.}
+}
+\description{
+\code{print} method for class ``\code{summary.spdur}''.
+}
+\details{
+Formats \code{spdur} summaries for printing.
+}
+\examples{
+data(model.coups)
+s <- summary(model.coups)
+class(s)
+print(s)
+}
+\seealso{
+The model fitting function is \code{\link{spdur}}, and see
+\code{\link{summary.spdur}} for associated summary method.
+}
+

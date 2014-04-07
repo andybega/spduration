@@ -1,0 +1,24 @@
+AIC.spdur               AIC method for spdur
+BIC.spdur               BIC method for spdur
+attemptDate             Attempt to convert to R date format
+buildDuration           Build duration version of panel data
+countryplot             Plot predicted values for a country
+coups                   Global coups, 1979 to 2010
+forecast                Model forecasts
+forecast.default        Default forecast method
+forecast.spdur          Plot spdur object predictions
+logLik.spdur            Log-Likelihood of an spdur Object
+model.coups             Model of global coups from 1979 to 2010
+nobs.spdur              Number of Observations in a spdur Object
+panelLag                Lag panel data
+plot.spdur              Plot split-duration model fit.
+predict.spdur           Predict fitted values for a split-population
+                        duration model
+print.summary.spdur     Print a split-population duration model results
+                        summary
+spdur                   Split-population duration (cure) regression
+spdurCrisp              Split-Pop Duration Model Wrapper for
+                        CRISP/ICEWS
+spduration-package      Split-Population Duration (Cure) Regression
+                        Models
+summary.spdur           Summarize split-population duration results

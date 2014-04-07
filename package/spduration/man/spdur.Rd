@@ -1,0 +1,94 @@
+\name{spdur}
+\alias{spdur}
+\title{Split-population duration (cure) regression}
+\usage{
+spdur(duration, atrisk, data = NULL, last = "end.spell", t.0 = "t.0",
+  fail = "failure", distr = "weibull", max.iter = 300, na.action,
+  silent = FALSE, ...)
+}
+\arguments{
+  \item{duration}{A formula of the form Y ~ X1 + X2 \dots,
+  where Y is duration until failure or censoring.}
+
+  \item{atrisk}{A formula of the form C ~ Z1 + Z2 \dots,
+  where C is a binary indicator of risk (1 - cure).}
+
+  \item{data}{A data frame containing the variables in
+  formula and formula2.}
+
+  \item{last}{A string identifying the vector in
+  \code{data} that indicates when a spell ends due to
+  failure or right-censoring.}
+
+  \item{t.0}{The starting point for time-varying covariate
+  intervals, by default \code{duration-1} when using
+  \code{\link{buildDuration}}.}
+
+  \item{fail}{Name of the variable indicating that a spell
+  ended in failure.}
+
+  \item{distr}{The type of distribution to use in the
+  hazard rate. Valid options are ``weibull'' or
+  ``loglog''.}
+
+  \item{max.iter}{Maximum number of iterations to use in
+  the likelihood maximization.}
+
+  \item{na.action}{a function which indicates what should
+  happen when the data contain NAs. The default is set by
+  the \code{na.action} setting of options, and is
+  \code{\link{na.fail}} if that is unset.}
+
+  \item{silent}{Supress optimization output, \code{FALSE}
+  by default.}
+
+  \item{\dots}{Optional arguments, see details.}
+}
+\value{
+Returns an object of class \code{spdur}, with attributes:
+\item{coefficients }{A named vector of coefficient point
+estimates.} \item{vcv }{Estimated covariance matrix.}
+\item{se }{Standard error estimates.} \item{zstat
+}{Z-statistic values.} \item{pval }{P-values.} \item{mf.dur
+}{Model frame for the duration equation.} \item{mf.risk
+}{Model frame for the risk equation.} \item{Y }{Matrix of
+duration variables: risk, duration, end of spell, and t.0.}
+\item{na.action }{What action was taken for missing values
+in \code{data}.} \item{call }{The original, unevaluated
+\code{spdur} call.} \item{distr }{Distribution used for the
+hazard rate.}
+}
+\description{
+This function estimates a split-population duration model
+and returns a object of class \code{spdur}.
+}
+\details{
+See \code{\link{summary.spdur}},
+\code{\link{predict.spdur}} , \code{\link{plot.spdur}}, and
+\code{\link{countryplot}} for post-estimation options.
+
+Optional arguments: \describe{ \item{base.inits}{Initial
+values for the base duration model that is estimates to get
+initial values for the full split-population model. This
+needs to be a vector with starting values for the constant,
+coefficients in the duration equation, and an additional
+value for the shape parameter of the density used, e.g.
+Weibull. By default they are 0 for all coefficients and 0
+or 1 for the Weibull and LogLog shape parameters
+respectively.} }
+}
+\examples{
+\dontrun{
+# Prepare data
+data(coups)
+dur.coups <- buildDuration(coups, "succ.coup", unitID="gwcode", tID="year",
+                           freq="year")
+
+# Estimate model
+model.coups <- spdur(duration ~ polity2, atrisk ~ polity2, data=dur.coups)
+}
+}
+\author{
+Andreas Beger
+}
+

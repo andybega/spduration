@@ -20,6 +20,7 @@
 #' @param na.action a function which indicates what should happen when the data 
 #' contain NAs. The default is set by the \code{na.action} setting of options, 
 #' and is \code{\link{na.fail}} if that is unset.
+#' @param silent Supress optimization output, \code{FALSE} by default.
 #' @param \dots Optional arguments, see details.
 #' 
 #' @details 
@@ -68,7 +69,8 @@
 #' @export spdur
 
 spdur <- function(duration, atrisk, data=NULL, last="end.spell", t.0="t.0", 
-                  fail="failure", distr='weibull', max.iter=300, na.action, ...) 
+                  fail="failure", distr='weibull', max.iter=300, na.action, 
+                  silent=FALSE, ...) 
 { 
   cl <- match.call()
   
@@ -104,10 +106,10 @@ spdur <- function(duration, atrisk, data=NULL, last="end.spell", t.0="t.0",
   
   # Estimation
   if (distr=='weibull') {
-    est <- spweibull(Y, X, Z, max.iter, ...)
+    est <- spweibull(Y, X, Z, max.iter, silent=silent, ...)
   }
   if (distr=='loglog') {
-    est <- sploglog(Y, X, Z, max.iter, ...)
+    est <- sploglog(Y, X, Z, max.iter, silent=silent, ...)
   }
   # Names
   varnames <- c(paste(unlist(attr(X, 'dimnames')[2])), paste(unlist(attr(Z, 'dimnames')[2])), 'log(alpha)')

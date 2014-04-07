@@ -1,0 +1,609 @@
+
+R version 3.0.2 (2013-09-25) -- "Frisbee Sailing"
+Copyright (C) 2013 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin10.8.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> pkgname <- "spduration"
+> source(file.path(R.home("share"), "R", "examples-header.R"))
+> options(warn = 1)
+> library('spduration')
+> 
+> base::assign(".oldSearch", base::search(), pos = 'CheckExEnv')
+> cleanEx()
+> nameEx("AIC.spdur")
+> ### * AIC.spdur
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: AIC.spdur
+> ### Title: AIC method for spdur
+> ### Aliases: AIC.spdur
+> 
+> ### ** Examples
+> 
+> data(model.coups)
+> AIC(model.coups)
+[1] 649.6188
+> 
+> 
+> 
+> cleanEx()
+> nameEx("BIC.spdur")
+> ### * BIC.spdur
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: BIC.spdur
+> ### Title: BIC method for spdur
+> ### Aliases: BIC.spdur
+> 
+> ### ** Examples
+> 
+> data(model.coups)
+> BIC(model.coups)
+[1] 681.9818
+> 
+> 
+> 
+> cleanEx()
+> nameEx("buildDuration")
+> ### * buildDuration
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: buildDuration
+> ### Title: Build duration version of panel data
+> ### Aliases: buildDuration
+> 
+> ### ** Examples
+> 
+> # Yearly data
+> data <- data.frame(y=c(0,0,0,1,0),
++                    unitID=c(1,1,1,1,1),
++                    tID=c(2000, 2001, 2002, 2003, 2004))
+> dur.data <- buildDuration(data, "y", "unitID", "tID", freq="year")
+Warning in attemptDate(data[, tID], freq) :
+  Converting to 'Date' class with yyyy-06-30
+> dur.data
+  y unitID  tID failure ongoing end.spell cured atrisk censor duration t.0
+2 0      1 2000       0       0         0     0      1      0        1   0
+3 0      1 2001       0       0         0     0      1      0        2   1
+4 0      1 2002       0       0         0     0      1      0        3   2
+5 1      1 2003       1       0         1     0      1      0        4   3
+1 0      1 2004       0       0         1     1      0      1        1   0
+> 
+> 
+> 
+> cleanEx()
+> nameEx("coups")
+> ### * coups
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: coups
+> ### Title: Global coups, 1979 to 2010
+> ### Aliases: coups
+> 
+> ### ** Examples
+> 
+> data(coups)
+> table(coups$succ.coup)
+
+   0    1 
+5755   73 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("forecast.spdur")
+> ### * forecast.spdur
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: forecast.spdur
+> ### Title: Plot spdur object predictions
+> ### Aliases: forecast.spdur
+> 
+> ### ** Examples
+> 
+> data(coups)
+> data(model.coups)
+> 
+> coups.dur <- buildDuration(coups, "succ.coup", "gwcode", "year", freq="year")
+> pred.data <- coups.dur[coups.dur$year==max(coups.dur$year), ]
+> pred.data <- pred.data[complete.cases(pred.data), ]
+> fcast <- forecast(model.coups, pred.data=pred.data)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("logLik.spdur")
+> ### * logLik.spdur
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: logLik.spdur
+> ### Title: Log-Likelihood of an spdur Object
+> ### Aliases: logLik.spdur
+> 
+> ### ** Examples
+> 
+> data(model.coups)
+> logLik(model.coups)
+'log Lik.' -319.8094 (df=4777)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("model.coups")
+> ### * model.coups
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: model.coups
+> ### Title: Model of global coups from 1979 to 2010
+> ### Aliases: model.coups
+> 
+> ### ** Examples
+> 
+> data(model.coups)
+> str(model.coups)
+List of 13
+ $ coefficients: Named num [1:5] 4.002 0.206 6.528 0.897 -0.032
+  ..- attr(*, "names")= chr [1:5] "(Dur. Intercept)" "polity2" "(Risk Intercept)" "polity2" ...
+ $ vcv         : num [1:5, 1:5] 0.05646 0.00191 0.42977 0.05096 0.01866 ...
+  ..- attr(*, "dimnames")=List of 2
+  .. ..$ : chr [1:5] "(Dur. Intercept)" "polity2" "(Risk Intercept)" "polity2" ...
+  .. ..$ : chr [1:5] "(Dur. Intercept)" "polity2" "(Risk Intercept)" "polity2" ...
+ $ logL        : num -320
+ $ se          : Named num [1:5] 0.2376 0.0304 3.2556 0.4084 0.119
+  ..- attr(*, "names")= chr [1:5] "(Dur. Intercept)" "polity2" "(Risk Intercept)" "polity2" ...
+ $ zstat       : Named num [1:5] 16.84 6.779 2.005 2.196 -0.269
+  ..- attr(*, "names")= chr [1:5] "(Dur. Intercept)" "polity2" "(Risk Intercept)" "polity2" ...
+ $ pval        : Named num [1:5] 0.00 1.21e-11 4.50e-02 2.81e-02 7.88e-01
+  ..- attr(*, "names")= chr [1:5] "(Dur. Intercept)" "polity2" "(Risk Intercept)" "polity2" ...
+ $ mf.dur      :'data.frame':	4782 obs. of  2 variables:
+  ..$ duration: num [1:4782] 1 1 1 1 1 1 1 1 1 1 ...
+  ..$ polity2 : int [1:4782] 0 5 8 9 -9 -4 -4 -7 9 -8 ...
+  ..- attr(*, "terms")=Classes 'terms', 'formula' length 3 duration ~ polity2
+  .. .. ..- attr(*, "variables")= language list(duration, polity2)
+  .. .. ..- attr(*, "factors")= int [1:2, 1] 0 1
+  .. .. .. ..- attr(*, "dimnames")=List of 2
+  .. .. .. .. ..$ : chr [1:2] "duration" "polity2"
+  .. .. .. .. ..$ : chr "polity2"
+  .. .. ..- attr(*, "term.labels")= chr "polity2"
+  .. .. ..- attr(*, "order")= int 1
+  .. .. ..- attr(*, "intercept")= int 1
+  .. .. ..- attr(*, "response")= int 1
+  .. .. ..- attr(*, ".Environment")=<environment: R_GlobalEnv> 
+  .. .. ..- attr(*, "predvars")= language list(duration, polity2)
+  .. .. ..- attr(*, "dataClasses")= Named chr [1:2] "numeric" "numeric"
+  .. .. .. ..- attr(*, "names")= chr [1:2] "duration" "polity2"
+ $ mf.risk     :'data.frame':	4782 obs. of  2 variables:
+  ..$ atrisk : num [1:4782] 0 1 0 0 0 1 0 0 0 1 ...
+  ..$ polity2: int [1:4782] 0 5 8 9 -9 -4 -4 -7 9 -8 ...
+  ..- attr(*, "terms")=Classes 'terms', 'formula' length 3 atrisk ~ polity2
+  .. .. ..- attr(*, "variables")= language list(atrisk, polity2)
+  .. .. ..- attr(*, "factors")= int [1:2, 1] 0 1
+  .. .. .. ..- attr(*, "dimnames")=List of 2
+  .. .. .. .. ..$ : chr [1:2] "atrisk" "polity2"
+  .. .. .. .. ..$ : chr "polity2"
+  .. .. ..- attr(*, "term.labels")= chr "polity2"
+  .. .. ..- attr(*, "order")= int 1
+  .. .. ..- attr(*, "intercept")= int 1
+  .. .. ..- attr(*, "response")= int 1
+  .. .. ..- attr(*, ".Environment")=<environment: R_GlobalEnv> 
+  .. .. ..- attr(*, "predvars")= language list(atrisk, polity2)
+  .. .. ..- attr(*, "dataClasses")= Named chr [1:2] "numeric" "numeric"
+  .. .. .. ..- attr(*, "names")= chr [1:2] "atrisk" "polity2"
+ $ Y           : num [1:4782, 1:5] 0 1 0 0 0 1 0 0 0 1 ...
+  ..- attr(*, "dimnames")=List of 2
+  .. ..$ : chr [1:4782] "5007" "5006" "5570" "5039" ...
+  .. ..$ : chr [1:5] "atrisk" "duration" "last" "t.0" ...
+  ..- attr(*, "last")= chr "end.spell"
+  ..- attr(*, "t.0")= chr "t.0"
+  ..- attr(*, "fail")= chr "failure"
+ $ na.action   :Class 'omit'  Named int [1:1046] 5 6 17 18 19 20 24 32 51 57 ...
+  .. ..- attr(*, "names")= chr [1:1046] "5" "129" "5538" "5506" ...
+ $ call        : language spdur(duration = duration ~ polity2, atrisk = atrisk ~ polity2, data = dur.coup)
+ $ distr       : chr "weibull"
+ $ obs         : int 4782
+ - attr(*, "class")= chr "spdur"
+> 
+> 
+> 
+> cleanEx()
+> nameEx("panelLag")
+> ### * panelLag
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: panelLag
+> ### Title: Lag panel data
+> ### Aliases: panelLag
+> 
+> ### ** Examples
+> 
+> data(coups)
+> # No need to order before using panelLag, just do it here so we can compare results below.
+> coups <- coups[order(coups$gwcode, coups$year), ]
+> test <- panelLag("polity2", "gwcode", "year", data=coups)
+> 
+> # Compare output
+> head(coups$polity2)
+[1] 10 10 10 10 10 10
+> head(test)
+21 22 23 24 25 26 
+NA 10 10 10 10 10 
+> 
+> 
+> 
+> cleanEx()
+> nameEx("plot.spdur")
+> ### * plot.spdur
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: plot.spdur
+> ### Title: Plot split-duration model fit.
+> ### Aliases: plot.spdur
+> 
+> ### ** Examples
+> 
+> # get model estimates
+> data(model.coups)
+> 
+> # plot
+> p <- plot(model.coups)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("predict.spdur")
+> ### * predict.spdur
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: predict.spdur
+> ### Title: Predict fitted values for a split-population duration model
+> ### Aliases: predict.spdur
+> 
+> ### ** Examples
+> 
+> # get model estimates
+> data(model.coups)
+> atrisk <- predict(model.coups)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("print.summary.spdur")
+> ### * print.summary.spdur
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: print.summary.spdur
+> ### Title: Print a split-population duration model results summary
+> ### Aliases: print.summary.spdur
+> 
+> ### ** Examples
+> 
+> data(model.coups)
+> s <- summary(model.coups)
+> class(s)
+[1] "summary.spdur"
+> print(s)
+Call:
+spdur(duration = duration ~ polity2, atrisk = atrisk ~ polity2, 
+    data = dur.coup)
+
+Duration equation: 
+                 Estimate  StdErr      t        p    
+(Dur. Intercept)  4.00151 0.23762 16.840  < 2e-16 ***
+polity2           0.20588 0.03037  6.779 1.21e-11 ***
+
+Risk equation: 
+                 Estimate StdErr     t      p  
+(Risk Intercept)   6.5278 3.2556 2.005 0.0449 *
+polity2            0.8966 0.4084 2.196 0.0281 *
+
+           Estimate   StdErr      t     p
+log(alpha) -0.03204  0.11899 -0.269 0.788
+---
+Signif. codes: *** = 0.001, ** = 0.01, * = 0.05, . = 0.1
+> 
+> 
+> 
+> cleanEx()
+> nameEx("spdur")
+> ### * spdur
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: spdur
+> ### Title: Split-population duration (cure) regression
+> ### Aliases: spdur
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D # Prepare data
+> ##D data(coups)
+> ##D dur.coups <- buildDuration(coups, "succ.coup", unitID="gwcode", tID="year",
+> ##D                            freq="year")
+> ##D 
+> ##D # Estimate model
+> ##D model.coups <- spdur(duration ~ polity2, atrisk ~ polity2, data=dur.coups)
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("spdurCrisp")
+> ### * spdurCrisp
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: spdurCrisp
+> ### Title: Split-Pop Duration Model Wrapper for CRISP/ICEWS
+> ### Aliases: spdurCrisp
+> 
+> ### ** Examples
+> 
+> ## Not run: 
+> ##D # Prepare data
+> ##D data(coups)
+> ##D dur.coups <- buildDuration(coups, "succ.coup", unitID="gwcode", tID="year",
+> ##D                            freq="year")
+> ##D 
+> ##D # Estimate model
+> ##D model3 <- spdurCrisp(
+> ##D   duration ~ polity2,
+> ##D   atrisk ~ polity2,
+> ##D   train=dur.coups, test=dur.coups[1,],
+> ##D   pred=dur.coups[1,])
+> ## End(Not run)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("spduration-package")
+> ### * spduration-package
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: spduration-package
+> ### Title: Split-Population Duration (Cure) Regression Models
+> ### Aliases: spduration-package spduration
+> 
+> ### ** Examples
+> 
+> library(spduration)
+> demo(coups)
+
+
+	demo(coups)
+	---- ~~~~~
+
+> ##
+> ##    Demo/test code for "spduration" R package using Powell & Thyne coups
+> ##    Andreas Beger
+> ##    Cassy Dorff
+> ##    October 2013
+> ##
+> 
+> 
+> # 1. install the latest version of spduration on dropbox
+> # 2. update this demo file so it uses the coups stuff
+> # 3. try out methods for spdurCRISP (model2 at the bottom), and see what breaks
+> 
+> 
+> library(spduration)
+
+> ## 
+> # Task: create coups model and try out some of the methods
+> data("coups")
+
+> # Demo model to save estimation for examples
+> duration.coup <- buildDuration(coups, "succ.coup", unitID="gwcode", tID='year',
++                           freq="year")                    
+
+> # Split duration model of coups
+> model.coups <- spdur(duration ~ polity2, atrisk ~ polity2, last='end.spell', 
++                      data=duration.coup, distr="weibull", max.iter=300)
+Fitting base weibull...
+Fitting split weibull...
+initial  value 350.011440 
+iter  10 value 323.775217
+iter  20 value 319.813613
+final  value 319.809378 
+converged
+
+> # summary methods
+> summary(model.coups) #works!
+Call:
+spdur(duration = duration ~ polity2, atrisk = atrisk ~ polity2, 
+    data = duration.coup, last = "end.spell", distr = "weibull", 
+    max.iter = 300)
+
+Duration equation: 
+                 Estimate  StdErr      t        p    
+(Dur. Intercept)  4.00151 0.23762 16.840  < 2e-16 ***
+polity2           0.20588 0.03037  6.779 1.21e-11 ***
+
+Risk equation: 
+                 Estimate StdErr     t      p  
+(Risk Intercept)   6.5278 3.2556 2.005 0.0449 *
+polity2            0.8966 0.4084 2.196 0.0281 *
+
+           Estimate   StdErr      t     p
+log(alpha) -0.03204  0.11899 -0.269 0.788
+---
+Signif. codes: *** = 0.001, ** = 0.01, * = 0.05, . = 0.1
+
+> nobs(model.coups) # works
+[1] 4782
+
+> AIC(model.coups) #works!
+[1] 649.6188
+
+> BIC(model.coups) #works!
+[1] 681.9818
+
+> # predict
+> pred <- duration.coup[-model.coups$na.action, ]
+
+> pred$yhat <- predict(model.coups)
+
+> top5 <- pred[pred$year==2010, c('gwcode', "year", 'yhat')]
+
+> top5 <- top5[order(top5$yhat, decreasing=TRUE), ]
+
+> head(top5)
+[1] gwcode year   yhat  
+<0 rows> (or 0-length row.names)
+
+> ### CRISP wrapper (spdurCRISP)
+> # training: buildDuration, subset the coups through 2000
+> coups.train <- coups[coups$year<="2000-06-30",]
+
+> duration.coups.train <- buildDuration(coups.train, "succ.coup", unitID="gwcode", 
++                                       tID='year', freq="year")
+
+> # test: buildDuration with coups through 2009
+> coups.test <- coups[coups$year<="2009-06-30",]
+
+> duration.coups.test <- buildDuration(coups.test, "succ.coup", unitID="gwcode", 
++                                      tID='year', freq="year")
+
+> # then subset it by dropping all before 2001
+> duration.coups.test <- duration.coups.test[duration.coups.test$year>=2001, ]
+
+> # pred: slice the last year of coups 2010
+> duration.coups.prediction<- buildDuration(coups, "succ.coup", unitID="gwcode", tID='year', freq="year")
+
+> duration.coups.prediction<- duration.coups.prediction[complete.cases(duration.coups.prediction), ]
+
+> coups.prediction<-duration.coups.prediction[duration.coups.prediction$year>="2010-06-30",]
+
+> # Test CRISP/ICEWS wrapper
+> model.coups2 <- spdurCrisp(
++ duration ~ polity2, atrisk ~ polity2,
++ last='end.spell', train=duration.coups.train, test=duration.coups.test[1,], 
++ pred=duration.coups.prediction[1,], distr="weibull", iter=300)
+Fitting base weibull...
+Fitting split weibull...
+initial  value 283.973941 
+iter  10 value 264.247130
+iter  20 value 261.297940
+final  value 261.297342 
+converged
+Training set predictions...
+Validation set predictions...
+Forecast...
+
+> # try out methods
+> summary(model.coups2)
+Call:
+spdurCrisp(duration = duration ~ polity2, atrisk = atrisk ~ polity2, 
+    train = duration.coups.train, test = duration.coups.test[1, 
+        ], pred = duration.coups.prediction[1, ], last = "end.spell", 
+    distr = "weibull", iter = 300)
+
+Duration equation: 
+                 Estimate  StdErr      t        p    
+(Dur. Intercept)  3.97246 0.23337 17.022  < 2e-16 ***
+polity2           0.16213 0.03196  5.072 3.93e-07 ***
+
+Risk equation: 
+                 Estimate StdErr     t       p   
+(Risk Intercept)   10.296  3.930 2.620 0.00881 **
+polity2             1.309  0.480 2.728 0.00638 **
+
+           Estimate  StdErr      t     p
+log(alpha)  -0.0622  0.1207 -0.515 0.606
+---
+Signif. codes: *** = 0.001, ** = 0.01, * = 0.05, . = 0.1
+
+> nobs(model.coups2)
+[1] 3222
+
+> AIC(model.coups2)
+[1] 532.5947
+
+> BIC(model.coups2)
+[1] 562.9835
+
+> # plots
+> plot(model.coups)
+
+> plot(model.coups2)
+> 
+> 
+> 
+> cleanEx()
+> nameEx("summary.spdur")
+> ### * summary.spdur
+> 
+> flush(stderr()); flush(stdout())
+> 
+> ### Name: summary.spdur
+> ### Title: Summarize split-population duration results
+> ### Aliases: summary.spdur
+> 
+> ### ** Examples
+> 
+> data(model.coups)
+> s <- summary(model.coups)
+> class(s)
+[1] "summary.spdur"
+> print(s)
+Call:
+spdur(duration = duration ~ polity2, atrisk = atrisk ~ polity2, 
+    data = dur.coup)
+
+Duration equation: 
+                 Estimate  StdErr      t        p    
+(Dur. Intercept)  4.00151 0.23762 16.840  < 2e-16 ***
+polity2           0.20588 0.03037  6.779 1.21e-11 ***
+
+Risk equation: 
+                 Estimate StdErr     t      p  
+(Risk Intercept)   6.5278 3.2556 2.005 0.0449 *
+polity2            0.8966 0.4084 2.196 0.0281 *
+
+           Estimate   StdErr      t     p
+log(alpha) -0.03204  0.11899 -0.269 0.788
+---
+Signif. codes: *** = 0.001, ** = 0.01, * = 0.05, . = 0.1
+> 
+> 
+> 
+> ### * <FOOTER>
+> ###
+> options(digits = 7L)
+> base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
+Time elapsed:  15.756 0.147 17.108 0 0 
+> grDevices::dev.off()
+null device 
+          1 
+> ###
+> ### Local variables: ***
+> ### mode: outline-minor ***
+> ### outline-regexp: "\\(> \\)?### [*]+" ***
+> ### End: ***
+> quit('no')

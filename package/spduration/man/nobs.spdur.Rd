@@ -1,0 +1,20 @@
+\name{nobs.spdur}
+\alias{nobs.spdur}
+\title{Number of Observations in a spdur Object}
+\usage{
+\method{nobs}{spdur}(object, ...)
+}
+\arguments{
+  \item{object}{an object inheriting from class
+  \code{spdur}.}
+
+  \item{\dots}{not used.}
+}
+\description{
+Extract the number of observations in a \code{spdur} class
+model object.
+}
+\seealso{
+\code{\link{AIC.spdur}}, \code{\link{BIC.spdur}}
+}
+

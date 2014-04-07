@@ -101,7 +101,7 @@ predict.spdur <- function(object, data=NULL, stat='conditional risk', ...) {
   # alpha
   al.hat <- exp(-coeff.a)  
   # lambda
-  la.hat <- exp(-X %*% coeff.b)
+  la.hat <- pmax(1e-10, exp(-X %*% coeff.b))  # hack to prevent NaN in ft calculation below
   
   # Unconditional cure/atrisk rate
   atrisk <- plogis(Z %*% coeff.g)

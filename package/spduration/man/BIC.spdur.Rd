@@ -1,0 +1,29 @@
+\name{BIC.spdur}
+\alias{BIC.spdur}
+\title{BIC method for spdur}
+\usage{
+\method{BIC}{spdur}(object, ...)
+}
+\arguments{
+  \item{object}{An object of class \code{spdur}.}
+
+  \item{\dots}{Optional arguments.}
+}
+\description{
+Computes the Bayesian Information Criterion for an
+\code{spdur} class object.
+}
+\details{
+Computed as \code{AIC(object, k = log(nobs(object)))}.
+}
+\examples{
+data(model.coups)
+BIC(model.coups)
+}
+\author{
+Andreas Beger
+}
+\seealso{
+\code{\link{BIC}}, \code{\link{AIC.spdur}}
+}
+

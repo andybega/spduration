@@ -1,0 +1,49 @@
+\name{panelLag}
+\alias{panelLag}
+\title{Lag panel data}
+\usage{
+panelLag(x, id, t, lag = 1, data = NULL)
+}
+\arguments{
+  \item{x}{String identifying the vectors to be lagged in
+  \code{data}.}
+
+  \item{id}{String identifying the unit (e.g. country)
+  identifier in \code{data}.}
+
+  \item{t}{String identifying the time identifier in
+  \code{data}.}
+
+  \item{lag}{Lag order, i.e. by how many time periods
+  should \code{x} be lagged? Unlike the default
+  \code{\link{lag}}, positive values indicate that past
+  data is used for the current time period.}
+
+  \item{data}{A data frame. If not provided, a new one will
+  be constructed with the vectors supplied for the other
+  parameters.}
+}
+\value{
+A vector of same length as \code{x} representing lagged
+values with leading \code{NA}'s.
+}
+\description{
+A function that correctly lags panel data where units are
+identified by \code{id} and time periods are identified
+with \code{t}. Results are in same order as \code{data} and
+are padded with \code{NA} as needed.
+}
+\examples{
+data(coups)
+# No need to order before using panelLag, just do it here so we can compare results below.
+coups <- coups[order(coups$gwcode, coups$year), ]
+test <- panelLag("polity2", "gwcode", "year", data=coups)
+
+# Compare output
+head(coups$polity2)
+head(test)
+}
+\author{
+Andreas Beger
+}
+

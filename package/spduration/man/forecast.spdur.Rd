@@ -1,0 +1,54 @@
+\name{forecast.spdur}
+\alias{forecast.spdur}
+\title{Plot spdur object predictions}
+\usage{
+\method{forecast}{spdur}(object, ..., pred.data = NULL,
+  stat = "conditional hazard", n.ahead = 6)
+}
+\arguments{
+  \item{object}{A \code{\link{spdur}} class model object.}
+
+  \item{\dots}{Optional aguments, not used.}
+
+  \item{pred.data}{Data on which to base forecasts, i.e.
+  slice of last time unit's observations for all
+  cross-sectional units.}
+
+  \item{stat}{Which statistic to forecast, see
+  \code{\link{predict.spdur}} for possible options}
+
+  \item{n.ahead}{How many time periods to predict ahead.
+  Default is 6.}
+}
+\description{
+\code{\link{plot}} method for \code{\link{spdur}} class
+objects.
+}
+\details{
+This function will create out-of-sample predictions of
+``stat'' using model estimates and the prediction data
+provided. It is assumed that prediction data consist of a
+slice of the last time period observed for the data used to
+estimate the model in \code{object}. For each row,
+\code{forecast.spdur} will estimate the model predictions
+for that time point and then extrapolate the resulting
+probability to \code{n.ahead} time periods using
+appropriate probability theory.
+
+For situations in which the covariate values are known for
+future time periods, e.g. in a test sample use
+\code{\link{predict.spdur}} instead.
+}
+\examples{
+data(coups)
+data(model.coups)
+
+coups.dur <- buildDuration(coups, "succ.coup", "gwcode", "year", freq="year")
+pred.data <- coups.dur[coups.dur$year==max(coups.dur$year), ]
+pred.data <- pred.data[complete.cases(pred.data), ]
+fcast <- forecast(model.coups, pred.data=pred.data)
+}
+\author{
+Andreas Beger, Daina Chiba
+}
+

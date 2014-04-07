@@ -1,0 +1,41 @@
+\name{plot.spdur}
+\alias{plot.spdur}
+\title{Plot split-duration model fit.}
+\usage{
+\method{plot}{spdur}(x, ..., failure = "failure", endSpellOnly = TRUE)
+}
+\arguments{
+  \item{x}{An object of class "\code{spdur}".}
+
+  \item{\dots}{Optional parameters passed to
+  \code{predict.spdur}, e.g. type of statistic to
+  calculate.}
+
+  \item{failure}{The variable indicating that a failure
+  event has occurred at time \code{t}.}
+
+  \item{endSpellOnly}{Should only the last observation in
+  each spell be kept? \code{TRUE} by default.}
+}
+\description{
+\code{plot} method for class ``\code{spdur}''.
+}
+\details{
+Creates a \code{\link{separationplot}} of fitted values
+from split-duration model results using
+\code{\link{predict.spdur}}.
+}
+\examples{
+# get model estimates
+data(model.coups)
+
+# plot
+p <- plot(model.coups)
+}
+\author{
+Andreas Beger
+}
+\seealso{
+\code{\link{separationplot}}, \code{\link{predict.spdur}}
+}
+

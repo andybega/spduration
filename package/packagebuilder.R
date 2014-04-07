@@ -16,20 +16,18 @@ library(corpcor)
 ## 1. ##
 ########
 ##
-## change version here, and workind directories
+## change version here, and working directories
 ##
-pack_ver <- "0.11"
+pack_ver <- "0.12"
 
 # Working directory from which to source functions, data, etc.
 # And location of package on dropbox (which we will create in a sec.)
 if(Sys.info()["user"]=="ab428") {
   pack_git <- "~/Work/spdur_package/package/spduration"
-  pack_db <- paste0("~/Dropbox/Work/spdur_package/package/spduration_", 
-                    pack_ver)
+  pack_db <- "~/Dropbox/Work/spdur_package"
 } else if(Sys.info()["user"]=="adbeger") {
   pack_git <- "~/Work/spdur_package/package/spduration"
-  pack_db <- paste0("~/Dropbox/Work/spdur_package/package/spduration_", 
-                    pack_ver)
+  pack_db <- "~/Dropbox/Work/spdur_package"
 }
   
 ########
@@ -42,9 +40,6 @@ if(Sys.info()["user"]=="ab428") {
 ##    3. Update man/spduration-package.Rd
 ##
 
-# Create package directory on dropbox and copy git package to it
-dir.create(pack_db)
-file.copy(from=pack_git, to=pack_db, recursive=T)
 
 ########
 ## 3. ##
@@ -52,7 +47,7 @@ file.copy(from=pack_git, to=pack_db, recursive=T)
 ## Estimate and save demo model
 ##
 
-setwd(paste0(pack_db, "/spduration"))
+setwd(pack_git)
 
 # Load all functions
 load_all("./")
@@ -67,11 +62,10 @@ dur.coup <- buildDuration(coups, "succ.coup", unitID='gwcode', tID='year',
 ## Split duration model of coups
 model.coups <- spdur(duration ~ polity2, atrisk ~ polity2, data=dur.coup)
 rm(dur.coup)
-# log-l should be 249.807508 (old) new ll function: 315.591765
 # latest: 319.809
 
 # save model to data
-save(model.coups, file=paste0(pack_db, "/spduration/data/model.coups.rda"))
+save(model.coups, file="data/model.coups.rda")
 
 ########
 ## 4. ##
@@ -83,7 +77,7 @@ save(model.coups, file=paste0(pack_db, "/spduration/data/model.coups.rda"))
 document(roclets=c("namespace", "rd"), reload=T)
 
 # Write 00Index for demo
-file.name <- paste0(pack_db, "/spduration/demo/00Index")
+file.name <- "demo/00Index"
 file.text <- "coups   Split-duration model of Powell coups.\n"
 write(file.text, file=file.name)
 
@@ -92,11 +86,17 @@ write(file.text, file=file.name)
 ########
 ## This will build and test the package using Terminal:
 
-setwd(pack_db)
+setwd("..")
 system("find . -name '*.DS_Store' -type f -delete")  # delete .DS_Store
 system("find . -name '.Rapp.history' -type f -delete")
 system("R CMD build --resave-data spduration")
 system("R CMD check spduration")
+
+# Copy package to dropbox for sharing
+file.copy(
+	from=paste0("spduration_", pack_ver, ".tar.gz"),
+	to=paste0(pack_db, "/spduration_", pack_ver, ".tar.gz"))
+
 
 ########
 ## 5. ##
@@ -109,7 +109,7 @@ install.packages(paste0(pack_db, "/spduration_", pack_ver, ".tar.gz"),
 ## Restart R
 
 library(spduration)
-demo(coups
+demo(coups)
 
 ########
 ## 6. ##

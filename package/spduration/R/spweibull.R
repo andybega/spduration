@@ -1,6 +1,6 @@
 #' @importFrom corpcor make.positive.definite
 spweibull <-
-function(Y, X, Z, max.iter) {  
+function(Y, X, Z, max.iter, silent=FALSE) {  
 
   # Base model likelihood
   weib.lik <- function(theta, y, X) {
@@ -25,7 +25,7 @@ function(Y, X, Z, max.iter) {
   if (!exists("base.inits")) {
     base.inits <- c(rep(0, ncol(X)), 0)
   }
-  cat('Fitting base weibull...\n')
+  if (!silent) cat('Fitting base weibull...\n')
   base <- optim(base.inits, 
                 weib.lik, method="BFGS", control=list(maxit=max.iter), 
                 hessian=T, y=Y, X=X)
@@ -57,11 +57,13 @@ function(Y, X, Z, max.iter) {
   # Estimate full model
   x.inits <- base$par[1:ncol(X)]
   a.init <- base$par[ncol(X)+1]
-  cat('Fitting split weibull...\n')
-  est <- optim(c(x.inits, rep(0, ncol(Z)), a.init), spweib.lik, method="BFGS", control=list(trace=T, maxit=max.iter), hessian=T, y=Y, X=X, Z=Z)
+  if (!silent) cat('Fitting split weibull...\n')
+  trace <- !silent
+  est <- optim(c(x.inits, rep(0, ncol(Z)), a.init), spweib.lik, method="BFGS", 
+    control=list(trace=trace, maxit=max.iter), hessian=T, y=Y, X=X, Z=Z)
   
   # Solve other results
-  if (est$convergence!=0) stop('Model did not converge')
+  if (est$convergence!=0 & !silent) stop('Model did not converge')
   coef <- est$par
   vcv <- solve(est$hessian)
   vcv <- make.positive.definite(vcv)
