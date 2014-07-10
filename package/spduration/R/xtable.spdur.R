@@ -1,8 +1,6 @@
 #' Create export table for a split-duration model
 #'
-#' \code{xtable} method for class ``\code{spdur}''.
-#' 
-#' @method xtable spdur
+#' \code{xtable}-like function for class ``\code{spdur}''.
 #' 
 #' @param object An object with class \code{spdur}.
 #' @param \dots Further arguments passed to \code{xtable}.
@@ -21,15 +19,15 @@
 #' 
 #' @examples
 #' data(model.coups)
-#' xtable(model.coups)
+#' xtable.spdur(model.coups)
 #' 
-#' @S3method xtable spdur
+#' @export
 
-xtable.spdur <- function(model, ...) {
+xtable.spdur <- function(object, ...) {
 	if (!require(xtable))
         stop("Please install xtable: install.packages('xtable')")
 
-  model.sum <- summary(model)
+  model.sum <- summary(object)
   model.tbl <- rbind(model.sum$duration, model.sum$alpha, model.sum$split)
   res <- xtable(model.tbl[, c("Estimate", "StdErr", "p")], ...)
   res

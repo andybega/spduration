@@ -1,8 +1,6 @@
 #' Create a simple table of split-population duration results
 #'
-#' \code{table} method for class ``\code{spdur}''.
-#' 
-#' @method table spdur
+#' \code{table}-like function for class ``\code{spdur}''.
 #' 
 #' @param object An object with class \code{spdur}.
 #' @param row.names Indicates whether parameter names should be added as row
@@ -23,15 +21,15 @@
 #' 
 #' @examples
 #' data(model.coups)
-#' tbl <- table(model.coups)
+#' tbl <- table.spdur(model.coups)
 #' tbl
 #' 
-#' @S3method table spdur
+#' @export
 
-table.spdur <- function(model, row.names=TRUE) {
+table.spdur <- function(object, row.names=TRUE) {
   # Format spdur estimates summary for pretty printing with xtable
   # if row.names=FALSE parameter names will be column in results
-  sum.tbl <- summary(model)
+  sum.tbl <- summary(object)
   dur   <- sum.tbl$duration[, c(1, 4), drop=FALSE]
   risk  <- sum.tbl$split[, c(1, 4), drop=FALSE]
   alpha <- sum.tbl$alpha[, c(1, 4), drop=FALSE]

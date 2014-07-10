@@ -9,3 +9,4 @@ comparison-and-sims/logs/*
 .Rapp*
 .RDataTmp
 *.sublime-*
+package/spduration.Rcheck

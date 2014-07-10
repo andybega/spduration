@@ -22,13 +22,9 @@ pack_ver <- "0.12"
 
 # Working directory from which to source functions, data, etc.
 # And location of package on dropbox (which we will create in a sec.)
-if(Sys.info()["user"]=="ab428") {
-  pack_git <- "~/Work/spdur_package/package/spduration"
-  pack_db <- "~/Dropbox/Work/spdur_package"
-} else if(Sys.info()["user"]=="adbeger") {
-  pack_git <- "~/Work/spdur_package/package/spduration"
-  pack_db <- "~/Dropbox/Work/spdur_package"
-}
+pack_git <- "~/Work/spdur_package/package/spduration"
+pack_db <- "~/Dropbox/Work/spdur_package"
+
   
 ########
 ## 2. ##
