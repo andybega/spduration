@@ -91,7 +91,8 @@ system("R CMD check spduration")
 # Copy package to dropbox for sharing
 file.copy(
 	from=paste0("spduration_", pack_ver, ".tar.gz"),
-	to=paste0(pack_db, "/spduration_", pack_ver, ".tar.gz"))
+	to=paste0(pack_db, "/spduration_", pack_ver, ".tar.gz"),
+	overwrite=TRUE)
 
 
 ########
@@ -100,7 +101,7 @@ file.copy(
 ## Install and test package
 ##
 install.packages(paste0(pack_db, "/spduration_", pack_ver, ".tar.gz"), 
-                 repos=NULL, type='source')
+	type='source')
 
 ## Restart R
 
