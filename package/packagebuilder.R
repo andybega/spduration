@@ -1,16 +1,90 @@
 ##
+##    Develop, test, and build spduration package
+##    Andreas Beger
+##    7 October 2014
+##
+
+library(devtools)
+
+setwd("~/Work/spdur_package/package/spduration")
+
+# One time calls during creation
+#create("path/to/spduration")
+#use_rstudio()
+
+# Package dependencies
+#use_testthat()
+
+
+#
+# The basic steps with devtools are:
+# 
+#   load_all()   This will simulate a library() call for the package
+#   document()   Update namespace and documentation
+#   check()      Check examples, docs, etc.
+#   build()      Build package tarball
+#   build_win()  Windows version; Ben will get email when it is done
+
+
+
+
+# While playing around with functions and documentation.
+# May have to delete the NAMESPACE file before loading
+devtools::load_all(reset=TRUE)
+
+# Document, namespace
+devtools::document()
+
+# Run unit tests
+devtools::test()
+
+# Write 00Index for demo
+file.name <- "demo/00Index"
+file.text <- paste0("crime    someting description")
+write(file.text, file=file.name)
+
+# Update NEWS file
+#   go to knoxr/NEWS
+#   manually add any new items
+
+check()
+
+##
+##    Build packages (source and Win)
+##
+
+#  Manually do:
+#   1. Update version and date in "DESCRIPTION"
+#   2. Update "NEWS"
+#   3. Update version and date in R/spduration-package.R
+#
+
+build()
+build_win()
+
+##
+##    Eventually... first add cran-comments.md
+##    Send to CRAN
+##
+
+#release()
+
+
+
+
+##
+## 		old way
+##
+
+
+
+
+##
 ##    Build spduration package
 ##    Andreas Beger
 ##    21 October 2013
 ##
 
-rm(list = ls())
-
-# AB: 6.5.2013 starting to transition to devtools/roxygen2
-library(devtools)
-library(roxygen2)
-library(plyr)
-library(corpcor)
 
 ########
 ## 1. ##
