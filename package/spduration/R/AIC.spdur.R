@@ -17,7 +17,7 @@
 #' data(model.coups)
 #' AIC(model.coups)
 #'
-#' @S3method AIC spdur
+#' @export AIC spdur
 #' @importFrom stats AIC
 AIC.spdur <- function(object, ..., k = 2)
 {

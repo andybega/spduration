@@ -9,12 +9,12 @@ library(devtools)
 setwd("~/Work/spdur_package/package/spduration")
 
 # One time calls during creation
-#create("path/to/knoxr")
+#create("path/to/spduration")
 #use_rstudio()
 
 # Package dependencies
 #use_testthat()
-#use_package("geosphere")
+
 
 #
 # The basic steps with devtools are:
@@ -53,6 +53,12 @@ check()
 ##    Build packages (source and Win)
 ##
 
+#  Manually do:
+#   1. Update version and date in "DESCRIPTION"
+#   2. Update "NEWS"
+#   3. Update version and date in R/spduration-package.R
+#
+
 build()
 build_win()
 
@@ -79,13 +85,6 @@ build_win()
 ##    21 October 2013
 ##
 
-rm(list = ls())
-
-# AB: 6.5.2013 starting to transition to devtools/roxygen2
-library(devtools)
-library(roxygen2)
-library(plyr)
-library(corpcor)
 
 ########
 ## 1. ##

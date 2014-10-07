@@ -17,7 +17,7 @@
 #' data(model.coups)
 #' BIC(model.coups)
 #' 
-#' @S3method BIC spdur
+#' @export BIC spdur
 #' @importFrom stats BIC
 BIC.spdur <- function(object, ...)
 {
