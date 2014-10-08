@@ -34,7 +34,7 @@
 #' pred.data <- pred.data[complete.cases(pred.data), ]
 #' fcast <- forecast(model.coups, pred.data=pred.data)
 #' 
-#' @S3method forecast spdur
+#' @export forecast spdur
 forecast.spdur <- function(object, ..., pred.data = NULL, 
                            stat = 'conditional hazard', n.ahead = 6)
 {

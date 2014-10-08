@@ -19,7 +19,7 @@
 #' class(s)
 #' print(s)
 #' 
-#' @S3method print summary.spdur
+#' @export print summary.spdur
 print.summary.spdur <- function(x, ...)
 {
   cat('Call:\n')

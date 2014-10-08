@@ -9,7 +9,7 @@
 #' 
 #' @seealso \code{\link{AIC.spdur}}, \code{\link{BIC.spdur}}
 #' 
-#' @S3method nobs spdur
+#' @export nobs spdur
 #' @importFrom stats nobs
 nobs.spdur <- function(object, ...)
 {

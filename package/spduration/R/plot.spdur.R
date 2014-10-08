@@ -25,7 +25,7 @@
 #' # plot
 #' p <- plot(model.coups)
 #' 
-#' @S3method plot spdur
+#' @export plot spdur
 #' @importFrom separationplot separationplot
 plot.spdur <- function(x, ..., failure='failure', endSpellOnly=TRUE)
 { 

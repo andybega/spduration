@@ -11,7 +11,7 @@
 #' data(model.coups)
 #' logLik(model.coups)
 #' 
-#' @S3method logLik spdur
+#' @export logLik spdur
 #' @importFrom stats logLik
 logLik.spdur <- function(object, ...) 
 {
