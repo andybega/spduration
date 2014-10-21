@@ -7,8 +7,8 @@
 #' @param object Object of class ``\code{spdur}''.
 #' @param data Optional data for which to calculate fitted values, defaults to 
 #' training data.
-#' @param stat Quantity of interest to calculate. Default conditional probability 
-#' of being at risk, i.e. conditioned on observed survival up to time \code{t}. 
+#' @param stat Quantity of interest to calculate. Default conditional hazard, 
+#' i.e. conditioned on observed survival up to time \code{t}. 
 #' See below for list of values.
 #' @param \dots Optional arguments to pass to \code{predict} function.
 #' 
@@ -47,7 +47,7 @@
 #' atrisk <- predict(model.coups)
 #' 
 #' @export predict spdur
-predict.spdur <- function(object, data=NULL, stat='conditional risk', ...) {
+predict.spdur <- function(object, data=NULL, stat='conditional hazard', ...) {
   # Input validation
   stat_choices <- c('conditional risk', 'conditional cure', 'hazard', 'failure',
                     'unconditional risk', 'unconditional cure', 

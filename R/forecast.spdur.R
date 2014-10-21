@@ -1,6 +1,6 @@
 #' Plot spdur object predictions
 #' 
-#' \code{\link{plot}} method for \code{\link{spdur}} class objects.
+#' \code{\link{forecast}} method for \code{\link{spdur}} class objects.
 #' 
 #' @method forecast spdur
 #' 
