@@ -1,4 +1,4 @@
-#' Build duration version of panel data
+#' Add duration variables to panel data
 #' 
 #' Builds a duration version of a data frame representing panel data.
 #' 
@@ -67,7 +67,7 @@
 #' 
 #' @author Andreas Beger
 #' 
-#' @seealso \code{\link{panelLag}} for lagging variables in a panel data frame 
+#' @seealso \code{\link{panel_lag}} for lagging variables in a panel data frame 
 #' before building duration data.
 #' 
 #' @examples
@@ -75,12 +75,12 @@
 #' data <- data.frame(y=c(0,0,0,1,0), 
 #'                    unitID=c(1,1,1,1,1), 
 #'                    tID=c(2000, 2001, 2002, 2003, 2004))
-#' dur.data <- buildDuration(data, "y", "unitID", "tID", freq="year")
+#' dur.data <- add_duration(data, "y", "unitID", "tID", freq="year")
 #' dur.data
 #'
 #' @export
 #' @importFrom plyr ddply
-buildDuration <- function(data, y, unitID, tID, freq="month", sort=FALSE,
+add_duration <- function(data, y, unitID, tID, freq="month", sort=FALSE,
                           ongoing=TRUE, slice.last=FALSE) {
   
   ##    Check input

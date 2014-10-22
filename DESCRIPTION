@@ -1,6 +1,6 @@
 Package: spduration
 Title: Split-Population Duration (Cure) Regression
-Version: 0.12
+Version: 0.12.1
 Date: 2014-10-21
 Authors@R: as.person(c(
     "Andreas Beger <adbeger@gmail.com> [aut, cre]",
@@ -21,8 +21,8 @@ Imports:
     ggplot2,
     plyr,
     separationplot,
-    stats
+    stats,
+    xtable
 Suggests:
     CRISP,
-    xtable,
     testthat

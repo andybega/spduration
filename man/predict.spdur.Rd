@@ -3,7 +3,8 @@
 \alias{predict.spdur}
 \title{Predict fitted values for a split-population duration model}
 \usage{
-\method{predict}{spdur}(object, data = NULL, stat = "conditional risk", ...)
+\method{predict}{spdur}(object, data = NULL, stat = "conditional hazard",
+  ...)
 }
 \arguments{
 \item{object}{Object of class ``\code{spdur}''.}
@@ -11,8 +12,8 @@
 \item{data}{Optional data for which to calculate fitted values, defaults to
 training data.}
 
-\item{stat}{Quantity of interest to calculate. Default conditional probability
-of being at risk, i.e. conditioned on observed survival up to time \code{t}.
+\item{stat}{Quantity of interest to calculate. Default conditional hazard,
+i.e. conditioned on observed survival up to time \code{t}.
 See below for list of values.}
 
 \item{\dots}{Optional arguments to pass to \code{predict} function.}

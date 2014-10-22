@@ -29,12 +29,12 @@
 #' data(coups)
 #' data(model.coups)
 #' 
-#' coups.dur <- buildDuration(coups, "succ.coup", "gwcode", "year", freq="year")
+#' coups.dur <- add_duration(coups, "succ.coup", "gwcode", "year", freq="year")
 #' pred.data <- coups.dur[coups.dur$year==max(coups.dur$year), ]
 #' pred.data <- pred.data[complete.cases(pred.data), ]
 #' fcast <- forecast(model.coups, pred.data=pred.data)
 #' 
-#' @export forecast spdur
+#' @export 
 forecast.spdur <- function(object, ..., pred.data = NULL, 
                            stat = 'conditional hazard', n.ahead = 6)
 {

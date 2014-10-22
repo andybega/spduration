@@ -10,5 +10,5 @@
 #' @details This generic is implemented in the \code{\link{spduration}} package
 #' with a \code{\link{plot.spdur}} method.
 #' 
-#' @export forecast 
+#' @export 
 forecast <- function(object, ...) { UseMethod('forecast') }

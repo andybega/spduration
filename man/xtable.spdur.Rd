@@ -3,12 +3,12 @@
 \alias{xtable.spdur}
 \title{Create export table for a split-duration model}
 \usage{
-xtable.spdur(object, ...)
+\method{xtable}{spdur}(x, ...)
 }
 \arguments{
-\item{object}{An object with class \code{spdur}.}
+\item{x}{An object with class \code{spdur}.}
 
-\item{\dots}{Further arguments passed to \code{xtable}.}
+\item{\dots}{Further arguments passed to \code{\link[xtable]{xtable}}.}
 }
 \value{
 An object with class \code{xtable}.
@@ -20,13 +20,15 @@ An object with class \code{xtable}.
 Format a split-duration model for export to Latex or html.
 }
 \examples{
+library(xtable)
 data(model.coups)
-xtable.spdur(model.coups)
+xtable(model.coups)
+print(xtable(model.coups), include.rownames=FALSE)
 }
 \seealso{
-\code{\link{xtable}}, or \code{\link{table.spdur}} for a simpler
-alternative that will convert a \code{spdur} object to a data frame
-containing model parameter estimates.
+\code{\link{xtable}}, or \code{\link{as.data.frame.spdur}} for a
+  simpler alternative that will convert a \code{spdur} object to a data frame
+  containing model parameter estimates.
 
 For print formatting, see \code{\link{print.xtable}}.
 }

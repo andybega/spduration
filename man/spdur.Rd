@@ -20,7 +20,7 @@ indicator of risk (1 - cure).}
 when a spell ends due to failure or right-censoring.}
 
 \item{t.0}{The starting point for time-varying covariate intervals, by
-default \code{duration-1} when using \code{\link{buildDuration}}.}
+default \code{duration-1} when using \code{\link{add_duration}}.}
 
 \item{fail}{Name of the variable indicating that a spell ended in failure.}
 
@@ -77,7 +77,7 @@ respectively.}
 \dontrun{
 # Prepare data
 data(coups)
-dur.coups <- buildDuration(coups, "succ.coup", unitID="gwcode", tID="year",
+dur.coups <- add_duration(coups, "succ.coup", unitID="gwcode", tID="year",
                            freq="year")
 
 # Estimate model

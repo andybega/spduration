@@ -25,7 +25,7 @@
 #' class(s)
 #' print(s)
 #' 
-#' @export summary spdur
+#' @export
 
 summary.spdur <- function(object, ...) {
   # Find index to separate 2 equations

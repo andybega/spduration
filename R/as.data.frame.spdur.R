@@ -1,11 +1,13 @@
-#' Create a simple table of split-population duration results
+#' Convert spdur results to summary data frame
 #'
 #' \code{table}-like function for class ``\code{spdur}''.
 #' 
-#' @param object An object with class \code{spdur}.
+#' @param x An object with class \code{spdur}.
 #' @param row.names Indicates whether parameter names should be added as row
 #' names to the data frame returned, or as a separate column with blank row 
-#' row names. 
+#' row names.
+#' @param optional Not used 
+#' @param \dots Not used.
 #' 
 #' @details
 #' This will create a data frame containing the estimated coefficients and 
@@ -21,18 +23,19 @@
 #' 
 #' @examples
 #' data(model.coups)
-#' tbl <- table.spdur(model.coups)
-#' tbl
+#' data.frame(model.coups)
 #' 
+#' @method as.data.frame spdur
 #' @export
 
-table.spdur <- function(object, row.names=TRUE) {
+as.data.frame.spdur <- function(x, row.names = TRUE, optional = FALSE, ...) {
   # Format spdur estimates summary for pretty printing with xtable
   # if row.names=FALSE parameter names will be column in results
-  sum.tbl <- summary(object)
-  dur   <- sum.tbl$duration[, c(1, 4), drop=FALSE]
-  risk  <- sum.tbl$split[, c(1, 4), drop=FALSE]
-  alpha <- sum.tbl$alpha[, c(1, 4), drop=FALSE]
+  sum.tbl <- summary(x)
+  want_rows <- c(1, 2, 4)
+  dur   <- sum.tbl$duration[, want_rows, drop=FALSE]
+  risk  <- sum.tbl$split[, want_rows, drop=FALSE]
+  alpha <- sum.tbl$alpha[, want_rows, drop=FALSE]
   
   # Fix for duplicated rownames, which won't allow merge
   duprows <- rownames(risk) %in% rownames(dur)
@@ -44,7 +47,7 @@ table.spdur <- function(object, row.names=TRUE) {
   if (row.names) {
     return(res)
   } else {
-    res$par <- rownames(res)
+    res <- data.frame(Parameter=rownames(res), res)
     rownames(res) <- NULL
     return(res)
   }

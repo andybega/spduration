@@ -11,7 +11,7 @@
 #' @param last A string identifying the vector in \code{data} that indicates 
 #' when a spell ends due to failure or right-censoring.
 #' @param t.0 The starting point for time-varying covariate intervals, by 
-#' default \code{duration-1} when using \code{\link{buildDuration}}.
+#' default \code{duration-1} when using \code{\link{add_duration}}.
 #' @param fail Name of the variable indicating that a spell ended in failure.
 #' @param distr The type of distribution to use in the hazard rate. Valid 
 #' options are ``weibull'' or ``loglog''.
@@ -59,7 +59,7 @@
 #' \dontrun{
 #' # Prepare data
 #' data(coups)
-#' dur.coups <- buildDuration(coups, "succ.coup", unitID="gwcode", tID="year",
+#' dur.coups <- add_duration(coups, "succ.coup", unitID="gwcode", tID="year",
 #'                            freq="year")
 #'
 #' # Estimate model

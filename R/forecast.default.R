@@ -7,5 +7,5 @@
 #' @param object A model object.
 #' @param \dots Additional arguments
 #' 
-#' @export forecast default
+#' @export 
 forecast.default <- function(object, ...) { NULL }

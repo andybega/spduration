@@ -20,7 +20,7 @@ for possible options}
 \item{\dots}{Optional aguments, not used.}
 }
 \description{
-\code{\link{plot}} method for \code{\link{spdur}} class objects.
+\code{\link{forecast}} method for \code{\link{spdur}} class objects.
 }
 \details{
 This function will create out-of-sample predictions of ``stat''
@@ -38,7 +38,7 @@ periods, e.g. in a test sample use \code{\link{predict.spdur}} instead.
 data(coups)
 data(model.coups)
 
-coups.dur <- buildDuration(coups, "succ.coup", "gwcode", "year", freq="year")
+coups.dur <- add_duration(coups, "succ.coup", "gwcode", "year", freq="year")
 pred.data <- coups.dur[coups.dur$year==max(coups.dur$year), ]
 pred.data <- pred.data[complete.cases(pred.data), ]
 fcast <- forecast(model.coups, pred.data=pred.data)

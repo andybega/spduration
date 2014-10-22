@@ -59,7 +59,7 @@ rewrite_indices <- function() {
 # will estimate and save example model 
 # included in package to save time in code examples
 example_model <- function() {
-  dur.coup <- buildDuration(coups, "succ.coup", unitID='gwcode', tID='year',
+  dur.coup <- add_duration(coups, "succ.coup", unitID='gwcode', tID='year',
                             freq="year")
   model.coups <- spdur(duration ~ polity2, atrisk ~ polity2, data=dur.coup)
   
@@ -85,11 +85,11 @@ example_model <- function() {
 #   3. Update version and date in R/spduration-package.R
 #
 
-pack_version <- 0.12
+pack_version <- "0.12.1"
 pack_path <- "~/Dropbox/Work/spduration"  # directory to which to build pack.
 
 devtools::build(path=pack_path)
-#devtools::build_win(path=pack_path)
+devtools::build_win()
 
 
 # Release to CRAN ---------------------------------------------------------

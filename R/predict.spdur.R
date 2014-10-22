@@ -46,7 +46,7 @@
 #' data(model.coups)
 #' atrisk <- predict(model.coups)
 #' 
-#' @export predict spdur
+#' @export
 predict.spdur <- function(object, data=NULL, stat='conditional hazard', ...) {
   # Input validation
   stat_choices <- c('conditional risk', 'conditional cure', 'hazard', 'failure',

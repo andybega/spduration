@@ -23,14 +23,14 @@
 #' data(coups)
 #' # No need to order before using panelLag, just do it here so we can compare results below.
 #' coups <- coups[order(coups$gwcode, coups$year), ]
-#' test <- panelLag("polity2", "gwcode", "year", data=coups)
+#' test <- panel_lag("polity2", "gwcode", "year", data=coups)
 #' 
 #' # Compare output
 #' head(coups$polity2)
 #' head(test)
 #' 
 #' @export
-panelLag <- function(x, id, t, lag=1, data=NULL) {
+panel_lag <- function(x, id, t, lag=1, data=NULL) {
   ## Returns a version of x lagged within panels given by id, in original order
   # Input validation
   if (lag < 0) { 
@@ -59,7 +59,7 @@ panelLag <- function(x, id, t, lag=1, data=NULL) {
   result <- result[order(data$orig.order)] # reorder results to original order
   
   if (lag.length.flag) warning('Lag order was larger than some or all unit series.')
-
+  
   return(result)
 }
 

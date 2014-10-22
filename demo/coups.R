@@ -18,7 +18,7 @@ library(spduration)
 data("coups")
 
 # Demo model to save estimation for examples
-duration.coup <- buildDuration(coups, "succ.coup", unitID="gwcode", tID='year',
+duration.coup <- add_duration(coups, "succ.coup", unitID="gwcode", tID='year',
                           freq="year")                    
 
 # Split duration model of coups
