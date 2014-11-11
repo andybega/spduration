@@ -63,13 +63,13 @@ predict.spdur <- function(object, data=NULL, stat='conditional hazard', ...) {
     Y <- object$Y
   } else {
     # From provided data
-    # First, process NA's
     fmla.dur  <- terms(object$mf.dur)
     fmla.risk <- terms(object$mf.risk)
     vars <- unique(c(all.vars(fmla.dur), all.vars(fmla.risk)))
     last <- attr(object$Y, "last")
     t.0  <- attr(object$Y, "t.0")
     vars <- c(vars, last, t.0)
+    
     # hack to fix bug when data are complete (missing model na.action)
     if (all(complete.cases(data[, vars]))==FALSE) {
       na.action <- paste0("na.", class(na.action(object)))
@@ -91,32 +91,34 @@ predict.spdur <- function(object, data=NULL, stat='conditional hazard', ...) {
   X <- model.matrix(attr(mf.dur, 'terms'), data=mf.dur)
   Z <- model.matrix(attr(mf.risk, 'terms'), data=mf.risk)
   
-  ## Start with actual prediction
+  # DV
+  ti <- Y[, 2]    # Time at current period
+  t0 <- Y[, 4]    # Time at previous period
+  
   # coefficients
-  coef <- coef(object)
+  coef    <- coef(object)
   coeff.b <- coef[1 : ncol(X)]
   coeff.g <- coef[(ncol(X) + 1) : (ncol(X) + ncol(Z))]
   coeff.a <- coef[(ncol(X) + ncol(Z) + 1)]
+  alpha   <- exp(-coeff.a)  
+  lambda  <- pmax(1e-10, exp(-X %*% coeff.b))  # hack to prevent NaN in ft calculation below
   
-  # alpha
-  al.hat <- exp(-coeff.a)  
-  # lambda
-  la.hat <- pmax(1e-10, exp(-X %*% coeff.b))  # hack to prevent NaN in ft calculation below
+  ## Start with actual prediction
   
   # Unconditional cure/atrisk rate
   atrisk <- plogis(Z %*% coeff.g)
-  cure <- 1 - atrisk
+  cure   <- 1 - atrisk
   if (stat=='unconditional cure') res <- cure
   if (stat=='unconditional risk') res <- atrisk
   
   # S(T)
   if (distr=='weibull') {
-    st <- exp(-(la.hat * Y[,2])^al.hat)
-    s0 <- exp(-(la.hat * (Y[,4]))^al.hat)
+    st <- exp(-(lambda * ti)^alpha)
+    s0 <- exp(-(lambda * t0)^alpha)
   }
   if (distr=='loglog') {
-    st <- 1/(1+(la.hat * Y[,2])^al.hat)
-    s0 <- 1/(1+(la.hat * Y[,4])^al.hat)
+    st <- 1/(1+(lambda * ti)^alpha)
+    s0 <- 1/(1+(lambda * t0)^alpha)
   }
   
   # Conditional cure/atrisk rate
@@ -125,20 +127,32 @@ predict.spdur <- function(object, data=NULL, stat='conditional hazard', ...) {
   if (stat=='conditional cure') res <- cure.t
   if (stat=='conditional risk') res <- atrisk.t
   
-  # f(t)
+  # Calculate f(t)
   if (distr=='weibull') {
-    ft <- la.hat * al.hat * (la.hat * Y[,2])^(al.hat-1) * exp(-(la.hat * Y[,2])^al.hat) 
+    ft <- lambda * alpha * (lambda * ti)^(alpha-1) * exp(-(lambda * ti)^alpha) 
   }
   if (distr=='loglog') {
-    ft <- (la.hat * al.hat * (la.hat * Y[,2])^(al.hat-1)) / ((1 + (la.hat * Y[,2])^al.hat)^2)  
+    ft <- (lambda * alpha * (lambda * ti)^(alpha-1)) / ((1 + (lambda * ti)^alpha)^2)  
   }
   
-  if (stat=='conditional failure') res <- atrisk.t * ft / pmax(1e-10, (cure.t + atrisk.t * s0)) # Pr(T=t | (T > t-1, not cured)) * Pr(not cured | T > t)
-  if (stat=='conditional hazard')  res <- atrisk.t * ft / pmax(1e-10, (cure.t + atrisk.t * st)) # Pr(T=t | (T > t, not cured)) * Pr(not cured | T > t)
-  if (stat=='failure')             res <- atrisk * ft / pmax(1e-10, (cure + atrisk * s0))       # Pr(T=t | (T > t-1, not cured)) * Pr(not cured)
-  if (stat=='hazard')              res <- atrisk * ft / pmax(1e-10, (cure + atrisk * st))       # Pr(T=t | (T > t, not cured)) * Pr(not cured)
+  if (stat=='failure') {  
+    # Pr(T=t | (T > t-1, not cured)) * Pr(not cured)
+    res <- atrisk * ft / pmax(1e-10, (cure + atrisk * s0))       
+  }             
+  if (stat=='hazard') {  
+    # Pr(T=t | (T > t, not cured)) * Pr(not cured)
+    res <- atrisk * ft / pmax(1e-10, (cure + atrisk * st))       
+  }
+  if (stat=='conditional failure') {  
+    # Pr(T=t | (T > t-1, not cured)) * Pr(not cured | T > t)
+    res <- atrisk.t * ft / pmax(1e-10, (cure.t + atrisk.t * s0)) 
+  }
+  if (stat=='conditional hazard') {
+    # Pr(T=t | (T > t, not cured)) * Pr(not cured | T > t)
+    res <- atrisk.t * ft / pmax(1e-10, (cure.t + atrisk.t * st)) 
+  }
   
-  return(res)
+  return(as.numeric(res))
 }
 
 # test code

@@ -9,6 +9,10 @@ NEW FEATURES
 
 * `table` method for `spdur` objects to create a simple data frame containing model parameters estimates. This is useful for combining several model estimates into a larger data frame before exporting via `xtable`. 
 
+BUG FIXES
+
+* `predict` will not return a vector instead of matrix with one column.
+
 
 spduration 0.11
 ---------------
