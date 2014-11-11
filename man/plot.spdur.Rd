@@ -3,7 +3,9 @@
 \alias{plot.spdur}
 \title{Plot split-duration model fit.}
 \usage{
-\method{plot}{spdur}(x, ..., failure = "failure", endSpellOnly = TRUE)
+\method{plot}{spdur}(x, failure = "failure", endSpellOnly = TRUE,
+  lwd1 = 5, lwd2 = 2, shuffle = TRUE, heading = "",
+  show.expected = TRUE, newplot = FALSE, type = "line", ...)
 }
 \arguments{
 \item{x}{An object of class "\code{spdur}".}
@@ -13,6 +15,20 @@ time \code{t}.}
 
 \item{endSpellOnly}{Should only the last observation in each spell be kept?
 \code{TRUE} by default.}
+
+\item{lwd1}{See \code{\link{separationplot}}.}
+
+\item{lwd2}{See \code{\link{separationplot}}.}
+
+\item{shuffle}{See \code{\link{separationplot}}.}
+
+\item{heading}{See \code{\link{separationplot}}.}
+
+\item{show.expected}{See \code{\link{separationplot}}.}
+
+\item{type}{See \code{\link{separationplot}}.}
+
+\item{newline}{See \code{\link{separationplot}}.}
 
 \item{\dots}{Optional parameters passed to \code{predict.spdur}, e.g. type
 of statistic to calculate.}

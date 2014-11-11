@@ -9,6 +9,12 @@ NEW FEATURES
 
 * `table` method for `spdur` objects to create a simple data frame containing model parameters estimates. This is useful for combining several model estimates into a larger data frame before exporting via `xtable`. 
 
+ENHANCEMENTS
+
+* Additional optional arguments for `predict.spdur` that control the separation plot formatting, see `?predict.spdur` and `?separationplot::separationplot`.
+
+* Occasionally, the conditional hazard rate values calculated by `predict.spdur` can exceed 1. These are truncated to 1 by default now, controlled through the `truncate` argument.
+
 BUG FIXES
 
 * `predict` will not return a vector instead of matrix with one column.

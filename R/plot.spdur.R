@@ -5,12 +5,19 @@
 #' @method plot spdur
 #' 
 #' @param x An object of class "\code{spdur}".
-#' @param \dots Optional parameters passed to \code{predict.spdur}, e.g. type 
-#' of statistic to calculate.
 #' @param failure The variable indicating that a failure event has occurred at 
 #' time \code{t}.
 #' @param endSpellOnly Should only the last observation in each spell be kept? 
 #' \code{TRUE} by default.
+#' @param lwd1 See \code{\link{separationplot}}.
+#' @param lwd2 See \code{\link{separationplot}}.
+#' @param shuffle See \code{\link{separationplot}}.
+#' @param heading See \code{\link{separationplot}}.
+#' @param show.expected See \code{\link{separationplot}}.
+#' @param newline See \code{\link{separationplot}}.
+#' @param type See \code{\link{separationplot}}.
+#' @param \dots Optional parameters passed to \code{predict.spdur}, e.g. type 
+#' of statistic to calculate.
 #' 
 #' @details Creates a \code{\link{separationplot}} of fitted values from 
 #' split-duration model results using \code{\link{predict.spdur}}.
@@ -27,7 +34,9 @@
 #' 
 #' @export 
 #' @importFrom separationplot separationplot
-plot.spdur <- function(x, ..., failure='failure', endSpellOnly=TRUE)
+plot.spdur <- function(x, failure='failure', endSpellOnly=TRUE, lwd1=5, lwd2=2, 
+                       shuffle=TRUE, heading="", show.expected=TRUE, 
+                       newplot=FALSE, type="line", ...)
 { 
   # Input validation
   if (!'spdur' %in% class(x)) stop('"object" argument must have class "spdur"')
@@ -49,5 +58,5 @@ plot.spdur <- function(x, ..., failure='failure', endSpellOnly=TRUE)
   # Separationplot call
   plot <- separationplot(pred, actual,
                          shuffle=T, heading='', show.expected=T, newplot=F, 
-                         type='line', lwd1=5, lwd2=2)
+                         type='line', lwd1=lwd1, lwd2=lwd2)
 }

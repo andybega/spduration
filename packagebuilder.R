@@ -85,7 +85,7 @@ example_model <- function() {
 #   3. Update version and date in R/spduration-package.R
 #
 
-pack_version <- "0.12.1"
+pack_version <- "0.12.2"
 pack_path <- "~/Dropbox/Work/spduration"  # directory to which to build pack.
 
 devtools::build(path=pack_path)

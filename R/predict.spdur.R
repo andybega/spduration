@@ -10,7 +10,7 @@
 #' @param stat Quantity of interest to calculate. Default conditional hazard, 
 #' i.e. conditioned on observed survival up to time \code{t}. 
 #' See below for list of values.
-#' @param \dots Optional arguments to pass to \code{predict} function.
+#' @param truncate For conditional hazard, truncate values greater than 1.
 #' 
 #' @details
 #' Calculates various types of probabilities, where ``conditional'' is used in 
@@ -36,8 +36,6 @@
 #' Returns a data frame with 1 column corresponding to \code{stat}, in the same 
 #' order as the data frame used to estimate \code{object}.
 #' 
-#' @author Andreas Beger, Daina Chiba, Daniel W. Hill, Nils Metternich
-#' 
 #' @note See \code{\link{forecast.spdur}} for producing forecasts when future 
 #' covariate values are unknown.
 #' 
@@ -47,7 +45,8 @@
 #' atrisk <- predict(model.coups)
 #' 
 #' @export
-predict.spdur <- function(object, data=NULL, stat='conditional hazard', ...) {
+predict.spdur <- function(object, data=NULL, stat='conditional hazard', 
+                          truncate=TRUE) {
   # Input validation
   stat_choices <- c('conditional risk', 'conditional cure', 'hazard', 'failure',
                     'unconditional risk', 'unconditional cure', 
@@ -151,6 +150,9 @@ predict.spdur <- function(object, data=NULL, stat='conditional hazard', ...) {
     # Pr(T=t | (T > t, not cured)) * Pr(not cured | T > t)
     res <- atrisk.t * ft / pmax(1e-10, (cure.t + atrisk.t * st)) 
   }
+  
+  # Sometimes h(t) can >1, truncate these values?
+  if (truncate) res <- ifelse(res>1, 1, res)
   
   return(as.numeric(res))
 }

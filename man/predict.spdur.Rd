@@ -4,7 +4,7 @@
 \title{Predict fitted values for a split-population duration model}
 \usage{
 \method{predict}{spdur}(object, data = NULL, stat = "conditional hazard",
-  ...)
+  truncate = TRUE)
 }
 \arguments{
 \item{object}{Object of class ``\code{spdur}''.}
@@ -16,7 +16,7 @@ training data.}
 i.e. conditioned on observed survival up to time \code{t}.
 See below for list of values.}
 
-\item{\dots}{Optional arguments to pass to \code{predict} function.}
+\item{truncate}{For conditional hazard, truncate values greater than 1.}
 }
 \value{
 Returns a data frame with 1 column corresponding to \code{stat}, in the same
@@ -53,8 +53,5 @@ covariate values are unknown.
 # get model estimates
 data(model.coups)
 atrisk <- predict(model.coups)
-}
-\author{
-Andreas Beger, Daina Chiba, Daniel W. Hill, Nils Metternich
 }
 
