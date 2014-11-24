@@ -1,3 +1,5 @@
+#' Split-population Weibull regression
+#' 
 #' @importFrom corpcor make.positive.definite
 spweibull <- function(Y, X, Z, max.iter, silent=FALSE) {  
   # Estimate base model
@@ -5,13 +7,11 @@ spweibull <- function(Y, X, Z, max.iter, silent=FALSE) {
     base.inits <- c(rep(0, ncol(X)), 0)
   }
   if (!silent) cat('Fitting base weibull...\n')
-  base <- optim(base.inits, 
-                weib_lnl, method="BFGS", control=list(maxit=max.iter), 
-                hessian=T, y=Y, X=X)
+  base <- weibull(Y=Y, X=X, inits=base.inits, max.iter=200, silent=TRUE)
   
   # Estimate full model
-  x.inits <- base$par[1:ncol(X)]
-  a.init <- base$par[ncol(X)+1]
+  x.inits <- base$coefficients[1:ncol(X)]
+  a.init <- base$coefficients[ncol(X)+1]
   if (!silent) cat('Fitting split weibull...\n')
   trace <- !silent
   est <- optim(c(x.inits, rep(0, ncol(Z)), a.init), spweib_lnl, method="BFGS", 
@@ -25,10 +25,29 @@ spweibull <- function(Y, X, Z, max.iter, silent=FALSE) {
   logL <- -est$value
   
   # Put together results
-  return(
-    list(coefficients = coef,
-         vcv = vcv,
-         logL = logL))
+  return(list(coefficients = coef, vcv = vcv, logL = logL, base=base))
+}
+
+#' Regular Weibull regression
+weibull <- function(Y, X, inits=NULL, max.iter, silent=TRUE) {
+  if (is.null(inits)) {
+    inits <- c(rep(0, ncol(X)), 0)
+  }
+  
+  trace <- !silent
+  est <- optim(inits, weib_lnl, method="BFGS", 
+               control=list(trace=trace, maxit=max.iter), 
+               hessian=T, y=Y, X=X)
+  
+  # Solve other results
+  if (est$convergence!=0 & !silent) stop('Model did not converge')
+  coef <- est$par
+  vcv <- solve(est$hessian)
+  vcv <- make.positive.definite(vcv)
+  logL <- -est$value
+  
+  # Put together results
+  return(list(coefficients = coef, vcv = vcv, logL = logL))
 }
 
 #' Regular weibull log likelihood

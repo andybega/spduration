@@ -33,7 +33,7 @@
 #' \dontrun{
 #' # Prepare data
 #' data(coups)
-#' dur.coups <- buildDuration(coups, "succ.coup", unitID="gwcode", tID="year",
+#' dur.coups <- add_duration(coups, "succ.coup", unitID="gwcode", tID="year",
 #'                            freq="year")
 #' 
 #' # Estimate model

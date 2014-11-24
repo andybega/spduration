@@ -3,6 +3,8 @@ spduration 0.12
 
 Changes are mostly related to adaptation of the packaged for the C-IED project. 
 
+The function `buildDuration` has been renamed `add_duration`.
+
 NEW FEATURES
 
 * `xtable` method for `spdur` objects to format estimates for export.
@@ -14,6 +16,8 @@ ENHANCEMENTS
 * Additional optional arguments for `predict.spdur` that control the separation plot formatting, see `?predict.spdur` and `?separationplot::separationplot`.
 
 * Occasionally, the conditional hazard rate values calculated by `predict.spdur` can exceed 1. These are truncated to 1 by default now, controlled through the `truncate` argument.
+
+* Estimates for the base (non-split) duration regression are now saved in the `spdur` model object under `base`. The base regression is used to provide starting values for parameters in the split version of the model.
 
 BUG FIXES
 

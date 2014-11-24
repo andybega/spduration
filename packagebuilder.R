@@ -61,7 +61,7 @@ rewrite_indices <- function() {
 example_model <- function() {
   dur.coup <- add_duration(coups, "succ.coup", unitID='gwcode', tID='year',
                             freq="year")
-  model.coups <- spdur(duration ~ polity2, atrisk ~ polity2, data=dur.coup)
+  model.coups <- spdur(duration ~ polity2, atrisk ~ polity2, data=dur.coup, dist="weibull")
   
   # logLike should be: 319.809
   LL_check <- isTRUE(all.equal(as.numeric(logLik(model.coups)), -319.8094, tolerance=1e-07))
@@ -82,10 +82,9 @@ example_model <- function() {
 #  Manually do:
 #   1. Update version and date in "DESCRIPTION"
 #   2. Update "NEWS"
-#   3. Update version and date in R/spduration-package.R
 #
 
-pack_version <- "0.12.2"
+pack_version <- "0.12.3"
 pack_path <- "~/Dropbox/Work/spduration"  # directory to which to build pack.
 
 devtools::build(path=pack_path)
