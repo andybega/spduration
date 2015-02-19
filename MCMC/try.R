@@ -13,3 +13,6 @@ mc.data <- mc.dgp(  p1 = 1,
   
   
   hist(mc.data[[1]]$y1)
+  
+  
+  mc.res.n9 <- mc.est(n.sim=100); save(mc.res.n9, file="output/mcres.N9.rda")

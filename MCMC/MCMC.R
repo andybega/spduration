@@ -40,3 +40,56 @@ mc.dgp <- function(
    out <- list(p1.data = p1.data)
   return(out)
 }
+
+
+
+
+
+## function to estimate models
+
+mc.est <- function(
+  n.sim = 100, seed = 123456, rho.mc = 0,
+  p1 = 1, 
+  b1 = c(1, 0), g = c(1,-1,0)){
+  
+  b.1.1 <- b.1.3  <- b.p1  <- matrix(NA, nrow=n.sim, ncol=2)
+  g.1 <- g.3 <- matrix(NA, nrow=n.sim, ncol=2)
+  rho <- matrix(NA, nrow=n.sim, ncol=2)
+  pb <- txtProgressBar()
+  set.seed(seed)
+  for(i in 1:n.sim){
+    setTxtProgressBar(pb,i/n.sim)
+    mc.data <- mc.dgp(b1=b1, g=g, p1=p1, rho.mc=rho.mc)
+    res <- summary(OF THE MODELS NAIVE VS. SPLIT)
+    ## beta for x1 in Duration
+    b.1.1[i,1] <- res $ NAIVE
+    b.1.1[i,2] <- res $ SPLIT
+    ## beta for x3 in Duration
+    b.1.3[i,1] <- res $ NAIVE
+    b.1.3[i,2] <- res $ SPLIT
+
+    
+    ## lnp1
+    b.p1[i,1] <- res $ NAIVE
+    b.p1[i,2] <- res $ SPLIT
+   
+    ## gamma for x3
+    g.1[i,1] <- res $ NAIVE
+    g.1[i,2] <- res $ SPLIT
+    g.3[i,1] <- res $ NAIVE
+    g.3[i,2] <- res $ SPLIT
+    
+  }
+  out <- list(b.1.1 = b.1.1, b.1.3 = b.1.3,
+              g.1 = g.1, g.3 = g.3, b.p1 = b.p1)
+  return(out)
+}
+
+get.rmse <- function(vec, true){
+  sqrt(mean((vec-true)^2))
+}
+
+
+
+
+
