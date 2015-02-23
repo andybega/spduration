@@ -35,7 +35,7 @@ mc.dgp <- function(
 
   rc <- rep(0, times= n); rc[cure==1] <- 1
   
-  p1.data <- data.frame(y1=y1c, t0=0, rc=rc, fo=1, lo=1, 
+  p1.data <- data.frame(y1=y1c, t0=0, atrisk=ifelse(rc==1,0,1), failure=ifelse(rc==1,0,1), lo=1, 
                         x1=x1, x2=x2, x3=x3, x13=x13, spellID=1:n)
    out <- list(p1.data = p1.data)
   return(out)
@@ -60,24 +60,26 @@ mc.est <- function(
   for(i in 1:n.sim){
     setTxtProgressBar(pb,i/n.sim)
     mc.data <- mc.dgp(b1=b1, g=g, p1=p1, rho.mc=rho.mc)
-    res <- summary(OF THE MODELS NAIVE VS. SPLIT)
+    model <- spdur(y1 ~ x1+x3, atrisk ~ x3+x13, last="lo", t.0="t0",fail="failure", distr='weibull',data=mc.data[[1]])
     ## beta for x1 in Duration
+    
+    
     b.1.1[i,1] <- res $ NAIVE
-    b.1.1[i,2] <- res $ SPLIT
+    b.1.1[i,2] <- model[[1]][2]
     ## beta for x3 in Duration
     b.1.3[i,1] <- res $ NAIVE
-    b.1.3[i,2] <- res $ SPLIT
+    b.1.3[i,2] <- model[[1]][3]
 
     
     ## lnp1
     b.p1[i,1] <- res $ NAIVE
-    b.p1[i,2] <- res $ SPLIT
+    b.p1[i,2] <- model[[1]][7]
    
     ## gamma for x3
     g.1[i,1] <- res $ NAIVE
-    g.1[i,2] <- res $ SPLIT
+    g.1[i,2] <- model[[1]][5]
     g.3[i,1] <- res $ NAIVE
-    g.3[i,2] <- res $ SPLIT
+    g.3[i,2] <- model[[1]][6]
     
   }
   out <- list(b.1.1 = b.1.1, b.1.3 = b.1.3,

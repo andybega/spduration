@@ -1,3 +1,5 @@
+library(mvtnorm)
+library(corpcor)
 samp.size <- 1000
 set.seed(12345678)
 vmat <- diag(5)
@@ -15,4 +17,4 @@ mc.data <- mc.dgp(  p1 = 1,
   hist(mc.data[[1]]$y1)
   
   
-  mc.res.n9 <- mc.est(n.sim=100); save(mc.res.n9, file="output/mcres.N9.rda")
+  mc.res.n9 <- mc.est(n.sim=10); save(mc.res.n9, file="output/mcres.N9.rda")
