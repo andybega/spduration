@@ -84,7 +84,7 @@ example_model <- function() {
 #   2. Update "NEWS"
 #
 
-pack_version <- "0.12.3"
+pack_version <- "0.12.4"
 pack_path <- "~/Dropbox/Work/spduration"  # directory to which to build pack.
 
 devtools::build(path=pack_path)
@@ -102,8 +102,8 @@ devtools::build_win()
 
 # Manual package install and check ----------------------------------------
 
-pack_loc <- file.path(pack_path, "spduration_", pack_version, ".tar.gz")
-install.packages(pack_loc, type='source', repos="http://cran.rstudio.com")
+pack_loc <- file.path(pack_path, paste0("spduration_", pack_version, ".tar.gz"))
+install.packages(pack_loc, type='source', repos=NULL)
 
 ## Restart R ##
 

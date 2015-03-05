@@ -1,7 +1,7 @@
 spduration 0.12
 ---------------
 
-Changes are mostly related to adaptation of the packaged for the C-IED project. 
+New plot types, `spdur` preserved base duration model results, and function names have been changed to underscore-separated names. 
 
 The function `buildDuration` has been renamed `add_duration`.
 
@@ -11,13 +11,17 @@ NEW FEATURES
 
 * `table` method for `spdur` objects to create a simple data frame containing model parameters estimates. This is useful for combining several model estimates into a larger data frame before exporting via `xtable`. 
 
+* `plot` has been rewritten to call on `separationplot.spdur`, or optionally on `plot_hazard` to produce a plot of the hazard function, based on the `type` argument. The two functions are also directly accessible. 
+
 ENHANCEMENTS
 
-* Additional optional arguments for `predict.spdur` that control the separation plot formatting, see `?predict.spdur` and `?separationplot::separationplot`.
+* Additional optional arguments for `separationplot.spdur` that control the separation plot formatting, see `?separationplot.spdur` and `?separationplot::separationplot`.
 
 * Occasionally, the conditional hazard rate values calculated by `predict.spdur` can exceed 1. These are truncated to 1 by default now, controlled through the `truncate` argument.
 
 * Estimates for the base (non-split) duration regression are now saved in the `spdur` model object under `base`. The base regression is used to provide starting values for parameters in the split version of the model.
+
+* The `predict` argument names now match the default R syntax, e.g. `object` instead of `model`, `newdata` for `data`, and `type` for `stat`.  
 
 BUG FIXES
 

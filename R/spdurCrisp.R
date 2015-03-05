@@ -17,7 +17,7 @@
 #' default \code{duration-1} when using \code{\link{add_duration}}.
 #' @param distr The type of distribution to use in the hazard rate. Valid 
 #' options are ``weibull'' or ``loglog''.
-#' @param stat See \code{\link[spduration]{predict.spdur}}
+#' @param type See \code{\link[spduration]{predict.spdur}}
 #' @param iter Maximum number of iterations to use in the likelihood 
 #' maximization.
 #' @param npred Number of months to predict out.
@@ -44,11 +44,11 @@
 #'   pred=dur.coups[1,])
 #' }
 #' 
-#' @export spdurCrisp
+#' @export 
 
 spdurCrisp <- function (duration, atrisk, train = train, test = test, 
                         pred = pred, last = "end.spell", t.0="t.0", 
-                        distr = "weibull", stat = 'conditional risk', 
+                        distr = "weibull", type = 'conditional hazard', 
                         iter = 100, npred=6, ...) {
   
   # Input validation
@@ -62,13 +62,13 @@ spdurCrisp <- function (duration, atrisk, train = train, test = test,
   
   # In-sample and test predictions
   cat('Training set predictions...\n')
-  train.p <- predict(model, stat=stat)
+  train.p <- predict(model, type=type)
   cat('Validation set predictions...\n')
-  test.p <- predict(model, data=test, stat=stat)
+  test.p <- predict(model, newdata=test, type=type)
   
   # Forecast
   cat('Forecast...\n')
-  pred.p <- forecast(model, pred.data=pred, stat=stat, npred=npred)
+  pred.p <- forecast(model, pred.data=pred, type=type, npred=npred)
   
   # Prepare and return results
   res <- model

@@ -5,9 +5,9 @@
 #' @method predict spdur
 #' 
 #' @param object Object of class ``\code{spdur}''.
-#' @param data Optional data for which to calculate fitted values, defaults to 
+#' @param newdata Optional data for which to calculate fitted values, defaults to 
 #' training data.
-#' @param stat Quantity of interest to calculate. Default conditional hazard, 
+#' @param type Quantity of interest to calculate. Default conditional hazard, 
 #' i.e. conditioned on observed survival up to time \code{t}. 
 #' See below for list of values.
 #' @param truncate For conditional hazard, truncate values greater than 1.
@@ -16,7 +16,7 @@
 #' Calculates various types of probabilities, where ``conditional'' is used in 
 #' reference to conditioning on the observed survival time of a spell up to 
 #' time \eqn{t}, in addition to conditioning on any variables included in the 
-#' model (which is always done). Valid values for the \code{stat} option 
+#' model (which is always done). Valid values for the \code{type} option 
 #' include:
 #' \itemize{
 #' \item ``conditional risk'': \eqn{Pr(Cure=0|Z\gamma, T>t)}{Pr(Cure=0|Z*gamma, T>t)}
@@ -33,7 +33,7 @@
 #' covariate vector.
 #' 
 #' @return
-#' Returns a data frame with 1 column corresponding to \code{stat}, in the same 
+#' Returns a data frame with 1 column corresponding to \code{type}, in the same 
 #' order as the data frame used to estimate \code{object}.
 #' 
 #' @note See \code{\link{forecast.spdur}} for producing forecasts when future 
@@ -45,17 +45,20 @@
 #' atrisk <- predict(model.coups)
 #' 
 #' @export
-predict.spdur <- function(object, data=NULL, stat='conditional hazard', 
+predict.spdur <- function(object, newdata=NULL, type="conditional hazard", 
                           truncate=TRUE) {
   # Input validation
-  stat_choices <- c('conditional risk', 'conditional cure', 'hazard', 'failure',
+  type_choices <- c('conditional risk', 'conditional cure', 'hazard', 'failure',
                     'unconditional risk', 'unconditional cure', 
                     'conditional hazard', 'conditional failure')
                     
-  if (!stat %in% stat_choices) stop('unknown statistic')
+  if (!type %in% type_choices) stop('unknown statistic')
+  
+  # minimum value for P, to avoid divide by 0 errors
+  p_min <- 1e-16
   
   # Get model frames
-  if(is.null(data)) {
+  if(is.null(newdata)) {
     # From object
     mf.dur <- object$mf.dur
     mf.risk <- object$mf.risk
@@ -70,12 +73,12 @@ predict.spdur <- function(object, data=NULL, stat='conditional hazard',
     vars <- c(vars, last, t.0)
     
     # hack to fix bug when data are complete (missing model na.action)
-    if (all(complete.cases(data[, vars]))==FALSE) {
+    if (all(complete.cases(newdata[, vars]))==FALSE) {
       na.action <- paste0("na.", class(na.action(object)))
       if (na.action=="na.NULL") na.action <- options("na.action")[[1]]
-      df <- do.call(na.action, list(data[, vars]))
+      df <- do.call(na.action, list(newdata[, vars]))
     } else {
-      df <- data[, vars]
+      df <- newdata[, vars]
     }
     
     mf.dur <- model.frame(formula=fmla.dur, data=df)
@@ -100,15 +103,15 @@ predict.spdur <- function(object, data=NULL, stat='conditional hazard',
   coeff.g <- coef[(ncol(X) + 1) : (ncol(X) + ncol(Z))]
   coeff.a <- coef[(ncol(X) + ncol(Z) + 1)]
   alpha   <- exp(-coeff.a)  
-  lambda  <- pmax(1e-10, exp(-X %*% coeff.b))  # hack to prevent NaN in ft calculation below
+  lambda  <- pmax(p_min, exp(-X %*% coeff.b))  # hack to prevent NaN in ft calculation below
   
   ## Start with actual prediction
   
   # Unconditional cure/atrisk rate
   atrisk <- plogis(Z %*% coeff.g)
   cure   <- 1 - atrisk
-  if (stat=='unconditional cure') res <- cure
-  if (stat=='unconditional risk') res <- atrisk
+  if (type=='unconditional cure') res <- cure
+  if (type=='unconditional risk') res <- atrisk
   
   # S(T)
   if (distr=='weibull') {
@@ -121,10 +124,10 @@ predict.spdur <- function(object, data=NULL, stat='conditional hazard',
   }
   
   # Conditional cure/atrisk rate
-  cure.t <- cure / pmax(1e-10, (st + cure * (1 - st))) # pmax to avoid dividing it by 0
+  cure.t <- cure / pmax(p_min, (st + cure * (1 - st))) # pmax to avoid dividing it by 0
   atrisk.t  <- 1 - cure.t
-  if (stat=='conditional cure') res <- cure.t
-  if (stat=='conditional risk') res <- atrisk.t
+  if (type=='conditional cure') res <- cure.t
+  if (type=='conditional risk') res <- atrisk.t
   
   # Calculate f(t)
   if (distr=='weibull') {
@@ -134,21 +137,21 @@ predict.spdur <- function(object, data=NULL, stat='conditional hazard',
     ft <- (lambda * alpha * (lambda * ti)^(alpha-1)) / ((1 + (lambda * ti)^alpha)^2)  
   }
   
-  if (stat=='failure') {  
+  if (type=='failure') {  
     # Pr(T=t | (T > t-1, not cured)) * Pr(not cured)
-    res <- atrisk * ft / pmax(1e-10, (cure + atrisk * s0))       
+    res <- atrisk * ft / pmax(p_min, (cure + atrisk * s0))       
   }             
-  if (stat=='hazard') {  
+  if (type=='hazard') {  
     # Pr(T=t | (T > t, not cured)) * Pr(not cured)
-    res <- atrisk * ft / pmax(1e-10, (cure + atrisk * st))       
+    res <- atrisk * ft / pmax(p_min, (cure + atrisk * st))       
   }
-  if (stat=='conditional failure') {  
+  if (type=='conditional failure') {  
     # Pr(T=t | (T > t-1, not cured)) * Pr(not cured | T > t)
-    res <- atrisk.t * ft / pmax(1e-10, (cure.t + atrisk.t * s0)) 
+    res <- atrisk.t * ft / pmax(p_min, (cure.t + atrisk.t * s0)) 
   }
-  if (stat=='conditional hazard') {
+  if (type=='conditional hazard') {
     # Pr(T=t | (T > t, not cured)) * Pr(not cured | T > t)
-    res <- atrisk.t * ft / pmax(1e-10, (cure.t + atrisk.t * st)) 
+    res <- atrisk.t * ft / pmax(p_min, (cure.t + atrisk.t * st)) 
   }
   
   # Sometimes h(t) can >1, truncate these values?
