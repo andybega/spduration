@@ -1,8 +1,15 @@
-# Sample .travis.yml for R projects
-
 language: r
-warnings_are_errors: true
 sudo: required
+warnings_are_errors: true
+
+r_binary_packages:
+  - ggplot2
+  - plyr
+  - xtable
+  
+r_github_packages:
+  - rstudio/rmarkdown
+  - hadley/testthat
 
 env:
  global:
