@@ -1,13 +1,19 @@
-spdur
-===
 
-**What**: Split-population duration model R package
+# spduration
+*********
 
-**Date**: November 2012
+[![Travis CI Build Status](https://magnum.travis-ci.com/andybega/spduration.svg?token=ji8RFNCqNWpGghfYBt4p&branch=master)](https://magnum.travis-ci.com/andybega/spduration)
+
+spduration implements a split-population duration model for duration data with time-varying covariates where a significant subset of the population or spells will not experience failure. 
+
+To install: 
+
+* the latest release version: `install.packages("spduration")`
+* the latest development version: `install_github("andybega/spduration")`
 
 **By**: Daniel W. Hill, Nils Metternich, Andreas Beger ([andreas.beger@duke.edu](mailto:andreas.beger@duke.edu))
 
-GNU GPL 3.0 <http://www.gnu.org/licenses/> <br />
+License: [GNU GPL 3.0](http://www.gnu.org/licenses/)
 
 Please cite or reference:  
 
