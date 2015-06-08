@@ -5,7 +5,7 @@
 \title{Predict fitted values for a split-population duration model}
 \usage{
 \method{predict}{spdur}(object, newdata = NULL, type = "conditional hazard",
-  truncate = TRUE)
+  truncate = TRUE, ...)
 }
 \arguments{
 \item{object}{Object of class ``\code{spdur}''.}
@@ -18,6 +18,8 @@ i.e. conditioned on observed survival up to time \code{t}.
 See below for list of values.}
 
 \item{truncate}{For conditional hazard, truncate values greater than 1.}
+
+\item{\dots}{not used, for compatability with generic function.}
 }
 \value{
 Returns a data frame with 1 column corresponding to \code{type}, in the same

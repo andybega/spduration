@@ -1,5 +1,11 @@
 #' Split-population Log-logistic regression
 #' 
+#' @param Y Dependent variables. 
+#' @param X Duration equation covariates.
+#' @param Z Risk equation covariates.
+#' @param max.iter Maximum iterations to try.
+#' @param silent Supress \code{\link{optim}} trace output?
+#' 
 #' @importFrom corpcor make.positive.definite
 sploglog <- function(Y, X, Z, max.iter, silent=FALSE) {
   # Estimate base model
@@ -29,6 +35,12 @@ sploglog <- function(Y, X, Z, max.iter, silent=FALSE) {
 }
 
 #' Regular Log-logistic regression
+#' 
+#' @param Y Dependent variables. 
+#' @param X Duration equation covariates.
+#' @param inits Vector of starting values. 
+#' @param max.iter Maximum iterations to try.
+#' @param silent Supress \code{\link{optim}} trace output?
 loglog <- function(Y, X, inits=NULL, max.iter, silent=TRUE) {
   if (is.null(inits)) {
     inits <- c(rep(0, ncol(X)), 0)
@@ -51,6 +63,10 @@ loglog <- function(Y, X, inits=NULL, max.iter, silent=TRUE) {
 }
 
 #' Regular Log-logistic likelihood
+#' 
+#' @param theta Current parameter values. 
+#' @param y Dependent variables. 
+#' @param X Duration equation covariates.
 loglog_lnl <- function(theta, y, X) {
   beta <- theta[1:ncol(X)]
   g <- theta[ncol(X) + 1]
@@ -70,6 +86,11 @@ loglog_lnl <- function(theta, y, X) {
 }
 
 #' Split-population Log-logistic log likelihood
+#' 
+#' @param theta Current parameter values. 
+#' @param y Dependent variables. 
+#' @param X Duration equation covariates.
+#' @param Z Risk equation covariates.
 sploglog_lnl <- function(theta, y, X, Z) {
   rx<-ncol(X)
   rz<-ncol(Z)

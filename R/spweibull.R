@@ -1,5 +1,11 @@
 #' Split-population Weibull regression
 #' 
+#' @param Y Dependent variables. 
+#' @param X Duration equation covariates.
+#' @param Z Risk equation covariates.
+#' @param max.iter Maximum iterations to try.
+#' @param silent Supress \code{\link{optim}} trace output?
+#' 
 #' @importFrom corpcor make.positive.definite
 spweibull <- function(Y, X, Z, max.iter, silent=FALSE) {  
   # Estimate base model
@@ -29,6 +35,12 @@ spweibull <- function(Y, X, Z, max.iter, silent=FALSE) {
 }
 
 #' Regular Weibull regression
+#' 
+#' @param Y Dependent variables. 
+#' @param X Duration equation covariates.
+#' @param inits Vector of starting values. 
+#' @param max.iter Maximum iterations to try.
+#' @param silent Supress \code{\link{optim}} trace output?
 weibull <- function(Y, X, inits=NULL, max.iter, silent=TRUE) {
   if (is.null(inits)) {
     inits <- c(rep(0, ncol(X)), 0)
@@ -51,6 +63,10 @@ weibull <- function(Y, X, inits=NULL, max.iter, silent=TRUE) {
 }
 
 #' Regular weibull log likelihood
+#' 
+#' @param theta Current parameter values. 
+#' @param y Dependent variables. 
+#' @param X Duration equation covariates.
 weib_lnl <- function(theta, y, X) {
   # Parameters
   beta   <- theta[1:ncol(X)]
@@ -79,6 +95,11 @@ weib_lnl <- function(theta, y, X) {
 }
 
 #' Split-population Weibull log likelihood
+#' 
+#' @param theta Current parameter values. 
+#' @param y Dependent variables. 
+#' @param X Duration equation covariates.
+#' @param Z Risk equation covariates.
 spweib_lnl <- function(theta, y, X, Z) {
   # Parameters
   rx <- ncol(X)

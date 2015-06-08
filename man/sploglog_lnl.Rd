@@ -6,6 +6,15 @@
 \usage{
 sploglog_lnl(theta, y, X, Z)
 }
+\arguments{
+\item{theta}{Current parameter values.}
+
+\item{y}{Dependent variables.}
+
+\item{X}{Duration equation covariates.}
+
+\item{Z}{Risk equation covariates.}
+}
 \description{
 Split-population Log-logistic log likelihood
 }

@@ -1,6 +1,6 @@
 #' Plot split-duration model results.
 #' 
-#' See \code{\link{separationplot.spdur}} and \code{\link{plot_hazard}}.
+#' See \code{\link{separationplot.spdur}} and \code{\link{plot_hazard2}}.
 #' 
 #' @method plot spdur
 #' 
@@ -128,7 +128,7 @@ loglog_hazard  <- function(t, x) {
 #' @param x An object of class "\code{spdur}".
 #' @param pred_type Which statistic to plot, i.e. "conditional hazard" or 
 #'   "conditional risk".
-#' @param y Variable that captures observed outcomes. If \code{NULL} (default), 
+#' @param obs Variable that captures observed outcomes. If \code{NULL} (default), 
 #'   it is chosen based on \code{pred_type}: "fail" for (conditional) hazard, and 
 #'   "atrisk" for (conditional) risk.
 #' @param endSpellOnly Should only the last observation in each spell be kept? 
@@ -138,7 +138,7 @@ loglog_hazard  <- function(t, x) {
 #' @param shuffle See \code{\link{separationplot}}.
 #' @param heading See \code{\link{separationplot}}.
 #' @param show.expected See \code{\link{separationplot}}.
-#' @param newline See \code{\link{separationplot}}.
+#' @param newplot See \code{\link{separationplot}}
 #' @param type See \code{\link{separationplot}}.
 #' @param \dots Optional parameters passed to \code{\link{separationplot}}, 
 #'   e.g. type of statistic to calculate.

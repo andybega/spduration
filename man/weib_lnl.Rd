@@ -6,6 +6,13 @@
 \usage{
 weib_lnl(theta, y, X)
 }
+\arguments{
+\item{theta}{Current parameter values.}
+
+\item{y}{Dependent variables.}
+
+\item{X}{Duration equation covariates.}
+}
 \description{
 Regular weibull log likelihood
 }

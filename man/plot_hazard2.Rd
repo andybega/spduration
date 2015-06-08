@@ -13,7 +13,7 @@ plot_hazard2(x, xvals = NULL, zvals = NULL)
   same order as the duration equation in \code{x}. Defaults to means.}
 
 \item{zvals}{A vector of values for the risk equation varialbes, in teh same
-order as the risk equation in \code{x}. Defaults to means.}
+   order as the risk equation in \code{x}. Defaults to means.}
 }
 \description{
 Given a set of values for the duration and risk equations, plot the shape of

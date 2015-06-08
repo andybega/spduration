@@ -6,6 +6,17 @@
 \usage{
 sploglog(Y, X, Z, max.iter, silent = FALSE)
 }
+\arguments{
+\item{Y}{Dependent variables.}
+
+\item{X}{Duration equation covariates.}
+
+\item{Z}{Risk equation covariates.}
+
+\item{max.iter}{Maximum iterations to try.}
+
+\item{silent}{Supress \code{\link{optim}} trace output?}
+}
 \description{
 Split-population Log-logistic regression
 }

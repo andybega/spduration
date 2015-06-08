@@ -9,6 +9,9 @@
 #'    same order as the duration equation in \code{x}. Defaults to means.
 #'  @param zvals A vector of values for the risk equation varialbes, in teh same
 #'    order as the risk equation in \code{x}. Defaults to means.
+#'    
+#'  @importFrom MASS mvrnorm
+#'  @export
 plot_hazard2 <- function(x,xvals=NULL,zvals=NULL){
   dur.dat<-x$mf.dur
   risk.dat<-x$mf.risk 

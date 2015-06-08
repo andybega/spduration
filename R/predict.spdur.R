@@ -11,6 +11,7 @@
 #' i.e. conditioned on observed survival up to time \code{t}. 
 #' See below for list of values.
 #' @param truncate For conditional hazard, truncate values greater than 1.
+#' @param \dots not used, for compatability with generic function.
 #' 
 #' @details
 #' Calculates various types of probabilities, where ``conditional'' is used in 
@@ -46,7 +47,7 @@
 #' 
 #' @export
 predict.spdur <- function(object, newdata=NULL, type="conditional hazard", 
-                          truncate=TRUE) {
+                          truncate=TRUE, ...) {
   # Input validation
   type_choices <- c('conditional risk', 'conditional cure', 'hazard', 'failure',
                     'unconditional risk', 'unconditional cure', 

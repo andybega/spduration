@@ -3,7 +3,6 @@ sudo: required
 warnings_are_errors: true
 
 r_binary_packages:
-  - ggplot2
   - plyr
   - xtable
   

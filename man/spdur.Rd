@@ -60,8 +60,7 @@ object of class \code{spdur}.
 }
 \details{
 See \code{\link{summary.spdur}}, \code{\link{predict.spdur}} ,
-\code{\link{plot.spdur}}, and \code{\link{countryplot}} for post-estimation
-options.
+and \code{\link{plot.spdur}} for post-estimation options.
 
 Optional arguments:
 \describe{

@@ -15,6 +15,10 @@
 \item{pred_type}{Which statistic to plot, i.e. "conditional hazard" or
 "conditional risk".}
 
+\item{obs}{Variable that captures observed outcomes. If \code{NULL} (default),
+it is chosen based on \code{pred_type}: "fail" for (conditional) hazard, and
+"atrisk" for (conditional) risk.}
+
 \item{endSpellOnly}{Should only the last observation in each spell be kept?
 \code{FALSE} by default.}
 
@@ -28,13 +32,9 @@
 
 \item{show.expected}{See \code{\link{separationplot}}.}
 
+\item{newplot}{See \code{\link{separationplot}}}
+
 \item{type}{See \code{\link{separationplot}}.}
-
-\item{y}{Variable that captures observed outcomes. If \code{NULL} (default),
-it is chosen based on \code{pred_type}: "fail" for (conditional) hazard, and
-"atrisk" for (conditional) risk.}
-
-\item{newline}{See \code{\link{separationplot}}.}
 
 \item{\dots}{Optional parameters passed to \code{\link{separationplot}},
   e.g. type of statistic to calculate.}

@@ -6,6 +6,17 @@
 \usage{
 loglog(Y, X, inits = NULL, max.iter, silent = TRUE)
 }
+\arguments{
+\item{Y}{Dependent variables.}
+
+\item{X}{Duration equation covariates.}
+
+\item{inits}{Vector of starting values.}
+
+\item{max.iter}{Maximum iterations to try.}
+
+\item{silent}{Supress \code{\link{optim}} trace output?}
+}
 \description{
 Regular Log-logistic regression
 }

@@ -15,7 +15,7 @@
   \code{\link{plot_hazard1}} or \code{\link{plot_hazard2}}.}
 }
 \description{
-See \code{\link{separationplot.spdur}} and \code{\link{plot_hazard}}.
+See \code{\link{separationplot.spdur}} and \code{\link{plot_hazard2}}.
 }
 \examples{
 # get model estimates

@@ -89,9 +89,6 @@ data <- data.frame(y=c(0,0,0,1,0),
 dur.data <- add_duration(data, "y", "unitID", "tID", freq="year")
 dur.data
 }
-\author{
-Andreas Beger
-}
 \seealso{
 \code{\link{panel_lag}} for lagging variables in a panel data frame
 before building duration data.

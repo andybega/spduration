@@ -23,6 +23,7 @@
 #' @name spduration
 #' @docType package
 NULL
+globalVariables("temp.t")
 
 #' @docType data
 #' 

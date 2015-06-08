@@ -65,8 +65,6 @@
 #' \item{t.0}{Starting time for period observed during \code{t}, by default
 #' equals \code{duration} - 1.}
 #' 
-#' @author Andreas Beger
-#' 
 #' @seealso \code{\link{panel_lag}} for lagging variables in a panel data frame 
 #' before building duration data.
 #' 

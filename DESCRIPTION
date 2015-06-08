@@ -18,8 +18,8 @@ License: GPL-3
 LazyData: true
 Imports:
     corpcor,
-    ggplot2,
     plyr,
+    MASS, 
     separationplot,
     stats,
     xtable
