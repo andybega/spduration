@@ -13,8 +13,7 @@ Authors@R: c(
 Description: Functions for estimating split-duration regression models and \
     various associated generic function methods.
 Depends: 
-    R (>= 3.1.2),
-    RcppArmadillo
+    R (>= 3.1.2)
 License: GPL-3
 LazyData: true
 Imports: 
@@ -25,7 +24,6 @@ Imports:
     stats,
     xtable,
     Rcpp (>= 0.11.0),
-    RcppArmadillo (>= 0.5.200.1.0)
 Suggests: 
     testthat
 LinkingTo: 
