@@ -22,6 +22,8 @@
 #' 
 #' @name spduration
 #' @docType package
+#' @useDynLib spduration
+#' @importFrom Rcpp sourceCpp
 NULL
 globalVariables("temp.t")
 
