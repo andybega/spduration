@@ -2,7 +2,6 @@
 *.Rproj
 .Rhistory
 .Rproj.user
-.Rbuildignore
 *.DS_Store
 comparison-and-sims/logs/*
 .Rdata

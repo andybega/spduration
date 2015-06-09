@@ -1,0 +1,5 @@
+.Rbuildignore
+^.*\.Rproj$
+^\.Rproj\.user$
+packagebuilder.R
+^\.travis\.yml$
