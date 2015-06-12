@@ -5,15 +5,17 @@
 
 ## R CMD check results
 
-local - nothing
+There were no ERRORs or WARNINGs. 
 
-* checking CRAN incoming feasibility ... NOTE
-Maintainer: 'Andreas Beger <adbeger@gmail.com>'
+There were 2 NOTEs:
+
+* checking CRAN incoming feasibility ... NOTE <br>
+Maintainer: 'Andreas Beger <adbeger@gmail.com>' <br>
 New submission
 
-On `win-builder.r` I get one additional note with R-release, but not with R-devel:
+On `win-builder.r` and with Travis CI I get one additional note:
 
-* checking package dependencies ... NOTE
+* checking package dependencies ... NOTE <br>
   No repository set, so cyclic dependency check skipped
 
 ## Downstream dependencies

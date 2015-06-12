@@ -8,8 +8,6 @@
 #' @param \dots Optional arguments.
 #' @param k The penalty parameter, by default 2. For \code{\link{BIC.spdur}},
 #' the penalty parameter equals \code{log(N)}.
-#'
-#' author Andreas Beger
 #' 
 #' @seealso \code{link{AIC}}, \code{link{BIC.spdur}}
 #' 
@@ -38,8 +36,6 @@ AIC.spdur <- function(object, ..., k = 2)
 #' @param \dots Optional arguments.
 #' 
 #' @details Computed as \code{AIC(object, k = log(nobs(object)))}.
-#' 
-#' @author Andreas Beger
 #' 
 #' @seealso \code{\link{BIC}}, \code{\link{AIC.spdur}}
 #' 

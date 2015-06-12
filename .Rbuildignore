@@ -2,6 +2,7 @@
 cran-comments.md
 ^.*\.Rproj$
 ^\.Rproj\.user$
-packagebuilder.R
 ^\.travis\.yml$
 ^NEWS\.md$
+packagebuilder.R
+dev-cycle.r

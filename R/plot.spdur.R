@@ -146,8 +146,6 @@ loglog_hazard  <- function(t, x) {
 #' @details Creates a \code{\link{separationplot}} of fitted values from 
 #' split-duration model results using \code{\link{predict.spdur}}.
 #' 
-#' @author Andreas Beger
-#' 
 #' @seealso \code{\link{separationplot}}, \code{\link{predict.spdur}}
 #' @examples
 #' # get model estimates

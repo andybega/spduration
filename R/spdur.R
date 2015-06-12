@@ -52,8 +52,6 @@
 #' \item{call }{The original, unevaluated \code{spdur} call.}
 #' \item{distr }{Distribution used for the hazard rate.}
 #' 
-#' @author Andreas Beger
-#' 
 #' @examples
 #' \dontrun{
 #' # Prepare data
