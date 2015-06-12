@@ -1,3 +1,8 @@
+spduration 0.13
+----------------
+
+Switched to backend functions written in C++. The loglikelihood for the Weibull and Loglog functions are now both calculated with C++ code, for a significant speed improvement. 
+
 spduration 0.12
 ---------------
 

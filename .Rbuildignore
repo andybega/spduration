@@ -1,5 +1,7 @@
 .Rbuildignore
+cran-comments.md
 ^.*\.Rproj$
 ^\.Rproj\.user$
 packagebuilder.R
 ^\.travis\.yml$
+^NEWS\.md$
