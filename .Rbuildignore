@@ -1,0 +1,8 @@
+.Rbuildignore
+cran-comments.md
+^.*\.Rproj$
+^\.Rproj\.user$
+^\.travis\.yml$
+^NEWS\.md$
+packagebuilder.R
+dev-cycle.r

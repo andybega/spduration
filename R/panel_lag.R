@@ -17,8 +17,6 @@
 #' @return A vector of same length as \code{x} representing lagged values with 
 #' leading \code{NA}'s.
 #' 
-#' @author Andreas Beger
-#' 
 #' @examples
 #' data(coups)
 #' # No need to order before using panelLag, just do it here so we can compare results below.

@@ -23,8 +23,6 @@
 #' For situations in which the covariate values are known for future time
 #' periods, e.g. in a test sample use \code{\link{predict.spdur}} instead.
 #' 
-#' @author Andreas Beger, Daina Chiba
-#' 
 #' @examples
 #' data(coups)
 #' data(model.coups)

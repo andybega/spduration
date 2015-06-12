@@ -1,27 +1,31 @@
 Package: spduration
 Title: Split-Population Duration (Cure) Regression
-Version: 0.12.4
-Date: 2015-06-08
+Version: 0.13.1
+Date: 2015-06-12
 Authors@R: c(
     person("Andreas", "Beger", role = c("aut", "cre"), email = "adbeger@gmail.com"),
+    person("Daina", "Chiba", role = c("aut"), email = "dchiba@essex.ac.uk"),
     person("Daniel", "Hill", role = c("aut"), email = "dwhill@uga.edu"),
     person("Nils", "Metternich", role = c("aut"), email = "n.metternich@ucl.ac.uk"),
-    person("Daina", "Chiba", role = c("ctb"), email = "dchiba@essex.ac.uk"),
-    person("Shahryar", "Minhas", role = c("ctb"), email = "sfm12@duke.edu"),
-    person("Michael", "Ward", role = c("aut"), email = "michael.don.ward@gmail.com")
+    person("Shahryar", "Minhas", role = c("aut"), email = "sfm12@duke.edu"),
+    person("Michael", "Ward", role = c("cph"), email = "michael.don.ward@gmail.com")
     )
 Description: Functions for estimating split-duration regression models and \
     various associated generic function methods.
-Depends:
+Depends: 
     R (>= 3.1.2)
 License: GPL-3
 LazyData: true
-Imports:
+Imports: 
     corpcor,
     plyr,
     MASS, 
     separationplot,
     stats,
-    xtable
-Suggests:
+    xtable,
+    Rcpp (>= 0.11.0),
+Suggests: 
     testthat
+LinkingTo: 
+    Rcpp, 
+    RcppArmadillo
