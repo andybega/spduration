@@ -84,7 +84,4 @@ dur.coups <- add_duration(coups, "succ.coup", unitID="gwcode", tID="year",
 model.coups <- spdur(duration ~ polity2, atrisk ~ polity2, data=dur.coups)
 }
 }
-\author{
-Andreas Beger
-}
 

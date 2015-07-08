@@ -10,9 +10,7 @@
 \item{object}{An object of class \code{spdur}.}
 
 \item{k}{The penalty parameter, by default 2. For \code{\link{BIC.spdur}},
-the penalty parameter equals \code{log(N)}.
-
-author Andreas Beger}
+the penalty parameter equals \code{log(N)}.}
 
 \item{\dots}{Optional arguments.}
 }

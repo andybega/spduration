@@ -53,9 +53,6 @@ data(model.coups)
 # plot
 p <- plot(model.coups)
 }
-\author{
-Andreas Beger
-}
 \seealso{
 \code{\link{separationplot}}, \code{\link{predict.spdur}}
 }

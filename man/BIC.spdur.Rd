@@ -21,9 +21,6 @@ Computed as \code{AIC(object, k = log(nobs(object)))}.
 data(model.coups)
 BIC(model.coups)
 }
-\author{
-Andreas Beger
-}
 \seealso{
 \code{\link{BIC}}, \code{\link{AIC.spdur}}
 }

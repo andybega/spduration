@@ -12,8 +12,10 @@
 #   4. Check/test the packge, fix bugs, errors, warnings, notes that come up
 #
 
+library(devtools)
+
 # Check local
-check()
+devtools::check()
 
 # Check Windows, R devel and release
 build_win(version = "R-release")

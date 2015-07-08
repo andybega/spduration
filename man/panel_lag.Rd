@@ -40,7 +40,4 @@ test <- panel_lag("polity2", "gwcode", "year", data=coups)
 head(coups$polity2)
 head(test)
 }
-\author{
-Andreas Beger
-}
 
