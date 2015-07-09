@@ -13,7 +13,7 @@ There were 2 NOTEs:
 Maintainer: 'Andreas Beger <adbeger@gmail.com>' <br>
 New submission
 
-On `win-builder.r` and with Travis CI I get one additional note:
+On `win-builder` and with Travis CI I get one additional note:
 
 * checking package dependencies ... NOTE <br>
   No repository set, so cyclic dependency check skipped

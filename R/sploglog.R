@@ -7,6 +7,7 @@
 #' @param silent Supress \code{\link{optim}} trace output?
 #' 
 #' @importFrom corpcor make.positive.definite
+#' @importFrom stats optim
 sploglog <- function(Y, X, Z, max.iter, silent=FALSE) {
   # Estimate base model
   if (!exists("base.inits")) {
@@ -41,6 +42,8 @@ sploglog <- function(Y, X, Z, max.iter, silent=FALSE) {
 #' @param inits Vector of starting values. 
 #' @param max.iter Maximum iterations to try.
 #' @param silent Supress \code{\link{optim}} trace output?
+#' 
+#' @importFrom stats optim
 loglog <- function(Y, X, inits=NULL, max.iter, silent=TRUE) {
   if (is.null(inits)) {
     inits <- c(rep(0, ncol(X)), 0)

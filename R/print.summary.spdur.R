@@ -19,6 +19,7 @@
 #' class(s)
 #' print(s)
 #' 
+#' @importFrom stats printCoefmat
 #' @method print summary.spdur
 #' @export
 print.summary.spdur <- function(x, ...)

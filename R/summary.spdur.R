@@ -26,7 +26,7 @@
 #' print(s)
 #' 
 #' @export
-
+#' @importFrom stats coef
 summary.spdur <- function(object, ...) {
   # Find index to separate 2 equations
   start_split <- which(names(object$coefficients)=='(Risk Intercept)')

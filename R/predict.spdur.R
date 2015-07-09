@@ -45,6 +45,7 @@
 #' data(model.coups)
 #' atrisk <- predict(model.coups)
 #' 
+#' @importFrom stats complete.cases model.frame model.response model.matrix plogis
 #' @export
 predict.spdur <- function(object, newdata=NULL, type="conditional hazard", 
                           truncate=TRUE, ...) {

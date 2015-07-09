@@ -39,6 +39,8 @@ plot.spdur <- function(x, type="sepplot", ...) {
 #' @param x An object of class "\code{spdur}".
 #' @param t_lim Time period over which to plot the hazard function.
 #' @param \dots Optional arguments to \code{\link{plot}}.
+#' 
+#' @importFrom graphics plot
 plot_hazard1 <- function(x, t_lim=NULL, ...) {
   # Choose t values if not set
   if (is.null(t_lim)) {
@@ -81,6 +83,8 @@ hazard <- function(x, t=NULL) {
 #' 
 #' @param t t
 #' @param x x
+#' 
+#' @importFrom stats plogis
 weibull_hazard <- function(t, x) {
   dur.dat<-x$mf.dur
   risk.dat<-x$mf.risk 
@@ -156,6 +160,7 @@ loglog_hazard  <- function(t, x) {
 #' 
 #' @export 
 #' @importFrom separationplot separationplot
+#' @importFrom stats predict
 separationplot.spdur <- function(x, pred_type="conditional hazard", obs=NULL, 
   endSpellOnly=FALSE, lwd1=5, lwd2=2, shuffle=TRUE, heading="", 
   show.expected=TRUE, newplot=FALSE, type="line", ...) {

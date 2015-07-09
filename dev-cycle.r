@@ -22,12 +22,12 @@ build_win(version = "R-release")
 build_win(version = "R-devel")
 
 # commit to git and check travis
-# magnum.travis.ci
+# https://magnum.travis-ci.com
 
 #
 #   5. Update cran-comments.md
 #
 R.Version()$version.string
 
-
-#devtools::release()
+devtools::build()
+devtools::release()

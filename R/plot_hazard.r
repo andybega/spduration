@@ -11,6 +11,8 @@
 #'    order as the risk equation in \code{x}. Defaults to means.
 #'    
 #'  @importFrom MASS mvrnorm
+#'  @importFrom graphics plot lines
+#'  @importFrom stats plogis quantile
 #'  @export
 plot_hazard2 <- function(x,xvals=NULL,zvals=NULL){
   dur.dat<-x$mf.dur
