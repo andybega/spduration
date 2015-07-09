@@ -7,3 +7,5 @@
 .Rapp*
 .RDataTmp
 *.sublime-*
+dev-cycle.R
+cran-comments.md
