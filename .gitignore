@@ -3,9 +3,7 @@
 .Rhistory
 .Rproj.user
 *.DS_Store
-comparison-and-sims/logs/*
 .Rdata
 .Rapp*
 .RDataTmp
 *.sublime-*
-package/spduration.Rcheck
