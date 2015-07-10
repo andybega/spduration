@@ -1,5 +1,5 @@
 language: r
-sudo: required
+sudo: fase
 warnings_are_errors: true
 
 r_binary_packages:
