@@ -1,6 +1,6 @@
 Package: spduration
 Title: Split-Population Duration (Cure) Regression
-Version: 0.13.1
+Version: 0.13.1.9000
 Date: 2015-08-09
 Authors@R: c(
     person("Andreas", "Beger", role = c("aut", "cre"), email = "adbeger@gmail.com"),
@@ -10,8 +10,7 @@ Authors@R: c(
     person("Shahryar", "Minhas", role = c("aut"), email = "hermes829@gmail.com"),
     person("Michael", "Ward", role = c("cph"), email = "michael.don.ward@gmail.com")
     )
-Description: Functions for estimating split-duration regression models and \
-    various associated generic function methods.
+Description: Functions for estimating split-duration regression models and various associated generic function methods.
 Depends: 
     R (>= 3.1.2)
 License: GPL-3
