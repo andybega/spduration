@@ -30,6 +30,15 @@
 summary.spdur <- function(object, ...) {
   # Find index to separate 2 equations
   start_split <- which(names(object$coefficients)=='(Risk Intercept)')
+  # hack for models without risk intercept
+  # doesn't work if terms include character or factor, see #17 on git
+  if (length(start_split)==0) {
+    factor_flag <- any(attr(terms(object$mf.dur), "dataClasses")[-1] %in% c("character", "factor"))
+    if (factor_flag) stop("bug for models without risk intercept but factor terms (see #17 on git)")
+    dur_const <- attr(terms(object$mf.dur), "intercept")
+    dur_terms <- length(attr((terms(object$mf.dur)), "term.labels"))
+    start_split <- dur_const + dur_terms + 1 # intercept + 1st split var
+  }
   end_duration <- start_split - 1
   
   table <- cbind(Estimate = coef(object),

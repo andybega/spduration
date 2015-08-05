@@ -88,6 +88,8 @@ spdur <- function(duration, atrisk, data=NULL, last="end.spell", t.0="t.0",
   attr(X, "dimnames")[[2]] <- sub("\\(Intercept\\)", "(Dur. Intercept)", 
                                   attr(X, "dimnames")[[2]])
   lhb <- model.response(mf.dur)
+  k.dur <- ncol(X)  # mark number of terms in dur. eq. for summary()
+  
   # Risk/non-immunity equation
   mf.risk <- eval(model.frame(formula=atrisk, data=df), parent.frame())
   Z <- model.matrix(attr(mf.risk, 'terms'), data=mf.risk)
@@ -95,6 +97,8 @@ spdur <- function(duration, atrisk, data=NULL, last="end.spell", t.0="t.0",
   attr(Z, "dimnames")[[2]] <- sub("\\(Intercept\\)", "(Risk Intercept)", 
                                   attr(Z, "dimnames")[[2]])
   lhg <- model.response(mf.risk)
+  k.risk <- ncol(Z)  # mark number of terms in risk. eq. for summary()
+  
   # Y vectors
   Y <- cbind(atrisk=lhg, duration=lhb, last=df[, last], t.0=df[, t.0], 
              fail=df[, fail])
@@ -127,6 +131,7 @@ spdur <- function(duration, atrisk, data=NULL, last="end.spell", t.0="t.0",
   est$call <- cl
   est$distr <- eval.parent(distr, 1)
   est$obs <- nrow(Y)
+  est$n.terms <- list(dur = k.dur, risk = k.risk)
   
   class(est) <- 'spdur'
   return(est)
