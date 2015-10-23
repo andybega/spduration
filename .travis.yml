@@ -3,13 +3,13 @@ sudo: required
 warnings_are_errors: true
 
 r_binary_packages:
+  - covr
   - plyr
   - xtable
   
 r_github_packages:
   - rstudio/rmarkdown
   - hadley/testthat
-  - jimhester/covr
 
 env:
  global:
