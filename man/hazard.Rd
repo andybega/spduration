@@ -14,4 +14,5 @@ hazard(x, t = NULL)
 \description{
 Calculate hazard function values
 }
+\keyword{internal}
 

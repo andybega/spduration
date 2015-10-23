@@ -156,35 +156,9 @@ predict.spdur <- function(object, newdata=NULL, type="conditional hazard",
     res <- atrisk.t * ft / pmax(p_min, (cure.t + atrisk.t * st)) 
   }
   
-  # Sometimes h(t) can >1, truncate these values?
+  # Sometimes h(t) can > 1, truncate these values?
   if (truncate) res <- ifelse(res>1, 1, res)
   
   return(as.numeric(res))
 }
 
-# test code
-# estimate model and predict
-# load('data/coups.rda')
-# dur.coup <- buildDuration(coups, "succ.coup", unitID='gwcode', tID='year',
-#                           freq="year")
-# model.coups <- spdur(duration ~ polity2, atrisk ~ polity2, data=dur.coup)
-# pred1 <- predict(model.coups)
-# all.equal(c(head(pred1)), c(0.99851638891028, 0.999983390673093, 
-#   0.999998875400387, 0.999999541492892, 0.161009654496433, 0.948028467976632))
-# # try new data
-# test.data <- dur.coup[dur.coup$year>2000, ]
-# pred2 <- predict(model.coups, test.data)
-# all.equal(c(head(pred2)), c(0.9999924, 0.9999812, 0.9999998, 0.9999924, 
-#                             0.9999988, 0.9999995), tolerance=1e-05)
-# # try complete cases only
-# dur.coup3 <- dur.coup[complete.cases(dur.coup), ]
-# model.coups3 <- spdur(duration ~ polity2, atrisk ~ polity2, data=dur.coup3)
-# pred3.1 <- predict(model.coups3)
-# all.equal(c(head(pred3.1)), c(1.000000e+00, 6.871392e-12, 9.999997e-01, 
-#                               1.000000e+00, 1.000000e+00, 5.193213e-03),
-#           tolerance=1e-05)
-# test.data3 <- dur.coup3[dur.coup3$year>2000, ]
-# pred3 <- predict(model.coups3, test.data3)
-# all.equal(c(head(pred3)), c(.836345e-03, 3.218981e-12, 3.774758e-15, 
-#                             2.153515e-03, 1.000000e+00, 1.000000e+00),
-#           tolerance=1e-03)

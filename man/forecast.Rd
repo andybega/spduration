@@ -18,6 +18,6 @@ of the first argument
 }
 \details{
 This generic is implemented in the \code{\link{spduration}} package
-with a \code{\link{plot.spdur}} method.
+with a \code{\link{forecast.spdur}} method.
 }
 

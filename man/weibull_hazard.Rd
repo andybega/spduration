@@ -14,4 +14,5 @@ weibull_hazard(t, x)
 \description{
 Weibull hazard function
 }
+\keyword{internal}
 

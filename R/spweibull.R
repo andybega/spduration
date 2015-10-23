@@ -8,6 +8,8 @@
 #' 
 #' @importFrom corpcor make.positive.definite
 #' @importFrom stats optim
+#' 
+#' @keywords internal
 spweibull <- function(Y, X, Z, max.iter, silent=FALSE) {  
   # Estimate base model
   if (!exists("base.inits")) {

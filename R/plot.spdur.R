@@ -36,6 +36,9 @@ plot.spdur <- function(x, type="sepplot", ...) {
 
 #' Plot hazard rate
 #' 
+#' A plot of the shape of the hazard rate when covariates are held at their mean
+#' values. 
+#' 
 #' @param x An object of class "\code{spdur}".
 #' @param t_lim Time period over which to plot the hazard function.
 #' @param \dots Optional arguments to \code{\link{plot}}.
@@ -52,6 +55,7 @@ plot_hazard1 <- function(x, t_lim=NULL, ...) {
   
   h_t <- hazard(x, t)
   plot(t, h_t, ..., type="l", xlab="Time", ylab="Conditional Hazard")
+  title()
 }
 
 #' Calculate hazard function values
@@ -59,7 +63,7 @@ plot_hazard1 <- function(x, t_lim=NULL, ...) {
 #' @param x An object of class "\code{spdur}".
 #' @param t Vector of duration values over which to evaluate the hazard function.
 #' 
-#' @export
+#' @keywords internal
 hazard <- function(x, t=NULL) {
   # Choose t values if not set
   if (is.null(t)) {
@@ -85,32 +89,34 @@ hazard <- function(x, t=NULL) {
 #' @param x x
 #' 
 #' @importFrom stats plogis
+#' 
+#' @keywords internal
 weibull_hazard <- function(t, x) {
-  dur.dat<-x$mf.dur
-  risk.dat<-x$mf.risk 
-  ti<-t
+  dur.dat  <- x$mf.dur
+  risk.dat <- x$mf.risk 
+  ti <- t
   
   X <- model.matrix(attr(x$mf.dur, 'terms'), data=x$mf.dur)
   Z <- model.matrix(attr(x$mf.risk, 'terms'), data=x$mf.risk)
   
-  beta<-x$coef[1:ncol(X)]
-  gamma<-x$coef[(ncol(X) + 1):(ncol(X) + ncol(Z))]
-  a<-x$coef[ncol(X) + ncol(Z) + 1]
-  alpha<-exp(-a)
+  beta  <- x$coef[1:ncol(X)]
+  gamma <- x$coef[(ncol(X) + 1):(ncol(X) + ncol(Z))]
+  a     <- x$coef[ncol(X) + ncol(Z) + 1]
+  alpha <- exp(-a)
   
-  mean.X<-apply(X,2,mean)
-  mean.Z<-apply(Z,2,mean)
+  mean.X <- apply(X, 2, mean)
+  mean.Z <- apply(Z, 2, mean)
   
-  lambda<-pmax(1e-10, exp(-mean.X %*% beta))
-  cure<-1 - plogis(mean.Z %*% gamma)
+  lambda <- pmax(1e-10, exp(-mean.X %*% beta))
+  cure <- 1 - plogis(mean.Z %*% gamma)
   
-  preds<-vector(length=length(ti))
+  preds <- vector(length=length(ti))
   for(i in 1:length(ti)){
-    st<-exp(-(lambda * ti[i])^alpha)
-    cure.t<-cure / pmax(1e-10, (st + cure * (1 - st)))
-    atrisk.t<-1 - cure.t
-    ft<-lambda * alpha * (lambda * ti[i])^(alpha-1) * exp(-(lambda * ti[i])^alpha)
-    preds[i]<-atrisk.t * ft / pmax(1e-10, (cure.t + atrisk.t * st))
+    st       <- exp(-(lambda * ti[i])^alpha)
+    cure.t   <- cure / pmax(1e-10, (st + cure * (1 - st)))
+    atrisk.t <- 1 - cure.t
+    ft <- lambda * alpha * (lambda * ti[i])^(alpha-1) * exp(-(lambda * ti[i])^alpha)
+    preds[i] <- atrisk.t * ft / pmax(1e-10, (cure.t + atrisk.t * st))
   }
   return(preds)
 }
@@ -119,8 +125,36 @@ weibull_hazard <- function(t, x) {
 #' 
 #' @param t t
 #' @param x x
+#' 
+#' @keywords internal
 loglog_hazard  <- function(t, x) {
-  NULL
+  dur.dat  <- x$mf.dur
+  risk.dat <- x$mf.risk 
+  ti <- t
+  
+  X <- model.matrix(attr(x$mf.dur, 'terms'), data=x$mf.dur)
+  Z <- model.matrix(attr(x$mf.risk, 'terms'), data=x$mf.risk)
+  
+  beta  <- x$coef[1:ncol(X)]
+  gamma <- x$coef[(ncol(X) + 1):(ncol(X) + ncol(Z))]
+  a     <- x$coef[ncol(X) + ncol(Z) + 1]
+  alpha <- exp(-a)
+  
+  mean.X <- apply(X, 2, mean)
+  mean.Z <- apply(Z, 2, mean)
+  
+  lambda <- pmax(1e-10, exp(-mean.X %*% beta))
+  cure <- 1 - plogis(mean.Z %*% gamma)
+  
+  preds <- vector(length=length(ti))
+  for(i in 1:length(ti)){
+    st       <- 1/(1+(lambda * ti[i])^alpha)
+    cure.t   <- cure / pmax(1e-10, (st + cure * (1 - st)))
+    atrisk.t <- 1 - cure.t
+    ft <- (lambda * alpha * (lambda * ti[i])^(alpha-1)) / ((1 + (lambda * ti[i])^alpha)^2)  
+    preds[i] <- atrisk.t * ft / pmax(1e-10, (cure.t + atrisk.t * st))
+  }
+  return(preds)
 }
 
 #' Generate a Separation Plot

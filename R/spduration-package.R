@@ -27,39 +27,3 @@
 #' @importFrom Rcpp sourceCpp
 NULL
 globalVariables("temp.t")
-
-#' @docType data
-#' 
-#' @name coups
-#' 
-#' @title Global coups, 1979 to 2010
-#' 
-#' @description Data on global coups from 1979 to 2010 from Powell & Thyne
-#' 
-#' @usage coups
-#' 
-#' @format A data frame with 5828 observations of 9 variables:
-#' \describe{
-#'  \item{\code{gwcode}}{Gleditsch and Ward country codes.}
-#'  \item{\code{year}}{Year, in date format.}
-#'  \item{\code{coup1}}{}
-#'  \item{\code{succ.coup}}{Successful coup, 0/1.}
-#'  \item{\code{democ}}{Polity democracy score (0-10).}
-#'  \item{\code{autoc}}{Polity autocracy score (0-10).}
-#'  \item{\code{polity}}{Polity score (democ-autoc).}
-#'  \item{\code{polity2}}{Polity score with correction for regime transitions.}
-#'  \item{\code{regtrans}}{Regime transitions.}
-#'}
-#' 
-#' @source 
-#' Powell, Jonathan M. and Clayton L. Thyne. ``Global instances of coups from 
-#' 1950 to 2010: A new dataset.'' Journal of Peace Research Vol. 48 No. 2.
-#' 
-#' Gleditsch, Kristian S. and Michael D. Ward. 1999. ``Interstate System 
-#' Membership: A Revised List of the Independent States since 1816." 
-#' International Interactions 25.
-#' 
-#' @examples
-#' data(coups)
-#' table(coups$succ.coup)
-"coups"

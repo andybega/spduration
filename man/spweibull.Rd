@@ -20,4 +20,5 @@ spweibull(Y, X, Z, max.iter, silent = FALSE)
 \description{
 Split-population Weibull regression
 }
+\keyword{internal}
 

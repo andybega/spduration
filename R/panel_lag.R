@@ -53,26 +53,11 @@ panel_lag <- function(x, id, t, lag=1, data=NULL) {
   
   data$orig.order <- 1:nrow(data) # to reorder results later
   data <- data[order(data[, id], data[, t]), ]
-  result <- unlist(by(data[, x], data[, id], lagger, k=k))
-  result <- result[order(data$orig.order)] # reorder results to original order
+  res <- unlist(by(data[, x], data[, id], lagger, k=k))
+  res <- res[order(data$orig.order)] # reorder results to original order
   
   if (lag.length.flag) warning('Lag order was larger than some or all unit series.')
   
-  return(result)
+  names(res) <- NULL
+  return(res)
 }
-
-## Test code
-# test.data <- data.frame(x1=c(1,2,3,4,5,6,7,8,9,0), id1=c(1,1,1,1,1,2,2,2,2,2), t1=c(1,2,3,4,5,1,2,3,4,5))
-# # Result with no warning.
-# panelLag('x1', 'id1', 't1', lag=1, data=test.data)
-# # Result with warning about lag.
-# panelLag('x1', 'id1', 't1', lag=-1, data=test.data)
-# # Result with warning about lag length.
-# panelLag('x1', 'id1', 't1', lag=-6, data=test.data)
-
-# # return data in original sort
-# test.data <- data.frame(x1=c(1,2,3,4,5,6,7,8,9,0), id1=c(1,1,1,1,1,2,2,2,2,2), t1=c(1,2,3,4,5,1,2,3,4,5))
-# test.data <- test.data[sample(1:10), ]
-# test.data$x1.l1 <- panelLag('x1', 'id1', 't1', lag=1, data=test.data)
-# test.data <- test.data[order(test.data$id1, test.data$t1), ]
-# all(test.data$x1.l1==c(NA,1,2,3,4,NA,6,7,8,9), na.rm=T)

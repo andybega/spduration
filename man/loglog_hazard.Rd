@@ -14,4 +14,5 @@ loglog_hazard(t, x)
 \description{
 Log-logistic hazard function
 }
+\keyword{internal}
 

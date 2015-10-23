@@ -2,7 +2,8 @@
 # spduration
 *********
 
-[![Travis CI Build Status](https://magnum.travis-ci.com/andybega/spduration.svg?token=ji8RFNCqNWpGghfYBt4p&branch=master)](https://magnum.travis-ci.com/andybega/spduration)
+[![Build Status](https://travis-ci.org/andybega/spduration.svg?branch=master)](https://travis-ci.org/andybega/spduration)
+[![CRAN version](http://www.r-pkg.org/badges/version/spduration)](http://www.r-pkg.org/pkg/spduration)
 
 spduration implements a split-population duration model for duration data with time-varying covariates where a significant subset of the population or spells will not experience failure. 
 

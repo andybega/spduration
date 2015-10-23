@@ -20,4 +20,5 @@ loglog(Y, X, inits = NULL, max.iter, silent = TRUE)
 \description{
 Regular Log-logistic regression
 }
+\keyword{internal}
 

@@ -4,8 +4,10 @@
 #'
 #' @param date character or numeric
 #' @param by character, "year", "month", or "day"
+#' 
+#' @keywords internal
 
-attemptDate <- function(date, by) {
+attempt_date <- function(date, by) {
   if (!class(date)=="Date") {
   	date <- as.character(date)
   	try(date <- as.Date(date), silent=TRUE)

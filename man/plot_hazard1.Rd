@@ -14,6 +14,7 @@ plot_hazard1(x, t_lim = NULL, ...)
 \item{\dots}{Optional arguments to \code{\link{plot}}.}
 }
 \description{
-Plot hazard rate
+A plot of the shape of the hazard rate when covariates are held at their mean
+values.
 }
 
