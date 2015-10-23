@@ -48,3 +48,4 @@ double loglog_lnl(arma::vec theta, arma::mat y, arma::mat X) {
   double logL = sum(cens + nocens);
   return(-logL);
 }
+
