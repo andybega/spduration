@@ -2,19 +2,20 @@
 % Please edit documentation in R/plot.spdur.R
 \name{plot_hazard1}
 \alias{plot_hazard1}
-\title{Plot hazard rate}
+\title{Plot conditional hazard rate}
 \usage{
-plot_hazard1(x, t_lim = NULL, ...)
+plot_hazard1(x, ...)
 }
 \arguments{
-\item{x}{An object of class "\code{spdur}".}
+\item{x}{class "spdur" object}
 
-\item{t_lim}{Time period over which to plot the hazard function.}
-
-\item{\dots}{Optional arguments to \code{\link{plot}}.}
+\item{...}{passed to \code{plot_hazard}}
+}
+\value{
+NULL, plots.
 }
 \description{
-A plot of the shape of the hazard rate when covariates are held at their mean
-values.
+Plot hazard function without simulated confidence intervals. See
+\code{\link{plot_hazard}} instead.
 }
 

@@ -105,12 +105,15 @@ plot_hazard <- function(x, t = NULL, ci=TRUE, n=1000, xvals=NULL, zvals=NULL, ..
   lambda <- exp(-X_vals %*% beta)
   cure   <- 1 - plogis(Z_vals %*% gamma)
   
-  ht <- hazard(ti = t, lambda = lambda, cure = cure, out = NULL, dist = x$distr)
+  ht <- hazard(ti = t, lambda = lambda, cure = cure, alpha = alpha,
+               out = NULL, dist = x$distr)
   
   if (ci==TRUE) {
     
-    Beta  <- mvrnorm(n=n, mu=beta,  Sigma=beta_vcv)	
-    Gamma <- mvrnorm(n=n, mu=gamma, Sigma=gamma_vcv)
+    Beta  <- mvrnorm(n = n, mu=beta,  Sigma=beta_vcv)	
+    Gamma <- mvrnorm(n = n, mu=gamma, Sigma=gamma_vcv)
+    A     <- rnorm(n = n, mean = a, sd = x$vcv[, "log(alpha)"]["log(alpha)"])
+    Alpha <- exp(-A)
     
     lambda <- exp(-tcrossprod(X_vals, Beta))
     cure   <- 1 - plogis(tcrossprod(Z_vals, Gamma))
@@ -120,7 +123,7 @@ plot_hazard <- function(x, t = NULL, ci=TRUE, n=1000, xvals=NULL, zvals=NULL, ..
     
     for (i in 1:n) {
       sims[, i] <- hazard(ti = t, lambda = lambda[i], cure = cure[i], 
-                          out = NULL, dist = x$distr)
+                          alpha = Alpha[i], out = NULL, dist = x$distr)
     }
     
     hmat[, 1] <- ht
@@ -147,7 +150,7 @@ plot_hazard <- function(x, t = NULL, ci=TRUE, n=1000, xvals=NULL, zvals=NULL, ..
 #' @param ti Vector of duration values over which to evaluate the hazard function.
 #' 
 #' @keywords internal
-hazard <- function(ti, lambda, cure, out, dist) {
+hazard <- function(ti, lambda, cure, alpha, out, dist) {
   
   # minimum value for P, to avoid divide by 0 errors
   p_min <- 1e-16

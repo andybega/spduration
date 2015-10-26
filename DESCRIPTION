@@ -17,7 +17,6 @@ License: GPL-3
 LazyData: true
 Imports: 
     corpcor,
-    graphics,
     plyr,
     MASS, 
     separationplot,

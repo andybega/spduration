@@ -4,12 +4,12 @@
 \alias{hazard}
 \title{Calculate hazard function values}
 \usage{
-hazard(x, t = NULL)
+hazard(ti, lambda, cure, alpha, out, dist)
 }
 \arguments{
-\item{x}{An object of class "\code{spdur}".}
+\item{ti}{Vector of duration values over which to evaluate the hazard function.}
 
-\item{t}{Vector of duration values over which to evaluate the hazard function.}
+\item{x}{An object of class "\code{spdur}".}
 }
 \description{
 Calculate hazard function values

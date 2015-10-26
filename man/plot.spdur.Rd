@@ -4,28 +4,33 @@
 \alias{plot.spdur}
 \title{Plot split-duration model results.}
 \usage{
-\method{plot}{spdur}(x, type = "sepplot", ...)
+\method{plot}{spdur}(x, type = "sepplot", ci = TRUE, ...)
 }
 \arguments{
 \item{x}{An object of class "\code{spdur}".}
 
-\item{type}{What kind of plot? "hazard1", "hazard2", "sepplot".}
+\item{type}{What kind of plot? "sepplot" or "hazard".}
 
-\item{\dots}{Optional parameters passed to \code{\link{separationplot.spdur}},
-  \code{\link{plot_hazard1}} or \code{\link{plot_hazard2}}.}
+\item{ci}{For plots of the hazard rate, should a confidence interval be included?}
+
+\item{\dots}{Optional parameters passed to \code{\link{separationplot.spdur}}
+  or \code{\link{plot_hazard}}.}
 }
 \description{
-See \code{\link{separationplot.spdur}} and \code{\link{plot_hazard2}}.
+Plot results from a spduration model. Two types are currently implemented:
+a separation plot for evaluating model predictions ("sepplot"), and a plot of
+the conditional hazard rate ("hazard"), with or without simulation-based
+confidence intervals.
 }
 \examples{
 # get model estimates
 data(model.coups)
 
 # plot
-p <- plot(model.coups)
+plot(model.coups)
+plot(model.coups, type = "hazard")
 }
 \seealso{
-\code{\link{separationplot.spdur}}, \code{\link{plot_hazard1}},
-  \code{\link{plot_hazard2}}
+\code{\link{separationplot.spdur}}, \code{\link{plot_hazard}}
 }
 
