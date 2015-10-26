@@ -1,32 +1,34 @@
 #' Plot split-duration model results.
 #' 
-#' See \code{\link{separationplot.spdur}} and \code{\link{plot_hazard2}}.
+#' Plot results from a spduration model. Two types are currently implemented:
+#' a separation plot for evaluating model predictions ("sepplot"), and a plot of 
+#' the conditional hazard rate ("hazard"), with or without simulation-based
+#' confidence intervals.
 #' 
 #' @method plot spdur
 #' 
 #' @param x An object of class "\code{spdur}".
-#' @param type What kind of plot? "hazard1", "hazard2", "sepplot".
-#' @param \dots Optional parameters passed to \code{\link{separationplot.spdur}},
-#'   \code{\link{plot_hazard1}} or \code{\link{plot_hazard2}}.
+#' @param type What kind of plot? "sepplot" or "hazard".
+#' @param ci For plots of the hazard rate, should a confidence interval be included?
+#' @param \dots Optional parameters passed to \code{\link{separationplot.spdur}}
+#'   or \code{\link{plot_hazard}}.
 #' 
-#' @seealso \code{\link{separationplot.spdur}}, \code{\link{plot_hazard1}},
-#'   \code{\link{plot_hazard2}}
+#' @seealso \code{\link{separationplot.spdur}}, \code{\link{plot_hazard}}
 #' @examples
 #' # get model estimates
 #' data(model.coups)
 #' 
 #' # plot
-#' p <- plot(model.coups)
+#' plot(model.coups)
+#' plot(model.coups, type = "hazard")
 #' 
 #' @export 
-plot.spdur <- function(x, type="sepplot", ...) { 
+plot.spdur <- function(x, type="sepplot", ci=TRUE, ...) { 
   # Input validation
   if (!'spdur' %in% class(x)) stop('"object" argument must have class "spdur"')
   
-  if (type=="hazard1") {
-    plot_hazard1(x, ...)
-  } else if (type=="hazard2") {
-    plot_hazard2(x, ...)
+  if (type=="hazard") {
+    plot_hazard(x, ci = ci, ...)
   } else if (type=="sepplot") {
     separationplot.spdur(x, ...)
   } else {
@@ -34,127 +36,180 @@ plot.spdur <- function(x, type="sepplot", ...) {
   }
 }
 
-#' Plot hazard rate
+#'  Simulate and plot hazard function
+#'  
+#'  Given a set of values for the duration and risk equations, plot the shape of
+#'  estimated hazard function in respect to duration. Confidence intervals are 
+#'  provided through simulation.
+#'  
+#'  @param x An object of class \code{spdur}
+#'  @param t Time values at which to evaluate hazard function, e.g. \code{c(1:50)}.
+#'    Defaults to 1 through 1.2 * maximum duration value in data. 
+#'  @param ci Compute simulation-based confidence interval?
+#'  @param n Number of simulations to use for CI, defaults to 1,000. 
+#'  @param xvals A vector of values for the duration equation variables, in the 
+#'    same order as the duration equation in \code{x}. Defaults to means.
+#'  @param zvals A vector of values for the risk equation varialbes, in teh same
+#'    order as the risk equation in \code{x}. Defaults to means.
+#'  @param \dots Additional parameters passed to \code{\link{plot}}.
+#'    
+#'  @examples 
+#'  # Get model estimates
+#'  data(model.coups)
 #' 
-#' A plot of the shape of the hazard rate when covariates are held at their mean
-#' values. 
-#' 
-#' @param x An object of class "\code{spdur}".
-#' @param t_lim Time period over which to plot the hazard function.
-#' @param \dots Optional arguments to \code{\link{plot}}.
-#' 
-#' @importFrom graphics plot
-plot_hazard1 <- function(x, t_lim=NULL, ...) {
-  # Choose t values if not set
-  if (is.null(t_lim)) {
+#'  # Plot
+#'  plot_hazard(model.coups, ci = FALSE)
+#'  plot_hazard(model.coups, ci = TRUE)
+#'      
+#'  @importFrom MASS mvrnorm
+#'  @export
+plot_hazard <- function(x, t = NULL, ci=TRUE, n=1000, xvals=NULL, zvals=NULL, ...) {
+  
+  # Set t vector if needed to 1.2 * max observed duration; lower limit is 1
+  if (is.null(t)) {
     max_t <- round(max(x$Y[x$Y[, "last"]==1, "duration"]) * 1.2)
-    t <- seq(1, max_t, length.out=100)
+    t     <- seq(1, max_t, length.out=100)
+  } 
+  
+  # Extract covariate matrices
+  dur.dat  <- x$mf.dur
+  risk.dat <- x$mf.risk 
+  X <- model.matrix(attr(x$mf.dur, 'terms'), data=x$mf.dur)
+  Z <- model.matrix(attr(x$mf.risk, 'terms'), data=x$mf.risk)
+  
+  # Extract coefficient point estimates
+  beta  <- x$coef[1:ncol(X)]
+  gamma <- x$coef[(ncol(X) + 1):(ncol(X) + ncol(Z))]
+  a     <- x$coef[ncol(X) + ncol(Z) + 1]
+  alpha <- exp(-a)
+  beta_vcv  <-x$vcv[1:ncol(X), 1:ncol(X)]
+  gamma_vcv <-x$vcv[(ncol(X) + 1):(ncol(X) + ncol(Z)), (ncol(X) + 1):(ncol(X) + ncol(Z))]
+  
+  if (is.null(xvals)) {
+    X_vals <- apply(X, 2, mean)		
+  } else if (!length(xvals)==ncol(X) && length(xvals)-ncol(X)==-1) {
+    stop("Incorrect length for xvals, did you forget 1 for intercept term?")			
   } else {
-    t <- seq(t_lim[1], t_lim[2], length.out=100)
+    stop("Incorrect length for xvals")
   }
   
-  h_t <- hazard(x, t)
-  plot(t, h_t, ..., type="l", xlab="Time", ylab="Conditional Hazard")
-  title()
+  if (is.null(zvals)) {
+    Z_vals <- apply(Z, 2, mean)		
+  } else if (!length(zvals)==ncol(Z) && length(zvals)-ncol(Z)==-1) {
+    stop("Incorrect length for zvals, did you forget 1 for intercept term?")			
+  } else {
+    stop("Incorrect length for zvals")
+  }
+  
+  # Calculate hazard using point estimates only
+  lambda <- exp(-X_vals %*% beta)
+  cure   <- 1 - plogis(Z_vals %*% gamma)
+  
+  ht <- hazard(ti = t, lambda = lambda, cure = cure, out = NULL, dist = x$distr)
+  
+  if (ci==TRUE) {
+    
+    Beta  <- mvrnorm(n=n, mu=beta,  Sigma=beta_vcv)	
+    Gamma <- mvrnorm(n=n, mu=gamma, Sigma=gamma_vcv)
+    
+    lambda <- exp(-tcrossprod(X_vals, Beta))
+    cure   <- 1 - plogis(tcrossprod(Z_vals, Gamma))
+    
+    sims <- matrix(nrow = length(t), ncol = n)
+    hmat <- matrix(nrow = length(t), ncol = 3)
+    
+    for (i in 1:n) {
+      sims[, i] <- hazard(ti = t, lambda = lambda[i], cure = cure[i], 
+                          out = NULL, dist = x$distr)
+    }
+    
+    hmat[, 1] <- ht
+    hmat[, 2] <- apply(sims, 1, quantile, probs = 0.05)
+    hmat[, 3] <- apply(sims, 1, quantile, probs = 0.95)
+    
+    plot(t, hmat[,1], type="l", xlab="Time", ylab="Conditional Hazard",
+         ylim = c(0, max(hmat[, 3])), ...)
+    lines(t , hmat[,2], lty=2)
+    lines(t , hmat[,3], lty=2)
+  } else {
+    # Plot without CIs
+    plot(t, ht, type = "l", xlab = "Time", "ylab" = "Conditional hazard",
+         ylim = c(0, 1.2*max(ht)), ...)
+  }
+  
+  invisible(NULL)
 }
+
 
 #' Calculate hazard function values
 #' 
 #' @param x An object of class "\code{spdur}".
-#' @param t Vector of duration values over which to evaluate the hazard function.
+#' @param ti Vector of duration values over which to evaluate the hazard function.
 #' 
 #' @keywords internal
-hazard <- function(x, t=NULL) {
-  # Choose t values if not set
-  if (is.null(t)) {
-    max_t <- round(max(x$Y[x$Y[, "last"]==1, "duration"]) * 1.2)
-    t <- seq(1, max_t, length.out=100)
-  }
-
-  # Pass to hazard function for `dist`
-  dist <- x$dist
+hazard <- function(ti, lambda, cure, out, dist) {
+  
+  # minimum value for P, to avoid divide by 0 errors
+  p_min <- 1e-16
+  
+  ht <- vector("numeric", length(ti))
   if (dist=="weibull") {
-    h_t <- weibull_hazard(t, x)
+    
+    st       <- exp(-(lambda * ti)^alpha)
+    cure.t   <- cure / pmax(p_min, (st + cure * (1 - st))) # pmax to avoid dividing it by 0
+    atrisk.t <- 1 - cure.t
+    ft       <- lambda * alpha * (lambda * ti)^(alpha-1) * exp(-(lambda * ti)^alpha)
+    
+    ht       <- atrisk.t * ft / pmax(p_min, (cure.t + atrisk.t * st))
+    
   } else if (dist=="loglog") {
-    h_t <- loglog_hazard(t, x)
+    
+    st       <- 1/(1+(lambda * ti)^alpha)
+    cure.t   <- cure / pmax(p_min, (st + cure * (1 - st))) # pmax to avoid dividing it by 0
+    atrisk.t <- 1 - cure.t
+    ft       <- (lambda * alpha * (lambda * ti)^(alpha-1)) / ((1 + (lambda * ti)^alpha)^2)  
+    
+    ht       <- atrisk.t * ft / pmax(p_min, (cure.t + atrisk.t * st))
+    
   } else {
+    
     stop(paste0("Unrecognized distribution: ", dist))
+    
   }
-  return(h_t)
+  
+  ht
 }
 
-#' Weibull hazard function
+
+#' Plot conditional hazard rate
+#'
+#' Plot hazard function without simulated confidence intervals. See
+#' \code{\link{plot_hazard}} instead.
 #' 
-#' @param t t
-#' @param x x
-#' 
-#' @importFrom stats plogis
-#' 
-#' @keywords internal
-weibull_hazard <- function(t, x) {
-  dur.dat  <- x$mf.dur
-  risk.dat <- x$mf.risk 
-  ti <- t
-  
-  X <- model.matrix(attr(x$mf.dur, 'terms'), data=x$mf.dur)
-  Z <- model.matrix(attr(x$mf.risk, 'terms'), data=x$mf.risk)
-  
-  beta  <- x$coef[1:ncol(X)]
-  gamma <- x$coef[(ncol(X) + 1):(ncol(X) + ncol(Z))]
-  a     <- x$coef[ncol(X) + ncol(Z) + 1]
-  alpha <- exp(-a)
-  
-  mean.X <- apply(X, 2, mean)
-  mean.Z <- apply(Z, 2, mean)
-  
-  lambda <- pmax(1e-10, exp(-mean.X %*% beta))
-  cure <- 1 - plogis(mean.Z %*% gamma)
-  
-  preds <- vector(length=length(ti))
-  for(i in 1:length(ti)){
-    st       <- exp(-(lambda * ti[i])^alpha)
-    cure.t   <- cure / pmax(1e-10, (st + cure * (1 - st)))
-    atrisk.t <- 1 - cure.t
-    ft <- lambda * alpha * (lambda * ti[i])^(alpha-1) * exp(-(lambda * ti[i])^alpha)
-    preds[i] <- atrisk.t * ft / pmax(1e-10, (cure.t + atrisk.t * st))
-  }
-  return(preds)
+#' @param x class "spdur" object
+#' @param ... passed to \code{plot_hazard}
+#'   
+#' @return NULL, plots.
+#' @export
+plot_hazard1 <- function(x, ...) {
+  warning("Use plot_hazard(x, ci = FALSE, ...) instead")
+  plot_hazard(x, ci = FALSE, ...)
 }
 
-#' Log-logistic hazard function
+
+#' Simulate and plot hazard function
 #' 
-#' @param t t
-#' @param x x
+#' Plot hazard function with simulated confidence intervals. See
+#' \code{\link{plot_hazard}} instead.
 #' 
-#' @keywords internal
-loglog_hazard  <- function(t, x) {
-  dur.dat  <- x$mf.dur
-  risk.dat <- x$mf.risk 
-  ti <- t
-  
-  X <- model.matrix(attr(x$mf.dur, 'terms'), data=x$mf.dur)
-  Z <- model.matrix(attr(x$mf.risk, 'terms'), data=x$mf.risk)
-  
-  beta  <- x$coef[1:ncol(X)]
-  gamma <- x$coef[(ncol(X) + 1):(ncol(X) + ncol(Z))]
-  a     <- x$coef[ncol(X) + ncol(Z) + 1]
-  alpha <- exp(-a)
-  
-  mean.X <- apply(X, 2, mean)
-  mean.Z <- apply(Z, 2, mean)
-  
-  lambda <- pmax(1e-10, exp(-mean.X %*% beta))
-  cure <- 1 - plogis(mean.Z %*% gamma)
-  
-  preds <- vector(length=length(ti))
-  for(i in 1:length(ti)){
-    st       <- 1/(1+(lambda * ti[i])^alpha)
-    cure.t   <- cure / pmax(1e-10, (st + cure * (1 - st)))
-    atrisk.t <- 1 - cure.t
-    ft <- (lambda * alpha * (lambda * ti[i])^(alpha-1)) / ((1 + (lambda * ti[i])^alpha)^2)  
-    preds[i] <- atrisk.t * ft / pmax(1e-10, (cure.t + atrisk.t * st))
-  }
-  return(preds)
+#' @param x class "spdur" object
+#' @param ... passed to \code{plot_hazard}
+#'   
+#' @return NULL, plots.
+#' @export
+plot_hazard2 <- function(x, ...) {
+  warning("Use plot_hazard(x, ci = TRUE, ...) instead")
+  plot_hazard(x, ci = TRUE, ...)
 }
 
 #' Generate a Separation Plot
@@ -192,9 +247,10 @@ loglog_hazard  <- function(t, x) {
 #' # plot
 #' p <- plot(model.coups)
 #' 
-#' @export 
 #' @importFrom separationplot separationplot
 #' @importFrom stats predict
+#' @export 
+#' @method separationplot spdur
 separationplot.spdur <- function(x, pred_type="conditional hazard", obs=NULL, 
   endSpellOnly=FALSE, lwd1=5, lwd2=2, shuffle=TRUE, heading="", 
   show.expected=TRUE, newplot=FALSE, type="line", ...) {
@@ -228,3 +284,4 @@ separationplot.spdur <- function(x, pred_type="conditional hazard", obs=NULL,
                          shuffle=T, heading='', show.expected=T, newplot=F, 
                          type='line', lwd1=lwd1, lwd2=lwd2, ...)
 }
+

@@ -53,7 +53,6 @@
 #' \item{distr }{Distribution used for the hazard rate.}
 #' 
 #' @examples
-#' \dontrun{
 #' # Prepare data
 #' data(coups)
 #' dur.coups <- add_duration(coups, "succ.coup", unitID="gwcode", tID="year",
@@ -61,7 +60,6 @@
 #'
 #' # Estimate model
 #' model.coups <- spdur(duration ~ polity2, atrisk ~ polity2, data=dur.coups)
-#' }
 #' 
 #' @importFrom stats as.formula model.frame model.matrix model.response pnorm
 #' @export spdur
