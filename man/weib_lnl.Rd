@@ -16,4 +16,5 @@ weib_lnl(theta, y, X)
 \description{
 Regular weibull log likelihood
 }
+\keyword{internal}
 

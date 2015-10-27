@@ -46,6 +46,8 @@ spweibull <- function(Y, X, Z, max.iter, silent=FALSE) {
 #' @param silent Supress \code{\link{optim}} trace output?
 #' 
 #' @importFrom stats optim
+#' 
+#' @keywords internal
 weibull <- function(Y, X, inits=NULL, max.iter, silent=TRUE) {
   if (is.null(inits)) {
     inits <- c(rep(0, ncol(X)), 0)

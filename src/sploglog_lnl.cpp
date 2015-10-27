@@ -10,6 +10,8 @@ using namespace Rcpp;
 //' @param y Dependent variables. 
 //' @param X Duration equation covariates.
 //' @param Z Risk equation covariates.
+//' 
+//' @keywords internal
 // [[Rcpp::export]]
 double sploglog_lnl(arma::vec theta, arma::mat y, arma::mat X, arma::mat Z) {
   

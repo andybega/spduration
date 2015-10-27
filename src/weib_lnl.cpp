@@ -9,6 +9,8 @@ using namespace Rcpp;
 //' @param theta Current parameter values. 
 //' @param y Dependent variables. 
 //' @param X Duration equation covariates.
+//' 
+//' @keywords internal
 // [[Rcpp::export]]
 double weib_lnl(arma::vec theta, arma::mat y, arma::mat X) {
 

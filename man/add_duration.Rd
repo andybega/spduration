@@ -34,9 +34,8 @@ period; used with \code{\link{forecast.spdur}}. For compatibility with CRISP
 and ICEWS projects.}
 }
 \value{
-Returns the original data frame with 9 duration-specific additional
+Returns the original data frame with 8 duration-specific additional
 variables:
-\item{spellID}{Unique key for spells.}
 \item{failure}{Binary indicator of an event.}
 \item{ongoing}{Binary indicator for ongoing events, not counting the inital
 failure time.}

@@ -16,4 +16,5 @@ loglog_lnl(theta, y, X)
 \description{
 Regular Log-logistic likelihood
 }
+\keyword{internal}
 

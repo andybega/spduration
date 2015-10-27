@@ -89,16 +89,20 @@ plot_hazard <- function(x, t = NULL, ci=TRUE, n=1000, xvals=NULL, zvals=NULL, ..
     X_vals <- apply(X, 2, mean)		
   } else if (!length(xvals)==ncol(X) && length(xvals)-ncol(X)==-1) {
     stop("Incorrect length for xvals, did you forget 1 for intercept term?")			
-  } else {
+  } else if (!length(xvals)==ncol(X)) {
     stop("Incorrect length for xvals")
+  } else {
+    X_vals <- xvals
   }
   
   if (is.null(zvals)) {
     Z_vals <- apply(Z, 2, mean)		
   } else if (!length(zvals)==ncol(Z) && length(zvals)-ncol(Z)==-1) {
     stop("Incorrect length for zvals, did you forget 1 for intercept term?")			
+  } else if (!length(zvals)==ncol(Z)) {
+    stop("Incorrect length for xvals")
   } else {
-    stop("Incorrect length for zvals")
+    Z_vals <- zvals
   }
   
   # Calculate hazard using point estimates only

@@ -6,6 +6,8 @@
 #' @param theta Current parameter values. 
 #' @param y Dependent variables. 
 #' @param X Duration equation covariates.
+#' 
+#' @keywords internal
 loglog_lnl <- function(theta, y, X) {
     .Call('spduration_loglog_lnl', PACKAGE = 'spduration', theta, y, X)
 }
@@ -16,6 +18,8 @@ loglog_lnl <- function(theta, y, X) {
 #' @param y Dependent variables. 
 #' @param X Duration equation covariates.
 #' @param Z Risk equation covariates.
+#' 
+#' @keywords internal
 sploglog_lnl <- function(theta, y, X, Z) {
     .Call('spduration_sploglog_lnl', PACKAGE = 'spduration', theta, y, X, Z)
 }
@@ -26,6 +30,8 @@ sploglog_lnl <- function(theta, y, X, Z) {
 #' @param y Dependent variables. 
 #' @param X Duration equation covariates.
 #' @param Z Risk equation covariates.
+#' 
+#' @keywords internal
 spweib_lnl <- function(theta, y, X, Z) {
     .Call('spduration_spweib_lnl', PACKAGE = 'spduration', theta, y, X, Z)
 }
@@ -35,6 +41,8 @@ spweib_lnl <- function(theta, y, X, Z) {
 #' @param theta Current parameter values. 
 #' @param y Dependent variables. 
 #' @param X Duration equation covariates.
+#' 
+#' @keywords internal
 weib_lnl <- function(theta, y, X) {
     .Call('spduration_weib_lnl', PACKAGE = 'spduration', theta, y, X)
 }

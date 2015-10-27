@@ -18,4 +18,5 @@ sploglog_lnl(theta, y, X, Z)
 \description{
 Split-population Log-logistic log likelihood
 }
+\keyword{internal}
 

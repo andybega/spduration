@@ -1,31 +1,40 @@
 library(spduration)
 context("Test add_duration")
 
+test_that("Correct output given time frequency", {
+  
+  # Test for yearly data
+  data <- data.frame(y=c(0,0,0,1,0), 
+                      unitID=c(1,1,1,1,1), 
+                      tID=c(2000, 2001, 2002, 2003, 2004))
+  
+  expect_warning(add_duration(data, "y", "unitID", "tID", freq="year"))
+  
+  test <- suppressWarnings(
+    add_duration(data, "y", "unitID", "tID", freq="year")
+  )
+  
+  goal <- structure(
+    list( y = c(0, 0, 0, 1, 0), 
+          unitID = c(1, 1, 1, 1, 1), 
+          tID = c(2000, 2001, 2002, 2003, 2004), 
+          failure = c(0, 0, 0, 1, 0), 
+          ongoing = c(0, 0, 0, 0, 0), 
+          end.spell = c(0, 0, 0, 1, 1), 
+          cured = c(0, 0, 0, 0, 1), 
+          atrisk = c(1, 1, 1, 1, 0), 
+          censor = c(0, 0, 0, 0, 1), 
+          duration = c(1, 2, 3, 4, 1), 
+          t.0 = c(0, 1, 2, 3, 0)), 
+     .Names = c("y", "unitID", "tID", "failure", "ongoing", 
+                "end.spell", "cured", "atrisk", "censor", "duration", "t.0"), 
+     class = "data.frame", row.names = c(2L, 3L, 4L, 5L, 1L))
+  expect_equivalent(test, goal)
+  
+  
+})
 
 
-# # Test for yearly data
-# data <- data.frame(y=c(0,0,0,1,0), 
-#                     unitID=c(1,1,1,1,1), 
-#                     tID=c(2000, 2001, 2002, 2003, 2004))
-# test <- buildDuration(data, "y", "unitID", "tID", freq="year")
-# goal <- structure(
-#   list(spellID = c(2, 2, 2, 2, 1), 
-#       y = c(0, 0, 0, 1, 0), 
-#         unitID = c(1, 1, 1, 1, 1), 
-#         tID = c("2000", "2001", "2002", "2003", "2004"), 
-#         failure = c(0, 0, 0, 1, 0), 
-#         ongoing = c(0, 0, 0, 0, 0), 
-#         end.spell = c(0, 0, 0, 1, 1), 
-#         cured = c(0, 0, 0, 0, 1), 
-#         atrisk = c(1, 1, 1, 1, 0), 
-#         censor = c(0, 0, 0, 0, 1), 
-#         duration = c(1, 2, 3, 4, 1), 
-#         t.0 = c(0, 1, 2, 3, 0)), 
-#    .Names = c("spellID", "y", "unitID", "tID", "failure", "ongoing", 
-#               "end.spell", "cured", "atrisk", "censor", "duration", "t.0"), 
-#    class = "data.frame", row.names = c(2L, 3L, 4L, 5L, 1L))
-# all(test==goal)
-# 
 # # Test for daily data
 # data <- data.frame(
 #   tID=c(rep(seq.Date(as.Date("2000-01-01"), by="day", length.out=10), 2)),
