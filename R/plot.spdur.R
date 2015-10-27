@@ -62,6 +62,8 @@ plot.spdur <- function(x, type="sepplot", ci=TRUE, ...) {
 #'  plot_hazard(model.coups, ci = TRUE)
 #'      
 #'  @importFrom MASS mvrnorm
+#'  @importFrom graphics lines plot
+#'  @importFrom stats quantile rnorm
 #'  @export
 plot_hazard <- function(x, t = NULL, ci=TRUE, n=1000, xvals=NULL, zvals=NULL, ...) {
   
