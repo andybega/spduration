@@ -69,6 +69,7 @@ spdur <- function(duration, atrisk, data=NULL, last="end.spell", t.0="t.0",
                   silent=FALSE, ...) 
 { 
   cl <- match.call()
+  distr <- match.arg(distr)
   
   # NA actions, separately because model.frame for two different equations
   # might return data frames with different row numbers, breaking the function.
@@ -106,31 +107,45 @@ spdur <- function(duration, atrisk, data=NULL, last="end.spell", t.0="t.0",
   
   # Estimation
   if (distr=='weibull') {
-    est <- spweibull(Y, X, Z, max.iter, silent=silent, ...)
+    fit <- spweibull(Y, X, Z, max.iter, silent=silent, ...)
   }
   if (distr=='loglog') {
-    est <- sploglog(Y, X, Z, max.iter, silent=silent, ...)
+    fit <- sploglog(Y, X, Z, max.iter, silent=silent, ...)
   }
   # Names
   varnames <- c(paste(unlist(attr(X, 'dimnames')[2])), paste(unlist(attr(Z, 'dimnames')[2])), 'log(alpha)')
-  attr(est$coefficients, 'names') <- varnames
-  colnames(est$vcv) <- rownames(est$vcv) <- varnames
+  attr(fit$coefficients, 'names') <- varnames
+  colnames(fit$vcv) <- rownames(fit$vcv) <- varnames
+  
+  coef.dur  <- fit$coefficients[c(1:k.dur)] 
+  coef.risk <- fit$coefficients[(k.dur + 1):(k.dur + k.risk)]
+  coef.distr <- fit$coefficients[(k.dur + k.risk + 1)]
+
+  fit$coefficients <- list(duration = coef.dur, risk = coef.risk, distr = coef.distr)
   
   # Calculate uncertainty measures
-  est$se <- sqrt(diag(est$vcv))
-  est$zstat <- with(est, coefficients/se)
-  est$pval <- 2*(1-pnorm(abs(est$zstat)))
+  se    <- sqrt(diag(fit$vcv))
+  zstat <- c(fit$coefficients$duration, fit$coefficients$risk, fit$coefficients$distr)/se
+  pval <- 2*(1-pnorm(abs(zstat)))
   
-  # Other class elements
-  est$mf.dur <- mf.dur
-  est$mf.risk <- mf.risk
-  est$Y <- Y
-  est$na.action <- attr(df, "na.action")
-  est$call <- cl
-  est$distr <- eval.parent(distr, 1)
-  est$obs <- nrow(Y)
-  est$n.terms <- list(dur = k.dur, risk = k.risk)
+  res <- list(
+    coefficients = fit$coefficients,
+    vcov = fit$vcv,
+    logL = fit$logL,
+    base = fit$base,
+    se = se, zstat = zstat, pval = pval,
+    mf.dur = mf.dur,
+    mf.risk = mf.risk,
+    Y = Y,
+    na.action = attr(df, "na.action"),
+    call = cl,
+    formula = NULL,
+    terms = NULL,
+    distr = eval.parent(distr, 1),
+    obs = nrow(Y),
+    n.terms = list(duration = k.dur, risk = k.risk)
+    )
   
-  class(est) <- 'spdur'
-  return(est)
+  class(res) <- 'spdur'
+  return(res)
 }

@@ -9,3 +9,5 @@
 *.sublime-*
 dev-cycle.R
 cran-comments.md
+
+tests/testthat/Rplots.pdf

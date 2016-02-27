@@ -80,12 +80,13 @@ plot_hazard <- function(x, t = NULL, ci=TRUE, n=1000, xvals=NULL, zvals=NULL, ..
   Z <- model.matrix(attr(x$mf.risk, 'terms'), data=x$mf.risk)
   
   # Extract coefficient point estimates
-  beta  <- x$coef[1:ncol(X)]
-  gamma <- x$coef[(ncol(X) + 1):(ncol(X) + ncol(Z))]
-  a     <- x$coef[ncol(X) + ncol(Z) + 1]
-  alpha <- exp(-a)
-  beta_vcv  <-x$vcv[1:ncol(X), 1:ncol(X)]
-  gamma_vcv <-x$vcv[(ncol(X) + 1):(ncol(X) + ncol(Z)), (ncol(X) + 1):(ncol(X) + ncol(Z))]
+  beta  <- coef(x, model = "duration")
+  gamma <- coef(x, model = "risk")
+  alpha <- coef(x, model = "distr")
+  alpha <- exp(-alpha)
+  beta_vcv  <- vcov(x, "duration")
+  gamma_vcv <- vcov(x, "risk")
+  alpha_vcv <- vcov(x, "distr")
   
   if (is.null(xvals)) {
     X_vals <- apply(X, 2, mean)		
@@ -102,7 +103,7 @@ plot_hazard <- function(x, t = NULL, ci=TRUE, n=1000, xvals=NULL, zvals=NULL, ..
   } else if (!length(zvals)==ncol(Z) && length(zvals)-ncol(Z)==-1) {
     stop("Incorrect length for zvals, did you forget 1 for intercept term?")			
   } else if (!length(zvals)==ncol(Z)) {
-    stop("Incorrect length for xvals")
+    stop("Incorrect length for zvals")
   } else {
     Z_vals <- zvals
   }
@@ -115,10 +116,15 @@ plot_hazard <- function(x, t = NULL, ci=TRUE, n=1000, xvals=NULL, zvals=NULL, ..
                out = NULL, dist = x$distr)
   
   if (ci==TRUE) {
+    Coef_smpl <- mvrnorm(n = n, mu = coef(x, "full"), Sigma = vcov(x, "full"))
     
-    Beta  <- mvrnorm(n = n, mu=beta,  Sigma=beta_vcv)	
-    Gamma <- mvrnorm(n = n, mu=gamma, Sigma=gamma_vcv)
-    A     <- rnorm(n = n, mean = a, sd = x$vcv[, "log(alpha)"]["log(alpha)"])
+    b_idx <- 1:x$n.terms$duration
+    g_idx <- (max(b_idx) + 1):(max(b_idx) + x$n.terms$risk)
+    a_idx <- (max(g_idx) + 1):ncol(Coef_smpl)
+    
+    Beta  <- Coef_smpl[, b_idx]
+    Gamma <- Coef_smpl[, g_idx]
+    A     <- Coef_smpl[, a_idx]
     Alpha <- exp(-A)
     
     lambda <- exp(-tcrossprod(X_vals, Beta))

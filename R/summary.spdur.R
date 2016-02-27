@@ -28,31 +28,37 @@
 #' @export
 #' @importFrom stats coef
 summary.spdur <- function(object, ...) {
-  # Find index to separate 2 equations
-  start_split <- which(names(object$coefficients)=='(Risk Intercept)')
-  # hack for models without risk intercept
-  # doesn't work if terms include character or factor, see #17 on git
-  if (length(start_split)==0) {
-    factor_flag <- any(attr(terms(object$mf.dur), "dataClasses")[-1] %in% c("character", "factor"))
-    if (factor_flag) stop("bug for models without risk intercept but factor terms (see #17 on git)")
-    dur_const <- attr(terms(object$mf.dur), "intercept")
-    dur_terms <- length(attr((terms(object$mf.dur)), "term.labels"))
-    start_split <- dur_const + dur_terms + 1 # intercept + 1st split var
-  }
-  end_duration <- start_split - 1
   
-  table <- cbind(Estimate = coef(object),
-                 StdErr = object$se,
-                 t = object$zstat,
-                 p = object$pval)
+  dur_idx  <- 1:object$n.terms$duration
+  risk_idx <- (object$n.terms$duration + 1):(object$n.terms$duration + object$n.terms$risk)
   
-  duration_table <- table[1:end_duration, , drop=FALSE]
-  split_table <- table[start_split:(nrow(table)-1), , drop=FALSE]
+  tbl_dur <- cbind(
+    object$coefficients$duration[dur_idx],
+    object$se[dur_idx],
+    object$zstat[dur_idx],
+    object$pval[dur_idx]
+  )
+  
+  tbl_risk <- cbind(
+    object$coefficients$risk,
+    object$se[risk_idx],
+    object$zstat[risk_idx],
+    object$pval[risk_idx]
+  )
+  
+  tbl_alpha <- cbind(
+    object$coefficients$duration[length(object$coefficients$duration)],
+    object$se[length(object$se)],
+    object$zstat[length(object$se)],
+    object$pval[length(object$se)]
+  )
+  
+  colnames(tbl_dur) <- colnames(tbl_risk) <- colnames(tbl_alpha) <- c("Estimate", "StdErr", "t", "p")
   
   res <- list(call = object$call,
-              duration = duration_table,
-              split = split_table,
-              alpha = table[nrow(table), , drop=FALSE])
+              duration = tbl_dur,
+              split = tbl_risk,
+              alpha = tbl_alpha)
   class(res) <- 'summary.spdur'
   return(res)
 }

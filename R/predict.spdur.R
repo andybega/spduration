@@ -1,6 +1,6 @@
-#' Predict fitted values for a split-population duration model
+#' Predict methods for spdur Objects
 #' 
-#' \code{predict} method for class ``\code{spdur}''.
+#' \code{predict} and related methods for class ``\code{spdur}''.
 #' 
 #' @method predict spdur
 #' 
@@ -9,7 +9,8 @@
 #' training data.
 #' @param type Quantity of interest to calculate. Default conditional hazard, 
 #' i.e. conditioned on observed survival up to time \code{t}. 
-#' See below for list of values.
+#' See below for list of values. For \code{residuals}, the type of residual to 
+#' calculate
 #' @param truncate For conditional hazard, truncate values greater than 1.
 #' @param \dots not used, for compatability with generic function.
 #' 
@@ -26,7 +27,7 @@
 #' \item ``failure'': \eqn{Pr(T=t|T>t-1, C=0, X\beta) * Pr(Cure=0|Z\gamma)}{Pr(T=t|T>t-1, C=0, X*beta) * Pr(Cure=0|Z*gamma)}
 #' \item ``unconditional risk'': \eqn{Pr(Cure=0|Z\gamma)}{Pr(Cure=0|Z*gamma)}
 #' \item ``unconditional cure'': \eqn{Pr(Cure=1|Z\gamma)}{Pr(Cure=1|Z*gamma)}
-#' \item ``conditional hazard'': \eqn{Pr(T=t|T>t, C=0, X\beta) * Pr(Cure=0|Z\gamma, T>t)}{Pr(T=t|T>t, C=0, X*beta) * Pr(Cure=0|Z*gamma, T>t)}
+#' \item ``conditional hazard'' or ``response'': \eqn{Pr(T=t|T>t, C=0, X\beta) * Pr(Cure=0|Z\gamma, T>t)}{Pr(T=t|T>t, C=0, X*beta) * Pr(Cure=0|Z*gamma, T>t)}
 #' \item ``conditional failure'': \eqn{Pr(T=t|T>t-1, C=0, X\beta) * Pr(Cure=0|Z\gamma, T>t)}{Pr(T=t|T>t-1, C=0, X*beta) * Pr(Cure=0|Z*gamma, T>t)}
 #' }
 #' The vector \eqn{Z\gamma}{Z*gamma} indicates the cure/at risk equation 
@@ -47,10 +48,10 @@
 #' 
 #' @importFrom stats complete.cases model.frame model.response model.matrix plogis
 #' @export
-predict.spdur <- function(object, newdata=NULL, type="conditional hazard", 
+predict.spdur <- function(object, newdata=NULL, type=c("response"), 
                           truncate=TRUE, ...) {
   # Input validation
-  type_choices <- c('conditional risk', 'conditional cure', 'hazard', 'failure',
+  type_choices <- c('response', 'conditional risk', 'conditional cure', 'hazard', 'failure',
                     'unconditional risk', 'unconditional cure', 
                     'conditional hazard', 'conditional failure')
                     
@@ -100,12 +101,11 @@ predict.spdur <- function(object, newdata=NULL, type="conditional hazard",
   t0 <- Y[, 4]    # Time at previous period
   
   # coefficients
-  coef    <- coef(object)
-  coeff.b <- coef[1 : ncol(X)]
-  coeff.g <- coef[(ncol(X) + 1) : (ncol(X) + ncol(Z))]
-  coeff.a <- coef[(ncol(X) + ncol(Z) + 1)]
+  coeff.b <- coef(object, model = "duration")
+  coeff.g <- coef(object, model = "risk")
+  coeff.a <- coef(object, model = "duration")
   alpha   <- exp(-coeff.a)  
-  lambda  <- pmax(p_min, exp(-X %*% coeff.b))  # hack to prevent NaN in ft calculation below
+  lambda  <- pmax(p_min, exp(-X %*% coeff.b))  # raise 0 to slightly above 0 to prevent division by 0 below
   
   ## Start with actual prediction
   
@@ -151,7 +151,7 @@ predict.spdur <- function(object, newdata=NULL, type="conditional hazard",
     # Pr(T=t | (T > t-1, not cured)) * Pr(not cured | T > t)
     res <- atrisk.t * ft / pmax(p_min, (cure.t + atrisk.t * s0)) 
   }
-  if (type=='conditional hazard') {
+  if (type=='conditional hazard' | type=="response") {
     # Pr(T=t | (T > t, not cured)) * Pr(not cured | T > t)
     res <- atrisk.t * ft / pmax(p_min, (cure.t + atrisk.t * st)) 
   }
@@ -160,5 +160,37 @@ predict.spdur <- function(object, newdata=NULL, type="conditional hazard",
   if (truncate) res <- ifelse(res>1, 1, res)
   
   return(as.numeric(res))
+}
+
+#' @rdname predict.spdur
+#' 
+#' @method fitted spdur
+#' 
+#' @examples 
+#' head(fitted(model.coups))
+#' 
+#' @export
+#' @importFrom stats fitted
+fitted.spdur <- function(object, ...)
+{
+  res <- predict(object, type = "conditional hazard")
+  return(res)
+}
+
+#' @rdname predict.spdur
+#' 
+#' @method residuals spdur
+#' 
+#' @examples 
+#' head(residuals(model.coups))
+#' 
+#' @export
+#' @importFrom stats residuals
+residuals.spdur <- function(object, type = c("response"), ...) 
+{
+  # look into adding deviance and pearson residuals
+  ch <- predict(object, type = "conditional hazard")
+  res <- object$Y[, "fail"] - ch
+  return(res)
 }
 

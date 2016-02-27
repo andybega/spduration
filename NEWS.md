@@ -1,3 +1,10 @@
+# spduration 0.14.1
+
+* Fixes issue #17, which led to errors in `summary.spdur` when called on a model 
+with factor variables or without intercept terms. 
+* Added accessor methods for `terms`, `model.matrix`, `coef`, and `vcov`. 
+* Added `fitted` and `residuals` methods.
+
 # spduration 0.14.0
 
 * Added Belkin & Schofer 2003 coup data in `data(bscoup)`, see `?bscoup`. 
