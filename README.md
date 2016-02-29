@@ -20,4 +20,7 @@ library(devtools)
 install_github("andybega/spduration")
 ```
 
-For bug reports, please file on [github](https://github.com/andybega/spduration/issues).
+## Contact
+
+- submit suggestions, bugs, issues, questions at: [https://github.com/andybega/spduration/issues](https://github.com/andybega/spduration/issues)
+- email: [adbeger+spduration@gmail.com](mailto:adbeger+spduration@gmail.com)

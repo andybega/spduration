@@ -44,7 +44,7 @@
 #' @examples 
 #' # get model estimates
 #' data(model.coups)
-#' atrisk <- predict(model.coups)
+#' ch <- predict(model.coups)
 #' 
 #' @importFrom stats complete.cases model.frame model.response model.matrix plogis
 #' @export
@@ -103,7 +103,7 @@ predict.spdur <- function(object, newdata=NULL, type=c("response"),
   # coefficients
   coeff.b <- coef(object, model = "duration")
   coeff.g <- coef(object, model = "risk")
-  coeff.a <- coef(object, model = "duration")
+  coeff.a <- coef(object, model = "distr")
   alpha   <- exp(-coeff.a)  
   lambda  <- pmax(p_min, exp(-X %*% coeff.b))  # raise 0 to slightly above 0 to prevent division by 0 below
   

@@ -62,7 +62,7 @@ covariate values are unknown.
 \examples{
 # get model estimates
 data(model.coups)
-atrisk <- predict(model.coups)
+ch <- predict(model.coups)
 head(fitted(model.coups))
 head(residuals(model.coups))
 }

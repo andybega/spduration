@@ -60,12 +60,14 @@
 #'
 #' # Estimate model
 #' model.coups <- spdur(duration ~ polity2, atrisk ~ polity2, data=dur.coups)
+#' model.coups <- spdur(duration ~ polity2, atrisk ~ polity2, data=dur.coups,
+#'                      distr="loglog")
 #' 
 #' @importFrom stats as.formula model.frame model.matrix model.response pnorm
 #' @export spdur
 
 spdur <- function(duration, atrisk, data=NULL, last="end.spell", t.0="t.0", 
-                  fail="failure", distr='weibull', max.iter=300, na.action, 
+                  fail="failure", distr=c("weibull", "loglog"), max.iter=300, na.action, 
                   silent=FALSE, ...) 
 { 
   cl <- match.call()
