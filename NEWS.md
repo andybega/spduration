@@ -1,9 +1,10 @@
-# spduration 0.14.1
+# spduration 0.15.0
 
-* Fixes issue #17, which led to errors in `summary.spdur` when called on a model 
-with factor variables or without intercept terms. 
 * Added accessor methods for `terms`, `model.matrix`, `coef`, and `vcov`. 
 * Added `fitted` and `residuals` methods.
+* Fixes issue #17, which led to errors in `summary.spdur` when called on a model 
+with factor variables or without intercept terms. 
+* Fixes an issue with the hazard rate plot confidence intervals (`plot_hazard(ci = TRUE)`), where CIs coud be wrong because coefficients were sampled by equation rather than using the full variance covariance matrix.
 
 # spduration 0.14.0
 

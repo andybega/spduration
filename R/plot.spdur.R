@@ -36,35 +36,37 @@ plot.spdur <- function(x, type="sepplot", ci=TRUE, ...) {
   }
 }
 
-#'  Simulate and plot hazard function
-#'  
-#'  Given a set of values for the duration and risk equations, plot the shape of
-#'  estimated hazard function in respect to duration. Confidence intervals are 
-#'  provided through simulation.
-#'  
-#'  @param x An object of class \code{spdur}
-#'  @param t Time values at which to evaluate hazard function, e.g. \code{c(1:50)}.
-#'    Defaults to 1 through 1.2 * maximum duration value in data. 
-#'  @param ci Compute simulation-based confidence interval?
-#'  @param n Number of simulations to use for CI, defaults to 1,000. 
-#'  @param xvals A vector of values for the duration equation variables, in the 
-#'    same order as the duration equation in \code{x}. Defaults to means.
-#'  @param zvals A vector of values for the risk equation varialbes, in teh same
-#'    order as the risk equation in \code{x}. Defaults to means.
-#'  @param \dots Additional parameters passed to \code{\link{plot}}.
-#'    
-#'  @examples 
-#'  # Get model estimates
-#'  data(model.coups)
+#' Plot hazard function
 #' 
-#'  # Plot
-#'  plot_hazard(model.coups, ci = FALSE)
-#'  plot_hazard(model.coups, ci = TRUE)
-#'      
-#'  @importFrom MASS mvrnorm
-#'  @importFrom graphics lines plot
-#'  @importFrom stats quantile rnorm
-#'  @export
+#' \code{plot_hazard} plots the shape of estimated hazard function in respect 
+#' to duration, given a set of values for the duration and risk equations 
+#' covariates. Confidence intervals are provided through simulation.
+#' 
+#' @param x An object of class \code{spdur}
+#' @param t Time values at which to evaluate hazard function, e.g. \code{c(1:50)}.
+#'    Defaults to 1 through 1.2 * maximum duration value in data. 
+#' @param ci Compute simulation-based confidence interval?
+#' @param n Number of simulations to use for CI, defaults to 1,000. 
+#' @param xvals A vector of values for the duration equation variables, in the 
+#'    same order as the duration equation in \code{x}. Defaults to means.
+#' @param zvals A vector of values for the risk equation varialbes, in teh same
+#'    order as the risk equation in \code{x}. Defaults to means.
+#' @param \dots Additional parameters passed to \code{\link{plot}}.
+#' 
+#' @seealso \code{\link{separationplot.spdur}}
+#' 
+#' @examples 
+#' # Get model estimates
+#' data(model.coups)
+#' 
+#' # Plot
+#' plot_hazard(model.coups, ci = FALSE)
+#' plot_hazard(model.coups, ci = TRUE)
+#' 
+#' @importFrom MASS mvrnorm
+#' @importFrom graphics lines plot
+#' @importFrom stats quantile rnorm
+#' @export
 plot_hazard <- function(x, t = NULL, ci=TRUE, n=1000, xvals=NULL, zvals=NULL, ...) {
   
   # Set t vector if needed to 1.2 * max observed duration; lower limit is 1

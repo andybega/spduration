@@ -10,22 +10,23 @@ Authors@R: c(
     person("Shahryar", "Minhas", role = c("aut"), email = "hermes829@gmail.com"),
     person("Michael", "Ward", role = c("cph"), email = "michael.don.ward@gmail.com")
     )
-Description: Functions for estimating split-duration regression models and various associated generic function methods.
-Depends: 
+Description: Functions for estimating split-duration regression models and
+    various associated generic function methods.
+Depends:
     R (>= 3.1.2)
 License: GPL-3
 LazyData: true
-Imports: 
+Imports:
     corpcor,
     graphics,
     plyr,
-    MASS, 
+    MASS,
     separationplot,
     stats,
     Rcpp (>= 0.11.0),
     xtable
-Suggests: 
+Suggests:
     testthat
-LinkingTo: 
-    Rcpp, 
+LinkingTo: Rcpp,
     RcppArmadillo
+RoxygenNote: 5.0.1
