@@ -32,22 +32,21 @@ as.data.frame.spdur <- function(x, row.names = TRUE, optional = FALSE, ...) {
   # Format spdur estimates summary for pretty printing with xtable
   # if row.names=FALSE parameter names will be column in results
   sum.tbl <- summary(x)
-  want_rows <- c(1, 2, 4)
+  want_rows <- c(1, 2, 3, 4)
   dur   <- sum.tbl$duration[, want_rows, drop=FALSE]
   risk  <- sum.tbl$split[, want_rows, drop=FALSE]
   alpha <- sum.tbl$alpha[, want_rows, drop=FALSE]
   
-  # Fix for duplicated rownames, which won't allow merge
-  duprows <- rownames(risk) %in% rownames(dur)
-  if (any(duprows)) {
-    rownames(risk)[which(duprows)] <- paste(rownames(risk)[which(duprows)], "1", sep=".")
-  }
-  res <- data.frame(rbind(dur, alpha, risk))
+  # Id equation for row names, also fixes duplicate rownames issue
+  rownames(dur) <- paste0("Dur_", rownames(dur))
+  rownames(risk) <- paste0("Risk_", rownames(risk))
+  
+  res <- data.frame(rbind(dur, alpha, risk), check.names=FALSE)
 
   if (row.names) {
     return(res)
   } else {
-    res <- data.frame(Parameter=rownames(res), res)
+    res <- data.frame(Parameter=rownames(res), res, check.names=FALSE)
     rownames(res) <- NULL
     return(res)
   }

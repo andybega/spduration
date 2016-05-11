@@ -1,3 +1,9 @@
+# spduration 0.15.1
+
+* Fixes bug in `summary.spdur` that would return wrong estimates for `log(alpha)`.
+* Better column names for `summary` and `xtable` methods.
+* Fixes test error after `testthat` update.
+
 # spduration 0.15.0
 
 * Added accessor methods for `terms`, `model.matrix`, `coef`, and `vcov`. 

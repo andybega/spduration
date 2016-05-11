@@ -86,8 +86,6 @@ spdur <- function(duration, atrisk, data=NULL, last="end.spell", t.0="t.0",
   mf.dur <- eval(model.frame(formula=duration, data=df), parent.frame())
   X <- model.matrix(attr(mf.dur, 'terms'), data=mf.dur)
   attr(X, "na.action") <- na.action(df)
-  attr(X, "dimnames")[[2]] <- sub("\\(Intercept\\)", "(Dur. Intercept)", 
-                                  attr(X, "dimnames")[[2]])
   lhb <- model.response(mf.dur)
   k.dur <- ncol(X)  # mark number of terms in dur. eq. for summary()
   
@@ -95,8 +93,6 @@ spdur <- function(duration, atrisk, data=NULL, last="end.spell", t.0="t.0",
   mf.risk <- eval(model.frame(formula=atrisk, data=df), parent.frame())
   Z <- model.matrix(attr(mf.risk, 'terms'), data=mf.risk)
   attr(Z, "na.action") <- na.action(df)
-  attr(Z, "dimnames")[[2]] <- sub("\\(Intercept\\)", "(Risk Intercept)", 
-                                  attr(Z, "dimnames")[[2]])
   lhg <- model.response(mf.risk)
   k.risk <- ncol(Z)  # mark number of terms in risk. eq. for summary()
   
