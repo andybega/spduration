@@ -16,6 +16,7 @@
 #' AIC(model.coups)
 #'
 #' @export 
+#' @import stats
 AIC.spdur <- function(object, ..., k = 2)
 {
   npar <- length(object$coefficients)

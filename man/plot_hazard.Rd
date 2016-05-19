@@ -40,6 +40,6 @@ plot_hazard(model.coups, ci = TRUE)
 
 }
 \seealso{
-\code{\link{separationplot.spdur}}
+\code{\link{separationplot_spdur}}
 }
 

@@ -10,10 +10,10 @@
 #' @param x An object of class "\code{spdur}".
 #' @param type What kind of plot? "sepplot" or "hazard".
 #' @param ci For plots of the hazard rate, should a confidence interval be included?
-#' @param \dots Optional parameters passed to \code{\link{separationplot.spdur}}
+#' @param \dots Optional parameters passed to \code{\link{separationplot_spdur}}
 #'   or \code{\link{plot_hazard}}.
 #' 
-#' @seealso \code{\link{separationplot.spdur}}, \code{\link{plot_hazard}}
+#' @seealso \code{\link{separationplot_spdur}}, \code{\link{plot_hazard}}
 #' @examples
 #' # get model estimates
 #' data(model.coups)
@@ -53,7 +53,7 @@ plot.spdur <- function(x, type="sepplot", ci=TRUE, ...) {
 #'    order as the risk equation in \code{x}. Defaults to means.
 #' @param \dots Additional parameters passed to \code{\link{plot}}.
 #' 
-#' @seealso \code{\link{separationplot.spdur}}
+#' @seealso \code{\link{separationplot_spdur}}
 #' 
 #' @examples 
 #' # Get model estimates
@@ -64,6 +64,7 @@ plot.spdur <- function(x, type="sepplot", ci=TRUE, ...) {
 #' plot_hazard(model.coups, ci = TRUE)
 #' 
 #' @export
+#' @import graphics
 plot_hazard <- function(x, t = NULL, ci=TRUE, n=1000, xvals=NULL, zvals=NULL, ...) {
   
   # Set t vector if needed to 1.2 * max observed duration; lower limit is 1

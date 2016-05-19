@@ -21,13 +21,13 @@ Imports:
     graphics,
     plyr,
     MASS,
+    separationplot,
     stats,
     Rcpp (>= 0.11.0),
     xtable
 Suggests:
     covr,
     devtools,
-    separationplot,
     testthat
 LinkingTo: 
     Rcpp,
