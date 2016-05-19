@@ -59,7 +59,6 @@ forecast.default <- function(object, ...) { NULL }
 #' pred.data <- pred.data[complete.cases(pred.data), ]
 #' fcast <- forecast(model.coups, pred.data=pred.data)
 #' 
-#' @importFrom stats terms model.frame model.matrix model.response plogis
 #' @export 
 forecast.spdur <- function(object, ..., pred.data = NULL, 
                            stat = 'conditional hazard', n.ahead = 6)

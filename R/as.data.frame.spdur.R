@@ -25,7 +25,6 @@
 #' data(model.coups)
 #' data.frame(model.coups)
 #' 
-#' @method as.data.frame spdur
 #' @export
 
 as.data.frame.spdur <- function(x, row.names = TRUE, optional = FALSE, ...) {

@@ -46,7 +46,6 @@
 #' data(model.coups)
 #' ch <- predict(model.coups)
 #' 
-#' @importFrom stats complete.cases model.frame model.response model.matrix plogis
 #' @export
 predict.spdur <- function(object, newdata=NULL, type=c("response"), 
                           truncate=TRUE, ...) {
@@ -170,7 +169,6 @@ predict.spdur <- function(object, newdata=NULL, type=c("response"),
 #' head(fitted(model.coups))
 #' 
 #' @export
-#' @importFrom stats fitted
 fitted.spdur <- function(object, ...)
 {
   res <- predict(object, type = "conditional hazard")
@@ -185,7 +183,6 @@ fitted.spdur <- function(object, ...)
 #' head(residuals(model.coups))
 #' 
 #' @export
-#' @importFrom stats residuals
 residuals.spdur <- function(object, type = c("response"), ...) 
 {
   # look into adding deviance and pearson residuals

@@ -30,7 +30,7 @@ plot.spdur <- function(x, type="sepplot", ci=TRUE, ...) {
   if (type=="hazard") {
     plot_hazard(x, ci = ci, ...)
   } else if (type=="sepplot") {
-    separationplot.spdur(x, ...)
+    separationplot_spdur(x, ...)
   } else {
     stop("Unrecognized plot type")
   }
@@ -63,9 +63,6 @@ plot.spdur <- function(x, type="sepplot", ci=TRUE, ...) {
 #' plot_hazard(model.coups, ci = FALSE)
 #' plot_hazard(model.coups, ci = TRUE)
 #' 
-#' @importFrom MASS mvrnorm
-#' @importFrom graphics lines plot
-#' @importFrom stats quantile rnorm
 #' @export
 plot_hazard <- function(x, t = NULL, ci=TRUE, n=1000, xvals=NULL, zvals=NULL, ...) {
   
@@ -118,7 +115,7 @@ plot_hazard <- function(x, t = NULL, ci=TRUE, n=1000, xvals=NULL, zvals=NULL, ..
                out = NULL, dist = x$distr)
   
   if (ci==TRUE) {
-    Coef_smpl <- mvrnorm(n = n, mu = coef(x, "full"), Sigma = vcov(x, "full"))
+    Coef_smpl <- MASS::mvrnorm(n = n, mu = coef(x, "full"), Sigma = vcov(x, "full"))
     
     b_idx <- 1:x$n.terms$duration
     g_idx <- (max(b_idx) + 1):(max(b_idx) + x$n.terms$risk)
@@ -231,9 +228,7 @@ plot_hazard2 <- function(x, ...) {
 
 #' Generate a Separation Plot
 #' 
-#' \code{\link{separationplot}} method for class ``\code{spdur}''.
-#' 
-#' @method separationplot spdur
+#' A \code{\link{separationplot}} wrapper for class ``\code{spdur}''.
 #' 
 #' @param x An object of class "\code{spdur}".
 #' @param pred_type Which statistic to plot, i.e. "conditional hazard" or 
@@ -259,18 +254,23 @@ plot_hazard2 <- function(x, ...) {
 #' @seealso \code{\link{separationplot}}, \code{\link{predict.spdur}}
 #' @examples
 #' # get model estimates
+#' library(separationplot)
 #' data(model.coups)
 #' 
 #' # plot
 #' p <- plot(model.coups)
 #' 
-#' @importFrom separationplot separationplot
-#' @importFrom stats predict
 #' @export 
-#' @method separationplot spdur
-separationplot.spdur <- function(x, pred_type="conditional hazard", obs=NULL, 
+#' @import separationplot
+separationplot_spdur <- function(x, pred_type="conditional hazard", obs=NULL, 
   endSpellOnly=FALSE, lwd1=5, lwd2=2, shuffle=TRUE, heading="", 
   show.expected=TRUE, newplot=FALSE, type="line", ...) {
+  
+  if (!requireNamespace("separationplot", quietly = TRUE)) {
+    stop("separationplot needed for this function to work. Please install it.",
+         call. = FALSE)
+  }
+  
   # Input validation
   if (!'spdur' %in% class(x)) stop('"object" argument must have class "spdur"')
   
@@ -297,7 +297,7 @@ separationplot.spdur <- function(x, pred_type="conditional hazard", obs=NULL,
   }
   
   # Separationplot call
-  plot <- separationplot(pred, actual,
+  plot <- separationplot::separationplot(pred, actual,
                          shuffle=T, heading='', show.expected=T, newplot=F, 
                          type='line', lwd1=lwd1, lwd2=lwd2, ...)
 }

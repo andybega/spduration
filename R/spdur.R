@@ -63,7 +63,6 @@
 #' model.coups <- spdur(duration ~ polity2, atrisk ~ polity2, data=dur.coups,
 #'                      distr="loglog")
 #' 
-#' @importFrom stats as.formula model.frame model.matrix model.response pnorm
 #' @export spdur
 
 spdur <- function(duration, atrisk, data=NULL, last="end.spell", t.0="t.0", 

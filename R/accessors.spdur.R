@@ -26,7 +26,6 @@ NULL
 #' logLik(model.coups)
 #' 
 #' @export
-#' @importFrom stats logLik
 logLik.spdur <- function(object, ...) 
 {
   p <- nobs(object) - length(object$coefficients)
@@ -44,7 +43,6 @@ logLik.spdur <- function(object, ...)
 #' nobs(model.coups)
 #' 
 #' @export
-#' @importFrom stats nobs
 nobs.spdur <- function(object, ...)
 {
   val <- object$obs
@@ -57,7 +55,6 @@ nobs.spdur <- function(object, ...)
 #' coef(model.coups)
 #' 
 #' @export
-#' @importFrom stats coef
 coef.spdur <- function (object, model = c("full", "duration", "risk", "distr"), ...) 
 {
   model <- match.arg(model)
@@ -109,7 +106,6 @@ vcov.spdur <- function (object, model = c("full", "duration", "risk", "distr"), 
 #' head(model.matrix(model.coups))
 #' 
 #' @export
-#' @importFrom stats model.matrix
 model.matrix.spdur <- function(object, model = c("duration", "risk"), ...) 
 {
   model <- match.arg(model)
@@ -126,7 +122,6 @@ model.matrix.spdur <- function(object, model = c("duration", "risk"), ...)
 #' terms(model.coups)
 #' 
 #' @export
-#' @importFrom stats terms
 terms.spdur <- function(x, model = c("duration", "risk"), ...) 
 {
   model <- match.arg(model)

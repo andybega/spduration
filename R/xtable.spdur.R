@@ -23,11 +23,12 @@
 #' xtable(model.coups)
 #' print(xtable(model.coups), include.rownames=FALSE)
 #' 
-#' @importFrom xtable xtable
 #' @export
+#' @import xtable
 
 xtable.spdur <- function(x, ...) {
+
   model_table <- as.data.frame(x, row.names=FALSE)
-  res <- xtable(model_table, ...)
+  res <- xtable::xtable(model_table, ...)
   res
 }

@@ -7,7 +7,6 @@
 #' @param silent Supress \code{\link{optim}} trace output?
 #' 
 #' @importFrom corpcor make.positive.definite
-#' @importFrom stats optim
 #' 
 #' @keywords internal
 spweibull <- function(Y, X, Z, max.iter, silent=FALSE) {  
@@ -30,7 +29,7 @@ spweibull <- function(Y, X, Z, max.iter, silent=FALSE) {
   if (est$convergence!=0 & !silent) stop('Model did not converge')
   coef <- est$par
   vcv <- solve(est$hessian)
-  vcv <- make.positive.definite(vcv)
+  vcv <- corpcor::make.positive.definite(vcv)
   logL <- -est$value
   
   # Put together results
@@ -62,7 +61,7 @@ weibull <- function(Y, X, inits=NULL, max.iter, silent=TRUE) {
   if (est$convergence!=0 & !silent) stop('Model did not converge')
   coef <- est$par
   vcv <- solve(est$hessian)
-  vcv <- make.positive.definite(vcv)
+  vcv <- corpcor::make.positive.definite(vcv)
   logL <- -est$value
   
   # Put together results

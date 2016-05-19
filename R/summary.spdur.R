@@ -26,7 +26,6 @@
 #' print(s)
 #' 
 #' @export
-#' @importFrom stats coef
 summary.spdur <- function(object, ...) {
   
   dur_idx  <- 1:object$n.terms$duration
