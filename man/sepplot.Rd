@@ -43,7 +43,7 @@ e.g. type of statistic to calculate.}
 A \code{\link{separationplot}} wrapper for class ``\code{spdur}''.
 }
 \details{
-Creates a \code{\link{separationplot}} of fitted values from 
+Creates a separation plot of fitted values from 
 split-duration model results using \code{\link{predict.spdur}}.
 }
 \examples{
@@ -58,4 +58,3 @@ p <- plot(model.coups)
 \seealso{
 \code{\link{separationplot}}, \code{\link{predict.spdur}}
 }
-

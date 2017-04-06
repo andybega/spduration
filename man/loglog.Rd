@@ -21,4 +21,3 @@ loglog(Y, X, inits = NULL, max.iter, silent = TRUE)
 Regular Log-logistic regression
 }
 \keyword{internal}
-

@@ -18,4 +18,3 @@ NULL, plots.
 Plot hazard function without simulated confidence intervals. See
 \code{\link{plot_hazard}} instead.
 }
-

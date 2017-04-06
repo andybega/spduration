@@ -14,4 +14,3 @@
 \description{
 The default forecast method, currently undefined.
 }
-

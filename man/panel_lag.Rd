@@ -41,4 +41,3 @@ head(coups$polity2)
 head(test)
 
 }
-

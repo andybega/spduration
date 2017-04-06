@@ -15,4 +15,3 @@ attempt_date(date, by)
 For internal use only
 }
 \keyword{internal}
-

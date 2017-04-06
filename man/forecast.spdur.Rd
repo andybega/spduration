@@ -10,6 +10,8 @@
 \arguments{
 \item{object}{A \code{\link{spdur}} class model object.}
 
+\item{\dots}{Optional aguments, not used.}
+
 \item{pred.data}{Data on which to base forecasts, i.e. slice of last time
 unit's observations for all cross-sectional units.}
 
@@ -17,8 +19,6 @@ unit's observations for all cross-sectional units.}
 for possible options}
 
 \item{n.ahead}{How many time periods to predict ahead. Default is 6.}
-
-\item{\dots}{Optional aguments, not used.}
 }
 \description{
 \code{\link{forecast}} method for \code{\link{spdur}} class objects.
@@ -45,4 +45,3 @@ pred.data <- pred.data[complete.cases(pred.data), ]
 fcast <- forecast(model.coups, pred.data=pred.data)
 
 }
-

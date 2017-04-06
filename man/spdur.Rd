@@ -85,4 +85,3 @@ model.coups <- spdur(duration ~ polity2, atrisk ~ polity2, data=dur.coups,
                      distr="loglog")
 
 }
-

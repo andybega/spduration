@@ -25,4 +25,3 @@ BIC(model.coups)
 \seealso{
 \code{\link{BIC}}, \code{\link{AIC.spdur}}
 }
-

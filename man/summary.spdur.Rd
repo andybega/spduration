@@ -34,4 +34,3 @@ The model fitting function is \code{\link{spdur}}, and see
 
 For print formatting, see \code{\link{print.summary.spdur}}.
 }
-

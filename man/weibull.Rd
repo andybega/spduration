@@ -21,4 +21,3 @@ weibull(Y, X, inits = NULL, max.iter, silent = TRUE)
 Regular Weibull regression
 }
 \keyword{internal}
-

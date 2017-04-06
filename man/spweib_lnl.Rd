@@ -19,4 +19,3 @@ spweib_lnl(theta, y, X, Z)
 Split-population Weibull log likelihood
 }
 \keyword{internal}
-

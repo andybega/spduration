@@ -28,4 +28,3 @@ Leisch, Friedrich. 2009. ``Creating R Packages: A Tutorial.''
     Svolik, Milan. 2008. ``Authoritarian Reversals and Democratic 
         Consolidation.'' American Political Science Review.
 }
-

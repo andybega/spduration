@@ -2,12 +2,12 @@
 % Please edit documentation in R/accessors.spdur.R
 \name{accessors}
 \alias{accessors}
-\alias{coef.spdur}
 \alias{logLik.spdur}
-\alias{model.matrix.spdur}
 \alias{nobs.spdur}
-\alias{terms.spdur}
+\alias{coef.spdur}
 \alias{vcov.spdur}
+\alias{model.matrix.spdur}
+\alias{terms.spdur}
 \title{Accessor methods for spdur Objects}
 \usage{
 \method{logLik}{spdur}(object, ...)
@@ -27,12 +27,12 @@
 \arguments{
 \item{object}{an object inheriting from class \code{spdur}.}
 
+\item{\dots}{not used}
+
 \item{model}{return full model, or only duration or risk equations, or 
 distribution parameters.}
 
 \item{x}{\code{spdur} class object for terms}
-
-\item{\dots}{not used}
 }
 \description{
 Several standard accessor methods for a \code{spdur} class object.
@@ -56,4 +56,3 @@ terms(model.coups)
 \seealso{
 \code{\link{AIC.spdur}}, \code{\link{BIC.spdur}}
 }
-

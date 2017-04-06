@@ -37,4 +37,3 @@ table(bscoup$coup)
 range(bscoup$year)
 }
 \keyword{datasets}
-

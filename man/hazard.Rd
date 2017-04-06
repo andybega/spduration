@@ -15,4 +15,3 @@ hazard(ti, lambda, cure, alpha, out, dist)
 Calculate hazard function values
 }
 \keyword{internal}
-

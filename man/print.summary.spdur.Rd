@@ -28,4 +28,3 @@ print(s)
 The model fitting function is \code{\link{spdur}}, and see 
 \code{\link{summary.spdur}} for associated summary method.
 }
-

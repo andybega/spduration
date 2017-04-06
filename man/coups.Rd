@@ -35,4 +35,3 @@ data(coups)
 table(coups$succ.coup)
 }
 \keyword{datasets}
-

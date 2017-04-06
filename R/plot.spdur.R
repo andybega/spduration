@@ -10,10 +10,10 @@
 #' @param x An object of class "\code{spdur}".
 #' @param type What kind of plot? "sepplot" or "hazard".
 #' @param ci For plots of the hazard rate, should a confidence interval be included?
-#' @param \dots Optional parameters passed to \code{\link{separationplot_spdur}}
+#' @param \dots Optional parameters passed to \code{\link{sepplot}}
 #'   or \code{\link{plot_hazard}}.
 #' 
-#' @seealso \code{\link{separationplot_spdur}}, \code{\link{plot_hazard}}
+#' @seealso \code{\link{sepplot}}, \code{\link{plot_hazard}}
 #' @examples
 #' # get model estimates
 #' data(model.coups)
@@ -30,7 +30,7 @@ plot.spdur <- function(x, type="sepplot", ci=TRUE, ...) {
   if (type=="hazard") {
     plot_hazard(x, ci = ci, ...)
   } else if (type=="sepplot") {
-    separationplot_spdur(x, ...)
+    sepplot(x, ...)
   } else {
     stop("Unrecognized plot type")
   }
@@ -53,7 +53,7 @@ plot.spdur <- function(x, type="sepplot", ci=TRUE, ...) {
 #'    order as the risk equation in \code{x}. Defaults to means.
 #' @param \dots Additional parameters passed to \code{\link{plot}}.
 #' 
-#' @seealso \code{\link{separationplot_spdur}}
+#' @seealso \code{\link{sepplot}}
 #' 
 #' @examples 
 #' # Get model estimates
@@ -249,7 +249,7 @@ plot_hazard2 <- function(x, ...) {
 #' @param \dots Optional parameters passed to \code{\link{separationplot}}, 
 #'   e.g. type of statistic to calculate.
 #' 
-#' @details Creates a \code{\link{separationplot}} of fitted values from 
+#' @details Creates a separation plot of fitted values from 
 #' split-duration model results using \code{\link{predict.spdur}}.
 #' 
 #' @seealso \code{\link{separationplot}}, \code{\link{predict.spdur}}
@@ -264,7 +264,7 @@ plot_hazard2 <- function(x, ...) {
 #' @export 
 #' @import separationplot
 sepplot <- function(x, pred_type="conditional hazard", obs=NULL, 
-  endSpellOnly=FALSE, lwd1=5, lwd2=2, shuffle=TRUE, heading="", 
+  endSpellOnly = FALSE, lwd1 = 5, lwd2 = 2, shuffle=TRUE, heading="", 
   show.expected=TRUE, newplot=FALSE, type="line", ...) {
   
   if (!requireNamespace("separationplot", quietly = TRUE)) {
@@ -299,7 +299,7 @@ sepplot <- function(x, pred_type="conditional hazard", obs=NULL,
   
   # Separationplot call
   plot <- separationplot::separationplot(pred, actual,
-                         shuffle=T, heading='', show.expected=T, newplot=F, 
-                         type='line', lwd1=lwd1, lwd2=lwd2, ...)
+                         shuffle=shuffle, heading=heading, show.expected=show.expected, newplot=newplot, 
+                         type=type, lwd1=lwd1, lwd2=lwd2, ...)
 }
 

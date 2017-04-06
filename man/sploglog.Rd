@@ -21,4 +21,3 @@ sploglog(Y, X, Z, max.iter, silent = FALSE)
 Split-population Log-logistic regression
 }
 \keyword{internal}
-

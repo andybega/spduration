@@ -38,4 +38,3 @@ data.frame(model.coups)
 \code{\link{xtable.spdur}} for formatting a single model to 
 Latex output.
 }
-

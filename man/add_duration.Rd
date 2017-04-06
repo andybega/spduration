@@ -93,4 +93,3 @@ dur.data
 \code{\link{panel_lag}} for lagging variables in a panel data frame 
 before building duration data.
 }
-

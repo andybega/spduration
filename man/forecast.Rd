@@ -20,4 +20,3 @@ of the first argument
 This generic is implemented in the \code{\link{spduration}} package
 with a \code{\link{forecast.spdur}} method.
 }
-

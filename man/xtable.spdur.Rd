@@ -34,4 +34,3 @@ print(xtable(model.coups), include.rownames=FALSE)
 
 For print formatting, see \code{\link{print.xtable}}.
 }
-

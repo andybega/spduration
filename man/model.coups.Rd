@@ -21,4 +21,3 @@ up package testing by elminiating the need to re-estimate a model each time.
 data(model.coups)
 str(model.coups)
 }
-

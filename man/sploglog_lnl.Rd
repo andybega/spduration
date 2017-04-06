@@ -19,4 +19,3 @@ sploglog_lnl(theta, y, X, Z)
 Split-population Log-logistic log likelihood
 }
 \keyword{internal}
-
