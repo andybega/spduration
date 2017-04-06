@@ -263,7 +263,7 @@ plot_hazard2 <- function(x, ...) {
 #' 
 #' @export 
 #' @import separationplot
-separationplot_spdur <- function(x, pred_type="conditional hazard", obs=NULL, 
+sepplot <- function(x, pred_type="conditional hazard", obs=NULL, 
   endSpellOnly=FALSE, lwd1=5, lwd2=2, shuffle=TRUE, heading="", 
   show.expected=TRUE, newplot=FALSE, type="line", ...) {
   

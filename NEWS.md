@@ -1,9 +1,9 @@
 # spduration 0.15.2
 
-* separationplot.spdur -> separationplot_spdur. `separationplot` is a standalone function so change the `spdur` version to a simple wrapper. 
+* separationplot.spdur -> sepplot. `separationplot` is a standalone function so change the `spdur` version to a simple wrapper. 
 * Clean up NAMESPACE. Moved `stats` to imported package in description and removed all associated explicit namespace generic imports. 
 
-# spduration 0.15.1 (2016-05-11)
+# spduration 0.15.1 (2016-05-12)
 
 * Fixes bug in `summary.spdur` that would return wrong estimates for `log(alpha)`.
 * Better column names for `summary` and `xtable` methods.
