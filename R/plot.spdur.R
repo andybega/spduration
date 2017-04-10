@@ -247,7 +247,7 @@ plot_hazard2 <- function(x, ...) {
 #' @param heading See \code{\link[separationplot]{separationplot}}.
 #' @param show.expected See \code{\link[separationplot]{separationplot}}.
 #' @param newplot See \code{\link[separationplot]{separationplot}}
-#' @param type See \code[separationplot]{\link{separationplot}}.
+#' @param type See \code{\link[separationplot]{separationplot}}.
 #' @param \dots Optional parameters passed to \code{\link[separationplot]{separationplot}}, 
 #'   e.g. type of statistic to calculate.
 #' 

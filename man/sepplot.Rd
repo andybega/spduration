@@ -34,7 +34,7 @@ it is chosen based on \code{pred_type}: "fail" for (conditional) hazard, and
 
 \item{newplot}{See \code{\link[separationplot]{separationplot}}}
 
-\item{type}{See \code[separationplot]{\link{separationplot}}.}
+\item{type}{See \code{\link[separationplot]{separationplot}}.}
 
 \item{\dots}{Optional parameters passed to \code{\link[separationplot]{separationplot}}, 
 e.g. type of statistic to calculate.}
