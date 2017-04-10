@@ -14,13 +14,13 @@ bibliography: spdur.bib
 
 # Introduction
 
-Duration models are an important class of statistical estimators that take into account the duration dependency of specific outcomes. A prominent example is that the risk of dying depends on the age of an individual. Newborns are at a greater risk of dying, but as they grow older this risk quickly declines and then gradually starts to increase again after the age of 9-10. While individual behavior (smoking, exercising, diet) and structural factors (health care, health regulations, urban vs rural) can increase or decrease the probability of dying over time, the underlying risk is time dependent and impacts on all individuals. 
+Duration models are an important class of statistical estimators that take into account the duration dependency of specific outcomes. A prominent example is that the risk of dying depends on the age of an individual. Newborns are at a greater risk of dying, but as they grow older this risk quickly declines and then gradually starts to increase again after the age of 9-10. While individual behavior (smoking, exercising, diet) and structural factors (health care, health regulations, urban vs rural) can increase or decrease the probability of dying over time, the underlying risk is time dependent and impacts on all individuals.
 
 However, there are conditions under which not all individuals have the same underlying risk to experience a specific outcome and might not even be at risk at all. Consider the risk of acquiring a viral infection like the common flu. Let us initially assume that everyone is at risk of infection, and individual behavior (e.g., good hygiene) and structural factors (e.g., workplace) determine whether individuals catch the flu. Under these assumptions a standard duration model should provide us with efficient estimates of how different behavioral and structural factors impact on the general baseline risk. But, there might be individuals that are immune to the flu in the overall population--because they received vaccination, had the specific flu virus in the past, or have some other characteristic that makes it impossible for them to attract the disease. In this instance we have two underlying populations: an at risk population and an immune one. If the immune population is relatively large, estimates using a standard duration model will be biased and predictions inaccurate.
 
 # Immune populations and inference of duration processes
 
-Regular duration models, where baseline risk is modeled by some distribution of time, were originally developed in health and demographic research and grew naturally from life tables and survival records for medical patients. Basic formulations of such models, like the parametric exponential or Weibull regressions or semi-parametric Cox regression, implicitly assume that all subjects or units under observation, including right-censored observations, will eventually experience the event of interest. This assumption may be violated in many substantive areas and empirical applications, where a sub-population of units or individuals will never experience an event, and thus are effectively ``cured''. 
+Regular duration models, where baseline risk is modeled by some distribution of time, were originally developed in health and demographic research and grew naturally from life tables and survival records for medical patients. Basic formulations of such models, like the parametric exponential or Weibull regressions or semi-parametric Cox regression, implicitly assume that all subjects or units under observation, including right-censored observations, will eventually experience the event of interest. This assumption may be violated in many substantive areas and empirical applications, where a sub-population of units or individuals will never experience an event, and thus are effectively ``cured''.
 
 The insight that populations might be split in regard to their baseline risk has been formulated as early as 1949 by @boag1949maximum and @berkson1952survival, who were researching survival rates in cancer patients. In their application some fraction of patients survived because their cancer was cured, while others relapsed after apparent remission due to levels of disease below detectable thresholds. The development of duration methods in health and medicine has also shaped the terminology conventionally used for such models. For example, split-population duration models are also referred to as cure rate models. Similarly, the basic concepts like survival and failure rates reference the survival of humans.
 
@@ -37,7 +37,7 @@ Conventional duration models assume that all subjects will eventually fail, die,
 
 The major modeling question in this setting, which we will return to below, is the choice of a function form (e.g., exponential, Weibull, or log-logistic) describing the underlying hazard rate $h(t) = \frac{f(t)}{S(t)}$ over time.
 
-The cumulative failure rate ($F(t) = 1 - S(t)$) over time converges to 1, meaning all subjects fail eventually. In the examples of applied research discussed above this assumption is untenable. Some cancer patients are cured after treatment, most young people never become regular smokers, and many states will not experience the kind of violence that persists in other parts of the world. The presence of a large sub-population which is not at risk for an event, will in practice inflate estimates of the survival fraction, and reduce hazard estimates for all subjects. This is the case because the underlying risk is estimated based on subjects that genuinely will fail and those that are cured. Hence, such a model will over predict the hazard for subjects that are not at risk (cured), and under predict for those who are at risk of eventually experiencing the event of interest. 
+The cumulative failure rate ($F(t) = 1 - S(t)$) over time converges to 1, meaning all subjects fail eventually. In the examples of applied research discussed above this assumption is untenable. Some cancer patients are cured after treatment, most young people never become regular smokers, and many states will not experience the kind of violence that persists in other parts of the world. The presence of a large sub-population which is not at risk for an event, will in practice inflate estimates of the survival fraction, and reduce hazard estimates for all subjects. This is the case because the underlying risk is estimated based on subjects that genuinely will fail and those that are cured. Hence, such a model will over predict the hazard for subjects that are not at risk (cured), and under predict for those who are at risk of eventually experiencing the event of interest.
 
 We can incorporate the presence of a sub-population, where we label the subpopulation at risk with $\pi$, by rewriting the likelihood as:[^1]
 
@@ -47,7 +47,7 @@ We can incorporate the presence of a sub-population, where we label the subpopul
 \mathcal{L}\{\theta|(t_{1}, \dots, t_{n})\} &= \prod_{i=1}^{N} \left(\pi_i f(t_i)\right)^{\delta_i} \times  \left((1-\pi_i) + \pi_i S(t_i)\right)^{1-\delta_i}
 \end{align}
 
-Crucially, this split-population framework is primarily useful in contexts where sub-populations are not clearly or easily identifiable. For example, there is a clear sub-population in a model of the age at first pregnancy for humans---men---which researchers can easily identify and exclude from their data. Less clear are answers to questions such as whether a cancer patient is cured or not cured given that they have no visible signs of cancer following treatment or have hit the 5-year disease free survival mark. In such situations split-population models provide a way to infer sub-populations in a probabilistic fashion. 
+Crucially, this split-population framework is primarily useful in contexts where sub-populations are not clearly or easily identifiable. For example, there is a clear sub-population in a model of the age at first pregnancy for humans---men---which researchers can easily identify and exclude from their data. Less clear are answers to questions such as whether a cancer patient is cured or not cured given that they have no visible signs of cancer following treatment or have hit the 5-year disease free survival mark. In such situations split-population models provide a way to infer sub-populations in a probabilistic fashion.
 
 Early efforts focused only on the cure rate ($1 - \pi$) and treated it as a constant, but we can model membership in the subpopulation with its own covariates through a logistic link function:
 
@@ -55,11 +55,11 @@ Early efforts focused only on the cure rate ($1 - \pi$) and treated it as a cons
 \pi_i &= \frac{1}{1 + e^{-z_i \gamma}}
 \end{align}
 
-Where $z_i$ is a vector of covariates for a subject at a given time. For interpretation, it is important to note that with time-varying covariates, the risk (or cured) estimate for a subject is particular to a given time point rather than constant over all time periods in the spell.[^2] Depending on the covariates, the risk estimate for a subject can thus fluctuate over time. To ease interpretation, it might be convenient to restrict covariates in the logit risk model to slow-moving, stable covariates in order to produce stable risk estimates for subjects. 
+Where $z_i$ is a vector of covariates for a subject at a given time. For interpretation, it is important to note that with time-varying covariates, the risk (or cured) estimate for a subject is particular to a given time point rather than constant over all time periods in the spell.[^2] Depending on the covariates, the risk estimate for a subject can thus fluctuate over time. To ease interpretation, it might be convenient to restrict covariates in the logit risk model to slow-moving, stable covariates in order to produce stable risk estimates for subjects.
 
-[^2]: We use ``spell'' to designate all time periods observed for a subject up to the failure time. Subjects can theoretically have multiple spells, e.g., cancer patients who go into remission and relapse more than once, or states that experience multiple civil wars over their history. 
+[^2]: We use ``spell'' to designate all time periods observed for a subject up to the failure time. Subjects can theoretically have multiple spells, e.g., cancer patients who go into remission and relapse more than once, or states that experience multiple civil wars over their history.
 
-The last component to complete the likelihood is the choice of a distribution for the shape of the hazard rate. The \pkg{spduration} package implements two hazard rate shapes, Weibull and log-logistic:
+The last component to complete the likelihood is the choice of a distribution for the shape of the hazard rate. The `spduration` package implements two hazard rate shapes, Weibull and log-logistic:
 
 \begin{eqnarray*}
 \textrm{Weibull} \\
@@ -81,7 +81,7 @@ h(t, \pi) = \frac{f(t, \pi)}{S(t, \pi)} & = & \frac{ \pi(t) \times f(t) }{ (1-\p
  \pi(t) & = & \frac{ 1-\pi }{ S(t) + (1-\pi) (1 - S(t)) }
 \end{eqnarray}
 
-For a given unconditional risk rate $\pi$, the probability that a subject with survival time $t$ is in the risk set decreases over time, because an increasing number of surviving cases consist of immune or cured ($1-\pi$) cases that will never fail. In the hazard rate, the failure rate in the numerator is conditional on the probability that a case is in the risk set, given survival up to time $t$, and the numerator is an adjusted survivor function that accounts for the fraction of cured cases by time $t$, which is $1-\pi(t)$. 
+For a given unconditional risk rate $\pi$, the probability that a subject with survival time $t$ is in the risk set decreases over time, because an increasing number of surviving cases consist of immune or cured ($1-\pi$) cases that will never fail. In the hazard rate, the failure rate in the numerator is conditional on the probability that a case is in the risk set, given survival up to time $t$, and the numerator is an adjusted survivor function that accounts for the fraction of cured cases by time $t$, which is $1-\pi(t)$.
 
 # Fit a split-population model on coups data
 
@@ -89,23 +89,43 @@ In order to illustrate the package functionality, we examine a model of coups d`
 
 For their empirical test Belkin and Schofer develop a measure of "structural coup risk" which incorporates factors such as the strength of democratic institutions and civil society, and a recent history of successful coups. However, they implement a logistic regression model, which does not capture the process as described in their quote above. This is because the logistic regression model assumes that all observations are at risk for a coup (i.e., the probability of a coup is non-zero for all observations). Since their structural coup risk indicator is developed precisely to distinguish between at risk and "immune" cases, the split-population model allows one to examine whether the indicator effectively does so.
 
-We begin by loading the package and the Belkin and Schofer replication data, and formatting the data to add several variables needed by the split-population duration model. 
+We begin by loading the package and the Belkin and Schofer replication data, and formatting the data to add several variables needed by the split-population duration model.
 
 ```{r data, warning=FALSE}
 library("spduration")
 data(bscoup)
+?bscoup
+head(bscoup[, 1:5])
+```
+
+The data are documented in `?bscoup`, which also gives a reference to the source citation. It consists of a little more than 5,000 observations of 162 countries from 1960 to 2000. Each row corresponds to a country *c* in year *t*. Excluding the country and year identifiers, the data include 12 variables, including a binary indicator for successful coups.
+
+```{r}
+str(bscoup)
+```
+
+Altogether the data include 290 coups, which makes for a positive rate of slightly more than 5% of all observations.
+
+```{r}
 bscoup$coup <- ifelse(bscoup$coup == "yes", 1, 0)
+table(bscoup$coup)
+```
+
+Before we can estimate a split-population duration model with the data, we need to add several variables that capture the survival characteristics of the data.
+
+```{r}
 bscoup      <- add_duration(bscoup, "coup", unitID = "countryid", tID = "year",
                             freq = "year", ongoing = FALSE)
 ```
 
-The `add_duration` function takes as input a data frame with a binary response variable--"coup"--that measures the occurrence of the event, or failure, recorded over discrete time periods. We assume that the data frame is in a cross-sectional time-series format that consists of multiple observations over time for a number of subjects, in our case countries. 
 
-Within the framework of duration modeling, these data conceptually consist of "spells", which are repeated observations of a unit from the time they enter the data (left-censoring) or after they experienced the event of interest, until the next event or the end of observation (right censoring). Table \ref{tab-ex} shows how a single country could have two spells during the observation period. Observations for Portugal make up two spells, one that begins in 1960, when our data start, to a coup event in 1975, when a second spell starts and continues until either the next coup or the data end. Canada on the other hand experienced no coups and so observations for that country from 1960 to 2000 make up one spell. 
+The `add_duration` function takes as input a data frame with a binary response variable--"coup"--that measures the occurrence of the event, or failure, recorded over discrete time periods. We assume that the data frame is in a cross-sectional time-series format that consists of multiple observations over time for a number of subjects, in our case countries.
+
+Within the framework of duration modeling, these data conceptually consist of "spells", which are repeated observations of a unit from the time they enter the data (left-censoring) or after they experienced the event of interest, until the next event or the end of observation (right censoring). Table \ref{tab-ex} shows how a single country could have two spells during the observation period. Observations for Portugal make up two spells, one that begins in 1960, when our data start, to a coup event in 1975, when a second spell starts and continues until either the next coup or the data end. Canada on the other hand experienced no coups and so observations for that country from 1960 to 2000 make up one spell.
 
 | Country | Year | Coup | Spell ID | Duration |
 |:--------|-----:|-----:|---------:|---------:|
-|Portugal | 1960 | 0 | 1 | 1 | 
+|Portugal | 1960 | 0 | 1 | 1 |
 ... | ... | 0 | 1 | ... |
 ... | 1975 | 1 | 1 | 16 |
 Portugal | 1976 | 0 | 2 | 1 |
@@ -115,11 +135,13 @@ Canada | 1960 | 0 | 3 | 1 |
 ... | ... | 0 | 3 | ... |
 ... | 2000 | 0 | 3 | 41 |
 
-The `add_duration` functions identifies spells in the data and returns the data frame with several additional variables needed for estimation. The most important among these are a counter of elapsed time in a spell, "duration". It also codes that a spell was at risk ("atrisk==1") if it ended in a failure event, and not at risk otherwise.   These are then used as response variables for the formula in the `spdur` function. 
+The `add_duration` functions identifies spells in the data and returns the data frame with several additional variables needed for estimation. The most important among these are a counter of elapsed time in a spell, "duration". It also codes that a spell was at risk ("atrisk==1") if it ended in a failure event, and not at risk otherwise.   These are then used as response variables for the formula in the `spdur` function.
 
-Though the data used in this example are recorded annually, the function supports annual, monthly, or daily data and will try to convert the `tID` input to class "Date" given the provided argument in `freq`. Another important question is how to handle consecutive 1's in the response variable provided. This is controlled with the `ongoing` argument. In some cases like civil war occurrence, the *y* variable records all years during which a country experienced a civil war. Here `ongoing` should be set to true so that the models try to predict the onset of the civil war, but disregard ongoing conflicts (`failure` is set to `NA` for these cases, dropping them from analysis). With ongoing set to false, successive 1's in *y* are treated as distinct and new failures, and kept in the analysis. This makes sense for discrete, short-term events like coups. Countries can experience distinct coups in successive years. 
+Though the data used in this example are recorded annually, the function supports annual, monthly, or daily data and will try to convert the `tID` input to class "Date" given the provided argument in `freq`, as indicated by the warning it returned in the example above. This can be avoided by converting any numeric dates to R dates first.
 
-The `spdur` function is the primary function in the package and produces a regression model object of class `spdur` which can then be used with further methods. We begin by fitting first a Weibull and then a log-logistic split-population duration model using the coups data, including the measure of coup risk in the logit (risk) equation. 
+Another important question is how to handle consecutive 1’s in the response variable provided. This is controlled with the `ongoing` argument. In some cases like civil war occurrence, the *y* variable records all years during which a country experienced a civil war. Here `ongoing` should be set to true so that the models try to predict the onset of the civil war, but disregard ongoing conflicts (failure is set to `NA` for these cases, dropping them from analysis). With `ongoing` set to false, successive 1’s in *y* are treated as distinct and new failures, and kept in the analysis. This makes sense for discrete, short-term events like coups. Countries can experience distinct coups in successive years.
+
+The `spdur` function is the primary function in the package and produces a regression model object of class `spdur` which can then be used with further methods. We begin by fitting first a Weibull and then a log-logistic split-population duration model using the coups data, including the measure of coup risk in the logit (risk) equation.
 
 ```{r models, include = TRUE}
 weib_model <- spdur(
@@ -142,7 +164,7 @@ tbl <- xtable(loglog_model, caption = "Coup model with log-logistic hazard",
 print(tbl, type = "html", caption.placement = "top", comment = FALSE, include.rownames = FALSE)
 ```
 
-The table shows estimates from the duration equation, beginning with the intercept, and then estimates from the risk equation. The duration component of the model is in accelerated failure time format and the coefficient estimates are on the log of expected time to failure. The negative coefficient for military regimes for example means that the expected time to a coup is shorter in military regimes than non-military regimes, holding all other factors constant. In the risk equation, positive coefficients mean higher risk of coup. Thus, military regimes have a higher risk of experiencing a coup. 
+The table shows estimates from the duration equation, beginning with the intercept, and then estimates from the risk equation. The duration component of the model is in accelerated failure time format and the coefficient estimates are on the log of expected time to failure. The negative coefficient for military regimes for example means that the expected time to a coup is shorter in military regimes than non-military regimes, holding all other factors constant. In the risk equation, positive coefficients mean higher risk of coup. Thus, military regimes have a higher risk of experiencing a coup.
 
 One may also use the `AIC` and `BIC` function to calculate the information criterion statistics for `spdur` objects. In our example, both models are close enough in both statistics to be indistinguishable, so we will continue to focus on the log-logistic form.
 
@@ -152,35 +174,36 @@ matrix(c(
   ), ncol = 2, dimnames = list(c("Weibull", "Loglog"), c("AIC", "BIC")))
 ```
 
-The package also includes a function, `plot_hazard`, that can be used with an `spdur` object to plot the estimated hazard rate. `plot_hazard` plots the conditional hazard, which is the probability of survival conditional on the covariates in the risk and duration equations, and conditional on survival up to time $t$. The function calculates the estimated hazard rate as well as 90\% confidence intervals, which are produced by simulating values from the estimated sampling distributions of the model parameters. By default the function uses the mean values of the covariates during the simulations, but users can choose specific covariate values by entering them as vectors in the arguments `xvals` and `zvals`, which correspond to the covariates in the duration and risk equations, respectively. The command below creates the graph A in Figure \ref{hazard-ex}.
+The package includes two types of plots that show the estimated hazard rates and predictive performance, respectively. The hazard rates can be plotted by either calling `plot_hazard` directly, or with `plot(x, type = "hazard")`, on a fitted `spdur` object. It will produce a plot of the conditional hazard, which is the probability of survival conditional on the covariates in the risk and duration equations, and conditional on survival up to time t, when holding all covariates at their sample means. The function calculates the average hazard rate as well as 90% confidence intervals, which are produced by simulating values from the estimated sampling distributions of the model parameters.
 
 ```{r hazard-ex-1}
-plot_hazard(loglog_model, main = "A")
+plot(weib_model,   type="hazard", main="Weibull")
+plot(loglog_model, type="hazard", main="Loglog")
 ```
 
-As mean values are maybe not that interesting, we can also generate scenarios by entering values manually. The values are used in the same order that variables are specified in the equations used to estimate the models, which also corresponds to the order of variables in Table 2. Note the inclusion of an intercept term. This produces plot B in Figure \ref{hazard-ex}
+By default the `plot_hazard` function uses the mean values of the covariates during the simulations, but users can choose specific covariate values by entering them as vectors in the arguments `xvals` and `zvals`, which correspond to the covariates in the duration and risk equations, respectively. The values are used in the same order that variables are specified in the equations used to estimate the models, which also corresponds to the order of variables in the model summary table. Note the inclusion of an intercept term.
 
 ```{r hazard-ex-2}
-plot_hazard(loglog_model, 
-     xvals = c(1, 1, 10, 0.05), 
+plot_hazard(loglog_model,
+     xvals = c(1, 1, 10, 0.05),
      zvals = c(1, 7, 8.64, 1, 1, 0.05, 0, 0),
      main = "B")
 ```
 
-The hazard plots can also be called with `plot(..., type = "hazard")`. Without a type argument, `plot.spdur` will produce a separation plot, which is a graphical display for evaluating model predictions [@greenhill2011separation]. The code below produces the figure below:
+While `plot(x, type = "hazard")` will produce a hazard plot, without a type argument, `plot.spdur` will produce a separation plot, which is a graphical display for evaluating model predictions [@greenhill2011separation]. The code below produces the figure below:
 
 ```{r, fig.show = 'hold'}
 plot(weib_model, heading = "Weibull")
 plot(loglog_model, heading = "LogLog")
 ```
 
-The option `endSpellOnly` is set to `FALSE` so that every observation, not only those at the end of a spell, is used in the plot. By default the `plot` function will calculate the conditional hazard for each observation. The separation plot sorts observations from left to right according to the predicted probability assigned by the model (higher values to the right), and shows each event/failure as red line, with non-events shown in beige. This makes it easy to see whether the model is assigning high probabilities of failure to actual cases of failure, and low probabilities to non-failures. 
+The option `endSpellOnly` is set to `FALSE` so that every observation, not only those at the end of a spell, is used in the plot. By default the `plot` function will calculate the conditional hazard for each observation. The separation plot sorts observations from left to right according to the predicted probability assigned by the model (higher values to the right), and shows each event/failure as red line, with non-events shown in beige. This makes it easy to see whether the model is assigning high probabilities of failure to actual cases of failure, and low probabilities to non-failures.
 
 Underlying both plotting functions is the `predict` function, which can be used on an object of class `spdur` to generate several kinds of predictions, including the probability that an observation is ``at-risk'' and the probability of failure for a given time period.
 
 ## Out-of-sample testing
 
-Finally, we demonstrate how to evaluate a model's out of sample predictions. We will use data from 1996 onwards as the test set, and prior data for training purposes. The `add_duration` function retrospectively codes the risk variable based on how a spell ended, and we therefore need to take care in how we add the duration variables for each data set. For the training data we need to subset the training set first, so that coups in the tests set don't influence the risk coding in the training data. 
+Finally, we demonstrate how to evaluate a model's out of sample predictions. We will use data from 1996 onwards as the test set, and prior data for training purposes. The `add_duration` function retrospectively codes the risk variable based on how a spell ended, and we therefore need to take care in how we add the duration variables for each data set. For the training data we need to subset the training set first, so that coups in the tests set don't influence the risk coding in the training data.
 
 ```{r}
 data(bscoup)
@@ -198,7 +221,7 @@ coup_test  <- add_duration(bscoup, "coup", unitID = "countryid", tID = "year",
 coup_test  <- coup_test[coup_test$year >= 1996, ]
 ```
 
-Now we can fit new models using the training data, and calculate predictions from these models for the test data, using `predict(..., newdata = coup_test)`. 
+Now we can fit new models using the training data, and calculate predictions from these models for the test data, using `predict(..., newdata = coup_test)`.
 
 ```{r estimate train models}
 weib_model2   <- spdur(
@@ -209,7 +232,7 @@ weib_model2   <- spdur(
 loglog_model2 <- spdur(
   duration ~ milreg + instab + regconf,
   atrisk ~ couprisk + wealth + milreg + rwar + regconf + samerica + camerica,
-  data = coup_train, distr = "loglog", silent = TRUE) 
+  data = coup_train, distr = "loglog", silent = TRUE)
 ```
 
 
@@ -229,16 +252,30 @@ separationplot(weib2_test_p,   obs_y, newplot = FALSE)
 separationplot(loglog2_test_p, obs_y, newplot = FALSE)
 ```
 
+# Additional discussion
 
-# Censoring considerations
+## Censoring considerations
 
-Truncation and censoring are problematic for split-population duration models, as they are for standard duration regression, but also pose some additional considerations. In left-truncation, we do not observe data for a spell prior to some date, and thus have incomplete and inaccurate values for the duration or time to failure for a spell. Since immune spells in the sample are over time going to distinguish themselves with exceptionally long survival times compared to spells at risk which fail periodically, left-censoring also makes it more difficult to distinguish the immune and at risk subpopulations. 
+Truncation and censoring are problematic for split-population duration models, as they are for standard duration regression, but also pose some additional considerations. In left-truncation, we do not observe data for a spell prior to some date, and thus have incomplete and inaccurate values for the duration or time to failure for a spell. Since immune spells in the sample are over time going to distinguish themselves with exceptionally long survival times compared to spells at risk which fail periodically, left-censoring also makes it more difficult to distinguish the immune and at risk subpopulations.
 
-Sometimes information about previous failures in the data is available beyond the time period over which covariates are observed, making it possible to ameliorate or eliminate left-censoring by using the information of previous failures when constructing the necessary duration variables with `add_duration()`. 
+Sometimes information about previous failures in the data is available beyond the time period over which covariates are observed, making it possible to ameliorate or eliminate left-censoring by using the information of previous failures when constructing the necessary duration variables with `add_duration()`.
 
-Right-censoring, where spells end before outcomes are observed, also pose a unique problem in the split-population framework. Although right-censored spells themselves are accommodated in the modeling function, they impact the coding of at risk vs. immune spells. The `add_duration()` function retroactively codes all observations in a spell as at risk if the spell itself ended in failure. Right-censored spells are coded as immune over their entire duration. This can lead to some misclassification of observations as immune even though they experience failure at some point in the unobserved future. 
+Right-censoring, where spells end before outcomes are observed, also pose a unique problem in the split-population framework. Although right-censored spells themselves are accommodated in the modeling function, they impact the coding of at risk vs. immune spells. The `add_duration()` function retroactively codes all observations in a spell as at risk if the spell itself ended in failure. Right-censored spells are coded as immune over their entire duration. This can lead to some misclassification of observations as immune even though they experience failure at some point in the unobserved future.
 
 Furthermore, as the example above shows, in out-of-sample testing based on some kind of data partitioning scheme, this coding scheme can lead to unintentional contamination of in-sample cases with knowledge of out-of-sample failures through the risk coding for failed spells. This leads to two recommendations. First, data should be partitioned spell or block-wise, e.g., by withholding the last *x* years of data, and not randomly. Second, given the two concerns of left-censoring and non-independence induced through the duration and risk coding, care should be taken to ensure that duration data are built without access to future information in another data partition.
+
+## Alternative packages
+
+The `survival` package [@thernau2000modeling, thernau2015survival], arguably the most well-established library for survival and event history analysis in R, allows for the estimation of a wide variety of semi-, non-, and parametric survival models, and provides facilities for handling and descriptive summaries of survival and event history data. It does not include cure rate or split-population mixture models of the type we have implemented though.
+
+One useful extension of our project in the future would be to integrate and adapt the `Surv` class for survival data in `survival` to the `spduration` library. This would require some modification of the class as our model also requires information on the risk status of spells, but would give access to the much broader functionality, especially for descriptive summaries of data, in the `survival` library.
+
+Other currently available R routines for estimation of split-population/cure rate duration models include the packages `smcure`  [@cai2012smcureR], described in @cai2012smcure, and `nltm` [@garibotti2010nltm]. `smcure` implements semi-parametric proportional hazards and accelerated failure time cure models using estimation procedures presented in @peng2003fitting and @zhang2007new.[^4] The package `nltm` will estimate a semi-parametric proportional hazard cure model, and a number of other survival models, using the approach developed in @tsodikov2003semiparametric and @tsodikov2007profile. Semi-parametric estimation of the hazard function is attractive because it requires no assumption about its shape, and such assumptions can be difficult in practice to empirically evaluate. The main advantage `spduration` offers is the ability to include time varying covariates, which gives it a broader range of practical applications, as `smcure` and`nltm` will only accommodate case-based data. `spduration` also features more post-estimation methods than alternative packages, including those discussed above to create and evaluate model predictions.  
+
+[^4]: There is also the older `gfcure` package, which estimates the parametric accelerated failure time cure model discussed in @peng1998generalized. A version for Windows is available at http://post.queensu.ca/~pengp/software.html.
+
+Finally, there are Stata routines for implementing cure models [see, e.g., @lambert2007modeling; @buxton2013cureregr], some of which can handle time-varying covariates, but this is of course of limited appeal to R users.
+
 
 # Conclusion
 
@@ -248,8 +285,8 @@ Many outcomes of interest are rare events. For example, coups, war onset, or mas
 
 [^3]: For a discussion of the difficulties rare events can pose for prediction see @king2001logistic and @king2001explaining.
 
-In the language of machine learning, we are dealing with highly imbalanced classes. It is a well-recognized problem and has led to the development or use of several specialized mixture models like zero-inflated Poisson and negative binomial regression for count data, and a zero-inflated ordered probit for ordinal outcomes [@bagozzi2015modeling]. Split-population duration regression provides another principled solution to the challenges posed by data in this domain, but, unlike other solutions to the sparse outcome problem, also addresses underlying temporal dynamics that are an important part of the non-independent data political scientists and other social scientists commonly use. 
+In the language of machine learning, we are dealing with highly imbalanced classes. It is a well-recognized problem and has led to the development or use of several specialized mixture models like zero-inflated Poisson and negative binomial regression for count data, and a zero-inflated ordered probit for ordinal outcomes [@bagozzi2015modeling]. Split-population duration regression provides another principled solution to the challenges posed by data in this domain, but, unlike other solutions to the sparse outcome problem, also addresses underlying temporal dynamics that are an important part of the non-independent data political scientists and other social scientists commonly use.
 
-Split-population duration models are not only appealing in a technical sense, but they also match the logic or intuition many social scientists use when they distinguish long-term risk factors from more fleeting triggering causes. The example we have used, @belkin2003toward, is a particularly clear illustration of how well the language of theorists maps onto the model intuition. 
+Split-population duration models are not only appealing in a technical sense, but they also match the logic or intuition many social scientists use when they distinguish long-term risk factors from more fleeting triggering causes. The example we have used, @belkin2003toward, is a particularly clear illustration of how well the language of theorists maps onto the model intuition.
 
 # References
