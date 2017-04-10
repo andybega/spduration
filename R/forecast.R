@@ -25,7 +25,7 @@ forecast <- function(object, ...) { UseMethod('forecast') }
 #' @export 
 forecast.default <- function(object, ...) { NULL }
 
-#' Plot spdur object predictions
+#' Forecast from a spdur model
 #' 
 #' \code{\link{forecast}} method for \code{\link{spdur}} class objects.
 #' 
