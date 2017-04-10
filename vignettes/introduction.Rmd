@@ -176,7 +176,7 @@ matrix(c(
 
 The package includes two types of plots that show the estimated hazard rates and predictive performance, respectively. The hazard rates can be plotted by either calling `plot_hazard` directly, or with `plot(x, type = "hazard")`, on a fitted `spdur` object. It will produce a plot of the conditional hazard, which is the probability of survival conditional on the covariates in the risk and duration equations, and conditional on survival up to time t, when holding all covariates at their sample means. The function calculates the average hazard rate as well as 90% confidence intervals, which are produced by simulating values from the estimated sampling distributions of the model parameters.
 
-```{r hazard-ex-1}
+```{r hazard-ex-1, fig.show='hold'}
 plot(weib_model,   type="hazard", main="Weibull")
 plot(loglog_model, type="hazard", main="Loglog")
 ```
@@ -187,12 +187,13 @@ By default the `plot_hazard` function uses the mean values of the covariates dur
 plot_hazard(loglog_model,
      xvals = c(1, 1, 10, 0.05),
      zvals = c(1, 7, 8.64, 1, 1, 0.05, 0, 0),
-     main = "B")
+     main = "High risk scenario")
 ```
 
 While `plot(x, type = "hazard")` will produce a hazard plot, without a type argument, `plot.spdur` will produce a separation plot, which is a graphical display for evaluating model predictions [@greenhill2011separation]. The code below produces the figure below:
 
-```{r, fig.show = 'hold'}
+```{r, fig.show = 'hold', , fig.width = 5, fig.height = 5}
+par(mfrow=c(2,1), mar=c(2,2,2,2))
 plot(weib_model, heading = "Weibull")
 plot(loglog_model, heading = "LogLog")
 ```
@@ -279,9 +280,9 @@ Finally, there are Stata routines for implementing cure models [see, e.g., @lamb
 
 # Conclusion
 
-![](rates.png)
+Many outcomes of interest are rare events. For example, coups, war onset, or mass killings are exceedingly rare events when considering that most countries do not experience high levels of violence. The figure above shows a few examples of published research that models binary outcomes. @fearon2003ethnicity is a widely cited study of civil war onset that uses yearly observations of all major countries; @beger2014ensemble is an example of the positive rates when moving to monthly data for a similar set of countries. The positive rates range from 5 to less than 0.2% of all data points.[^3]
 
-Many outcomes of interest are rare events. For example, coups, war onset, or mass killings are exceedingly rare events when considering that most countries do not experience high levels of violence. The figure above shows a few examples of published research that models binary outcomes. @fearon2003ethnicity is a widely cited study of civil war onset that uses yearly observations of all major countries; @beger2014ensemble is an example of the positive rates when moving to monthly data for a similar set of countries. The positive rates range from 5 to less than 0.2\% of all data points.[^3]
+![](rates.png)
 
 [^3]: For a discussion of the difficulties rare events can pose for prediction see @king2001logistic and @king2001explaining.
 
