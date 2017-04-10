@@ -22,25 +22,26 @@ it is chosen based on \code{pred_type}: "fail" for (conditional) hazard, and
 \item{endSpellOnly}{Should only the last observation in each spell be kept? 
 \code{FALSE} by default.}
 
-\item{lwd1}{See \code{\link{separationplot}}.}
+\item{lwd1}{See \code{\link[separationplot]{separationplot}}.}
 
-\item{lwd2}{See \code{\link{separationplot}}.}
+\item{lwd2}{See \code{\link[separationplot]{separationplot}}.}
 
-\item{shuffle}{See \code{\link{separationplot}}.}
+\item{shuffle}{See \code{\link[separationplot]{separationplot}}.}
 
-\item{heading}{See \code{\link{separationplot}}.}
+\item{heading}{See \code{\link[separationplot]{separationplot}}.}
 
-\item{show.expected}{See \code{\link{separationplot}}.}
+\item{show.expected}{See \code{\link[separationplot]{separationplot}}.}
 
-\item{newplot}{See \code{\link{separationplot}}}
+\item{newplot}{See \code{\link[separationplot]{separationplot}}}
 
-\item{type}{See \code{\link{separationplot}}.}
+\item{type}{See \code[separationplot]{\link{separationplot}}.}
 
-\item{\dots}{Optional parameters passed to \code{\link{separationplot}}, 
+\item{\dots}{Optional parameters passed to \code{\link[separationplot]{separationplot}}, 
 e.g. type of statistic to calculate.}
 }
 \description{
-A \code{\link{separationplot}} wrapper for class ``\code{spdur}''.
+A \code{\link[separationplot]{separationplot}} wrapper for class 
+``\code{spdur}''.
 }
 \details{
 Creates a separation plot of fitted values from 
@@ -53,8 +54,9 @@ data(model.coups)
 
 # plot
 p <- plot(model.coups)
+p
 
 }
 \seealso{
-\code{\link{separationplot}}, \code{\link{predict.spdur}}
+\code{\link[separationplot]{separationplot}}, \code{\link{predict.spdur}}
 }

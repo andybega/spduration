@@ -28,9 +28,9 @@ print(xtable(model.coups), include.rownames=FALSE)
 
 }
 \seealso{
-\code{\link{xtable}}, or \code{\link{as.data.frame.spdur}} for a
+\code{\link[xtable]{xtable}}, or \code{\link{as.data.frame.spdur}} for a
   simpler alternative that will convert a \code{spdur} object to a data frame
   containing model parameter estimates.
 
-For print formatting, see \code{\link{print.xtable}}.
+For print formatting, see \code{\link[xtable]{print.xtable}}.
 }

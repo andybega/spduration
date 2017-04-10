@@ -1,7 +1,7 @@
 Package: spduration
 Title: Split-Population Duration (Cure) Regression
 Version: 0.16.0
-Date: 2017-04-06
+Date: 2017-04-10
 Authors@R: c(
     person("Andreas", "Beger", role = c("aut", "cre"), email = "adbeger@gmail.com"),
     person("Daina", "Chiba", role = c("aut"), email = "dchiba@essex.ac.uk"),
@@ -21,9 +21,9 @@ Imports:
     graphics,
     plyr,
     MASS,
-    separationplot,
     stats,
     Rcpp (>= 0.11.0),
+    separationplot,
     xtable
 Suggests:
     covr,

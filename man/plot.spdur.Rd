@@ -27,8 +27,9 @@ confidence intervals.
 data(model.coups)
 
 # plot
-plot(model.coups)
 plot(model.coups, type = "hazard")
+
+plot(model.coups)
 
 }
 \seealso{
