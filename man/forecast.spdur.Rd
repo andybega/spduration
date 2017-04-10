@@ -2,7 +2,7 @@
 % Please edit documentation in R/forecast.R
 \name{forecast.spdur}
 \alias{forecast.spdur}
-\title{Plot spdur object predictions}
+\title{Forecast from a spdur model}
 \usage{
 \method{forecast}{spdur}(object, ..., pred.data = NULL,
   stat = "conditional hazard", n.ahead = 6)
