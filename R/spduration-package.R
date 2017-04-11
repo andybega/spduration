@@ -16,8 +16,18 @@
 #'     display of model fit. 
 #' 
 #' @references
+#'     Boag, J.W. 1949. ``Maximum Likelihood Estimates of the Proportion of 
+#'       Patients Cured by Cancer Therapy.'' <http://www.jstor.org/stable/2983694>
+#' 
+#' 	   Berkson, J. and Gage, R.P. ``Survival Curve for Cancer Patients Following 
+#' 	     Treatment.'' <http://www.jstor.org/stable/2281318>
+#' 
 #'     Leisch, Friedrich. 2009. ``Creating R Packages: A Tutorial.''
-#'     
+#' 
+#'     Schmidt, Peter and Witte, Ann Dryden. 1989. ``Predicting Criminal 
+#'       Recidivism Using "Split Population" Survival Time Models.'' 
+#'       <doi:10.1016/0304-4076(89)90034-1>    
+#' 
 #'     Svolik, Milan. 2008. ``Authoritarian Reversals and Democratic 
 #'         Consolidation.'' American Political Science Review.
 #' 

@@ -1,17 +1,25 @@
 Package: spduration
 Title: Split-Population Duration (Cure) Regression
 Version: 0.16.0
-Date: 2017-04-10
+Date: 2017-04-11
 Authors@R: c(
-    person("Andreas", "Beger", role = c("aut", "cre"), email = "adbeger@gmail.com"),
-    person("Daina", "Chiba", role = c("aut"), email = "dchiba@essex.ac.uk"),
-    person("Daniel", "Hill", role = c("aut"), email = "dwhill@uga.edu"),
-    person("Nils", "Metternich", role = c("aut"), email = "n.metternich@ucl.ac.uk"),
-    person("Shahryar", "Minhas", role = c("aut"), email = "hermes829@gmail.com"),
-    person("Michael", "Ward", role = c("cph"), email = "michael.don.ward@gmail.com")
+    person("Andreas", "Beger", , "adbeger@gmail.com", c("aut", "cre")),
+    person("Daina", "Chiba", , "dchiba@essex.ac.uk", "aut"),
+    person("Daniel W.", "Hill, Jr.", , "dwhill@uga.edu", "aut"),
+    person("Nils W.", "Metternich", , "n.metternich@ucl.ac.uk", "aut"),
+    person("Shahryar", "Minhas", , "hermes829@gmail.com", "aut"),
+    person("Michael D.", "Ward", , "michael.don.ward@gmail.com", c("aut", "cph"))
     )
-Description: Functions for estimating split-duration regression models and
-    various associated generic function methods.
+Description: An implementation of split-population duration regression models. 
+    Unlike regular duration models, split-population duration models are
+    mixture models that accommodate the presence of a sub-population that is 
+    not at risk for failure, e.g. cancer patients who have been cured by 
+    treatment. This package implements Weibull and Loglogistic forms for the 
+    duration component, and focuses on data with time-varying covariates. 
+    These models were originally formulated in Boag (1949) 
+    <http://www.jstor.org/stable/2983694> and Berkson and Gage (1952) 
+    <http://www.jstor.org/stable/2281318>, and extended in Schmidt and Witte 
+    (1989) <doi:10.1016/0304-4076(89)90034-1>.
 Depends:
     R (>= 3.1.2)
 License: GPL-3
