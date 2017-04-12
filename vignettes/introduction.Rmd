@@ -121,7 +121,7 @@ bscoup      <- add_duration(bscoup, "coup", unitID = "countryid", tID = "year",
 
 The `add_duration` function takes as input a data frame with a binary response variable--"coup"--that measures the occurrence of the event, or failure, recorded over discrete time periods. We assume that the data frame is in a cross-sectional time-series format that consists of multiple observations over time for a number of subjects, in our case countries.
 
-Within the framework of duration modeling, these data conceptually consist of "spells", which are repeated observations of a unit from the time they enter the data (left-censoring) or after they experienced the event of interest, until the next event or the end of observation (right censoring). Table \ref{tab-ex} shows how a single country could have two spells during the observation period. Observations for Portugal make up two spells, one that begins in 1960, when our data start, to a coup event in 1975, when a second spell starts and continues until either the next coup or the data end. Canada on the other hand experienced no coups and so observations for that country from 1960 to 2000 make up one spell.
+Within the framework of duration modeling, these data conceptually consist of "spells", which are repeated observations of a unit from the time they enter the data (left-censoring) or after they experienced the event of interest, until the next event or the end of observation (right censoring). The table below shows how a single country could have two spells during the observation period. Observations for Portugal make up two spells, one that begins in 1960, when our data start, to a coup event in 1975, when a second spell starts and continues until either the next coup or the data end. Canada on the other hand experienced no coups and so observations for that country from 1960 to 2000 make up one spell.
 
 | Country | Year | Coup | Spell ID | Duration |
 |:--------|-----:|-----:|---------:|---------:|
@@ -267,7 +267,7 @@ Furthermore, as the example above shows, in out-of-sample testing based on some 
 
 ## Alternative packages
 
-The `survival` package [@thernau2000modeling, thernau2015survival], arguably the most well-established library for survival and event history analysis in R, allows for the estimation of a wide variety of semi-, non-, and parametric survival models, and provides facilities for handling and descriptive summaries of survival and event history data. It does not include cure rate or split-population mixture models of the type we have implemented though.
+The `survival` package [@thernau2000modeling, @thernau2015survival], arguably the most well-established library for survival and event history analysis in R, allows for the estimation of a wide variety of semi-, non-, and parametric survival models, and provides facilities for handling and descriptive summaries of survival and event history data. It does not include cure rate or split-population mixture models of the type we have implemented though.
 
 One useful extension of our project in the future would be to integrate and adapt the `Surv` class for survival data in `survival` to the `spduration` library. This would require some modification of the class as our model also requires information on the risk status of spells, but would give access to the much broader functionality, especially for descriptive summaries of data, in the `survival` library.
 
@@ -280,7 +280,7 @@ Finally, there are Stata routines for implementing cure models [see, e.g., @lamb
 
 # Conclusion
 
-Many outcomes of interest are rare events. For example, coups, war onset, or mass killings are exceedingly rare events when considering that most countries do not experience high levels of violence. The figure above shows a few examples of published research that models binary outcomes. @fearon2003ethnicity is a widely cited study of civil war onset that uses yearly observations of all major countries; @beger2014ensemble is an example of the positive rates when moving to monthly data for a similar set of countries. The positive rates range from 5 to less than 0.2% of all data points.[^3]
+Many outcomes of interest are rare events. For example, coups, war onset, or mass killings are exceedingly rare events when considering that most countries do not experience high levels of violence. The figure below shows a few examples of published research that models binary outcomes. @fearon2003ethnicity is a widely cited study of civil war onset that uses yearly observations of all major countries; @beger2014ensemble is an example of the positive rates when moving to monthly data for a similar set of countries. The positive rates range from 5 to less than 0.2% of all data points.[^3]
 
 ![](rates.png)
 

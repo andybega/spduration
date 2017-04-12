@@ -1,6 +1,6 @@
 Package: spduration
 Title: Split-Population Duration (Cure) Regression
-Version: 0.16.0
+Version: 0.16.0.9000
 Date: 2017-04-11
 Authors@R: c(
     person("Andreas", "Beger", , "adbeger@gmail.com", c("aut", "cre")),
@@ -20,6 +20,7 @@ Description: An implementation of split-population duration regression models.
     <http://www.jstor.org/stable/2983694> and Berkson and Gage (1952) 
     <http://www.jstor.org/stable/2281318>, and extended in Schmidt and Witte 
     (1989) <doi:10.1016/0304-4076(89)90034-1>.
+BugReports: https://github.com/andybega/spduration/issues
 Depends:
     R (>= 3.1.2)
 License: GPL-3

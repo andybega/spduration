@@ -1,3 +1,8 @@
+# spduration 0.16.0.9000
+
+* Added bug reports link to DESCRIPTION for github issues page (https://github.com/andybega/spduration/issues). 
+* Fixes minor errors in introduction vignette. 
+
 # spduration 0.16.0 (2017-04-11)
 
 * separationplot.spdur -> sepplot. `separationplot` is a standalone function so change the `spdur` version to a simple wrapper. 
