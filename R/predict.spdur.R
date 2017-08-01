@@ -12,6 +12,8 @@
 #' See below for list of values. For \code{residuals}, the type of residual to 
 #' calculate
 #' @param truncate For conditional hazard, truncate values greater than 1.
+#' @param na.action Function determining what should be done with missing values 
+#'   in newdata. The default is to predict NA.
 #' @param \dots not used, for compatability with generic function.
 #' 
 #' @details
@@ -47,8 +49,8 @@
 #' ch <- predict(model.coups)
 #' 
 #' @export
-predict.spdur <- function(object, newdata=NULL, type=c("response"), 
-                          truncate=TRUE, ...) {
+predict.spdur <- function(object, newdata = NULL, type = "response", 
+                          truncate = TRUE, na.action = na.pass, ...) {
   # Input validation
   type_choices <- c('response', 'conditional risk', 'conditional cure', 'hazard', 'failure',
                     'unconditional risk', 'unconditional cure', 
@@ -62,9 +64,9 @@ predict.spdur <- function(object, newdata=NULL, type=c("response"),
   # Get model frames
   if(is.null(newdata)) {
     # From object
-    mf.dur <- object$mf.dur
+    mf.dur  <- object$mf.dur
     mf.risk <- object$mf.risk
-    Y <- object$Y
+    Y       <- object$Y
   } else {
     # From provided data
     fmla.dur  <- terms(object$mf.dur)
@@ -74,16 +76,19 @@ predict.spdur <- function(object, newdata=NULL, type=c("response"),
     t.0  <- attr(object$Y, "t.0")
     vars <- c(vars, last, t.0)
     
-    # hack to fix bug when data are complete (missing model na.action)
-    if (all(complete.cases(newdata[, vars]))==FALSE) {
-      na.action <- paste0("na.", class(na.action(object)))
-      if (na.action=="na.NULL") na.action <- options("na.action")[[1]]
-      df <- do.call(na.action, list(newdata[, vars]))
-    } else {
-      df <- newdata[, vars]
-    }
+    # # hack to fix bug when data are complete (missing model na.action)
+    # if (all(complete.cases(newdata[, vars]))==FALSE) {
+    #   na.action <- paste0("na.", class(na.action(object)))
+    #   if (na.action=="na.NULL") na.action <- options("na.action")[[1]]
+    #   df <- do.call(na.action, list(newdata[, vars]))
+    # } else {
+    #   df <- newdata[, vars]
+    # }
     
-    mf.dur <- model.frame(formula=fmla.dur, data=df)
+    df <- do.call(na.action, list(newdata[, vars]))
+    if (any(is.na(df))) stop("missing values in newdata (na.pass is not supported)")
+    
+    mf.dur  <- model.frame(formula=fmla.dur, data=df)
     mf.risk <- model.frame(formula=fmla.risk, data=df)
     lhb  <- model.response(mf.dur)
     lhg  <- model.response(mf.risk)
@@ -158,6 +163,13 @@ predict.spdur <- function(object, newdata=NULL, type=c("response"),
   # Sometimes h(t) can > 1, truncate these values?
   if (truncate) res <- ifelse(res>1, 1, res)
   
+  # Process na.action in original model
+  if (missing(newdata)) {
+    res <- napredict(object$na.action, res)
+  } else {
+    res <- napredict(attr(df, "na.action"), res)
+  }
+  
   return(as.numeric(res))
 }
 
@@ -186,8 +198,9 @@ fitted.spdur <- function(object, ...)
 residuals.spdur <- function(object, type = c("response"), ...) 
 {
   # look into adding deviance and pearson residuals
-  ch <- predict(object, type = "conditional hazard")
-  res <- object$Y[, "fail"] - ch
-  return(res)
+  ch  <- predict(object, type = "conditional hazard")
+  # pad Y with NA's in appropriate places; can use either napredict or naresid for this
+  res <- naresid(object$na.action, object$Y[, "fail"]) - ch
+  res
 }
 

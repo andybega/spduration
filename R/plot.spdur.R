@@ -168,6 +168,9 @@ hazard <- function(ti, lambda, cure, alpha, out, dist) {
   # minimum value for P, to avoid divide by 0 errors
   p_min <- 1e-16
   
+  lambda <- as.vector(lambda)
+  cure   <- as.vector(cure)
+  
   ht <- vector("numeric", length(ti))
   if (dist=="weibull") {
     

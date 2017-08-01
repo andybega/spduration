@@ -6,8 +6,8 @@
 \alias{residuals.spdur}
 \title{Predict methods for spdur Objects}
 \usage{
-\method{predict}{spdur}(object, newdata = NULL, type = c("response"),
-  truncate = TRUE, ...)
+\method{predict}{spdur}(object, newdata = NULL, type = "response",
+  truncate = TRUE, na.action = na.pass, ...)
 
 \method{fitted}{spdur}(object, ...)
 
@@ -25,6 +25,9 @@ See below for list of values. For \code{residuals}, the type of residual to
 calculate}
 
 \item{truncate}{For conditional hazard, truncate values greater than 1.}
+
+\item{na.action}{Function determining what should be done with missing values 
+in newdata. The default is to predict NA.}
 
 \item{\dots}{not used, for compatability with generic function.}
 }

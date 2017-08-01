@@ -21,6 +21,62 @@ test_that("predict matches known values", {
   )
 })
 
+test_that("`predict`, `resid`, and `fitted` respond to na.action in model object", {
+  data(coups)
+  dur.coups <- add_duration(coups, "succ.coup", unitID="gwcode", tID="year",
+                            freq="year")
+  mdl1 <- spdur(duration ~ polity2, atrisk ~ polity2, data=dur.coups, silent = TRUE,
+                na.action = na.omit)
+  mdl2 <- spdur(duration ~ polity2, atrisk ~ polity2, data=dur.coups, silent = TRUE,
+                na.action = na.exclude)
+  
+  N1 <- sum(complete.cases(dur.coups[, c("duration", "polity2")]))
+  N2 <- nrow(dur.coups)
+  
+  expect_length(predict(mdl1), N1)
+  expect_length(predict(mdl2), N2)
+  
+  expect_length(residuals(mdl1), N1)
+  expect_length(residuals(mdl2), N2)
+  
+  expect_length(fitted(mdl1), N1)
+  expect_length(fitted(mdl2), N2)
+  
+})
+
+test_that("na.action with newdata is handled correctly", {
+  # na.action should only affect output if newdata is used, otherwise used
+  # from model object
+  data(coups)
+  dur.coups <- add_duration(coups, "succ.coup", unitID="gwcode", tID="year",
+                            freq="year")
+  mdl1 <- spdur(duration ~ polity2, atrisk ~ polity2, data=dur.coups, silent = TRUE,
+                na.action = na.omit)
+  mdl2 <- spdur(duration ~ polity2, atrisk ~ polity2, data=dur.coups, silent = TRUE,
+                na.action = na.exclude)
+  
+  N1 <- sum(complete.cases(dur.coups[1:2000, c("duration", "polity2")]))
+  N2 <- nrow(dur.coups[1:2000, ])
+  
+  expect_error(
+    predict(mdl2, newdata = dur.coups[1:2000, ], na.action = na.fail)
+  )
+  expect_error(
+    predict(mdl2, newdata = dur.coups[1:2000, ], na.action = na.pass)
+  )
+  
+  expect_length(
+    predict(mdl2, newdata = dur.coups[1:2000, ], na.action = na.omit),
+    N1
+  )
+  
+  expect_length(
+    predict(mdl2, newdata = dur.coups[1:2000, ], na.action = na.exclude),
+    N2
+  )
+  
+})
+
 # test code
 # estimate model and predict
 # load('data/coups.rda')

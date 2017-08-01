@@ -1,5 +1,6 @@
-# spduration 0.16.0.9000
+# spduration 0.17.0 (2017-08-01)
 
+* Adds proper handling of the various `na.action` options for `spdur` and its `predict`, `residuals`, and `fitted` methods. 
 * Added bug reports link to DESCRIPTION for github issues page (https://github.com/andybega/spduration/issues). 
 * Fixes minor errors in introduction vignette. 
 

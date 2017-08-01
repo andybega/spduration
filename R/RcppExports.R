@@ -9,7 +9,7 @@
 #' 
 #' @keywords internal
 loglog_lnl <- function(theta, y, X) {
-    .Call('spduration_loglog_lnl', PACKAGE = 'spduration', theta, y, X)
+    .Call(`_spduration_loglog_lnl`, theta, y, X)
 }
 
 #' Split-population Log-logistic log likelihood
@@ -21,7 +21,7 @@ loglog_lnl <- function(theta, y, X) {
 #' 
 #' @keywords internal
 sploglog_lnl <- function(theta, y, X, Z) {
-    .Call('spduration_sploglog_lnl', PACKAGE = 'spduration', theta, y, X, Z)
+    .Call(`_spduration_sploglog_lnl`, theta, y, X, Z)
 }
 
 #' Split-population Weibull log likelihood
@@ -33,7 +33,7 @@ sploglog_lnl <- function(theta, y, X, Z) {
 #' 
 #' @keywords internal
 spweib_lnl <- function(theta, y, X, Z) {
-    .Call('spduration_spweib_lnl', PACKAGE = 'spduration', theta, y, X, Z)
+    .Call(`_spduration_spweib_lnl`, theta, y, X, Z)
 }
 
 #' Regular weibull log likelihood
@@ -44,6 +44,6 @@ spweib_lnl <- function(theta, y, X, Z) {
 #' 
 #' @keywords internal
 weib_lnl <- function(theta, y, X) {
-    .Call('spduration_weib_lnl', PACKAGE = 'spduration', theta, y, X)
+    .Call(`_spduration_weib_lnl`, theta, y, X)
 }
 

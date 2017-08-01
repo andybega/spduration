@@ -66,7 +66,7 @@
 #' @export spdur
 
 spdur <- function(duration, atrisk, data=NULL, last="end.spell", t.0="t.0", 
-                  fail="failure", distr=c("weibull", "loglog"), max.iter=300, na.action, 
+                  fail="failure", distr=c("weibull", "loglog"), max.iter=300, na.action,
                   silent=FALSE, ...) 
 { 
   cl <- match.call()
@@ -78,11 +78,16 @@ spdur <- function(duration, atrisk, data=NULL, last="end.spell", t.0="t.0",
   f2 <- as.formula(eval(atrisk))
   vars <- unique(c(all.vars(f1), all.vars(f2)))
   vars <- c(vars, last, t.0, fail)
-  if (missing(na.action)) na.action <- options("na.action")[[1]]
+  if (missing(na.action)) {
+    na.action <- options("na.action")[[1]]
+  }
   df <- do.call(na.action, list(data[, vars]))
+  # the only way to get to this point is na.pass; easier than trying to check
+  # if na.action is identical to na.pass function
+  if (any(is.na(df))) stop("na.pass is not supported")
   
   # Duration equation
-  mf.dur <- eval(model.frame(formula=duration, data=df), parent.frame())
+  mf.dur <- eval(model.frame(formula = duration, data=df), parent.frame())
   X <- model.matrix(attr(mf.dur, 'terms'), data=mf.dur)
   attr(X, "na.action") <- na.action(df)
   lhb <- model.response(mf.dur)

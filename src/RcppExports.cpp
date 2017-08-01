@@ -8,7 +8,7 @@ using namespace Rcpp;
 
 // loglog_lnl
 double loglog_lnl(arma::vec theta, arma::mat y, arma::mat X);
-RcppExport SEXP spduration_loglog_lnl(SEXP thetaSEXP, SEXP ySEXP, SEXP XSEXP) {
+RcppExport SEXP _spduration_loglog_lnl(SEXP thetaSEXP, SEXP ySEXP, SEXP XSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -21,7 +21,7 @@ END_RCPP
 }
 // sploglog_lnl
 double sploglog_lnl(arma::vec theta, arma::mat y, arma::mat X, arma::mat Z);
-RcppExport SEXP spduration_sploglog_lnl(SEXP thetaSEXP, SEXP ySEXP, SEXP XSEXP, SEXP ZSEXP) {
+RcppExport SEXP _spduration_sploglog_lnl(SEXP thetaSEXP, SEXP ySEXP, SEXP XSEXP, SEXP ZSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -35,7 +35,7 @@ END_RCPP
 }
 // spweib_lnl
 double spweib_lnl(arma::vec theta, arma::mat y, arma::mat X, arma::mat Z);
-RcppExport SEXP spduration_spweib_lnl(SEXP thetaSEXP, SEXP ySEXP, SEXP XSEXP, SEXP ZSEXP) {
+RcppExport SEXP _spduration_spweib_lnl(SEXP thetaSEXP, SEXP ySEXP, SEXP XSEXP, SEXP ZSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -49,7 +49,7 @@ END_RCPP
 }
 // weib_lnl
 double weib_lnl(arma::vec theta, arma::mat y, arma::mat X);
-RcppExport SEXP spduration_weib_lnl(SEXP thetaSEXP, SEXP ySEXP, SEXP XSEXP) {
+RcppExport SEXP _spduration_weib_lnl(SEXP thetaSEXP, SEXP ySEXP, SEXP XSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
