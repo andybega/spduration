@@ -5,7 +5,7 @@
 #' @method forecast spdur
 #' 
 #' @param object A \code{\link{spdur}} class model object.
-#' @param \dots Optional aguments, not used.
+#' @param \dots Optional arguments, not used.
 #' @param pred.data Data on which to base forecasts, i.e. slice of last time
 #' unit's observations for all cross-sectional units.
 #' @param stat Which statistic to forecast, see \code{\link{predict.spdur}}

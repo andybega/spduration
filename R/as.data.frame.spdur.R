@@ -12,7 +12,7 @@
 #' @details
 #' This will create a data frame containing the estimated coefficients and 
 #' standard errors for the risk and duration equations of a split-population 
-#' duration model. It's intented purpose is to help create larger tables
+#' duration model. It's intended purpose is to help create larger tables
 #' combining several model results.
 #' 
 #' @return

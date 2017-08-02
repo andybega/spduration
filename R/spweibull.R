@@ -4,7 +4,7 @@
 #' @param X Duration equation covariates.
 #' @param Z Risk equation covariates.
 #' @param max.iter Maximum iterations to try.
-#' @param silent Supress \code{\link{optim}} trace output?
+#' @param silent Suppress \code{\link{optim}} trace output?
 #' 
 #' @keywords internal
 spweibull <- function(Y, X, Z, max.iter, silent=FALSE) {  
@@ -40,7 +40,7 @@ spweibull <- function(Y, X, Z, max.iter, silent=FALSE) {
 #' @param X Duration equation covariates.
 #' @param inits Vector of starting values. 
 #' @param max.iter Maximum iterations to try.
-#' @param silent Supress \code{\link{optim}} trace output?
+#' @param silent Suppress \code{\link{optim}} trace output?
 #' 
 #' @keywords internal
 weibull <- function(Y, X, inits=NULL, max.iter, silent=TRUE) {

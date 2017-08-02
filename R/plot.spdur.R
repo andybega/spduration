@@ -50,7 +50,7 @@ plot.spdur <- function(x, type="sepplot", ci=TRUE, ...) {
 #' @param n Number of simulations to use for CI, defaults to 1,000. 
 #' @param xvals A vector of values for the duration equation variables, in the 
 #'    same order as the duration equation in \code{x}. Defaults to means.
-#' @param zvals A vector of values for the risk equation varialbes, in teh same
+#' @param zvals A vector of values for the risk equation variables, in the same
 #'    order as the risk equation in \code{x}. Defaults to means.
 #' @param \dots Additional parameters passed to \code{\link{plot}}.
 #' 

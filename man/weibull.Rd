@@ -15,7 +15,7 @@ weibull(Y, X, inits = NULL, max.iter, silent = TRUE)
 
 \item{max.iter}{Maximum iterations to try.}
 
-\item{silent}{Supress \code{\link{optim}} trace output?}
+\item{silent}{Suppress \code{\link{optim}} trace output?}
 }
 \description{
 Regular Weibull regression

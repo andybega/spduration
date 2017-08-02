@@ -37,7 +37,7 @@ and ICEWS projects.}
 Returns the original data frame with 8 duration-specific additional 
 variables:
 \item{failure}{Binary indicator of an event.}
-\item{ongoing}{Binary indicator for ongoing events, not counting the inital 
+\item{ongoing}{Binary indicator for ongoing events, not counting the initial 
 failure time.}
 \item{end.spell}{Binary indicator for the last observation in a spell, either
 due to censoring or failure.}
@@ -77,7 +77,7 @@ the dataset, they should be dropped manually before using
 \code{buildDuration()}.
 
 \code{t.0} is the starting time of the period of observation at \code{tID}. 
-It is by default set as \code{duration - 1} and currenlty only serves as a 
+It is by default set as \code{duration - 1} and currently only serves as a 
 placeholder to allow future expansion for varying observation times.
 }
 \examples{

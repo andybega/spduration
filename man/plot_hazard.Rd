@@ -20,7 +20,7 @@ Defaults to 1 through 1.2 * maximum duration value in data.}
 \item{xvals}{A vector of values for the duration equation variables, in the 
 same order as the duration equation in \code{x}. Defaults to means.}
 
-\item{zvals}{A vector of values for the risk equation varialbes, in teh same
+\item{zvals}{A vector of values for the risk equation variables, in the same
 order as the risk equation in \code{x}. Defaults to means.}
 
 \item{\dots}{Additional parameters passed to \code{\link{plot}}.}

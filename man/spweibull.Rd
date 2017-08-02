@@ -15,7 +15,7 @@ spweibull(Y, X, Z, max.iter, silent = FALSE)
 
 \item{max.iter}{Maximum iterations to try.}
 
-\item{silent}{Supress \code{\link{optim}} trace output?}
+\item{silent}{Suppress \code{\link{optim}} trace output?}
 }
 \description{
 Split-population Weibull regression

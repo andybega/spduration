@@ -80,7 +80,7 @@
 #' 
 #' @description This is a model object for a split-duration model of the 
 #' Powell & Thyne coups. It is used in several example code sections to speed
-#' up package testing by elminiating the need to re-estimate a model each time.
+#' up package testing by eliminating the need to re-estimate a model each time.
 #' 
 #' @usage model.coups
 #' 
