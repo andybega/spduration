@@ -6,8 +6,6 @@
 #' @param max.iter Maximum iterations to try.
 #' @param silent Supress \code{\link{optim}} trace output?
 #' 
-#' @importFrom corpcor make.positive.definite
-#' 
 #' @keywords internal
 spweibull <- function(Y, X, Z, max.iter, silent=FALSE) {  
   # Estimate base model
@@ -22,7 +20,7 @@ spweibull <- function(Y, X, Z, max.iter, silent=FALSE) {
   a.init <- base$coefficients[ncol(X)+1]
   if (!silent) cat('Fitting split weibull...\n')
   trace <- !silent
-  est <- optim(c(x.inits, rep(0, ncol(Z)), a.init), spweib_lnl, method="BFGS", 
+  est <- stats::optim(c(x.inits, rep(0, ncol(Z)), a.init), spweib_lnl, method="BFGS", 
     control=list(trace=trace, maxit=max.iter), hessian=T, y=Y, X=X, Z=Z)
   
   # Solve other results
@@ -44,8 +42,6 @@ spweibull <- function(Y, X, Z, max.iter, silent=FALSE) {
 #' @param max.iter Maximum iterations to try.
 #' @param silent Supress \code{\link{optim}} trace output?
 #' 
-#' @importFrom stats optim
-#' 
 #' @keywords internal
 weibull <- function(Y, X, inits=NULL, max.iter, silent=TRUE) {
   if (is.null(inits)) {
@@ -53,7 +49,7 @@ weibull <- function(Y, X, inits=NULL, max.iter, silent=TRUE) {
   }
   
   trace <- !silent
-  est <- optim(inits, weib_lnl, method="BFGS", 
+  est <- stats::optim(inits, weib_lnl, method="BFGS", 
                control=list(trace=trace, maxit=max.iter), 
                hessian=T, y=Y, X=X)
   

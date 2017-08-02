@@ -1,7 +1,7 @@
 Package: spduration
 Title: Split-Population Duration (Cure) Regression
 Version: 0.16.0.9000
-Date: 2017-08-01
+Date: 2017-08-0
 Authors@R: c(
     person("Andreas", "Beger", , "adbeger@gmail.com", c("aut", "cre")),
     person("Daina", "Chiba", , "dchiba@essex.ac.uk", "aut"),
@@ -28,6 +28,7 @@ LazyData: true
 Imports:
     corpcor,
     graphics,
+    forecast,
     plyr,
     MASS,
     stats,

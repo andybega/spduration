@@ -36,6 +36,7 @@ For situations in which the covariate values are known for future time
 periods, e.g. in a test sample use \code{\link{predict.spdur}} instead.
 }
 \examples{
+library(forecast)
 data(coups)
 data(model.coups)
 

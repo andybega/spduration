@@ -1,30 +1,3 @@
-#' Model forecasts
-#' 
-#' \code{forecast} is a generic function for creating out-of-sample predictions.
-#' It invokes particular \emph{methods} which depend on the \code{\link{class}}
-#' of the first argument
-#' 
-#' @param object A model object from which forecasts are created.
-#' @param \dots additional arguments affecting the forecasts produced.
-#' 
-#' @details This generic is implemented in the \code{\link{spduration}} package
-#' with a \code{\link{forecast.spdur}} method.
-#' 
-#' @export 
-forecast <- function(object, ...) { UseMethod('forecast') }
-
-#' Default forecast method
-#' 
-#' The default forecast method, currently undefined.
-#' 
-#' @method forecast default
-#' 
-#' @param object A model object.
-#' @param \dots Additional arguments
-#' 
-#' @export 
-forecast.default <- function(object, ...) { NULL }
-
 #' Forecast from a spdur model
 #' 
 #' \code{\link{forecast}} method for \code{\link{spdur}} class objects.
@@ -51,6 +24,7 @@ forecast.default <- function(object, ...) { NULL }
 #' periods, e.g. in a test sample use \code{\link{predict.spdur}} instead.
 #' 
 #' @examples
+#' library(forecast)
 #' data(coups)
 #' data(model.coups)
 #' 
@@ -60,6 +34,7 @@ forecast.default <- function(object, ...) { NULL }
 #' fcast <- forecast(model.coups, pred.data=pred.data)
 #' 
 #' @export 
+#' @importFrom forecast forecast
 forecast.spdur <- function(object, ..., pred.data = NULL, 
                            stat = 'conditional hazard', n.ahead = 6)
 {
