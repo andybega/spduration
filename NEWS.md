@@ -1,4 +1,4 @@
-# spduration 0.16.0.9000 (2017-08-02)
+# spduration 0.17.0 (2017-08-02)
 
 * Adds proper handling of the various `na.action` options for `spdur` and its `predict`, `residuals`, and `fitted` methods. 
 * Import `forecast` generic function from `forecast` package rather than re-defining it. Adds `forecast` to neccessary imports. 
