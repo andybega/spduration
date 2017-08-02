@@ -13,7 +13,7 @@
 #' calculate
 #' @param truncate For conditional hazard, truncate values greater than 1.
 #' @param na.action Function determining what should be done with missing values 
-#'   in newdata. The default is to predict NA.
+#'   in newdata. The default is to predict NA (\code{na.exclude}).
 #' @param \dots not used, for compatability with generic function.
 #' 
 #' @details
@@ -50,7 +50,7 @@
 #' 
 #' @export
 predict.spdur <- function(object, newdata = NULL, type = "response", 
-                          truncate = TRUE, na.action = na.pass, ...) {
+                          truncate = TRUE, na.action = na.exclude, ...) {
   # Input validation
   type_choices <- c('response', 'conditional risk', 'conditional cure', 'hazard', 'failure',
                     'unconditional risk', 'unconditional cure', 

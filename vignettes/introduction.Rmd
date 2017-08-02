@@ -238,8 +238,8 @@ loglog_model2 <- spdur(
 
 
 ```{r}
-weib2_test_p   <- predict(weib_model2, newdata = coup_test)
-loglog2_test_p <- predict(loglog_model2, newdata = coup_test)
+weib2_test_p   <- predict(weib_model2, newdata = coup_test, na.action = na.omit)
+loglog2_test_p <- predict(loglog_model2, newdata = coup_test, na.action = na.omit)
 ```
 
 Since we are predicting for data that is not contained in the "spdur" model objects, we have to use the `separationplot` functions directly from the package to produce the figure below:
