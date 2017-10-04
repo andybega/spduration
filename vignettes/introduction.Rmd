@@ -147,7 +147,7 @@ The `spdur` function is the primary function in the package and produces a regre
 weib_model <- spdur(
   duration ~ milreg + instab + regconf,
   atrisk ~ couprisk + wealth + milreg + rwar + regconf + samerica + camerica,
-  data = bscoup, silent = TRUE)
+  data = bscoup, distr = "weib", silent = TRUE)
 
 loglog_model <- spdur(
   duration ~ milreg + instab + regconf,

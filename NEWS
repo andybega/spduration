@@ -1,9 +1,9 @@
-# spduration 0.17.0 (2017-10-02)
+# spduration 0.17.0 (2017-10-04)
 
 * Adds proper handling of the various `na.action` options for `spdur` and its `predict`, `residuals`, and `fitted` methods. 
 * Import `forecast` generic function from `forecast` package rather than re-defining it. Adds `forecast` to neccessary imports. 
 * Added bug reports link to DESCRIPTION for github issues page (https://github.com/andybega/spduration/issues). 
-* Fixes minor errors in introduction vignette. 
+* Fixes minor errors in introduction vignette and data documentation. 
 * Register C++ routines to avoid R-devel note.
 
 # spduration 0.16.0 (2017-04-11)

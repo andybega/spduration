@@ -44,7 +44,7 @@
 #' 
 #' @usage bscoups
 #' 
-#' @format A data frame with 5828 observations of 9 variables:
+#' @format A data frame with 5463 observations of 14 variables:
 #' \describe{
 #'  \item{\code{countryid}}{Gleditsch and Ward country codes.}
 #'  \item{\code{year}}{Year}

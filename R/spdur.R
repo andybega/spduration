@@ -14,7 +14,7 @@
 #' default \code{duration-1} when using \code{\link{add_duration}}.
 #' @param fail Name of the variable indicating that a spell ended in failure.
 #' @param distr The type of distribution to use in the hazard rate. Valid 
-#' options are ``weibull'' or ``loglog''.
+#' options are ``weibull'' or ``loglog''; defaults to ``weibull''. 
 #' @param max.iter Maximum number of iterations to use in the likelihood 
 #' maximization.
 #' @param na.action a function which indicates what should happen when the data 
