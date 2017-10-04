@@ -29,7 +29,7 @@ calculate}
 \item{na.action}{Function determining what should be done with missing values 
 in newdata. The default is to predict NA (\code{na.exclude}).}
 
-\item{\dots}{not used, for compatability with generic function.}
+\item{\dots}{not used, for compatibility with generic function.}
 }
 \value{
 Returns a data frame with 1 column corresponding to \code{type}, in the same 

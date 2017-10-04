@@ -35,7 +35,7 @@ maximization.}
 contain NAs. The default is set by the \code{na.action} setting of options, 
 and is \code{\link{na.fail}} if that is unset.}
 
-\item{silent}{Supress optimization output, \code{FALSE} by default.}
+\item{silent}{Suppress optimization output, \code{FALSE} by default.}
 
 \item{\dots}{Optional arguments, see details.}
 }
