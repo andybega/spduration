@@ -30,7 +30,7 @@
 #' If \code{y} is an indicator of the incidence of some event, rather than an 
 #' onset indicator, then ongoing spells of failure beyond the initial event are 
 #' coded as NA (e.g. 000111 becomes a spell of 0001 NA NA). This is to preserve
-#' compatability with the base dataset. Note that the order of rows may be 
+#' compatibility with the base dataset. Note that the order of rows may be 
 #' different though.
 #' 
 #' There cannot be missing values ("\code{NA}") in any of the key variables 

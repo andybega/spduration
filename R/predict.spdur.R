@@ -14,7 +14,7 @@
 #' @param truncate For conditional hazard, truncate values greater than 1.
 #' @param na.action Function determining what should be done with missing values 
 #'   in newdata. The default is to predict NA (\code{na.exclude}).
-#' @param \dots not used, for compatability with generic function.
+#' @param \dots not used, for compatibility with generic function.
 #' 
 #' @details
 #' Calculates various types of probabilities, where ``conditional'' is used in 

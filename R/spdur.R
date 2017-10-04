@@ -20,7 +20,7 @@
 #' @param na.action a function which indicates what should happen when the data 
 #' contain NAs. The default is set by the \code{na.action} setting of options, 
 #' and is \code{\link{na.fail}} if that is unset.
-#' @param silent Supress optimization output, \code{FALSE} by default.
+#' @param silent Suppress optimization output, \code{FALSE} by default.
 #' @param \dots Optional arguments, see details.
 #' 
 #' @details 
