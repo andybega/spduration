@@ -15,7 +15,7 @@
 <![endif]-->
 </head>
 <body>
-    <div class="container template-home">
+    <div class="container template-vignette">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -63,24 +63,58 @@
 
       
       </header><div class="row">
-  <div class="contents col-md-9">
-    <div id="spduration" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#spduration" class="anchor"></a>spduration</h1></div>
-<hr>
+  <div class="col-md-9">
+    
+
+    
+    
+<div class="contents">
+
 <p>spduration implements a split-population duration model for duration data with time-varying covariates where a significant subset of the population or spells will not experience failure.</p>
-<p>To install:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(spduration)
+
+<span class="co"># Prepare data</span>
+<span class="kw">data</span>(coups)
+dur.coups &lt;-<span class="st"> </span><span class="kw"><a href="reference/add_duration.html">add_duration</a></span>(coups, <span class="st">"succ.coup"</span>, <span class="dt">unitID=</span><span class="st">"gwcode"</span>, <span class="dt">tID=</span><span class="st">"year"</span>,
+                          <span class="dt">freq=</span><span class="st">"year"</span>)
+
+<span class="co"># Estimate model</span>
+model.coups &lt;-<span class="st"> </span><span class="kw"><a href="reference/spdur.html">spdur</a></span>(duration <span class="op">~</span><span class="st"> </span>polity2, atrisk <span class="op">~</span><span class="st"> </span>polity2, <span class="dt">data =</span> dur.coups,
+                     <span class="dt">silent =</span> <span class="ot">TRUE</span>)
+<span class="kw">summary</span>(model.coups)</code></pre></div>
+<pre><code>## Call:
+## spdur(duration = duration ~ polity2, atrisk = atrisk ~ polity2, 
+##     data = dur.coups, silent = TRUE)
+## 
+## Duration equation: 
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  4.00150    0.23762  16.840  &lt; 2e-16 ***
+## polity2      0.20588    0.03037   6.779 1.21e-11 ***
+## 
+## Risk equation: 
+##             Estimate Std. Error t value Pr(&gt;|t|)  
+## (Intercept)   6.5278     3.2556   2.005   0.0449 *
+## polity2       0.8966     0.4084   2.196   0.0281 *
+## 
+##            Estimate Std. Error t value Pr(&gt;|t|)
+## log(alpha) -0.03204    0.11899  -0.269    0.788
+## ---
+## Signif. codes: *** = 0.001, ** = 0.01, * = 0.05, . = 0.1</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(model.coups, <span class="dt">type =</span> <span class="st">"hazard"</span>)</code></pre></div>
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" width="576" style="display: block; margin: auto;"></p>
+<div id="install" class="section level2">
+<h2 class="hasAnchor">
+<a href="#install" class="anchor"></a>Install</h2>
 <ul>
-<li>
-<p>the latest released version from CRAN:</p>
-<pre><code>install.packages("spduration")</code></pre>
-</li>
-<li>
-<p>the latest development version:</p>
-<pre><code>library(devtools)
-install_github("andybega/spduration")</code></pre>
-</li>
+<li>the latest released version from CRAN:</li>
 </ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">"spduration"</span>)</code></pre></div>
+<ul>
+<li>the latest development version:</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(devtools)
+<span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"andybega/spduration"</span>)</code></pre></div>
+</div>
 <div id="contact" class="section level2">
 <h2 class="hasAnchor">
 <a href="#contact" class="anchor"></a>Contact</h2>
@@ -94,8 +128,9 @@ install_github("andybega/spduration")</code></pre>
 </div>
   </div>
 
-  <div class="col-md-3" id="sidebar">
-    <h2>Links</h2>
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2 class="hasAnchor">
+<a href="#sidebar" class="anchor"></a>Links</h2>
 <ul class="list-unstyled">
 <li>Download from CRAN at <br><a href="https://cran.r-project.org/package=spduration">https://​cran.r-project.org/​package=spduration</a>
 </li>
@@ -121,6 +156,7 @@ install_github("andybega/spduration")</code></pre>
 <li><a href="https://codecov.io/gh/andybega/spduration"><img src="https://codecov.io/gh/andybega/spduration/branch/master/graph/badge.svg" alt="codecov"></a></li>
 </ul>
 </div>
+
 </div>
 
 
