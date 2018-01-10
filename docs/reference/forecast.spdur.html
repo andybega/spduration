@@ -78,7 +78,12 @@
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/andybega/spduration">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -142,8 +147,9 @@ periods, e.g. in a test sample use <code><a href='predict.spdur.html'>predict.sp
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>forecast</span>)
-<span class='fu'>data</span>(<span class='no'>coups</span>)
+    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>forecast</span>)</div><div class='output co'>#&gt; <span class='message'>This is forecast 8.2 </span>
+#&gt; <span class='message'>  Want to meet other forecasters? Join the International Institute of Forecasters:</span>
+#&gt; <span class='message'>  http://forecasters.org/</span></div><div class='input'><span class='fu'>data</span>(<span class='no'>coups</span>)
 <span class='fu'>data</span>(<span class='no'>model.coups</span>)
 
 <span class='no'>coups.dur</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='add_duration.html'>add_duration</a></span>(<span class='no'>coups</span>, <span class='st'>"succ.coup"</span>, <span class='st'>"gwcode"</span>, <span class='st'>"year"</span>, <span class='kw'>freq</span><span class='kw'>=</span><span class='st'>"year"</span>)
