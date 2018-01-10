@@ -1,11 +1,12 @@
 ---
-title: "spduration"
 output: github_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+# spduration
 
 [![Build Status](https://travis-ci.org/andybega/spduration.svg?branch=master)](https://travis-ci.org/andybega/spduration)
 [![CRAN version](http://www.r-pkg.org/badges/version/spduration)](http://www.r-pkg.org/pkg/spduration)
