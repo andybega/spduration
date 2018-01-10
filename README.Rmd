@@ -1,0 +1,52 @@
+---
+title: "spduration"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+[![Build Status](https://travis-ci.org/andybega/spduration.svg?branch=master)](https://travis-ci.org/andybega/spduration)
+[![CRAN version](http://www.r-pkg.org/badges/version/spduration)](http://www.r-pkg.org/pkg/spduration)
+[![Coverage Status](https://coveralls.io/repos/github/andybega/spduration/badge.svg?branch=master)](https://coveralls.io/github/andybega/spduration?branch=master)
+[![codecov](https://codecov.io/gh/andybega/spduration/branch/master/graph/badge.svg)](https://codecov.io/gh/andybega/spduration)
+
+spduration implements a split-population duration model for duration data with time-varying covariates where a significant subset of the population or spells will not experience failure. 
+
+```{r}
+library(spduration)
+
+# Prepare data
+data(coups)
+dur.coups <- add_duration(coups, "succ.coup", unitID="gwcode", tID="year",
+                          freq="year")
+
+# Estimate model
+model.coups <- spdur(duration ~ polity2, atrisk ~ polity2, data = dur.coups,
+                     silent = TRUE)
+summary(model.coups)
+```
+
+```{r, fig.width=6, fig.height = 5, fig.align='center'}
+plot(model.coups, type = "hazard")
+```
+
+
+## Install
+
+* the latest released version from CRAN: 
+```{r, eval = FALSE}
+install.packages("spduration")
+```
+
+* the latest development version: 
+```{r, eval = FALSE}
+library(devtools)
+install_github("andybega/spduration")
+```
+
+## Contact
+
+- submit suggestions, bugs, issues, questions at: [https://github.com/andybega/spduration/issues](https://github.com/andybega/spduration/issues)
+- email: [adbeger+spduration@gmail.com](mailto:adbeger+spduration@gmail.com)
