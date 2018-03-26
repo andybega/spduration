@@ -43,7 +43,7 @@ summary(model.coups)
 plot(model.coups, type = "hazard")
 ```
 
-<img src="README_files/figure-markdown_github/unnamed-chunk-2-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-2-1.png" style="display: block; margin: auto;" />
 
 Install
 -------
