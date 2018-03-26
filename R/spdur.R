@@ -30,7 +30,7 @@
 #' Optional arguments:
 #' \describe{
 #' \item{base.inits}{Initial values for the base duration model that is 
-#' estimates to get initial values for the full split-population model. This
+#' estimated to get initial values for the full split-population model. This
 #' needs to be a vector with starting values for the constant, coefficients
 #' in the duration equation, and an additional value for the shape parameter
 #' of the density used, e.g. Weibull. By default they are 0 for all 

@@ -37,7 +37,7 @@ double spweib_lnl(arma::vec theta, arma::mat y, arma::mat X, arma::mat Z) {
 
   vec cens(lambda.size());
   for(int i=0; i<cens.size(); ++i) {
-    if ( lo[i]==0 | rc[i]==0 ) {
+    if ( lo[i]==0 || rc[i]==0 ) {
       cens[i] = log(pr0[i] + (pr1[i] * st[i])) - log(pr0[i] + pr1[i] * st0[i]);
     } else {
       cens[i] = 0;
@@ -46,7 +46,7 @@ double spweib_lnl(arma::vec theta, arma::mat y, arma::mat X, arma::mat Z) {
 
   vec nocens(lambda.size());
   for(int i=0; i<nocens.size(); ++i) {
-    if ( rc[i]==1 & lo[i]==1 ) {
+    if ( rc[i]==1 && lo[i]==1 ) {
       nocens[i] = log(pr1[i]) + lnFt[i] - log(pr0[i] + pr1[i] * st0[i]);
     } else {
       nocens[i] = 0;

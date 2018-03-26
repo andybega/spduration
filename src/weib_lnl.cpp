@@ -31,7 +31,7 @@ double weib_lnl(arma::vec theta, arma::mat y, arma::mat X) {
 
   vec cens(lambda.size());
   for(int i=0; i<cens.size(); ++i) {
-  	if ( rc[i]==0 | lo[i]==0 ) {
+  	if ( rc[i]==0 || lo[i]==0 ) {
   		cens[i] = lnSt[i] - lnSt0[i];
   	} else {
   		cens[i] = 0;
@@ -40,7 +40,7 @@ double weib_lnl(arma::vec theta, arma::mat y, arma::mat X) {
 
   vec nocens(lambda.size());
   for(int i=0; i<nocens.size(); ++i) {
-  	if ( rc[i]==1 & lo[i]==1 ) {
+  	if ( rc[i]==1 && lo[i]==1 ) {
   		nocens[i] = lnFt[i] - lnSt0[i];
   	} else {
   		nocens[i] = 0;
