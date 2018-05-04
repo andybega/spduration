@@ -8,14 +8,17 @@
 <title>Splitting it Up: The <code>spduration</code> Split-population Duration Regression Package • spduration</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-<!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><meta property="og:title" content="Splitting it Up: The &lt;code&gt;spduration&lt;/code&gt; Split-population Duration Regression Package">
+<meta property="og:description" content="">
+<meta name="twitter:card" content="summary">
+<!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
 <body>
-    <div class="container template-vignette">
+    <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -24,8 +27,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">spduration</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">spduration</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.17.1</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
@@ -50,7 +57,7 @@
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -70,13 +77,17 @@
 
       
       </header><div class="row">
-  <div class="col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Splitting it Up: The <code>spduration</code> Split-population Duration Regression Package</h1>
                         <h4 class="author">Andreas Beger, Daniel W. Hill, Jr., Nils W. Metternich, Shahryar Minhas, and Michael D. Ward</h4>
             
-            <h4 class="date">2018-03-26</h4>
-          </div>
+            <h4 class="date">2018-05-04</h4>
+      
+      <small class="dont-index">Source: <a href="https://github.com/andybega/spduration/blob/master/vignettes/introduction.Rmd"><code>vignettes/introduction.Rmd</code></a></small>
+      <div class="hidden name"><code>introduction.Rmd</code></div>
+
+    </div>
 
     
         <div class="abstract">
@@ -84,7 +95,6 @@
       <p>We present an implementation of split-population duration regression in the <code>spduration</code> R package and an application to data on military coups. The statistical model accounts for units that are immune to a certain outcome and not part of the duration process the researcher is primarily interested in. We provide insights that if immune units exist, we can significantly increase the predictive performance compared to standard duration models. The package includes estimation and several post-estimation methods for split-population Weibull and Loglogistic models.</p>
     </div>
     
-<div class="contents">
 <div id="introduction" class="section level1">
 <h1 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h1>
@@ -540,13 +550,13 @@ Risk_camerica
 <p>The package includes two types of plots that show the estimated hazard rates and predictive performance, respectively. The hazard rates can be plotted by either calling <code>plot_hazard</code> directly, or with <code>plot(x, type = "hazard")</code>, on a fitted <code>spdur</code> object. It will produce a plot of the conditional hazard, which is the probability of survival conditional on the covariates in the risk and duration equations, and conditional on survival up to time t, when holding all covariates at their sample means. The function calculates the average hazard rate as well as 90% confidence intervals, which are produced by simulating values from the estimated sampling distributions of the model parameters.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(weib_model,   <span class="dt">type=</span><span class="st">"hazard"</span>, <span class="dt">main=</span><span class="st">"Weibull"</span>)
 <span class="kw">plot</span>(loglog_model, <span class="dt">type=</span><span class="st">"hazard"</span>, <span class="dt">main=</span><span class="st">"Loglog"</span>)</code></pre></div>
-<p><img src="introduction_files/figure-html/hazard-ex-1-1.png" width="672"><img src="introduction_files/figure-html/hazard-ex-1-2.png" width="672"></p>
+<p><img src="introduction_files/figure-html/hazard-ex-1-1.png" width="700"><img src="introduction_files/figure-html/hazard-ex-1-2.png" width="700"></p>
 <p>By default the <code>plot_hazard</code> function uses the mean values of the covariates during the simulations, but users can choose specific covariate values by entering them as vectors in the arguments <code>xvals</code> and <code>zvals</code>, which correspond to the covariates in the duration and risk equations, respectively. The values are used in the same order that variables are specified in the equations used to estimate the models, which also corresponds to the order of variables in the model summary table. Note the inclusion of an intercept term.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/plot_hazard.html">plot_hazard</a></span>(loglog_model,
      <span class="dt">xvals =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">10</span>, <span class="fl">0.05</span>),
      <span class="dt">zvals =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">7</span>, <span class="fl">8.64</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="fl">0.05</span>, <span class="dv">0</span>, <span class="dv">0</span>),
      <span class="dt">main =</span> <span class="st">"High risk scenario"</span>)</code></pre></div>
-<p><img src="introduction_files/figure-html/hazard-ex-2-1.png" width="672"></p>
+<p><img src="introduction_files/figure-html/hazard-ex-2-1.png" width="700"></p>
 <p>While <code>plot(x, type = "hazard")</code> will produce a hazard plot, without a type argument, <code>plot.spdur</code> will produce a separation plot, which is a graphical display for evaluating model predictions <span class="citation">(Greenhill, Ward, and Sacks 2011)</span>. The code below produces the figure below:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">1</span>), <span class="dt">mar=</span><span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>))
 <span class="kw">plot</span>(weib_model, <span class="dt">heading =</span> <span class="st">"Weibull"</span>)
@@ -719,7 +729,6 @@ obs_y &lt;-<span class="st"> </span>coup_test[<span class="kw">complete.cases</s
 <li id="fn4"><p>For a discussion of the difficulties rare events can pose for prediction see <span class="citation">King and Zeng (2001b)</span> and <span class="citation">King and Zeng (2001a)</span>.<a href="#fnref4">↩</a></p></li>
 </ol>
 </div>
-</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -755,11 +764,13 @@ obs_y &lt;-<span class="st"> </span>coup_test[<span class="kw">complete.cases</s
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
 </div>
+
+  
 
   </body>
 </html>

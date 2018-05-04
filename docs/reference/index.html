@@ -18,13 +18,19 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Function reference" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +53,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">spduration</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">spduration</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.17.1</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -73,7 +83,7 @@
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -85,6 +95,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -92,160 +103,155 @@
       
       </header>
 
-      <div class="row">
-  <div class="col-md-9">
+<div class="row">
+  <div class="contents col-md-9">
     <div class="page-header">
-      <h1>
-        Reference
-        <small>version&nbsp;0.17.1</small>
-      </h1>
+      <h1>Reference</h1>
     </div>
 
-    <div class="contents">
-      <table class="ref-index">
+    <table class="ref-index">
 
-      <colgroup>
-        <col class="alias" />
-        <col class="title" />
-      </colgroup>
+    <colgroup>
+      <col class="alias" />
+      <col class="title" />
+    </colgroup>
 
-      <tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-            <p class="section-desc"></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="accessors.html">logLik</a></code> <code><a href="accessors.html">nobs</a></code> <code><a href="accessors.html">coef</a></code> <code><a href="accessors.html">vcov</a></code> <code><a href="accessors.html">model.matrix</a></code> <code><a href="accessors.html">terms</a></code> </p>
-          </td>
-          <td><p>Accessor methods for spdur Objects</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="add_duration.html">add_duration</a></code> </p>
-          </td>
-          <td><p>Add duration variables to panel data</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="AIC.spdur.html">AIC</a></code> </p>
-          </td>
-          <td><p>AIC method for spdur</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="as.data.frame.spdur.html">as.data.frame</a></code> </p>
-          </td>
-          <td><p>Convert spdur results to summary data frame</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="BIC.spdur.html">BIC</a></code> </p>
-          </td>
-          <td><p>BIC method for spdur</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="bscoup.html">bscoups</a></code> </p>
-          </td>
-          <td><p>B&amp;S 2003 coup data</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="coups.html">coups</a></code> </p>
-          </td>
-          <td><p>Global coups, 1979 to 2010</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="forecast.spdur.html">forecast</a></code> </p>
-          </td>
-          <td><p>Forecast from a spdur model</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="model.coups.html">model.coups</a></code> </p>
-          </td>
-          <td><p>Model of global coups from 1979 to 2010</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="panel_lag.html">panel_lag</a></code> </p>
-          </td>
-          <td><p>Lag panel data</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="plot_hazard.html">plot_hazard</a></code> </p>
-          </td>
-          <td><p>Plot hazard function</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="plot_hazard1.html">plot_hazard1</a></code> </p>
-          </td>
-          <td><p>Plot conditional hazard rate</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="plot_hazard2.html">plot_hazard2</a></code> </p>
-          </td>
-          <td><p>Simulate and plot hazard function</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="plot.spdur.html">plot</a></code> </p>
-          </td>
-          <td><p>Plot split-duration model results.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="predict.spdur.html">predict</a></code> <code><a href="predict.spdur.html">fitted</a></code> <code><a href="predict.spdur.html">residuals</a></code> </p>
-          </td>
-          <td><p>Predict methods for spdur Objects</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="print.summary.spdur.html">print</a></code> </p>
-          </td>
-          <td><p>Print a split-population duration model results summary</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="sepplot.html">sepplot</a></code> </p>
-          </td>
-          <td><p>Generate a Separation Plot</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="spdur.html">spdur</a></code> </p>
-          </td>
-          <td><p>Split-population duration (cure) regression</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="spduration.html">spduration</a></code> </p>
-          </td>
-          <td><p>Split-Population Duration (Cure) Regression Models</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="summary.spdur.html">summary</a></code> </p>
-          </td>
-          <td><p>Summarize split-population duration results</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="xtable.spdur.html">xtable</a></code> </p>
-          </td>
-          <td><p>Create export table for a split-duration model</p></td>
-        </tr>
-      </tbody>
-      </table>
-    </div>
+    <tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        <!--  -->
+        <td>
+          <p><code><a href="AIC.spdur.html">AIC(<i>&lt;spdur&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>AIC method for spdur</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="BIC.spdur.html">BIC(<i>&lt;spdur&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>BIC method for spdur</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="accessors.html">logLik(<i>&lt;spdur&gt;</i>)</a></code> <code><a href="accessors.html">nobs(<i>&lt;spdur&gt;</i>)</a></code> <code><a href="accessors.html">coef(<i>&lt;spdur&gt;</i>)</a></code> <code><a href="accessors.html">vcov(<i>&lt;spdur&gt;</i>)</a></code> <code><a href="accessors.html">model.matrix(<i>&lt;spdur&gt;</i>)</a></code> <code><a href="accessors.html">terms(<i>&lt;spdur&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Accessor methods for spdur Objects</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="add_duration.html">add_duration()</a></code> </p>
+        </td>
+        <td><p>Add duration variables to panel data</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="as.data.frame.spdur.html">as.data.frame(<i>&lt;spdur&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Convert spdur results to summary data frame</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="bscoup.html">bscoups</a></code> </p>
+        </td>
+        <td><p>B&amp;S 2003 coup data</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="coups.html">coups</a></code> </p>
+        </td>
+        <td><p>Global coups, 1979 to 2010</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="forecast.spdur.html">forecast(<i>&lt;spdur&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Forecast from a spdur model</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="model.coups.html">model.coups</a></code> </p>
+        </td>
+        <td><p>Model of global coups from 1979 to 2010</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="panel_lag.html">panel_lag()</a></code> </p>
+        </td>
+        <td><p>Lag panel data</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="plot.spdur.html">plot(<i>&lt;spdur&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Plot split-duration model results.</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="plot_hazard.html">plot_hazard()</a></code> </p>
+        </td>
+        <td><p>Plot hazard function</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="plot_hazard1.html">plot_hazard1()</a></code> </p>
+        </td>
+        <td><p>Plot conditional hazard rate</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="plot_hazard2.html">plot_hazard2()</a></code> </p>
+        </td>
+        <td><p>Simulate and plot hazard function</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="predict.spdur.html">predict(<i>&lt;spdur&gt;</i>)</a></code> <code><a href="predict.spdur.html">fitted(<i>&lt;spdur&gt;</i>)</a></code> <code><a href="predict.spdur.html">residuals(<i>&lt;spdur&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Predict methods for spdur Objects</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="print.summary.spdur.html">print(<i>&lt;summary.spdur&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Print a split-population duration model results summary</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="sepplot.html">sepplot()</a></code> </p>
+        </td>
+        <td><p>Generate a Separation Plot</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="spdur.html">spdur()</a></code> </p>
+        </td>
+        <td><p>Split-population duration (cure) regression</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="spduration.html">spduration</a></code> </p>
+        </td>
+        <td><p>Split-Population Duration (Cure) Regression Models</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="summary.spdur.html">summary(<i>&lt;spdur&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Summarize split-population duration results</p></td>
+      </tr><tr>
+        <!--  -->
+        <td>
+          <p><code><a href="xtable.spdur.html">xtable(<i>&lt;spdur&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Create export table for a split-duration model</p></td>
+      </tr>
+    </tbody>
+    </table>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -262,11 +268,14 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

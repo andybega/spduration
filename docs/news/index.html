@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>All news • spduration</title>
+<title>Changelog • spduration</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -18,13 +18,19 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Changelog" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +53,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">spduration</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">spduration</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.17.1</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -73,7 +83,7 @@
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -85,6 +95,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -92,25 +103,26 @@
       
       </header>
 
-      <div class="row">
-
-  <div class="col-md-9">
+<div class="row">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Change log <small>All releases</small></h1>
+      <h1>Changelog <small></small></h1>
+      <small>Source: <a href='https://github.com/andybega/spduration/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div class="contents">
     <div id="spduration-0-17-1-2018-03-26" class="section level1">
-<h1 class="hasAnchor">
-<a href="#spduration-0-17-1-2018-03-26" class="anchor"></a>spduration 0.17.1 (2018-03-26)</h1>
+<h1 class="page-header">
+<a href="#spduration-0-17-1-2018-03-26" class="anchor"></a>spduration 0.17.1 (2018-03-26)<small> Unreleased </small>
+</h1>
 <ul>
 <li>Add pkgdown static documentation website at <a href="https://andybeger.com/spduration" class="uri">https://andybeger.com/spduration</a>.</li>
 <li>Fix C++ code that was causing warnings on R-devel; replacing &amp; and | with &amp;&amp; and ||.</li>
 </ul>
 </div>
     <div id="spduration-0-17-0-2017-10-04" class="section level1">
-<h1 class="hasAnchor">
-<a href="#spduration-0-17-0-2017-10-04" class="anchor"></a>spduration 0.17.0 (2017-10-04)</h1>
+<h1 class="page-header">
+<a href="#spduration-0-17-0-2017-10-04" class="anchor"></a>spduration 0.17.0 (2017-10-04)<small> 2017-10-04 </small>
+</h1>
 <ul>
 <li>Adds proper handling of the various <code>na.action</code> options for <code>spdur</code> and its <code>predict</code>, <code>residuals</code>, and <code>fitted</code> methods.</li>
 <li>Import <code>forecast</code> generic function from <code>forecast</code> package rather than re-defining it. Adds <code>forecast</code> to neccessary imports.</li>
@@ -120,8 +132,9 @@
 </ul>
 </div>
     <div id="spduration-0-16-0-2017-04-11" class="section level1">
-<h1 class="hasAnchor">
-<a href="#spduration-0-16-0-2017-04-11" class="anchor"></a>spduration 0.16.0 (2017-04-11)</h1>
+<h1 class="page-header">
+<a href="#spduration-0-16-0-2017-04-11" class="anchor"></a>spduration 0.16.0 (2017-04-11)<small> 2017-04-11 </small>
+</h1>
 <ul>
 <li>separationplot.spdur -&gt; sepplot. <code>separationplot</code> is a standalone function so change the <code>spdur</code> version to a simple wrapper.</li>
 <li>Cleaned up NAMESPACE. Moved <code>stats</code> to imported package in description and removed all associated explicit namespace generic imports.</li>
@@ -132,8 +145,9 @@
 </ul>
 </div>
     <div id="spduration-0-15-1-2016-05-12" class="section level1">
-<h1 class="hasAnchor">
-<a href="#spduration-0-15-1-2016-05-12" class="anchor"></a>spduration 0.15.1 (2016-05-12)</h1>
+<h1 class="page-header">
+<a href="#spduration-0-15-1-2016-05-12" class="anchor"></a>spduration 0.15.1 (2016-05-12)<small> 2016-05-12 </small>
+</h1>
 <ul>
 <li>Fixes bug in <code>summary.spdur</code> that would return wrong estimates for <code>log(alpha)</code>.</li>
 <li>Better column names for <code>summary</code> and <code>xtable</code> methods.</li>
@@ -141,18 +155,20 @@
 </ul>
 </div>
     <div id="spduration-0-15-0" class="section level1">
-<h1 class="hasAnchor">
-<a href="#spduration-0-15-0" class="anchor"></a>spduration 0.15.0</h1>
+<h1 class="page-header">
+<a href="#spduration-0-15-0" class="anchor"></a>spduration 0.15.0<small> 2016-03-01 </small>
+</h1>
 <ul>
 <li>Added accessor methods for <code>terms</code>, <code>model.matrix</code>, <code>coef</code>, and <code>vcov</code>.</li>
 <li>Added <code>fitted</code> and <code>residuals</code> methods.</li>
-<li>Fixes issue #17, which led to errors in <code>summary.spdur</code> when called on a model with factor variables or without intercept terms.</li>
+<li>Fixes issue <a href='https://github.com/andybega/spduration/issues/17'>#17</a>, which led to errors in <code>summary.spdur</code> when called on a model with factor variables or without intercept terms.</li>
 <li>Fixes an issue with the hazard rate plot confidence intervals (<code><a href="../reference/plot_hazard.html">plot_hazard(ci = TRUE)</a></code>), where CIs coud be wrong because coefficients were sampled by equation rather than using the full variance covariance matrix.</li>
 </ul>
 </div>
     <div id="spduration-0-14-0" class="section level1">
-<h1 class="hasAnchor">
-<a href="#spduration-0-14-0" class="anchor"></a>spduration 0.14.0</h1>
+<h1 class="page-header">
+<a href="#spduration-0-14-0" class="anchor"></a>spduration 0.14.0<small> 2015-10-27 </small>
+</h1>
 <ul>
 <li>Added Belkin &amp; Schofer 2003 coup data in <code>data(bscoup)</code>, see <code><a href="../reference/bscoup.html">?bscoup</a></code>.</li>
 <li>Replaced <code>plot_hazard1</code> and <code>plot_hazard2</code> with <code>plot_hazard</code>, added support for loglog models, and other internal streamlining of plotting code.</li>
@@ -161,13 +177,13 @@
 </ul>
 </div>
     <div id="spduration-0-13-1" class="section level1">
-<h1 class="hasAnchor">
-<a href="#spduration-0-13-1" class="anchor"></a>spduration 0.13.1</h1>
+<h1 class="page-header">
+<a href="#spduration-0-13-1" class="anchor"></a>spduration 0.13.1<small> 2015-07-09 </small>
+</h1>
 <ul>
 <li>Initial CRAN release</li>
 </ul>
 </div>
-    </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -193,11 +209,14 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

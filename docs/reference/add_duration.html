@@ -18,13 +18,22 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Add duration variables to panel data — add_duration" />
+
+<meta property="og:description" content="Builds a duration version of a data frame representing panel data." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +56,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">spduration</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">spduration</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.17.1</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -73,7 +86,7 @@
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -85,6 +98,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -92,20 +106,24 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Add duration variables to panel data</h1>
+    <small class="dont-index">Source: <a href='https://github.com/andybega/spduration/blob/master/R/add_duration.R'><code>R/add_duration.R</code></a></small>
+    <div class="hidden name"><code>add_duration.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Builds a duration version of a data frame representing panel data.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>add_duration</span>(<span class='no'>data</span>, <span class='no'>y</span>, <span class='no'>unitID</span>, <span class='no'>tID</span>, <span class='kw'>freq</span> <span class='kw'>=</span> <span class='st'>"month"</span>, <span class='kw'>sort</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>ongoing</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>slice.last</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -189,15 +207,15 @@ different though.</p>
 experiencing failure in the first time period. If those events are in fact 
 ongoing, e.g. the last year of a war that started before the start time of 
 the dataset, they should be dropped manually before using 
-<code>buildDuration()</code>.
-    <code>t.0</code> is the starting time of the period of observation at <code>tID</code>. 
+<code>buildDuration()</code>.</p>
+<p><code>t.0</code> is the starting time of the period of observation at <code>tID</code>. 
 It is by default set as <code>duration - 1</code> and currently only serves as a 
 placeholder to allow future expansion for varying observation times.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='panel_lag.html'>panel_lag</a></code> for lagging variables in a panel data frame 
-before building duration data.</p>
+    <div class='dont-index'><p><code><a href='panel_lag.html'>panel_lag</a></code> for lagging variables in a panel data frame 
+before building duration data.</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -236,11 +254,14 @@ before building duration data.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

@@ -18,13 +18,25 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Plot split-duration model results. — plot.spdur" />
+
+<meta property="og:description" content="Plot results from a spduration model. Two types are currently implemented:
+a separation plot for evaluating model predictions ("sepplot"), and a plot of 
+the conditional hazard rate ("hazard"), with or without simulation-based
+confidence intervals." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +59,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">spduration</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">spduration</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.17.1</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -73,7 +89,7 @@
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -85,6 +101,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -92,23 +109,27 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot split-duration model results.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/andybega/spduration/blob/master/R/plot.spdur.R'><code>R/plot.spdur.R</code></a></small>
+    <div class="hidden name"><code>plot.spdur.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Plot results from a spduration model. Two types are currently implemented:
 a separation plot for evaluating model predictions ("sepplot"), and a plot of 
 the conditional hazard rate ("hazard"), with or without simulation-based
 confidence intervals.</p>
     
+    </div>
 
     <pre class="usage"><span class='co'># S3 method for spdur</span>
 <span class='fu'>plot</span>(<span class='no'>x</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"sepplot"</span>, <span class='kw'>ci</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -132,7 +153,7 @@ or <code><a href='plot_hazard.html'>plot_hazard</a></code>.</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code><a href='sepplot.html'>sepplot</a></code>, <code><a href='plot_hazard.html'>plot_hazard</a></code></p>
+    <div class='dont-index'><p><code><a href='sepplot.html'>sepplot</a></code>, <code><a href='plot_hazard.html'>plot_hazard</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -140,8 +161,8 @@ or <code><a href='plot_hazard.html'>plot_hazard</a></code>.</p></td>
 <span class='fu'>data</span>(<span class='no'>model.coups</span>)
 
 <span class='co'># plot</span>
-<span class='fu'>plot</span>(<span class='no'>model.coups</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"hazard"</span>)</div><div class='img'><img src='plot.spdur-3.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
-<span class='fu'>plot</span>(<span class='no'>model.coups</span>)</div><div class='img'><img src='plot.spdur-4.png' alt='' width='700' height='432.632880098887' /></div><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>model.coups</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"hazard"</span>)</div><div class='img'><img src='plot.spdur-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>plot</span>(<span class='no'>model.coups</span>)</div><div class='img'><img src='plot.spdur-2.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -163,11 +184,14 @@ or <code><a href='plot_hazard.html'>plot_hazard</a></code>.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

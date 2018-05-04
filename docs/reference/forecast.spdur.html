@@ -18,13 +18,22 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Forecast from a spdur model — forecast.spdur" />
+
+<meta property="og:description" content="forecast method for spdur class objects." />
+<meta name="twitter:card" content="summary" />
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,8 +56,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">spduration</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">spduration</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.17.1</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -73,7 +86,7 @@
   </ul>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
@@ -85,6 +98,7 @@
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -92,21 +106,25 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Forecast from a spdur model</h1>
+    <small class="dont-index">Source: <a href='https://github.com/andybega/spduration/blob/master/R/forecast.R'><code>R/forecast.R</code></a></small>
+    <div class="hidden name"><code>forecast.spdur.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p><code>forecast</code> method for <code><a href='spdur.html'>spdur</a></code> class objects.</p>
     
+    </div>
 
     <pre class="usage"><span class='co'># S3 method for spdur</span>
 <span class='fu'>forecast</span>(<span class='no'>object</span>, <span class='no'>...</span>, <span class='kw'>pred.data</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"conditional hazard"</span>, <span class='kw'>n.ahead</span> <span class='kw'>=</span> <span class='fl'>6</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -147,8 +165,9 @@ periods, e.g. in a test sample use <code><a href='predict.spdur.html'>predict.sp
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>forecast</span>)
-<span class='fu'>data</span>(<span class='no'>coups</span>)
+    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>forecast</span>)</div><div class='output co'>#&gt; <span class='message'>This is forecast 8.3 </span>
+#&gt; <span class='message'>  Want to meet other forecasters? Join the International Institute of Forecasters:</span>
+#&gt; <span class='message'>  http://forecasters.org/</span></div><div class='input'><span class='fu'>data</span>(<span class='no'>coups</span>)
 <span class='fu'>data</span>(<span class='no'>model.coups</span>)
 
 <span class='no'>coups.dur</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='add_duration.html'>add_duration</a></span>(<span class='no'>coups</span>, <span class='st'>"succ.coup"</span>, <span class='st'>"gwcode"</span>, <span class='st'>"year"</span>, <span class='kw'>freq</span><span class='kw'>=</span><span class='st'>"year"</span>)
@@ -175,11 +194,14 @@ periods, e.g. in a test sample use <code><a href='predict.spdur.html'>predict.sp
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+
