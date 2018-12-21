@@ -1,14 +1,17 @@
 library("spduration")
-context("`spdur`")
+context("spdur")
 
-test_that("`spdur` estimates at all", {
+test_that("spdur estimates at all", {
   data(coups)
   dur.coups <- add_duration(coups, "succ.coup", unitID="gwcode", tID="year",
                             freq="year")
-  spdur(duration ~ polity2, atrisk ~ polity2, data=dur.coups, silent = TRUE)
+  expect_error(
+    spdur(duration ~ polity2, atrisk ~ polity2, data=dur.coups, silent = TRUE),
+    NA)
+  
 })
 
-test_that("`na.action`` is handled", {
+test_that("na.action is handled", {
   data(coups)
   dur.coups <- add_duration(coups, "succ.coup", unitID="gwcode", tID="year",
                             freq="year")

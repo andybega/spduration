@@ -4,7 +4,8 @@
 \alias{as.data.frame.spdur}
 \title{Convert spdur results to summary data frame}
 \usage{
-\method{as.data.frame}{spdur}(x, row.names = TRUE, optional = FALSE, ...)
+\method{as.data.frame}{spdur}(x, row.names = TRUE, optional = FALSE,
+  ...)
 }
 \arguments{
 \item{x}{An object with class \code{spdur}.}

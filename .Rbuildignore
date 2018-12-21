@@ -3,7 +3,7 @@ cran-comments.md
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^\.travis\.yml$
-dev-cycle.R
+scratchpad.R
 ^docs$
 README_files
 ^README.Rmd

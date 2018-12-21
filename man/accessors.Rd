@@ -14,11 +14,11 @@
 
 \method{nobs}{spdur}(object, ...)
 
-\method{coef}{spdur}(object, model = c("full", "duration", "risk", "distr"),
-  ...)
+\method{coef}{spdur}(object, model = c("full", "duration", "risk",
+  "distr"), ...)
 
-\method{vcov}{spdur}(object, model = c("full", "duration", "risk", "distr"),
-  ...)
+\method{vcov}{spdur}(object, model = c("full", "duration", "risk",
+  "distr"), ...)
 
 \method{model.matrix}{spdur}(object, model = c("duration", "risk"), ...)
 

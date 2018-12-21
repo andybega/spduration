@@ -1,5 +1,5 @@
 library(spduration)
-context("`plot` handling of input arguments")
+context("plot handling of input arguments")
 
 test_that("plot_hazard accepts all input options", {
   

@@ -1,6 +1,6 @@
 library(spduration)
 data(model.coups)
-context("`predict` handling of NA values")
+context("predict handling of NA values")
 
 test_that("methods run without error", {
   data(model.coups)
