@@ -7,3 +7,5 @@ scratchpad.R
 ^docs$
 README_files
 ^README.Rmd
+^codecov\.yml$
+^Makefile$

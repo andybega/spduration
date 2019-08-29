@@ -1,4 +1,4 @@
-library(testthat)
-library(spduration)
+library("testthat")
+library("spduration")
 
 test_check("spduration")
