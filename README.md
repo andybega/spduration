@@ -1,8 +1,8 @@
 
 # spduration
 
-[![Travis build
-status](https://travis-ci.org/andybega/spduration.svg?branch=master)](https://travis-ci.org/andybega/spduration)
+[![R build
+status](https://github.com/andybega/spduration/workflows/R-CMD-check/badge.svg)](https://github.com/andybega/spduration/actions)
 [![CRAN
 version](http://www.r-pkg.org/badges/version/spduration)](https://cran.r-project.org/package=spduration)
 [![Codecov test
@@ -16,18 +16,9 @@ population or spells will not experience failure.
 library("spduration")
 ```
 
-    ## Registered S3 method overwritten by 'xts':
-    ##   method     from
-    ##   as.zoo.xts zoo
-
     ## Registered S3 method overwritten by 'quantmod':
     ##   method            from
     ##   as.zoo.data.frame zoo
-
-    ## Registered S3 methods overwritten by 'forecast':
-    ##   method             from    
-    ##   fitted.fracdiff    fracdiff
-    ##   residuals.fracdiff fracdiff
 
 ``` r
 # Prepare data

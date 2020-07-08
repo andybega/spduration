@@ -9,3 +9,4 @@ README_files
 ^README.Rmd
 ^codecov\.yml$
 ^Makefile$
+^\.github$
