@@ -1,5 +1,5 @@
 
-# spduration
+# spduration <img src="man/figures/logo.png" align="right" width="120" />
 
 [![R build
 status](https://github.com/andybega/spduration/workflows/R-CMD-check/badge.svg)](https://github.com/andybega/spduration/actions)
