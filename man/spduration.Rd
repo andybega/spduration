@@ -3,7 +3,6 @@
 \docType{package}
 \name{spduration}
 \alias{spduration}
-\alias{spduration-package}
 \title{Split-Population Duration (Cure) Regression Models}
 \description{
 The spduration package provides functions to estimate 

@@ -4,8 +4,12 @@
 \alias{expand.call}
 \title{Expand call to full names.}
 \usage{
-expand.call(definition = NULL, call = sys.call(sys.parent(1)),
-  expand.dots = TRUE, eval = FALSE)
+expand.call(
+  definition = NULL,
+  call = sys.call(sys.parent(1)),
+  expand.dots = TRUE,
+  eval = FALSE
+)
 }
 \arguments{
 \item{definition}{a function. See \code{\link[base]{match.call}}.}

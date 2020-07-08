@@ -4,7 +4,8 @@
 \name{bscoup}
 \alias{bscoup}
 \title{B&S 2003 coup data}
-\format{A data frame with 5463 observations of 14 variables:
+\format{
+A data frame with 5463 observations of 14 variables:
 \describe{
  \item{\code{countryid}}{Gleditsch and Ward country codes.}
  \item{\code{year}}{Year}
@@ -20,13 +21,14 @@
  \item{\code{samerica}}{Indicator for countries in South America.}
  \item{\code{camerica}}{Indicator for countries in Central America.}
  \item{\code{regconf}}{Regional conflict.}
-}}
+}
+}
 \source{
 Belkin, Aaron and Evan Schofer. 2003. ``Toward a structural understanding of 
 coup risk.'' Journal of Conflict Resolution Vol. 47 No. 5.
 }
 \usage{
-bscoups
+bscoup
 }
 \description{
 Replication data from Belkin and Schofer's 2003 paper on coups.

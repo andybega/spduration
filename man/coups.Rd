@@ -4,7 +4,8 @@
 \name{coups}
 \alias{coups}
 \title{Global coups, 1979 to 2010}
-\format{A data frame with 5828 observations of 9 variables:
+\format{
+A data frame with 5828 observations of 9 variables:
 \describe{
  \item{\code{gwcode}}{Gleditsch and Ward country codes.}
  \item{\code{year}}{Year, in date format.}
@@ -15,7 +16,8 @@
  \item{\code{polity}}{Polity score (democ-autoc).}
  \item{\code{polity2}}{Polity score with correction for regime transitions.}
  \item{\code{regtrans}}{Regime transitions.}
-}}
+}
+}
 \source{
 Powell, Jonathan M. and Clayton L. Thyne. ``Global instances of coups from 
 1950 to 2010: A new dataset.'' Journal of Peace Research Vol. 48 No. 2.

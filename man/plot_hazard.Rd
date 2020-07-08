@@ -4,8 +4,7 @@
 \alias{plot_hazard}
 \title{Plot hazard function}
 \usage{
-plot_hazard(x, t = NULL, ci = TRUE, n = 1000, xvals = NULL,
-  zvals = NULL, ...)
+plot_hazard(x, t = NULL, ci = TRUE, n = 1000, xvals = NULL, zvals = NULL, ...)
 }
 \arguments{
 \item{x}{An object of class \code{spdur}}

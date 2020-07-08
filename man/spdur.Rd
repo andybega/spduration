@@ -4,9 +4,19 @@
 \alias{spdur}
 \title{Split-population duration (cure) regression}
 \usage{
-spdur(duration, atrisk, data = NULL, last = "end.spell", t.0 = "t.0",
-  fail = "failure", distr = c("weibull", "loglog"), max.iter = 300,
-  na.action, silent = FALSE, ...)
+spdur(
+  duration,
+  atrisk,
+  data = NULL,
+  last = "end.spell",
+  t.0 = "t.0",
+  fail = "failure",
+  distr = c("weibull", "loglog"),
+  max.iter = 300,
+  na.action,
+  silent = FALSE,
+  ...
+)
 }
 \arguments{
 \item{duration}{A formula of the form Y ~ X1 + X2 \dots, where Y is duration 

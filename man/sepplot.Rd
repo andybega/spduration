@@ -4,10 +4,20 @@
 \alias{sepplot}
 \title{Generate a Separation Plot}
 \usage{
-sepplot(x, pred_type = "conditional hazard", obs = NULL,
-  endSpellOnly = FALSE, lwd1 = 5, lwd2 = 2, shuffle = TRUE,
-  heading = "", show.expected = TRUE, newplot = FALSE,
-  type = "line", ...)
+sepplot(
+  x,
+  pred_type = "conditional hazard",
+  obs = NULL,
+  endSpellOnly = FALSE,
+  lwd1 = 5,
+  lwd2 = 2,
+  shuffle = TRUE,
+  heading = "",
+  show.expected = TRUE,
+  newplot = FALSE,
+  type = "line",
+  ...
+)
 }
 \arguments{
 \item{x}{An object of class "\code{spdur}".}

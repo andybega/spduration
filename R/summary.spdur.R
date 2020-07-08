@@ -2,8 +2,6 @@
 #'
 #' \code{summary} method for class ``\code{spdur}''.
 #' 
-#' @method summary spdur
-#' 
 #' @param object An object with class \code{spdur}.
 #' @param \dots Further arguments passed to or from other methods.
 #' 
@@ -84,7 +82,6 @@ summary.spdur <- function(object, ...) {
 #' print(s)
 #' 
 #' @importFrom stats printCoefmat
-#' @method print summary.spdur
 #' @export
 print.summary.spdur <- function(x, ...)
 {

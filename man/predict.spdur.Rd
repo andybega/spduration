@@ -6,8 +6,14 @@
 \alias{residuals.spdur}
 \title{Predict methods for spdur Objects}
 \usage{
-\method{predict}{spdur}(object, newdata = NULL, type = "response",
-  truncate = TRUE, na.action = na.exclude, ...)
+\method{predict}{spdur}(
+  object,
+  newdata = NULL,
+  type = "response",
+  truncate = TRUE,
+  na.action = na.exclude,
+  ...
+)
 
 \method{fitted}{spdur}(object, ...)
 

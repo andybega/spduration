@@ -4,8 +4,13 @@
 \alias{forecast.spdur}
 \title{Forecast from a spdur model}
 \usage{
-\method{forecast}{spdur}(object, ..., pred.data = NULL,
-  stat = "conditional hazard", n.ahead = 6)
+\method{forecast}{spdur}(
+  object,
+  ...,
+  pred.data = NULL,
+  stat = "conditional hazard",
+  n.ahead = 6
+)
 }
 \arguments{
 \item{object}{A \code{\link{spdur}} class model object.}

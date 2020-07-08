@@ -4,7 +4,9 @@
 \name{model.coups}
 \alias{model.coups}
 \title{Model of global coups from 1979 to 2010}
-\format{An object of class \code{spdur}.}
+\format{
+An object of class \code{spdur}.
+}
 \source{
 For information on the data used in this model, see the data documentation,
 \code{\link{coups}}.

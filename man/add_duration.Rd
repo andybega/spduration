@@ -4,8 +4,16 @@
 \alias{add_duration}
 \title{Add duration variables to panel data}
 \usage{
-add_duration(data, y, unitID, tID, freq = "month", sort = FALSE,
-  ongoing = TRUE, slice.last = FALSE)
+add_duration(
+  data,
+  y,
+  unitID,
+  tID,
+  freq = "month",
+  sort = FALSE,
+  ongoing = TRUE,
+  slice.last = FALSE
+)
 }
 \arguments{
 \item{data}{Data frame representing panel data.}

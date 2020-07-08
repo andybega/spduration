@@ -42,7 +42,7 @@
 #' 
 #' @description Replication data from Belkin and Schofer's 2003 paper on coups.
 #' 
-#' @usage bscoups
+#' @usage bscoup
 #' 
 #' @format A data frame with 5463 observations of 14 variables:
 #' \describe{
