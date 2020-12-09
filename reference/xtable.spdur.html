@@ -87,12 +87,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -141,7 +135,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for spdur</span>
-<span class='fu'>xtable</span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
+<span class='fu'>xtable</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -164,18 +158,20 @@
     <p>Format a split-duration model for export to Latex or html.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/xtable/man/xtable.html'>xtable</a></code>, or <code><a href='https://rdrr.io/pkg/spduration/man/as.data.frame.spdur.html'>as.data.frame.spdur</a></code> for a
+    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/xtable/man/xtable.html'>xtable</a></code>, or <code><a href='as.data.frame.spdur.html'>as.data.frame.spdur</a></code> for a
   simpler alternative that will convert a <code>spdur</code> object to a data frame
   containing model parameter estimates.</p>
 <p>For print formatting, see <code><a href='https://rdrr.io/pkg/xtable/man/print.xtable.html'>print.xtable</a></code>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'><a href='http://xtable.r-forge.r-project.org'>xtable</a></span>)</div><div class='output co'>#&gt; <span class='message'></span>
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='http://xtable.r-forge.r-project.org/'>xtable</a></span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: ‘xtable’</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:Hmisc’:</span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>    label, label&lt;-</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>model.coups</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/xtable/man/xtable.html'>xtable</a></span>(<span class='kw'>model.coups</span>)</div><div class='output co'>#&gt; % latex table generated in R 4.0.2 by xtable 1.8-4 package
-#&gt; % Wed Jul  8 10:16:46 2020
+#&gt; <span class='message'>    label, label&lt;-</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>model.coups</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/pkg/xtable/man/xtable.html'>xtable</a></span><span class='op'>(</span><span class='va'>model.coups</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; % latex table generated in R 4.0.3 by xtable 1.8-4 package
+#&gt; % Wed Dec  9 08:23:34 2020
 #&gt; \begin{table}[ht]
 #&gt; \centering
 #&gt; \begin{tabular}{rlrrrr}
@@ -189,8 +185,9 @@
 #&gt;   5 &amp; Risk\_polity2 &amp; 0.90 &amp; 0.41 &amp; 2.20 &amp; 0.03 \\ 
 #&gt;    \hline
 #&gt; \end{tabular}
-#&gt; \end{table}</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/xtable/man/xtable.html'>xtable</a></span>(<span class='kw'>model.coups</span>), include.rownames=<span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; % latex table generated in R 4.0.2 by xtable 1.8-4 package
-#&gt; % Wed Jul  8 10:16:46 2020
+#&gt; \end{table}</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/pkg/xtable/man/xtable.html'>xtable</a></span><span class='op'>(</span><span class='va'>model.coups</span><span class='op'>)</span>, include.rownames<span class='op'>=</span><span class='cn'>FALSE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; % latex table generated in R 4.0.3 by xtable 1.8-4 package
+#&gt; % Wed Dec  9 08:23:34 2020
 #&gt; \begin{table}[ht]
 #&gt; \centering
 #&gt; \begin{tabular}{lrrrr}
@@ -204,7 +201,8 @@
 #&gt;   Risk\_polity2 &amp; 0.90 &amp; 0.41 &amp; 2.20 &amp; 0.03 \\ 
 #&gt;    \hline
 #&gt; \end{tabular}
-#&gt; \end{table}</div><div class='input'></div></pre>
+#&gt; \end{table}</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -220,7 +218,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

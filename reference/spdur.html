@@ -88,12 +88,6 @@ object of class spdur." />
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -142,19 +136,19 @@ object of class spdur." />
 object of class <code>spdur</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/spduration/man/spdur.html'>spdur</a></span>(
-  <span class='kw'>duration</span>,
-  <span class='kw'>atrisk</span>,
-  data = <span class='kw'>NULL</span>,
-  last = <span class='st'>"end.spell"</span>,
-  t.0 = <span class='st'>"t.0"</span>,
-  fail = <span class='st'>"failure"</span>,
-  distr = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"weibull"</span>, <span class='st'>"loglog"</span>),
-  max.iter = <span class='fl'>300</span>,
-  <span class='kw'>na.action</span>,
-  silent = <span class='fl'>FALSE</span>,
-  <span class='kw'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>spdur</span><span class='op'>(</span>
+  <span class='va'>duration</span>,
+  <span class='va'>atrisk</span>,
+  data <span class='op'>=</span> <span class='cn'>NULL</span>,
+  last <span class='op'>=</span> <span class='st'>"end.spell"</span>,
+  t.0 <span class='op'>=</span> <span class='st'>"t.0"</span>,
+  fail <span class='op'>=</span> <span class='st'>"failure"</span>,
+  distr <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"weibull"</span>, <span class='st'>"loglog"</span><span class='op'>)</span>,
+  max.iter <span class='op'>=</span> <span class='fl'>300</span>,
+  <span class='va'>na.action</span>,
+  silent <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -181,7 +175,7 @@ when a spell ends due to failure or right-censoring.</p></td>
     <tr>
       <th>t.0</th>
       <td><p>The starting point for time-varying covariate intervals, by 
-default <code>duration-1</code> when using <code><a href='https://rdrr.io/pkg/spduration/man/add_duration.html'>add_duration</a></code>.</p></td>
+default <code>duration-1</code> when using <code><a href='add_duration.html'>add_duration</a></code>.</p></td>
     </tr>
     <tr>
       <th>fail</th>
@@ -231,8 +225,8 @@ t.0.</p></dd>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>See <code><a href='https://rdrr.io/pkg/spduration/man/summary.spdur.html'>summary.spdur</a></code>, <code><a href='https://rdrr.io/pkg/spduration/man/predict.spdur.html'>predict.spdur</a></code> ,
-and <code><a href='https://rdrr.io/pkg/spduration/man/plot.spdur.html'>plot.spdur</a></code> for post-estimation options.</p>
+    <p>See <code><a href='summary.spdur.html'>summary.spdur</a></code>, <code><a href='predict.spdur.html'>predict.spdur</a></code> ,
+and <code><a href='plot.spdur.html'>plot.spdur</a></code> for post-estimation options.</p>
 <p>Optional arguments:</p><dl>
 <dt>base.inits</dt><dd><p>Initial values for the base duration model that is 
 estimated to get initial values for the full split-population model. This
@@ -247,19 +241,21 @@ respectively.</p></dd>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Prepare data</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>coups</span>)
-<span class='kw'>dur.coups</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/spduration/man/add_duration.html'>add_duration</a></span>(<span class='kw'>coups</span>, <span class='st'>"succ.coup"</span>, unitID=<span class='st'>"gwcode"</span>, tID=<span class='st'>"year"</span>,
-                           freq=<span class='st'>"year"</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>coups</span><span class='op'>)</span>
+<span class='va'>dur.coups</span> <span class='op'>&lt;-</span> <span class='fu'><a href='add_duration.html'>add_duration</a></span><span class='op'>(</span><span class='va'>coups</span>, <span class='st'>"succ.coup"</span>, unitID<span class='op'>=</span><span class='st'>"gwcode"</span>, tID<span class='op'>=</span><span class='st'>"year"</span>,
+                           freq<span class='op'>=</span><span class='st'>"year"</span><span class='op'>)</span>
 
 <span class='co'># Estimate model</span>
-<span class='kw'>model.coups</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/spduration/man/spdur.html'>spdur</a></span>(<span class='kw'>duration</span> <span class='op'>~</span> <span class='kw'>polity2</span>, <span class='kw'>atrisk</span> <span class='op'>~</span> <span class='kw'>polity2</span>, data=<span class='kw'>dur.coups</span>)</div><div class='output co'>#&gt; Fitting base weibull...
+<span class='va'>model.coups</span> <span class='op'>&lt;-</span> <span class='fu'>spdur</span><span class='op'>(</span><span class='va'>duration</span> <span class='op'>~</span> <span class='va'>polity2</span>, <span class='va'>atrisk</span> <span class='op'>~</span> <span class='va'>polity2</span>, data<span class='op'>=</span><span class='va'>dur.coups</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Fitting base weibull...
 #&gt; Fitting split weibull...
 #&gt; initial  value 350.011298 
 #&gt; iter  10 value 323.775586
 #&gt; iter  20 value 319.813615
 #&gt; final  value 319.809378 
-#&gt; converged</div><div class='input'><span class='kw'>model.coups</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/spduration/man/spdur.html'>spdur</a></span>(<span class='kw'>duration</span> <span class='op'>~</span> <span class='kw'>polity2</span>, <span class='kw'>atrisk</span> <span class='op'>~</span> <span class='kw'>polity2</span>, data=<span class='kw'>dur.coups</span>,
-                     distr=<span class='st'>"loglog"</span>)</div><div class='output co'>#&gt; Fitting base loglog...
+#&gt; converged</div><div class='input'><span class='va'>model.coups</span> <span class='op'>&lt;-</span> <span class='fu'>spdur</span><span class='op'>(</span><span class='va'>duration</span> <span class='op'>~</span> <span class='va'>polity2</span>, <span class='va'>atrisk</span> <span class='op'>~</span> <span class='va'>polity2</span>, data<span class='op'>=</span><span class='va'>dur.coups</span>,
+                     distr<span class='op'>=</span><span class='st'>"loglog"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Fitting base loglog...
 #&gt; Fitting split loglog...
 #&gt; initial  value 347.703995 
 #&gt; iter  10 value 319.703145
@@ -267,7 +263,8 @@ respectively.</p></dd>
 #&gt; iter  20 value 317.637101
 #&gt; iter  20 value 317.637101
 #&gt; final  value 317.637101 
-#&gt; converged</div><div class='input'></div></pre>
+#&gt; converged</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -283,7 +280,7 @@ respectively.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

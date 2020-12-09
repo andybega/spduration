@@ -87,12 +87,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -141,20 +135,20 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for spdur</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(
-  <span class='kw'>object</span>,
-  newdata = <span class='kw'>NULL</span>,
-  type = <span class='st'>"response"</span>,
-  truncate = <span class='fl'>TRUE</span>,
-  na.action = <span class='kw'>na.exclude</span>,
-  <span class='kw'>...</span>
-)
+<span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span>
+  <span class='va'>object</span>,
+  newdata <span class='op'>=</span> <span class='cn'>NULL</span>,
+  type <span class='op'>=</span> <span class='st'>"response"</span>,
+  truncate <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  na.action <span class='op'>=</span> <span class='va'>na.exclude</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for spdur</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/fitted.values.html'>fitted</a></span>(<span class='kw'>object</span>, <span class='kw'>...</span>)
+<span class='fu'><a href='https://rdrr.io/r/stats/fitted.values.html'>fitted</a></span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for spdur</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>residuals</a></span>(<span class='kw'>object</span>, type = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"response"</span>), <span class='kw'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>residuals</a></span><span class='op'>(</span><span class='va'>object</span>, type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"response"</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -214,17 +208,20 @@ covariate vector, while \(X\beta\) indicates the duration equation
 covariate vector.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>See <code><a href='https://rdrr.io/pkg/spduration/man/forecast.spdur.html'>forecast.spdur</a></code> for producing forecasts when future 
+    <p>See <code><a href='forecast.spdur.html'>forecast.spdur</a></code> for producing forecasts when future 
 covariate values are unknown.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># get model estimates</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>model.coups</span>)
-<span class='kw'>ch</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span>(<span class='kw'>model.coups</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>model.coups</span><span class='op'>)</span>
+<span class='va'>ch</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/predict.html'>predict</a></span><span class='op'>(</span><span class='va'>model.coups</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/fitted.values.html'>fitted</a></span>(<span class='kw'>model.coups</span>))</div><div class='output co'>#&gt; [1] 0.016552005 0.005726432 0.003026371 0.002446806 0.016492801 0.036707531</div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>residuals</a></span>(<span class='kw'>model.coups</span>))</div><div class='output co'>#&gt;         5007         5006         5570         5039         4751         4877 
-#&gt; -0.016552005 -0.005726432 -0.003026371 -0.002446806 -0.016492801 -0.036707531 </div><div class='input'></div></pre>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/fitted.values.html'>fitted</a></span><span class='op'>(</span><span class='va'>model.coups</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 0.016552005 0.005726432 0.003026371 0.002446806 0.016492801 0.036707531</div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>residuals</a></span><span class='op'>(</span><span class='va'>model.coups</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;         5007         5006         5570         5039         4751         4877 
+#&gt; -0.016552005 -0.005726432 -0.003026371 -0.002446806 -0.016492801 -0.036707531 </div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -240,7 +237,7 @@ covariate values are unknown.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

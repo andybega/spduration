@@ -86,12 +86,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -186,7 +180,7 @@
 <li>Added accessor methods for <code>terms</code>, <code>model.matrix</code>, <code>coef</code>, and <code>vcov</code>.</li>
 <li>Added <code>fitted</code> and <code>residuals</code> methods.</li>
 <li>Fixes issue <a href='https://github.com/andybega/spduration/issues/17'>#17</a>, which led to errors in <code>summary.spdur</code> when called on a model with factor variables or without intercept terms.</li>
-<li>Fixes an issue with the hazard rate plot confidence intervals (<code><a href="https://rdrr.io/pkg/spduration/man/plot_hazard.html">plot_hazard(ci = TRUE)</a></code>), where CIs coud be wrong because coefficients were sampled by equation rather than using the full variance covariance matrix.</li>
+<li>Fixes an issue with the hazard rate plot confidence intervals (<code><a href="../reference/plot_hazard.html">plot_hazard(ci = TRUE)</a></code>), where CIs coud be wrong because coefficients were sampled by equation rather than using the full variance covariance matrix.</li>
 </ul>
 </div>
     <div id="spduration-0140" class="section level1">
@@ -194,7 +188,7 @@
 <a href="#spduration-0140" class="anchor"></a>spduration 0.14.0<small> 2015-10-27 </small>
 </h1>
 <ul>
-<li>Added Belkin &amp; Schofer 2003 coup data in <code><a href="https://rdrr.io/r/utils/data.html">data(bscoup)</a></code>, see <code><a href="https://rdrr.io/pkg/spduration/man/bscoup.html">?bscoup</a></code>.</li>
+<li>Added Belkin &amp; Schofer 2003 coup data in <code><a href="https://rdrr.io/r/utils/data.html">data(bscoup)</a></code>, see <code><a href="../reference/bscoup.html">?bscoup</a></code>.</li>
 <li>Replaced <code>plot_hazard1</code> and <code>plot_hazard2</code> with <code>plot_hazard</code>, added support for loglog models, and other internal streamlining of plotting code.</li>
 <li>Partial fix for summarizing and printing results for models without intercept term.</li>
 <li>Removed documentation and export for several internal functions.</li>
@@ -225,7 +219,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

@@ -89,12 +89,6 @@ order as data and are padded with NA as needed." />
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -144,7 +138,7 @@ order as data and are padded with NA as needed." />
 order as <code>data</code> and are padded with <code>NA</code> as needed.</p>
     </div>
 
-    <pre class="usage"><span class='fu'><a href='https://rdrr.io/pkg/spduration/man/panel_lag.html'>panel_lag</a></span>(<span class='kw'>x</span>, <span class='kw'>id</span>, <span class='kw'>t</span>, lag = <span class='fl'>1</span>, data = <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>panel_lag</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>id</span>, <span class='va'>t</span>, lag <span class='op'>=</span> <span class='fl'>1</span>, data <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -181,13 +175,16 @@ with the vectors supplied for the other parameters.</p></td>
 leading <code>NA</code>'s.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>coups</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>coups</span><span class='op'>)</span>
 <span class='co'># No need to order before using panelLag, just do it here so we can compare results below.</span>
-<span class='kw'>coups</span> <span class='op'>&lt;-</span> <span class='kw'>coups</span>[<span class='fu'><a href='https://rdrr.io/r/base/order.html'>order</a></span>(<span class='kw'>coups</span><span class='op'>$</span><span class='kw'>gwcode</span>, <span class='kw'>coups</span><span class='op'>$</span><span class='kw'>year</span>), ]
-<span class='kw'>test</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/spduration/man/panel_lag.html'>panel_lag</a></span>(<span class='st'>"polity2"</span>, <span class='st'>"gwcode"</span>, <span class='st'>"year"</span>, data=<span class='kw'>coups</span>)
+<span class='va'>coups</span> <span class='op'>&lt;-</span> <span class='va'>coups</span><span class='op'>[</span><span class='fu'><a href='https://rdrr.io/r/base/order.html'>order</a></span><span class='op'>(</span><span class='va'>coups</span><span class='op'>$</span><span class='va'>gwcode</span>, <span class='va'>coups</span><span class='op'>$</span><span class='va'>year</span><span class='op'>)</span>, <span class='op'>]</span>
+<span class='va'>test</span> <span class='op'>&lt;-</span> <span class='fu'>panel_lag</span><span class='op'>(</span><span class='st'>"polity2"</span>, <span class='st'>"gwcode"</span>, <span class='st'>"year"</span>, data<span class='op'>=</span><span class='va'>coups</span><span class='op'>)</span>
 
 <span class='co'># Compare output</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>coups</span><span class='op'>$</span><span class='kw'>polity2</span>)</div><div class='output co'>#&gt; [1] 10 10 10 10 10 10</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>test</span>)</div><div class='output co'>#&gt; [1] NA 10 10 10 10 10</div><div class='input'></div></pre>
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>coups</span><span class='op'>$</span><span class='va'>polity2</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 10 10 10 10 10 10</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>test</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] NA 10 10 10 10 10</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -203,7 +200,7 @@ leading <code>NA</code>'s.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

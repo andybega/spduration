@@ -45,12 +45,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -92,7 +86,7 @@
       <h1 data-toc-skip>Splitting it Up: The <code>spduration</code> Split-population Duration Regression Package</h1>
                         <h4 class="author">Andreas Beger, Daniel W. Hill, Jr., Nils W. Metternich, Shahryar Minhas, and Michael D. Ward</h4>
             
-            <h4 class="date">2020-07-08</h4>
+            <h4 class="date">2020-12-09</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/andybega/spduration/blob/master/vignettes/introduction.Rmd"><code>vignettes/introduction.Rmd</code></a></small>
       <div class="hidden name"><code>introduction.Rmd</code></div>
@@ -162,17 +156,15 @@ h(t, \pi) = \frac{f(t, \pi)}{S(t, \pi)} &amp; = &amp; \frac{ \pi(t) \times f(t) 
 <p>In order to illustrate the package functionality, we examine a model of coups d`etat in <span class="citation">Belkin and Schofer (2003)</span>. Belkin and Schofer’s paper lends itself to re-analysis with a split-population duration model because they explicitly distinguish long-term structural risk factors for coups from more short-term triggering causes that can explain the timing of a coup in an at-risk regime. They argue that many countries never experience coups because coups are effectively impossible due to structural factors, while others that never experience coups are nevertheless at risk due to a different configuration of those same factors. Using language which fits nicely with the class of models described above, they write “[t]riggers are not the source of the original risk, and in the absence of structural causes, the presence of triggering factors alone cannot lead to a coup. Hence, triggers should not be equated with coup risk. Rather, they are factors that may determine the exact timing of a coup in regimes that suffer from high coup risk” <span class="citation">(Belkin and Schofer 2003, 598)</span>.</p>
 <p>For their empirical test Belkin and Schofer develop a measure of “structural coup risk” which incorporates factors such as the strength of democratic institutions and civil society, and a recent history of successful coups. However, they implement a logistic regression model, which does not capture the process as described in their quote above. This is because the logistic regression model assumes that all observations are at risk for a coup (i.e., the probability of a coup is non-zero for all observations). Since their structural coup risk indicator is developed precisely to distinguish between at risk and “immune” cases, the split-population model allows one to examine whether the indicator effectively does so.</p>
 <p>We begin by loading the package and the Belkin and Schofer replication data, and formatting the data to add several variables needed by the split-population duration model.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st"><a href="https://github.com/andybega/spduration">"spduration"</a></span>)
-</pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/andybega/spduration">"spduration"</a></span><span class="op">)</span></code></pre></div>
 <pre><code>## Registered S3 method overwritten by 'quantmod':
 ##   method            from
 ##   as.zoo.data.frame zoo</code></pre>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="kw">bscoup</span>)
-<span class="op">?</span><span class="kw">bscoup</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">bscoup</span>[, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>])
-</pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">bscoup</span><span class="op">)</span>
+<span class="op">?</span><span class="va">bscoup</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">bscoup</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span></code></pre></div>
 <pre><code>##   countryid year  couprisk recentcoups rwar
 ## 1       909 1960 0.2200166           0    0
 ## 2       909 1961 0.2200166           0    0
@@ -181,9 +173,8 @@ h(t, \pi) = \frac{f(t, \pi)}{S(t, \pi)} &amp; = &amp; \frac{ \pi(t) \times f(t) 
 ## 5       909 1964 2.5702426           1    0
 ## 6       909 1965 2.5702426           2    0</code></pre>
 <p>The data are documented in <code><a href="../reference/bscoup.html">?bscoup</a></code>, which also gives a reference to the source citation. It consists of a little more than 5,000 observations of 162 countries from 1960 to 2000. Each row corresponds to a country <em>c</em> in year <em>t</em>. Excluding the country and year identifiers, the data include 12 variables, including a binary indicator for successful coups.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="kw">bscoup</span>)
-</pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">bscoup</span><span class="op">)</span></code></pre></div>
 <pre><code>## 'data.frame':    5463 obs. of  14 variables:
 ##  $ countryid  : num  909 909 909 909 909 909 909 920 920 920 ...
 ##  $ year       : num  1960 1961 1962 1963 1964 ...
@@ -210,18 +201,16 @@ h(t, \pi) = \frac{f(t, \pi)}{S(t, \pi)} &amp; = &amp; \frac{ \pi(t) \times f(t) 
 ##   ..$ hadcoup: Named int [1:2] 0 1
 ##   .. ..- attr(*, "names")= chr [1:2] "no" "yes"</code></pre>
 <p>Altogether the data include 290 coups, which makes for a positive rate of slightly more than 5% of all observations.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="kw">bscoup</span><span class="op">$</span><span class="kw">coup</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span>(<span class="kw">bscoup</span><span class="op">$</span><span class="kw">coup</span> <span class="op">==</span> <span class="st">"yes"</span>, <span class="fl">1</span>, <span class="fl">0</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span>(<span class="kw">bscoup</span><span class="op">$</span><span class="kw">coup</span>)
-</pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">bscoup</span><span class="op">$</span><span class="va">coup</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">bscoup</span><span class="op">$</span><span class="va">coup</span> <span class="op">==</span> <span class="st">"yes"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">bscoup</span><span class="op">$</span><span class="va">coup</span><span class="op">)</span></code></pre></div>
 <pre><code>## 
 ##    0    1 
 ## 5173  290</code></pre>
 <p>Before we can estimate a split-population duration model with the data, we need to add several variables that capture the survival characteristics of the data.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="kw">bscoup</span>      <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add_duration.html">add_duration</a></span>(<span class="kw">bscoup</span>, <span class="st">"coup"</span>, unitID = <span class="st">"countryid"</span>, tID = <span class="st">"year"</span>,
-                            freq = <span class="st">"year"</span>, ongoing = <span class="fl">FALSE</span>)
-</pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">bscoup</span>      <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add_duration.html">add_duration</a></span><span class="op">(</span><span class="va">bscoup</span>, <span class="st">"coup"</span>, unitID <span class="op">=</span> <span class="st">"countryid"</span>, tID <span class="op">=</span> <span class="st">"year"</span>,
+                            freq <span class="op">=</span> <span class="st">"year"</span>, ongoing <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <pre><code>## Warning in attempt_date(data[, tID], freq): Converting to 'Date' class with
 ## yyyy-06-30</code></pre>
 <p>The <code>add_duration</code> function takes as input a data frame with a binary response variable–“coup”–that measures the occurrence of the event, or failure, recorded over discrete time periods. We assume that the data frame is in a cross-sectional time-series format that consists of multiple observations over time for a number of subjects, in our case countries.</p>
@@ -304,24 +293,22 @@ h(t, \pi) = \frac{f(t, \pi)}{S(t, \pi)} &amp; = &amp; \frac{ \pi(t) \times f(t) 
 <p>Though the data used in this example are recorded annually, the function supports annual, monthly, or daily data and will try to convert the <code>tID</code> input to class “Date” given the provided argument in <code>freq</code>, as indicated by the warning it returned in the example above. This can be avoided by converting any numeric dates to R dates first.</p>
 <p>Another important question is how to handle consecutive 1’s in the response variable provided. This is controlled with the <code>ongoing</code> argument. In some cases like civil war occurrence, the <em>y</em> variable records all years during which a country experienced a civil war. Here <code>ongoing</code> should be set to true so that the models try to predict the onset of the civil war, but disregard ongoing conflicts (failure is set to <code>NA</code> for these cases, dropping them from analysis). With <code>ongoing</code> set to false, successive 1’s in <em>y</em> are treated as distinct and new failures, and kept in the analysis. This makes sense for discrete, short-term events like coups. Countries can experience distinct coups in successive years.</p>
 <p>The <code>spdur</code> function is the primary function in the package and produces a regression model object of class <code>spdur</code> which can then be used with further methods. We begin by fitting first a Weibull and then a log-logistic split-population duration model using the coups data, including the measure of coup risk in the logit (risk) equation.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit">
-<span class="kw">weib_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/spdur.html">spdur</a></span>(
-  <span class="kw">duration</span> <span class="op">~</span> <span class="kw">milreg</span> <span class="op">+</span> <span class="kw">instab</span> <span class="op">+</span> <span class="kw">regconf</span>,
-  <span class="kw">atrisk</span> <span class="op">~</span> <span class="kw">couprisk</span> <span class="op">+</span> <span class="kw">wealth</span> <span class="op">+</span> <span class="kw">milreg</span> <span class="op">+</span> <span class="kw">rwar</span> <span class="op">+</span> <span class="kw">regconf</span> <span class="op">+</span> <span class="kw">samerica</span> <span class="op">+</span> <span class="kw">camerica</span>,
-  data = <span class="kw">bscoup</span>, distr = <span class="st">"weib"</span>, silent = <span class="fl">TRUE</span>)
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">weib_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/spdur.html">spdur</a></span><span class="op">(</span>
+  <span class="va">duration</span> <span class="op">~</span> <span class="va">milreg</span> <span class="op">+</span> <span class="va">instab</span> <span class="op">+</span> <span class="va">regconf</span>,
+  <span class="va">atrisk</span> <span class="op">~</span> <span class="va">couprisk</span> <span class="op">+</span> <span class="va">wealth</span> <span class="op">+</span> <span class="va">milreg</span> <span class="op">+</span> <span class="va">rwar</span> <span class="op">+</span> <span class="va">regconf</span> <span class="op">+</span> <span class="va">samerica</span> <span class="op">+</span> <span class="va">camerica</span>,
+  data <span class="op">=</span> <span class="va">bscoup</span>, distr <span class="op">=</span> <span class="st">"weib"</span>, silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
-<span class="kw">loglog_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/spdur.html">spdur</a></span>(
-  <span class="kw">duration</span> <span class="op">~</span> <span class="kw">milreg</span> <span class="op">+</span> <span class="kw">instab</span> <span class="op">+</span> <span class="kw">regconf</span>,
-  <span class="kw">atrisk</span> <span class="op">~</span> <span class="kw">couprisk</span> <span class="op">+</span> <span class="kw">wealth</span> <span class="op">+</span> <span class="kw">milreg</span> <span class="op">+</span> <span class="kw">rwar</span> <span class="op">+</span> <span class="kw">regconf</span> <span class="op">+</span> <span class="kw">samerica</span> <span class="op">+</span> <span class="kw">camerica</span>,
-  data = <span class="kw">bscoup</span>, distr = <span class="st">"loglog"</span>, silent = <span class="fl">TRUE</span>)
-</pre></div>
+<span class="va">loglog_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/spdur.html">spdur</a></span><span class="op">(</span>
+  <span class="va">duration</span> <span class="op">~</span> <span class="va">milreg</span> <span class="op">+</span> <span class="va">instab</span> <span class="op">+</span> <span class="va">regconf</span>,
+  <span class="va">atrisk</span> <span class="op">~</span> <span class="va">couprisk</span> <span class="op">+</span> <span class="va">wealth</span> <span class="op">+</span> <span class="va">milreg</span> <span class="op">+</span> <span class="va">rwar</span> <span class="op">+</span> <span class="va">regconf</span> <span class="op">+</span> <span class="va">samerica</span> <span class="op">+</span> <span class="va">camerica</span>,
+  data <span class="op">=</span> <span class="va">bscoup</span>, distr <span class="op">=</span> <span class="st">"loglog"</span>, silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p>Using the <code>summary</code> function on either model object will produce standard output showing the model formula, estimates for the duration and risk equations, and test statistics with <span class="math inline">\(p\)</span>-values. These can be exported by calling <code>xtable</code> directly on the “spdur” object.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st"><a href="http://xtable.r-forge.r-project.org">"xtable"</a></span>)
-<span class="kw">tbl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/xtable/man/xtable.html">xtable</a></span>(<span class="kw">loglog_model</span>, caption = <span class="st">"Coup model with log-logistic hazard"</span>,
-              label = <span class="st">"loglog_table"</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw">tbl</span>, type = <span class="st">"html"</span>, caption.placement = <span class="st">"top"</span>, comment = <span class="fl">FALSE</span>, include.rownames = <span class="fl">FALSE</span>)
-</pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="http://xtable.r-forge.r-project.org/">"xtable"</a></span><span class="op">)</span>
+<span class="va">tbl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/xtable/man/xtable.html">xtable</a></span><span class="op">(</span><span class="va">loglog_model</span>, caption <span class="op">=</span> <span class="st">"Coup model with log-logistic hazard"</span>,
+              label <span class="op">=</span> <span class="st">"loglog_table"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">tbl</span>, type <span class="op">=</span> <span class="st">"html"</span>, caption.placement <span class="op">=</span> <span class="st">"top"</span>, comment <span class="op">=</span> <span class="cn">FALSE</span>, include.rownames <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <caption align="top">
 Coup model with log-logistic hazard
@@ -567,34 +554,30 @@ Risk_camerica
 </table>
 <p>The table shows estimates from the duration equation, beginning with the intercept, and then estimates from the risk equation. The duration component of the model is in accelerated failure time format and the coefficient estimates are on the log of expected time to failure. The negative coefficient for military regimes for example means that the expected time to a coup is shorter in military regimes than non-military regimes, holding all other factors constant. In the risk equation, positive coefficients mean higher risk of coup. Thus, military regimes have a higher risk of experiencing a coup.</p>
 <p>One may also use the <code>AIC</code> and <code>BIC</code> function to calculate the information criterion statistics for <code>spdur</code> objects. In our example, both models are close enough in both statistics to be indistinguishable, so we will continue to focus on the log-logistic form.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(
-  <span class="fu"><a href="https://rdrr.io/r/stats/AIC.html">AIC</a></span>(<span class="kw">weib_model</span>), <span class="fu"><a href="https://rdrr.io/r/stats/AIC.html">AIC</a></span>(<span class="kw">loglog_model</span>), <span class="fu"><a href="https://rdrr.io/r/stats/AIC.html">BIC</a></span>(<span class="kw">weib_model</span>), <span class="fu"><a href="https://rdrr.io/r/stats/AIC.html">BIC</a></span>(<span class="kw">loglog_model</span>)
-  ), ncol = <span class="fl">2</span>, dimnames = <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Weibull"</span>, <span class="st">"Loglog"</span>), <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"AIC"</span>, <span class="st">"BIC"</span>)))
-</pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/AIC.html">AIC</a></span><span class="op">(</span><span class="va">weib_model</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/AIC.html">AIC</a></span><span class="op">(</span><span class="va">loglog_model</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/AIC.html">BIC</a></span><span class="op">(</span><span class="va">weib_model</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/stats/AIC.html">BIC</a></span><span class="op">(</span><span class="va">loglog_model</span><span class="op">)</span>
+  <span class="op">)</span>, ncol <span class="op">=</span> <span class="fl">2</span>, dimnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Weibull"</span>, <span class="st">"Loglog"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"AIC"</span>, <span class="st">"BIC"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>##              AIC      BIC
 ## Weibull 1329.908 1348.972
 ## Loglog  1331.214 1350.278</code></pre>
 <p>The package includes two types of plots that show the estimated hazard rates and predictive performance, respectively. The hazard rates can be plotted by either calling <code>plot_hazard</code> directly, or with <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot(x, type = "hazard")</a></code>, on a fitted <code>spdur</code> object. It will produce a plot of the conditional hazard, which is the probability of survival conditional on the covariates in the risk and duration equations, and conditional on survival up to time t, when holding all covariates at their sample means. The function calculates the average hazard rate as well as 90% confidence intervals, which are produced by simulating values from the estimated sampling distributions of the model parameters.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>(<span class="kw">weib_model</span>,   type=<span class="st">"hazard"</span>, main=<span class="st">"Weibull"</span>)
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>(<span class="kw">loglog_model</span>, type=<span class="st">"hazard"</span>, main=<span class="st">"Loglog"</span>)
-</pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">weib_model</span>,   type<span class="op">=</span><span class="st">"hazard"</span>, main<span class="op">=</span><span class="st">"Weibull"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">loglog_model</span>, type<span class="op">=</span><span class="st">"hazard"</span>, main<span class="op">=</span><span class="st">"Loglog"</span><span class="op">)</span></code></pre></div>
 <p><img src="introduction_files/figure-html/hazard-ex-1-1.png" width="700"><img src="introduction_files/figure-html/hazard-ex-1-2.png" width="700"></p>
 <p>By default the <code>plot_hazard</code> function uses the mean values of the covariates during the simulations, but users can choose specific covariate values by entering them as vectors in the arguments <code>xvals</code> and <code>zvals</code>, which correspond to the covariates in the duration and risk equations, respectively. The values are used in the same order that variables are specified in the equations used to estimate the models, which also corresponds to the order of variables in the model summary table. Note the inclusion of an intercept term.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit">
-<span class="fu"><a href="../reference/plot_hazard.html">plot_hazard</a></span>(<span class="kw">loglog_model</span>,
-     xvals = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">10</span>, <span class="fl">0.05</span>),
-     zvals = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">8.64</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0.05</span>, <span class="fl">0</span>, <span class="fl">0</span>),
-     main = <span class="st">"High risk scenario"</span>)
-</pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/plot_hazard.html">plot_hazard</a></span><span class="op">(</span><span class="va">loglog_model</span>,
+     xvals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">10</span>, <span class="fl">0.05</span><span class="op">)</span>,
+     zvals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">8.64</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0.05</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>,
+     main <span class="op">=</span> <span class="st">"High risk scenario"</span><span class="op">)</span></code></pre></div>
 <p><img src="introduction_files/figure-html/hazard-ex-2-1.png" width="700"></p>
 <p>While <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot(x, type = "hazard")</a></code> will produce a hazard plot, without a type argument, <code>plot.spdur</code> will produce a separation plot, which is a graphical display for evaluating model predictions <span class="citation">(Greenhill, Ward, and Sacks 2011)</span>. The code below produces the figure below:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span>(mfrow=<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2</span>,<span class="fl">1</span>), mar=<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2</span>,<span class="fl">2</span>,<span class="fl">2</span>,<span class="fl">2</span>))
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>(<span class="kw">weib_model</span>, heading = <span class="st">"Weibull"</span>)
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>(<span class="kw">loglog_model</span>, heading = <span class="st">"LogLog"</span>)
-</pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span>, mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span>,<span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">weib_model</span>, heading <span class="op">=</span> <span class="st">"Weibull"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">loglog_model</span>, heading <span class="op">=</span> <span class="st">"LogLog"</span><span class="op">)</span></code></pre></div>
 <p><img src="introduction_files/figure-html/unnamed-chunk-4-1.png" width="480"></p>
 <p>The option <code>endSpellOnly</code> is set to <code>FALSE</code> so that every observation, not only those at the end of a spell, is used in the plot. By default the <code>plot</code> function will calculate the conditional hazard for each observation. The separation plot sorts observations from left to right according to the predicted probability assigned by the model (higher values to the right), and shows each event/failure as red line, with non-events shown in beige. This makes it easy to see whether the model is assigning high probabilities of failure to actual cases of failure, and low probabilities to non-failures.</p>
 <p>Underlying both plotting functions is the <code>predict</code> function, which can be used on an object of class <code>spdur</code> to generate several kinds of predictions, including the probability that an observation is ``at-risk’’ and the probability of failure for a given time period.</p>
@@ -602,45 +585,39 @@ Risk_camerica
 <h2 class="hasAnchor">
 <a href="#out-of-sample-testing" class="anchor"></a>Out-of-sample testing</h2>
 <p>Finally, we demonstrate how to evaluate a model’s out of sample predictions. We will use data from 1996 onwards as the test set, and prior data for training purposes. The <code>add_duration</code> function retrospectively codes the risk variable based on how a spell ended, and we therefore need to take care in how we add the duration variables for each data set. For the training data we need to subset the training set first, so that coups in the tests set don’t influence the risk coding in the training data.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="kw">bscoup</span>)
-<span class="kw">bscoup</span><span class="op">$</span><span class="kw">coup</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span>(<span class="kw">bscoup</span><span class="op">$</span><span class="kw">coup</span> <span class="op">==</span> <span class="st">"yes"</span>, <span class="fl">1</span>, <span class="fl">0</span>)
-<span class="kw">coup_train</span> <span class="op">&lt;-</span> <span class="kw">bscoup</span>[<span class="kw">bscoup</span><span class="op">$</span><span class="kw">year</span> <span class="op">&lt;</span> <span class="fl">1996</span>, ]
-<span class="kw">coup_train</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add_duration.html">add_duration</a></span>(<span class="kw">coup_train</span>, <span class="st">"coup"</span>, unitID = <span class="st">"countryid"</span>, tID = <span class="st">"year"</span>,
-                          freq = <span class="st">"year"</span>, ongoing = <span class="fl">FALSE</span>)
-</pre></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">bscoup</span><span class="op">)</span>
+<span class="va">bscoup</span><span class="op">$</span><span class="va">coup</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">bscoup</span><span class="op">$</span><span class="va">coup</span> <span class="op">==</span> <span class="st">"yes"</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>
+<span class="va">coup_train</span> <span class="op">&lt;-</span> <span class="va">bscoup</span><span class="op">[</span><span class="va">bscoup</span><span class="op">$</span><span class="va">year</span> <span class="op">&lt;</span> <span class="fl">1996</span>, <span class="op">]</span>
+<span class="va">coup_train</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add_duration.html">add_duration</a></span><span class="op">(</span><span class="va">coup_train</span>, <span class="st">"coup"</span>, unitID <span class="op">=</span> <span class="st">"countryid"</span>, tID <span class="op">=</span> <span class="st">"year"</span>,
+                          freq <span class="op">=</span> <span class="st">"year"</span>, ongoing <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <pre><code>## Warning in attempt_date(data[, tID], freq): Converting to 'Date' class with
 ## yyyy-06-30</code></pre>
 <p>For the test set it is recommended to add the duration variables and <em>then</em> subset the test set. Since the test set is later in time than the training set we do not have to worry about contamination of the risk coding, but if we subset the data before building the duration variables we will start all duration counters at 1996, when in fact we can safely use the previous historic coup information. To do this we need to build the duration variables first:</p>
-<div class="sourceCode" id="cb20"><pre class="downlit">
-<span class="kw">coup_test</span>  <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add_duration.html">add_duration</a></span>(<span class="kw">bscoup</span>, <span class="st">"coup"</span>, unitID = <span class="st">"countryid"</span>, tID = <span class="st">"year"</span>,
-                           freq = <span class="st">"year"</span>, ongoing = <span class="fl">FALSE</span>)
-</pre></div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">coup_test</span>  <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add_duration.html">add_duration</a></span><span class="op">(</span><span class="va">bscoup</span>, <span class="st">"coup"</span>, unitID <span class="op">=</span> <span class="st">"countryid"</span>, tID <span class="op">=</span> <span class="st">"year"</span>,
+                           freq <span class="op">=</span> <span class="st">"year"</span>, ongoing <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <pre><code>## Warning in attempt_date(data[, tID], freq): Converting to 'Date' class with
 ## yyyy-06-30</code></pre>
-<div class="sourceCode" id="cb22"><pre class="downlit">
-<span class="kw">coup_test</span>  <span class="op">&lt;-</span> <span class="kw">coup_test</span>[<span class="kw">coup_test</span><span class="op">$</span><span class="kw">year</span> <span class="op">&gt;=</span> <span class="fl">1996</span>, ]
-</pre></div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">coup_test</span>  <span class="op">&lt;-</span> <span class="va">coup_test</span><span class="op">[</span><span class="va">coup_test</span><span class="op">$</span><span class="va">year</span> <span class="op">&gt;=</span> <span class="fl">1996</span>, <span class="op">]</span></code></pre></div>
 <p>Now we can fit new models using the training data, and calculate predictions from these models for the test data, using <code><a href="https://rdrr.io/r/stats/predict.html">predict(..., newdata = coup_test)</a></code>.</p>
-<div class="sourceCode" id="cb23"><pre class="downlit">
-<span class="kw">weib_model2</span>   <span class="op">&lt;-</span> <span class="fu"><a href="../reference/spdur.html">spdur</a></span>(
-  <span class="kw">duration</span> <span class="op">~</span> <span class="kw">milreg</span> <span class="op">+</span> <span class="kw">instab</span> <span class="op">+</span> <span class="kw">regconf</span>,
-  <span class="kw">atrisk</span> <span class="op">~</span> <span class="kw">couprisk</span> <span class="op">+</span> <span class="kw">wealth</span> <span class="op">+</span> <span class="kw">milreg</span> <span class="op">+</span> <span class="kw">rwar</span> <span class="op">+</span> <span class="kw">regconf</span> <span class="op">+</span> <span class="kw">samerica</span> <span class="op">+</span> <span class="kw">camerica</span>,
-  data = <span class="kw">coup_train</span>, silent = <span class="fl">TRUE</span>)
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">weib_model2</span>   <span class="op">&lt;-</span> <span class="fu"><a href="../reference/spdur.html">spdur</a></span><span class="op">(</span>
+  <span class="va">duration</span> <span class="op">~</span> <span class="va">milreg</span> <span class="op">+</span> <span class="va">instab</span> <span class="op">+</span> <span class="va">regconf</span>,
+  <span class="va">atrisk</span> <span class="op">~</span> <span class="va">couprisk</span> <span class="op">+</span> <span class="va">wealth</span> <span class="op">+</span> <span class="va">milreg</span> <span class="op">+</span> <span class="va">rwar</span> <span class="op">+</span> <span class="va">regconf</span> <span class="op">+</span> <span class="va">samerica</span> <span class="op">+</span> <span class="va">camerica</span>,
+  data <span class="op">=</span> <span class="va">coup_train</span>, silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
-<span class="kw">loglog_model2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/spdur.html">spdur</a></span>(
-  <span class="kw">duration</span> <span class="op">~</span> <span class="kw">milreg</span> <span class="op">+</span> <span class="kw">instab</span> <span class="op">+</span> <span class="kw">regconf</span>,
-  <span class="kw">atrisk</span> <span class="op">~</span> <span class="kw">couprisk</span> <span class="op">+</span> <span class="kw">wealth</span> <span class="op">+</span> <span class="kw">milreg</span> <span class="op">+</span> <span class="kw">rwar</span> <span class="op">+</span> <span class="kw">regconf</span> <span class="op">+</span> <span class="kw">samerica</span> <span class="op">+</span> <span class="kw">camerica</span>,
-  data = <span class="kw">coup_train</span>, distr = <span class="st">"loglog"</span>, silent = <span class="fl">TRUE</span>)
-</pre></div>
-<div class="sourceCode" id="cb24"><pre class="downlit">
-<span class="kw">weib2_test_p</span>   <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="kw">weib_model2</span>, newdata = <span class="kw">coup_test</span>, na.action = <span class="kw">na.omit</span>)
-<span class="kw">loglog2_test_p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span>(<span class="kw">loglog_model2</span>, newdata = <span class="kw">coup_test</span>, na.action = <span class="kw">na.omit</span>)
-</pre></div>
+<span class="va">loglog_model2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/spdur.html">spdur</a></span><span class="op">(</span>
+  <span class="va">duration</span> <span class="op">~</span> <span class="va">milreg</span> <span class="op">+</span> <span class="va">instab</span> <span class="op">+</span> <span class="va">regconf</span>,
+  <span class="va">atrisk</span> <span class="op">~</span> <span class="va">couprisk</span> <span class="op">+</span> <span class="va">wealth</span> <span class="op">+</span> <span class="va">milreg</span> <span class="op">+</span> <span class="va">rwar</span> <span class="op">+</span> <span class="va">regconf</span> <span class="op">+</span> <span class="va">samerica</span> <span class="op">+</span> <span class="va">camerica</span>,
+  data <span class="op">=</span> <span class="va">coup_train</span>, distr <span class="op">=</span> <span class="st">"loglog"</span>, silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">weib2_test_p</span>   <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">weib_model2</span>, newdata <span class="op">=</span> <span class="va">coup_test</span>, na.action <span class="op">=</span> <span class="va">na.omit</span><span class="op">)</span>
+<span class="va">loglog2_test_p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span><span class="va">loglog_model2</span>, newdata <span class="op">=</span> <span class="va">coup_test</span>, na.action <span class="op">=</span> <span class="va">na.omit</span><span class="op">)</span></code></pre></div>
 <p>Since we are predicting for data that is not contained in the “spdur” model objects, we have to use the <code>separationplot</code> functions directly from the package to produce the figure below:</p>
-<div class="sourceCode" id="cb25"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="st">"separationplot"</span>)
-</pre></div>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st">"separationplot"</span><span class="op">)</span></code></pre></div>
 <pre><code>## Loading required package: RColorBrewer</code></pre>
 <pre><code>## Loading required package: Hmisc</code></pre>
 <pre><code>## Loading required package: lattice</code></pre>
@@ -657,13 +634,12 @@ Risk_camerica
 ##     format.pval, units</code></pre>
 <pre><code>## Loading required package: MASS</code></pre>
 <pre><code>## Loading required package: foreign</code></pre>
-<div class="sourceCode" id="cb37"><pre class="downlit">
-<span class="kw">obs_y</span> <span class="op">&lt;-</span> <span class="kw">coup_test</span>[<span class="fu"><a href="https://rdrr.io/r/stats/complete.cases.html">complete.cases</a></span>(<span class="kw">coup_test</span>), <span class="st">"coup"</span>]
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">obs_y</span> <span class="op">&lt;-</span> <span class="va">coup_test</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/stats/complete.cases.html">complete.cases</a></span><span class="op">(</span><span class="va">coup_test</span><span class="op">)</span>, <span class="st">"coup"</span><span class="op">]</span>
 
-<span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span>(mfrow=<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2</span>,<span class="fl">1</span>),mar=<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2</span>,<span class="fl">2</span>,<span class="fl">2</span>,<span class="fl">2</span>))
-<span class="fu"><a href="https://rdrr.io/pkg/separationplot/man/separationplot.html">separationplot</a></span>(<span class="kw">weib2_test_p</span>,   <span class="kw">obs_y</span>, newplot = <span class="fl">FALSE</span>)
-<span class="fu"><a href="https://rdrr.io/pkg/separationplot/man/separationplot.html">separationplot</a></span>(<span class="kw">loglog2_test_p</span>, <span class="kw">obs_y</span>, newplot = <span class="fl">FALSE</span>)
-</pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">1</span><span class="op">)</span>,mar<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span>,<span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/pkg/separationplot/man/separationplot.html">separationplot</a></span><span class="op">(</span><span class="va">weib2_test_p</span>,   <span class="va">obs_y</span>, newplot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/pkg/separationplot/man/separationplot.html">separationplot</a></span><span class="op">(</span><span class="va">loglog2_test_p</span>, <span class="va">obs_y</span>, newplot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
 <p><img src="introduction_files/figure-html/oos-sepplots-1.png" width="480"></p>
 </div>
 </div>
@@ -808,7 +784,7 @@ Risk_camerica
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

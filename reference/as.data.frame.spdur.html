@@ -87,12 +87,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -141,7 +135,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for spdur</span>
-<span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='kw'>x</span>, row.names = <span class='fl'>TRUE</span>, optional = <span class='fl'>FALSE</span>, <span class='kw'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>x</span>, row.names <span class='op'>=</span> <span class='cn'>TRUE</span>, optional <span class='op'>=</span> <span class='cn'>FALSE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -177,17 +171,19 @@ duration model. It's intended purpose is to help create larger tables
 combining several model results.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/spduration/man/xtable.spdur.html'>xtable.spdur</a></code> for formatting a single model to 
+    <div class='dont-index'><p><code><a href='xtable.spdur.html'>xtable.spdur</a></code> for formatting a single model to 
 Latex output.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>model.coups</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>model.coups</span>)</div><div class='output co'>#&gt;                     Estimate Std..Error   t.value     Pr...t..
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>model.coups</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='va'>model.coups</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;                     Estimate Std..Error   t.value     Pr...t..
 #&gt; Dur_(Intercept)   4.00150499 0.23762082 16.839876 0.000000e+00
 #&gt; Dur_polity2       0.20587882 0.03036943  6.779147 1.208877e-11
 #&gt; log(alpha)       -0.03203683 0.11899341 -0.269232 7.877512e-01
 #&gt; Risk_(Intercept)  6.52782381 3.25557613  2.005121 4.495012e-02
-#&gt; Risk_polity2      0.89664330 0.40838327  2.195593 2.812111e-02</div><div class='input'></div></pre>
+#&gt; Risk_polity2      0.89664330 0.40838327  2.195593 2.812111e-02</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -203,7 +199,7 @@ Latex output.</p></div>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

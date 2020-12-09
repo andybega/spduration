@@ -87,12 +87,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -141,7 +135,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for spdur</span>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='kw'>object</span>, <span class='kw'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>object</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -165,14 +159,16 @@
 risk and duration equations of a split-population duration model.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>The model fitting function is <code><a href='https://rdrr.io/pkg/spduration/man/spdur.html'>spdur</a></code>, and see 
+    <div class='dont-index'><p>The model fitting function is <code><a href='spdur.html'>spdur</a></code>, and see 
 <code><a href='https://rdrr.io/r/base/summary.html'>summary</a></code> for the generic function.</p>
-<p>For print formatting, see <code><a href='https://rdrr.io/pkg/spduration/man/print.summary.spdur.html'>print.summary.spdur</a></code>.</p></div>
+<p>For print formatting, see <code><a href='print.summary.spdur.html'>print.summary.spdur</a></code>.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>model.coups</span>)
-<span class='kw'>s</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='kw'>model.coups</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='kw'>s</span>)</div><div class='output co'>#&gt; [1] "summary.spdur"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='kw'>s</span>)</div><div class='output co'>#&gt; Call:
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>model.coups</span><span class='op'>)</span>
+<span class='va'>s</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>model.coups</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>s</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "summary.spdur"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>s</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Call:
 #&gt; spdur(duration = duration ~ polity2, atrisk = atrisk ~ polity2, 
 #&gt;     data = dur.coups)
 #&gt; 
@@ -189,7 +185,8 @@ risk and duration equations of a split-population duration model.</p>
 #&gt;            Estimate Std. Error t value Pr(&gt;|t|)
 #&gt; log(alpha) -0.03204    0.11899  -0.269    0.788
 #&gt; ---
-#&gt; Signif. codes: *** = 0.001, ** = 0.01, * = 0.05, . = 0.1</div><div class='input'></div></pre>
+#&gt; Signif. codes: *** = 0.001, ** = 0.01, * = 0.05, . = 0.1</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -205,7 +202,7 @@ risk and duration equations of a split-population duration model.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>
