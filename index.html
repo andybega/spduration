@@ -35,6 +35,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -47,7 +49,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">spduration</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.17.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.17.1.9002</span>
       </span>
     </div>
 
@@ -57,7 +59,7 @@
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -74,8 +76,8 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/andybega/spduration/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/andybega/spduration/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -91,68 +93,67 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="spduration-" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#spduration-" class="anchor"></a>spduration <img src="reference/figures/logo.png" align="right" width="120">
+<div class="section level1">
+<div class="page-header"><h1 id="spduration-">spduration <img src="reference/figures/logo.png" align="right" width="120"><a class="anchor" aria-label="anchor" href="#spduration-"></a>
 </h1></div>
-
+<p><a href="https://github.com/andybega/spduration/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/andybega/spduration/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a> <a href="https://cran.r-project.org/package=spduration" class="external-link"><img src="http://www.r-pkg.org/badges/version/spduration" alt="CRAN version"></a> <a href="https://codecov.io/gh/andybega/spduration?branch=master" class="external-link"><img src="https://codecov.io/gh/andybega/spduration/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></p>
 <p>spduration implements a split-population duration model for duration data with time-varying covariates where a significant subset of the population or spells will not experience failure.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/andybega/spduration">"spduration"</a></span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">## Registered S3 method overwritten by 'quantmod':</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="co">##   method            from</span></span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="co">##   as.zoo.data.frame zoo</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/andybega/spduration" class="external-link">"spduration"</a></span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Registered S3 method overwritten by 'quantmod':</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="do">##   method            from</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="do">##   as.zoo.data.frame zoo</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Prepare data</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">coups</span><span class="op">)</span>
-<span class="va">dur.coups</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/add_duration.html">add_duration</a></span><span class="op">(</span><span class="va">coups</span>, <span class="st">"succ.coup"</span>, unitID<span class="op">=</span><span class="st">"gwcode"</span>, tID<span class="op">=</span><span class="st">"year"</span>,
-                          freq<span class="op">=</span><span class="st">"year"</span><span class="op">)</span>
-
-<span class="co"># Estimate model</span>
-<span class="va">model.coups</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/spdur.html">spdur</a></span><span class="op">(</span><span class="va">duration</span> <span class="op">~</span> <span class="va">polity2</span>, <span class="va">atrisk</span> <span class="op">~</span> <span class="va">polity2</span>, data <span class="op">=</span> <span class="va">dur.coups</span>,
-                     silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">model.coups</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co">## Call:</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="co">## spdur(duration = duration ~ polity2, atrisk = atrisk ~ polity2, </span></span>
-<span id="cb4-3"><a href="#cb4-3"></a><span class="co">##     data = dur.coups, silent = TRUE)</span></span>
-<span id="cb4-4"><a href="#cb4-4"></a><span class="co">## </span></span>
-<span id="cb4-5"><a href="#cb4-5"></a><span class="co">## Duration equation: </span></span>
-<span id="cb4-6"><a href="#cb4-6"></a><span class="co">##             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
-<span id="cb4-7"><a href="#cb4-7"></a><span class="co">## (Intercept)  4.00150    0.23762  16.840  &lt; 2e-16 ***</span></span>
-<span id="cb4-8"><a href="#cb4-8"></a><span class="co">## polity2      0.20588    0.03037   6.779 1.21e-11 ***</span></span>
-<span id="cb4-9"><a href="#cb4-9"></a><span class="co">## </span></span>
-<span id="cb4-10"><a href="#cb4-10"></a><span class="co">## Risk equation: </span></span>
-<span id="cb4-11"><a href="#cb4-11"></a><span class="co">##             Estimate Std. Error t value Pr(&gt;|t|)  </span></span>
-<span id="cb4-12"><a href="#cb4-12"></a><span class="co">## (Intercept)   6.5278     3.2556   2.005   0.0449 *</span></span>
-<span id="cb4-13"><a href="#cb4-13"></a><span class="co">## polity2       0.8966     0.4084   2.196   0.0281 *</span></span>
-<span id="cb4-14"><a href="#cb4-14"></a><span class="co">## </span></span>
-<span id="cb4-15"><a href="#cb4-15"></a><span class="co">##            Estimate Std. Error t value Pr(&gt;|t|)</span></span>
-<span id="cb4-16"><a href="#cb4-16"></a><span class="co">## log(alpha) -0.03204    0.11899  -0.269    0.788</span></span>
-<span id="cb4-17"><a href="#cb4-17"></a><span class="co">## ---</span></span>
-<span id="cb4-18"><a href="#cb4-18"></a><span class="co">## Signif. codes: *** = 0.001, ** = 0.01, * = 0.05, . = 0.1</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Prepare data</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">coups</span><span class="op">)</span></span>
+<span><span class="va">dur.coups</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/add_duration.html">add_duration</a></span><span class="op">(</span><span class="va">coups</span>, <span class="st">"succ.coup"</span>, unitID<span class="op">=</span><span class="st">"gwcode"</span>, tID<span class="op">=</span><span class="st">"year"</span>,</span>
+<span>                          freq<span class="op">=</span><span class="st">"year"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Estimate model</span></span>
+<span><span class="va">model.coups</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/spdur.html">spdur</a></span><span class="op">(</span><span class="va">duration</span> <span class="op">~</span> <span class="va">polity2</span>, <span class="va">atrisk</span> <span class="op">~</span> <span class="va">polity2</span>, data <span class="op">=</span> <span class="va">dur.coups</span>,</span>
+<span>                     silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">model.coups</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Call:</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="do">## spdur(duration = duration ~ polity2, atrisk = atrisk ~ polity2, </span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="do">##     data = dur.coups, silent = TRUE)</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Duration equation: </span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="do">##             Estimate Std. Error t value Pr(&gt;|t|)    </span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)  4.00150    0.23762  16.840  &lt; 2e-16 ***</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="do">## polity2      0.20588    0.03037   6.779 1.21e-11 ***</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="do">## Risk equation: </span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="do">##             Estimate Std. Error t value Pr(&gt;|t|)  </span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="do">## (Intercept)   6.5278     3.2556   2.005   0.0449 *</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="do">## polity2       0.8966     0.4084   2.196   0.0281 *</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="do">##            Estimate Std. Error t value Pr(&gt;|t|)</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="do">## log(alpha) -0.03204    0.11899  -0.269    0.788</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="do">## ---</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="do">## Signif. codes: *** = 0.001, ** = 0.01, * = 0.05, . = 0.1</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">model.coups</span>, type <span class="op">=</span> <span class="st">"hazard"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">model.coups</span>, type <span class="op">=</span> <span class="st">"hazard"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-2-1.png" style="display: block; margin: auto;"></p>
-<div id="install" class="section level2">
-<h2 class="hasAnchor">
-<a href="#install" class="anchor"></a>Install</h2>
+<div class="section level2">
+<h2 id="install">Install<a class="anchor" aria-label="anchor" href="#install"></a>
+</h2>
 <ul>
 <li>the latest released version from CRAN:</li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"spduration"</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"spduration"</span><span class="op">)</span></span></code></pre></div>
 <ul>
 <li>the latest development version:</li>
 </ul>
-<!-- end list --><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/">devtools</a></span><span class="op">)</span>
-<span class="fu"><a href="https://devtools.r-lib.org//reference/remote-reexports.html">install_github</a></span><span class="op">(</span><span class="st">"andybega/spduration"</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/" class="external-link">devtools</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"andybega/spduration"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="contact" class="section level2">
-<h2 class="hasAnchor">
-<a href="#contact" class="anchor"></a>Contact</h2>
+<div class="section level2">
+<h2 id="contact">Contact<a class="anchor" aria-label="anchor" href="#contact"></a>
+</h2>
 <ul>
-<li>submit suggestions, bugs, issues, questions at: <a href="https://github.com/andybega/spduration/issues" class="uri">https://github.com/andybega/spduration/issues</a>
+<li>submit suggestions, bugs, issues, questions at: <a href="https://github.com/andybega/spduration/issues" class="external-link uri">https://github.com/andybega/spduration/issues</a>
 </li>
 <li>email: <a href="mailto:adbeger+spduration@gmail.com" class="email">adbeger+spduration@gmail.com</a>
 </li>
@@ -163,26 +164,33 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=spduration">https://​cloud.r-project.org/​package=spduration</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/andybega/spduration/">https://​github.com/​andybega/​spduration/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/andybega/spduration/issues">https://​github.com/​andybega/​spduration/​issues</a>
-</li>
+<li><a href="https://cloud.r-project.org/package=spduration" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/andybega/spduration/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/andybega/spduration/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></li>
+<li><a href="https://www.r-project.org/Licenses/GPL-3" class="external-link">GPL-3</a></li>
 </ul>
 </div>
-<div class="developers">
-<h2>Developers</h2>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li>Andreas Beger <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-1883-3169" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li><a href="authors.html#citation">Citing spduration</a></li>
+</ul>
+</div>
+
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
+<ul class="list-unstyled">
+<li>Andreas Beger <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-1883-3169" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 <li>Daina Chiba <br><small class="roles"> Author </small>  </li>
 <li>Daniel W. Hill, Jr. <br><small class="roles"> Author </small>  </li>
 <li>Nils W. Metternich <br><small class="roles"> Author </small>  </li>
@@ -191,24 +199,20 @@
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
-<ul class="list-unstyled">
-<li><a href="https://github.com/andybega/spduration/actions"><img src="https://github.com/andybega/spduration/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
-<li><a href="https://cran.r-project.org/package=spduration"><img src="http://www.r-pkg.org/badges/version/spduration" alt="CRAN version"></a></li>
-<li><a href="https://codecov.io/gh/andybega/spduration?branch=master"><img src="https://codecov.io/gh/andybega/spduration/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
-</ul>
-</div>
-</div>
+
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Andreas Beger, Daina Chiba, Daniel W. Hill, Jr., Nils W. Metternich, Shahryar Minhas, Michael D. Ward.</p>
+  <p></p>
+<p>Developed by Andreas Beger, Daina Chiba, Daniel W. Hill, Jr., Nils W. Metternich, Shahryar Minhas, Michael D. Ward.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -216,6 +220,8 @@
 
   
 
+
+  
 
   </body>
 </html>
