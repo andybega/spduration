@@ -39,7 +39,8 @@ Suggests:
     devtools,
     testthat,
     knitr,
-    rmarkdown
+    rmarkdown,
+    tibble
 LinkingTo:
     Rcpp,
     RcppArmadillo

@@ -101,7 +101,7 @@ spdur <- function(duration, atrisk, data=NULL, last="end.spell", t.0="t.0",
   k.risk <- ncol(Z)  # mark number of terms in risk. eq. for summary()
   
   # Y vectors
-  Y <- cbind(atrisk=lhg, duration=lhb, last=df[, last], t.0=df[, t.0], 
+  Y <- cbind(atrisk=lhg, duration=lhb, last=df[[last]], t.0=df[[t.0]], 
              fail=df[, fail])
   attr(Y, "last") <- last
   attr(Y, "t.0") <- t.0
