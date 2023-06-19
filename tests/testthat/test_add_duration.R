@@ -1,12 +1,10 @@
-library(spduration)
-context("Test add_duration")
 
 test_that("Correct output given time frequency", {
   
   # Test for yearly data
   data <- data.frame(y=c(0,0,0,1,0), 
-                      unitID=c(1,1,1,1,1), 
-                      tID=c(2000, 2001, 2002, 2003, 2004))
+                     unitID=c(1,1,1,1,1), 
+                     tID=c(2000, 2001, 2002, 2003, 2004))
   
   expect_warning(add_duration(data, "y", "unitID", "tID", freq="year"))
   
@@ -26,11 +24,39 @@ test_that("Correct output given time frequency", {
           censor = c(0, 0, 0, 0, 1), 
           duration = c(1, 2, 3, 4, 1), 
           t.0 = c(0, 1, 2, 3, 0)), 
-     .Names = c("y", "unitID", "tID", "failure", "ongoing", 
-                "end.spell", "cured", "atrisk", "censor", "duration", "t.0"), 
-     class = "data.frame", row.names = c(2L, 3L, 4L, 5L, 1L))
+    .Names = c("y", "unitID", "tID", "failure", "ongoing", 
+               "end.spell", "cured", "atrisk", "censor", "duration", "t.0"), 
+    class = "data.frame", row.names = c(2L, 3L, 4L, 5L, 1L))
   expect_equivalent(test, goal)
   
+  
+})
+
+test_that("add_duration works with tibble input", {
+  
+  # Test for yearly data
+  data <- tibble::tibble(y=c(0,0,0,1,0), 
+                        unitID=c(1,1,1,1,1), 
+                        tID=as.Date(paste0(c(2000:2004), "-01-01")))
+  
+  test <- add_duration(data, "y", "unitID", "tID", freq="year")
+  
+  goal <- structure(
+    list( y = c(0, 0, 0, 1, 0), 
+          unitID = c(1, 1, 1, 1, 1), 
+          tID = as.Date(paste0(c(2000:2004), "-01-01")), 
+          failure = c(0, 0, 0, 1, 0), 
+          ongoing = c(0, 0, 0, 0, 0), 
+          end.spell = c(0, 0, 0, 1, 1), 
+          cured = c(0, 0, 0, 0, 1), 
+          atrisk = c(1, 1, 1, 1, 0), 
+          censor = c(0, 0, 0, 0, 1), 
+          duration = c(1, 2, 3, 4, 1), 
+          t.0 = c(0, 1, 2, 3, 0)), 
+    .Names = c("y", "unitID", "tID", "failure", "ongoing", 
+               "end.spell", "cured", "atrisk", "censor", "duration", "t.0"), 
+    class = "data.frame", row.names = c(2L, 3L, 4L, 5L, 1L))
+  expect_equivalent(test, goal)
   
 })
 

@@ -76,14 +76,10 @@
 #' dur.data
 #'
 #' @export
-#' @importFrom plyr ddply
 add_duration <- function(data, y, unitID, tID, freq="month", sort=FALSE,
-                          ongoing=TRUE, slice.last=FALSE) {
+                         ongoing=TRUE, slice.last=FALSE) {
   
   ##    Check input
-  
-  # make sure it's not a tibble
-  data <- as.data.frame(data)
   
   # valid frequency
   supported.freq <- c("day", "month", "year")
@@ -93,7 +89,7 @@ add_duration <- function(data, y, unitID, tID, freq="month", sort=FALSE,
   
   # convert to date if possible
   if (!inherits(data[[tID]], "Date")) {  
-    data[, "temp.tID"] <- attempt_date(data[, tID], freq)
+    data[["temp.tID"]] <- attempt_date(data[[tID]], freq)
     tID <- "temp.tID"
   } 
   
@@ -122,25 +118,27 @@ add_duration <- function(data, y, unitID, tID, freq="month", sort=FALSE,
   # Mark failure (0, 1, NA for ongoing)
   if (ongoing==TRUE) {
     failure <- function(x) return(c(x[1], pmax(0, diff(x))))
-    res$failure <- unlist(by(res[, y], res[, unitID], failure))
-    res$ongoing <- ifelse(res[, y]==1 & res$failure==0, 1, 0)
+    res$failure <- unlist(by(res[[y]], res[[unitID]], failure))
+    res$ongoing <- ifelse(res[[y]]==1 & res$failure==0, 1, 0)
     res$failure <- ifelse(res$ongoing==1, NA, res$failure)
   } else {
-    res$failure <- res[, y]
+    res$failure <- res[[y]]
     res$ongoing <- 0
   }
   
   # Mark end of a spell and create unique ID
   # A spell can end 3 ways: failure, right-censor because last observation
   # period, or right censor because state ceased to exist.
-  res$temp.t <- res[, tID]
-  res <- ddply(res, .variables=unitID, transform, end=max(temp.t)) 
+  res$temp.t <- res[[tID]]
+  grouped <- split(res, as.factor(res[[unitID]]))
+  grouped <- lapply(grouped, function(df) { df$end = max(df$temp.t); df })
+  res <- do.call(rbind, grouped)
   if (freq=="year") {
-    cond <- (format(res[, tID], '%Y')==format(as.Date(res$end), '%Y'))
+    cond <- (format(res[[tID]], '%Y')==format(as.Date(res$end), '%Y'))
   } else if (freq=="month") {
-    cond <- (format(res[, tID], '%Y-%m')==format(as.Date(res$end), '%Y-%m'))
+    cond <- (format(res[[tID]], '%Y-%m')==format(as.Date(res$end), '%Y-%m'))
   } else if (freq=="day") {
-    cond <- (format(res[, tID], '%Y-%m-%d')==
+    cond <- (format(res[[tID]], '%Y-%m-%d')==
                format(as.Date(res$end), '%Y-%m-%d'))
   }
   # Mark if month is equal to last month for spell
@@ -161,7 +159,7 @@ add_duration <- function(data, y, unitID, tID, freq="month", sort=FALSE,
   colnames(helper) <- c("spellID", "cured")
   
   # Create cure (c) variable
-  res <- merge(res, helper, by=("spellID"), all.x=TRUE)
+  res <- merge(res, helper, by="spellID", all.x=TRUE)
   res$cured[is.na(res$cured) & res$ongoing==0] <- 1
   res$atrisk <- 1 - res$cured
   
@@ -170,19 +168,19 @@ add_duration <- function(data, y, unitID, tID, freq="month", sort=FALSE,
   
   # Create duration variable, need to order by spell ID and date!!!!
   helper <- 1 - res$ongoing
-  res <- res[order(res$spellID, res[, tID]), ]
+  res <- res[order(res$spellID, res[[tID]]), ]
   res$duration[!is.na(res$spellID)] <- unlist(
     by(helper[!is.na(res$spellID)], res$spellID[!is.na(res$spellID)], cumsum)
-    )
+  )
   res$t.0 <- res$duration - 1 ## previous duration
   
   ##    Slice option for forecast data; for CRISP/ICEWS
   if (slice.last==TRUE) {
-    dataend = max(data[, tID])
-    pred.data <- res[res[, tID]==dataend, ]
-    missing <- setdiff(unique(data[, unitID]), unique(pred.data[, unitID]))
+    dataend = max(data[[tID]])
+    pred.data <- res[res[[tID]]==dataend, ]
+    missing <- setdiff(unique(data[[unitID]]), unique(pred.data[[unitID]]))
     if (length(missing)==0) {
-      missing <- data[data[, tID]==dataend & data[, unitID] %in% missing, ]
+      missing <- data[data[[tID]]==dataend & data[[unitID]] %in% missing, ]
       missing <- cbind(spellID=rep(NA, dim(missing)[1]), missing)
       missing$failure <- 0
       missing$ongoing <- 1
@@ -199,28 +197,28 @@ add_duration <- function(data, y, unitID, tID, freq="month", sort=FALSE,
   ##    Clean up result
   
   # Reformat dates
-  if (freq=="year")  res[, tID] <- format(res[, tID], format="%Y")
-  if (freq=="month") res[, tID] <- format(res[, tID], format="%Y-%m")
-  if (freq=="day")   res[, tID] <- format(res[, tID], format="%Y-%m-%d")
+  if (freq=="year")  res[[tID]] <- format(res[[tID]], format="%Y")
+  if (freq=="month") res[[tID]] <- format(res[[tID]], format="%Y-%m")
+  if (freq=="day")   res[[tID]] <- format(res[[tID]], format="%Y-%m-%d")
   
   # Merge back with original data
   keep <- c("failure", "ongoing", "end.spell", "cured", "atrisk", "censor",
-    "duration", "t.0")
+            "duration", "t.0")
   if (sort==FALSE) {
     res <- res[order(res$orig_order_track), ]
     res <- subset(res, select=keep)
     res <- cbind(data, res)
   } else {
-    res <- res[order(res[, unitID], res[, tID]), ]
+    res <- res[order(res[[unitID]], res[[tID]]), ]
     res <- subset(res, select=keep)
-    data <- data[order(data[, unitID], data[, tID]), ]
+    data <- data[order(data[[unitID]], data[[tID]]), ]
     warning(paste0("Data are sorted by ", unitID, ", ", tID))
     res <- cbind(data, res)
   }
-
+  
   # Drop utility columns in original data
   res <- res[, !(colnames(res) %in% c("orig_order_track", "temp.tID"))]
-
+  
   # Done
   return(res)
 }
