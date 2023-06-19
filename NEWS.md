@@ -1,3 +1,6 @@
+# spduration 0.17.2 
+
+- Fix `model.matrix` so that it works correctly with dots arguments.
 - Fix an error when trying to use `add_duration()` with a tibble as input. The 
   errors were due to tibble returing lists when subsetting columns with `[, col]`. 
   The data input is now internally converted to a base data frame (`as.data.frame()`).

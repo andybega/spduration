@@ -1,6 +1,6 @@
 Package: spduration
 Title: Split-Population Duration (Cure) Regression
-Version: 0.17.1.9000
+Version: 0.17.1.9002
 Authors@R: c(
     person("Andreas", "Beger", , "adbeger@gmail.com", c("aut", "cre"), comment = c(ORCID = "0000-0003-1883-3169")),
     person("Daina", "Chiba", , "dchiba@essex.ac.uk", "aut"),
@@ -43,7 +43,7 @@ Suggests:
 LinkingTo:
     Rcpp,
     RcppArmadillo
-RoxygenNote: 7.1.0
+RoxygenNote: 7.2.3
 VignetteBuilder: knitr
 URL: https://github.com/andybega/spduration, https://andybeger.com/spduration
 BugReports: https://github.com/andybega/spduration/issues

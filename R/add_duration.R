@@ -82,6 +82,9 @@ add_duration <- function(data, y, unitID, tID, freq="month", sort=FALSE,
   
   ##    Check input
   
+  # make sure it's not a tibble
+  data <- as.data.frame(data)
+  
   # valid frequency
   supported.freq <- c("day", "month", "year")
   if (!freq %in% supported.freq) {
@@ -89,7 +92,7 @@ add_duration <- function(data, y, unitID, tID, freq="month", sort=FALSE,
   }
   
   # convert to date if possible
-  if (class(data[, tID])!="Date") {  
+  if (!inherits(data[[tID]], "Date")) {  
     data[, "temp.tID"] <- attempt_date(data[, tID], freq)
     tID <- "temp.tID"
   } 
@@ -100,9 +103,9 @@ add_duration <- function(data, y, unitID, tID, freq="month", sort=FALSE,
   }
   
   # check that y is binary and has failures
-  if (!all(unique(data[, y]) %in% c(0, 1))) {
+  if (!all(unique(data[[y]]) %in% c(0, 1))) {
     stop(paste(y, "must be binary (0, 1)"))
-  } else if (all(data[, y]==0)) {
+  } else if (all(data[[y]]==0)) {
     stop(paste0("No failures occur in data (", substitute(data), "[, \"", y, 
                 "\"])"))
   }
@@ -114,7 +117,7 @@ add_duration <- function(data, y, unitID, tID, freq="month", sort=FALSE,
   
   # Need to order by date to id and drop ongoing spells
   keep <- c(y, unitID, tID, "orig_order_track")
-  res <- data[order(data[, unitID], data[, tID]), keep]
+  res <- data[order(data[[unitID]], data[[tID]]), keep]
   
   # Mark failure (0, 1, NA for ongoing)
   if (ongoing==TRUE) {
