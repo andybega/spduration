@@ -109,11 +109,17 @@ vcov.spdur <- function (object, model = c("full", "duration", "risk", "distr"), 
 model.matrix.spdur <- function(object, model = c("duration", "risk"), ...) 
 {
   model <- match.arg(model)
-  res  <- switch(
-    model, 
-    duration = object$mf.dur, 
-    risk = object$mf.risk)
-  return(res)
+  args <- list(...)
+  # get the correct data
+  if (!"data" %in% names(list(...))) {
+    data <- switch(
+      model, 
+      duration = object$mf.dur, 
+      risk = object$mf.risk)
+    args[["data"]] <- data
+  }
+  args[["object"]] <- terms(object, model = model)
+  do.call(model.matrix, args)
 }
 
 #' @rdname accessors

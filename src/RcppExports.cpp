@@ -6,6 +6,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // loglog_lnl
 double loglog_lnl(arma::vec theta, arma::mat y, arma::mat X);
 RcppExport SEXP _spduration_loglog_lnl(SEXP thetaSEXP, SEXP ySEXP, SEXP XSEXP) {
