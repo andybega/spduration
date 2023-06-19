@@ -9,7 +9,7 @@ knitr::opts_chunk$set(echo = TRUE,
 
 # spduration <img src="man/figures/logo.png" align="right" width="120" />
 
-[![R build status](https://github.com/andybega/spduration/workflows/R-CMD-check/badge.svg)](https://github.com/andybega/spduration/actions)
+[![R-CMD-check](https://github.com/andybega/spduration/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/andybega/spduration/actions/workflows/R-CMD-check.yaml)
 [![CRAN version](http://www.r-pkg.org/badges/version/spduration)](https://cran.r-project.org/package=spduration)
 [![Codecov test coverage](https://codecov.io/gh/andybega/spduration/branch/master/graph/badge.svg)](https://codecov.io/gh/andybega/spduration?branch=master)
 

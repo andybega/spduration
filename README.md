@@ -1,8 +1,7 @@
 
 # spduration <img src="man/figures/logo.png" align="right" width="120" />
 
-[![R build
-status](https://github.com/andybega/spduration/workflows/R-CMD-check/badge.svg)](https://github.com/andybega/spduration/actions)
+[![R-CMD-check](https://github.com/andybega/spduration/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/andybega/spduration/actions/workflows/R-CMD-check.yaml)
 [![CRAN
 version](http://www.r-pkg.org/badges/version/spduration)](https://cran.r-project.org/package=spduration)
 [![Codecov test
@@ -59,17 +58,13 @@ plot(model.coups, type = "hazard")
 
 ## Install
 
-  - the latest released version from CRAN:
-
-<!-- end list -->
+- the latest released version from CRAN:
 
 ``` r
 install.packages("spduration")
 ```
 
-  - the latest development version:
-
-<!-- end list -->
+- the latest development version:
 
 ``` r
 library(devtools)
@@ -78,6 +73,6 @@ install_github("andybega/spduration")
 
 ## Contact
 
-  - submit suggestions, bugs, issues, questions at:
-    <https://github.com/andybega/spduration/issues>
-  - email: <adbeger+spduration@gmail.com>
+- submit suggestions, bugs, issues, questions at:
+  <https://github.com/andybega/spduration/issues>
+- email: <adbeger+spduration@gmail.com>
