@@ -1,5 +1,3 @@
-library("spduration")
-context("spdur")
 
 test_that("spdur estimates at all", {
   data(coups)
@@ -9,6 +7,26 @@ test_that("spdur estimates at all", {
     spdur(duration ~ polity2, atrisk ~ polity2, data=dur.coups, silent = TRUE),
     NA)
   
+})
+
+test_that("loglog distr works", {
+  data(coups)
+  dur.coups <- add_duration(coups, "succ.coup", unitID="gwcode", tID="year",
+                            freq="year")
+  expect_error(
+    spdur(duration ~ polity2, atrisk ~ polity2, data=dur.coups, silent = TRUE,
+          distr = "loglog"),
+    NA)
+})
+
+test_that("spdur works with tibble input", {
+  data(coups)
+  dur.coups <- add_duration(coups, "succ.coup", unitID="gwcode", tID="year",
+                            freq="year")
+  dur.coups <- tibble::as_tibble(dur.coups)
+  expect_error(
+    spdur(duration ~ polity2, atrisk ~ polity2, data=dur.coups, silent = TRUE),
+    NA)
 })
 
 test_that("na.action is handled", {

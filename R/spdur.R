@@ -72,6 +72,9 @@ spdur <- function(duration, atrisk, data=NULL, last="end.spell", t.0="t.0",
   cl <- match.call()
   distr <- match.arg(distr)
   
+  # make sure data is a data.frame, not tibble, etc.
+  data <- as.data.frame(data)
+  
   # NA actions, separately because model.frame for two different equations
   # might return data frames with different row numbers, breaking the function.
   f1 <- as.formula(eval(duration))
