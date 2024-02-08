@@ -17,10 +17,10 @@
 #' 
 #' @references
 #'     Boag, J.W. 1949. ``Maximum Likelihood Estimates of the Proportion of 
-#'       Patients Cured by Cancer Therapy.'' <http://www.jstor.org/stable/2983694>
+#'       Patients Cured by Cancer Therapy.'' <https://www.jstor.org/stable/2983694>
 #' 
 #' 	   Berkson, J. and Gage, R.P. ``Survival Curve for Cancer Patients Following 
-#' 	     Treatment.'' <http://www.jstor.org/stable/2281318>
+#' 	     Treatment.'' <https://www.jstor.org/stable/2281318>
 #' 
 #'     Leisch, Friedrich. 2009. ``Creating R Packages: A Tutorial.''
 #' 

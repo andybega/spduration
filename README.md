@@ -5,7 +5,7 @@
 [![CRAN
 version](http://www.r-pkg.org/badges/version/spduration)](https://cran.r-project.org/package=spduration)
 [![Codecov test
-coverage](https://codecov.io/gh/andybega/spduration/branch/master/graph/badge.svg)](https://codecov.io/gh/andybega/spduration?branch=master)
+coverage](https://codecov.io/gh/andybega/spduration/branch/master/graph/badge.svg)](https://app.codecov.io/gh/andybega/spduration?branch=master)
 
 spduration implements a split-population duration model for duration
 data with time-varying covariates where a significant subset of the

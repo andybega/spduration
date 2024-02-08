@@ -6,7 +6,7 @@
 
 # spduration 0.17.1 (2018-03-26)
 
-- Add pkgdown static documentation website at https://andybeger.com/spduration.
+- Add pkgdown static documentation website at https://www.andybeger.com/spduration.
 - Fix C++ code that was causing warnings on R-devel; replacing & and | with && and ||. 
 
 # spduration 0.17.0 (2017-10-04)

@@ -3,11 +3,11 @@ Title: Split-Population Duration (Cure) Regression
 Version: 0.17.1.9004
 Authors@R: c(
     person("Andreas", "Beger", , "adbeger@gmail.com", c("aut", "cre"), comment = c(ORCID = "0000-0003-1883-3169")),
-    person("Daina", "Chiba", , "dchiba@essex.ac.uk", "aut"),
+    person("Daina", "Chiba", , "dchiba@essex.ac.uk", "aut", comment = c(ORCID = "0000-0002-9208-4373")),
     person("Daniel W.", "Hill, Jr.", , "dwhill@uga.edu", "aut"),
-    person("Nils W.", "Metternich", , "n.metternich@ucl.ac.uk", "aut"),
+    person("Nils W.", "Metternich", , "n.metternich@ucl.ac.uk", "aut", comment = c(ORCID = "0000-0001-8757-0409")),
     person("Shahryar", "Minhas", , "hermes829@gmail.com", "aut"),
-    person("Michael D.", "Ward", , "michael.don.ward@gmail.com", c("aut", "cph"))
+    person("Michael D.", "Ward", , "michael.don.ward@gmail.com", c("aut", "cph"), comment = c(ORCID = "0000-0002-6561-6186"))
     )
 Description: An implementation of split-population duration regression models. 
     Unlike regular duration models, split-population duration models are
@@ -15,10 +15,8 @@ Description: An implementation of split-population duration regression models.
     not at risk for failure, e.g. cancer patients who have been cured by 
     treatment. This package implements Weibull and Loglogistic forms for the 
     duration component, and focuses on data with time-varying covariates. 
-    These models were originally formulated in Boag (1949) 
-    <http://www.jstor.org/stable/2983694> and Berkson and Gage (1952) 
-    <http://www.jstor.org/stable/2281318>, and extended in Schmidt and Witte 
-    (1989) <doi:10.1016/0304-4076(89)90034-1>.
+    These models were originally formulated in Boag (1949) and Berkson and Gage 
+    (1952), and extended in Schmidt and Witte (1989).
 Encoding: UTF-8
 Depends:
     R (>= 3.1.2)
@@ -45,5 +43,5 @@ LinkingTo:
     RcppArmadillo
 RoxygenNote: 7.3.1
 VignetteBuilder: knitr
-URL: https://github.com/andybega/spduration, https://andybeger.com/spduration
+URL: https://github.com/andybega/spduration, https://www.andybeger.com/spduration/
 BugReports: https://github.com/andybega/spduration/issues

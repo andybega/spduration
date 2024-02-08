@@ -10,3 +10,4 @@ README_files
 ^codecov\.yml$
 ^Makefile$
 ^\.github$
+^cran-comments\.md$
