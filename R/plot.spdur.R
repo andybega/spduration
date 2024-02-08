@@ -159,8 +159,12 @@ plot_hazard <- function(x, t = NULL, ci=TRUE, n=1000, xvals=NULL, zvals=NULL, ..
 
 #' Calculate hazard function values
 #' 
-#' @param x An object of class "\code{spdur}".
 #' @param ti Vector of duration values over which to evaluate the hazard function.
+#' @param lambda density function parameter
+#' @param cure density function parameter
+#' @param alpha density function parameter
+#' @param out not used
+#' @param dist "weibull" or "loglog"
 #' 
 #' @keywords internal
 hazard <- function(ti, lambda, cure, alpha, out, dist) {

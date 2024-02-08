@@ -9,7 +9,15 @@ hazard(ti, lambda, cure, alpha, out, dist)
 \arguments{
 \item{ti}{Vector of duration values over which to evaluate the hazard function.}
 
-\item{x}{An object of class "\code{spdur}".}
+\item{lambda}{density function parameter}
+
+\item{cure}{density function parameter}
+
+\item{alpha}{density function parameter}
+
+\item{out}{not used}
+
+\item{dist}{"weibull" or "loglog"}
 }
 \description{
 Calculate hazard function values

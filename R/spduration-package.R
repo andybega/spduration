@@ -32,8 +32,9 @@
 #'         Consolidation.'' American Political Science Review.
 #' 
 #' @name spduration
-#' @docType package
 #' @useDynLib spduration, .registration = TRUE
 #' @importFrom Rcpp sourceCpp
-NULL
+"_PACKAGE"
+
 globalVariables("temp.t")
+
