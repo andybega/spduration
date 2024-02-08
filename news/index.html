@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">spduration</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.17.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.17.2.9000</span>
       </span>
     </div>
 
@@ -58,7 +58,10 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="0.17.2" id="spduration-0172">spduration 0.17.2<a class="anchor" aria-label="anchor" href="#spduration-0172"></a></h2>
+<h2 class="page-header" data-toc-text="development version" id="spduration-development-version">spduration (development version)<a class="anchor" aria-label="anchor" href="#spduration-development-version"></a></h2>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.17.2" id="spduration-0172-2024-02-08">spduration 0.17.2 (2024-02-08)<a class="anchor" aria-label="anchor" href="#spduration-0172-2024-02-08"></a></h2>
 <ul><li>Fix <code>model.matrix</code> so that it works correctly with dots arguments.</li>
 <li>Fix an error when trying to use <code><a href="../reference/add_duration.html">add_duration()</a></code> or <code><a href="../reference/spdur.html">spdur()</a></code> with a tibble as input. The errors were due to tibble returning lists when subsetting columns with <code>[, col]</code>. The data input is now internally converted to a base data frame (<code><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame()</a></code>).</li>
 <li>Removed dependency on plyr.</li>
