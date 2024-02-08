@@ -1,4 +1,6 @@
-# spduration 0.17.2 
+# spduration (development version)
+
+# spduration 0.17.2 (2024-02-08)
 
 - Fix `model.matrix` so that it works correctly with dots arguments.
 - Fix an error when trying to use `add_duration()` or `spdur()` with a tibble as input. The errors were due to tibble returning lists when subsetting columns with `[, col]`. The data input is now internally converted to a base data frame (`as.data.frame()`).
