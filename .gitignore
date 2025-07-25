@@ -9,6 +9,5 @@
 *.sublime-*
 
 spduration.Rcheck
-dev-cycle.R
 cran-comments.md
 
