@@ -26,7 +26,7 @@ for possible options}
 \item{n.ahead}{How many time periods to predict ahead. Default is 6.}
 }
 \description{
-\code{\link{forecast}} method for \code{\link{spdur}} class objects.
+\code{\link[forecast]{forecast}} method for \code{\link{spdur}} class objects.
 }
 \details{
 This function will create out-of-sample predictions of ``stat'' 

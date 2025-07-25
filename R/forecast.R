@@ -1,6 +1,6 @@
 #' Forecast from a spdur model
 #' 
-#' \code{\link{forecast}} method for \code{\link{spdur}} class objects.
+#' \code{\link[forecast]{forecast}} method for \code{\link{spdur}} class objects.
 #' 
 #' @method forecast spdur
 #' 

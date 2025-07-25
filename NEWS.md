@@ -1,5 +1,7 @@
 # spduration (development version)
 
+- Add package anchors (\link[PKG](foo)) in documentation to fix R check NOTEs on CRAN. 
+
 # spduration 0.17.2 (2024-02-08)
 
 - Fix `model.matrix` so that it works correctly with dots arguments.
