@@ -3,7 +3,7 @@ pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
   introduction: introduction.html
-last_built: 2025-07-28T09:51Z
+last_built: 2025-07-28T10:20Z
 urls:
   reference: https://www.andybeger.com/spduration/reference
   article: https://www.andybeger.com/spduration/articles
