@@ -12,3 +12,5 @@ README_files
 ^\.github$
 ^cran-comments\.md$
 ^CRAN-SUBMISSION$
+^_pkgdown\.yml$
+^pkgdown$

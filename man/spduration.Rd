@@ -43,6 +43,7 @@ Useful links:
 \itemize{
   \item \url{https://github.com/andybega/spduration}
   \item \url{https://www.andybeger.com/spduration/}
+  \item \url{http://www.andybeger.com/spduration/}
   \item Report bugs at \url{https://github.com/andybega/spduration/issues}
 }
 

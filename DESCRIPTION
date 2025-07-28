@@ -43,5 +43,5 @@ LinkingTo:
     RcppArmadillo
 RoxygenNote: 7.3.2
 VignetteBuilder: knitr
-URL: https://github.com/andybega/spduration, https://www.andybeger.com/spduration/
+URL: https://github.com/andybega/spduration, https://www.andybeger.com/spduration/, http://www.andybeger.com/spduration/
 BugReports: https://github.com/andybega/spduration/issues

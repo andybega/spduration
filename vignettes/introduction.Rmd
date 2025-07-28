@@ -6,7 +6,7 @@ abstract: >
   We present an implementation of split-population duration regression in the   `spduration` R package and an application to data on military coups. The statistical model accounts for units that are immune to a certain outcome and not part of the duration process the researcher is primarily interested in. We provide insights that if immune units exist, we can significantly increase the predictive performance compared to standard duration models. The package includes estimation and several post-estimation methods for split-population Weibull and Loglogistic models.
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Introduction to spduration}
+  %\VignetteIndexEntry{Splitting it Up: The `spduration` Split-population Duration Regression Package}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 bibliography: spdur.bib  

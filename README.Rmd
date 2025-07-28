@@ -30,6 +30,11 @@ summary(model.coups)
 ```
 
 ```{r, fig.width=6, fig.height = 5, fig.align='center'}
+#| fig.alt: >
+#|   Plot of the conditional hazard rate over time for coups. It shows a relatively
+#|   constant hazard of around 0.013, going almost 40 years on the x-axis. The plot
+#|   includes confidence bands, which range from around 0.005 to 0.020, with slightly
+#|   less uncertainty around 2-3 years out.
 plot(model.coups, type = "hazard")
 ```
 

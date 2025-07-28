@@ -13,7 +13,13 @@ population or spells will not experience failure.
 
 ``` r
 library("spduration")
+```
 
+    ## Registered S3 method overwritten by 'quantmod':
+    ##   method            from
+    ##   as.zoo.data.frame zoo
+
+``` r
 # Prepare data
 data(coups)
 dur.coups <- add_duration(coups, "succ.coup", unitID="gwcode", tID="year",
@@ -48,7 +54,7 @@ summary(model.coups)
 plot(model.coups, type = "hazard")
 ```
 
-<img src="man/figures/README-unnamed-chunk-2-1.png" style="display: block; margin: auto;" />
+<img src="man/figures/README-unnamed-chunk-2-1.png" alt="Plot of the conditional hazard rate over time for coups. It shows a relatively constant hazard of around 0.013, going almost 40 years on the x-axis. The plot includes confidence bands, which range from around 0.005 to 0.020, with slightly less uncertainty around 2-3 years out." style="display: block; margin: auto;" />
 
 ## Install
 

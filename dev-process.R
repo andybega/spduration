@@ -3,6 +3,7 @@
 #   keep track in news.md
 #
 
+
 library("devtools")
 library("usethis")
 library("pkgdown")
@@ -37,6 +38,9 @@ shine(cov)
 
 
 # Package release ---------------------------------------------------------
+#
+#   See https://r-pkgs.org/release.html
+#
 
 library("devtools")
 library("pkgdown")
@@ -60,20 +64,17 @@ check_win_oldrelease()
 tar_file <-  tail(dir("..", pattern = "spduration_", full.names = T), 1)
 system(sprintf("R CMD check --as-cran --use-valgrind ../%s", tar_file))
 
-# commit to git for travis
-# https://travis-ci.org
-
-#   once emails are in and travis is done:
+#   Fix any CRAN check issues
 #
 #   Update cran-comments.md
 
-R.Version()$version.string
 
+
+# Submit to CRAN
 devtools::release()
 
-# update local install
-desc <- readLines("DESCRIPTION")
-vers <- desc[grep("Version", desc)]
-vers <- stringr::str_extract(vers, "[0-9\\.]+")
-devtools::install_url(paste0("file://", getwd(), "/../spduration_", vers, ".tar.gz"))
+# If success
+usethis::use_github_release()
+usethis::use_dev_version(push = TRUE)
 
+# git push
