@@ -56,7 +56,7 @@ library("pkgdown")
 
 devtools::check(remote = TRUE, manual = TRUE)
 
-check_rhub()
+rhub_check()
 check_win_devel()
 check_win_release()
 check_win_oldrelease()
