@@ -50,12 +50,11 @@ library("pkgdown")
 #       - patch: fixes bugs
 #       - dev (9000): working version
 
-devtools::check()
-devtools::build()
-pkgdown::build_site()
+devtools::check(remote = TRUE, manual = TRUE)
 
-build_win(version = "R-release")
-build_win(version = "R-devel")
+check_win_devel()
+check_win_release()
+check_win_oldrelease()
 
 # Valgrind
 tar_file <-  tail(dir("..", pattern = "spduration_", full.names = T), 1)
